@@ -32,6 +32,18 @@ const state = {
   ],
 };
 
+const API_BASE_URL = String(
+  new URLSearchParams(window.location.search).get("api") ||
+  "https://api-webapp-tanki-online-production.up.railway.app"
+).trim().replace(/\/+$/, "");
+
+function withApiBase(path) {
+  if (!path) return path;
+  if (/^https?:\/\//i.test(path)) return path;
+  const p = path.startsWith("/") ? path : `/${path}`;
+  return `${API_BASE_URL}${p}`;
+}
+
 function qs(id) {
   return document.getElementById(id);
 }
@@ -357,7 +369,7 @@ function prettyError(e) {
 async function api(path, options = {}) {
   const headers = Object.assign({ "Content-Type": "application/json" }, options.headers || {});
   if (state.token) headers.Authorization = `Bearer ${state.token}`;
-  const res = await fetch(path, Object.assign({}, options, { headers }));
+  const res = await fetch(withApiBase(path), Object.assign({}, options, { headers }));
   if (!res.ok) {
     let msg = `${res.status}`;
     try {
@@ -575,7 +587,7 @@ async function refreshAll() {
 
 function absUrl(path) {
   try {
-    return new URL(path, window.location.origin).toString();
+    return new URL(path, API_BASE_URL || window.location.origin).toString();
   } catch {
     return path;
   }
