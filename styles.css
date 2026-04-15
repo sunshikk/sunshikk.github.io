@@ -431,8 +431,17 @@ body::after {
   box-shadow: 0 10px 20px rgba(62, 144, 232, 0.35);
 }
 
+.equipBtn.isDisabled {
+  background: linear-gradient(180deg, #5b6577, #465063);
+  border-color: #707b8f;
+  color: #d6dde8;
+  text-shadow: none;
+  box-shadow: none;
+  transform: none;
+}
+
 .equipBtn:disabled {
-  opacity: 0.6;
+  opacity: 1;
   cursor: not-allowed;
 }
 
@@ -635,6 +644,95 @@ body::after {
 .containerActions .equipBtn,
 .containerActions .ghostBtn {
   margin-top: 0;
+}
+
+.rewardModal {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(4, 10, 20, 0.72);
+  backdrop-filter: blur(3px);
+}
+
+.rewardCard {
+  width: min(460px, 92vw);
+  border-radius: 14px;
+  border: 2px solid #62a8ff;
+  background: linear-gradient(180deg, #1a2740, #172236);
+  padding: 16px;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.45);
+}
+
+.rewardCard.rarity-rare { border-color: #58e7ff; box-shadow: 0 0 18px rgba(88, 231, 255, 0.4); }
+.rewardCard.rarity-epic { border-color: #b071ff; box-shadow: 0 0 18px rgba(176, 113, 255, 0.4); }
+.rewardCard.rarity-ultrarare { border-color: #ff5d5d; box-shadow: 0 0 18px rgba(255, 93, 93, 0.4); }
+.rewardCard.rarity-legendary { border-color: #ffd34f; box-shadow: 0 0 18px rgba(255, 211, 79, 0.45); }
+
+.rewardTitle {
+  text-align: center;
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.rewardContainerBox {
+  position: relative;
+  border-radius: 10px;
+  min-height: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at center, rgba(255, 255, 255, 0.14), transparent 70%);
+}
+
+.rewardContainerImg {
+  width: min(320px, 90%);
+  height: 180px;
+  object-fit: contain;
+}
+
+.rewardDropImg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 110px;
+  height: 110px;
+  object-fit: contain;
+  transform: translate(-50%, -50%) scale(0.7);
+  opacity: 0;
+  filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.7));
+  transition: transform 0.45s ease, opacity 0.45s ease;
+}
+
+.rewardDropImg.show {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.rewardText {
+  margin-top: 10px;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.rewardCloseBtn {
+  display: block;
+  margin: 14px auto 0;
+}
+
+.shake { animation: shake 0.35s linear 1; }
+
+@keyframes shake {
+  0% { transform: translateX(0); }
+  20% { transform: translateX(-6px); }
+  40% { transform: translateX(6px); }
+  60% { transform: translateX(-4px); }
+  80% { transform: translateX(4px); }
+  100% { transform: translateX(0); }
 }
 
 .statsGrid {

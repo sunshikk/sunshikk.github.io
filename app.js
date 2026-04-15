@@ -269,9 +269,17 @@ function renderGarage() {
   qs("garageSelectedName").textContent = `${NAMES[key] || key}`.toUpperCase();
   qs("garageSelectedDesc").textContent = DESCRIPTIONS[key] || "Выберите предмет.";
   qs("garageTankImg").src = withCacheBust(absUrl(state.profile.tank_image_url));
+  const equippedCurrent = state.garageCategory === "weapon" ? state.profile.weapon : state.profile.hull;
+  const equipBtn = qs("equipBtn");
+  if (equipBtn) {
+    const isCurrentEquipped = key === equippedCurrent;
+    equipBtn.disabled = isCurrentEquipped;
+    equipBtn.classList.toggle("isDisabled", isCurrentEquipped);
+    equipBtn.textContent = isCurrentEquipped ? "Установлено" : "Установить";
+  }
   const rail = qs("garageItemsRail");
   rail.innerHTML = "";
-  const equipped = state.garageCategory === "weapon" ? state.profile.weapon : state.profile.hull;
+  const equipped = equippedCurrent;
   for (const itemKey of garageList()) {
     const card = document.createElement("button");
     card.type = "button";
@@ -407,6 +415,8 @@ function bindUI() {
   });
   qs("equipBtn")?.addEventListener("click", async () => {
     const key = currentGarageKey();
+    const equipped = state.garageCategory === "weapon" ? state.profile?.weapon : state.profile?.hull;
+    if (key === equipped) return;
     if (!isUnlocked(key)) { qs("garageHint").textContent = "Сначала разблокируй этот предмет."; return; }
     const weapon = state.garageCategory === "weapon" ? key : state.selectedWeapon;
     const hull = state.garageCategory === "hull" ? key : state.selectedHull;
