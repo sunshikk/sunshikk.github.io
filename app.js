@@ -73,6 +73,18 @@ function absUrl(path) {
 }
 function withCacheBust(url) { return `${url}${url.includes("?") ? "&" : "?"}v=${Date.now()}`; }
 function sleep(ms) { return new Promise((resolve) => setTimeout(resolve, ms)); }
+async function fadeAudioVolume(audio, from, to, durationMs = 300, shouldContinue = () => true) {
+  if (!audio) return;
+  const steps = 14;
+  const stepTime = Math.max(15, Math.floor(durationMs / steps));
+  audio.volume = Math.max(0, Math.min(1, from));
+  for (let i = 1; i <= steps; i += 1) {
+    if (!shouldContinue()) return;
+    const t = i / steps;
+    audio.volume = Math.max(0, Math.min(1, from + (to - from) * t));
+    await sleep(stepTime);
+  }
+}
 function waitForImageLoad(img, timeoutMs = 2000) {
   return new Promise((resolve) => {
     if (!img) return resolve();
@@ -115,12 +127,20 @@ function prettyError(err) {
   const low = raw.toLowerCase();
   if (!raw) return "Неизвестная ошибка.";
   if (low.includes("not enough crystals") || low.includes("insufficient crystals")) return "Недостаточно кристаллов для покупки.";
+  if (low.includes("not enough") && low.includes("crystal")) return "Недостаточно кристаллов для покупки.";
+  if (low.includes("not enough containers")) return "Недостаточно контейнеров.";
   if (low.includes("already owned")) return "Этот предмет уже куплен.";
   if (low.includes("unauthorized") || low === "401") return "Сессия истекла. Открой мини-приложение заново из бота.";
+  if (low.includes("invalid token")) return "Сессия недействительна. Открой мини-приложение заново из бота.";
   if (low.includes("forbidden") || low === "403") return "Нет доступа к этому действию.";
   if (low.includes("not found") || low === "404") return "Запрошенный ресурс не найден.";
+  if (low.includes("item not found")) return "Предмет не найден.";
+  if (low.includes("item locked") || low.includes("not unlocked")) return "Этот предмет еще не разблокирован.";
   if (low.includes("bad request") || low === "400") return "Некорректный запрос.";
   if (low.includes("internal server error") || low === "500") return "Внутренняя ошибка сервера.";
+  if (low.includes("too many requests") || low === "429") return "Слишком много запросов. Попробуй чуть позже.";
+  if (low.includes("failed to fetch")) return "Не удалось получить ответ от сервера.";
+  if (low.includes("timeout")) return "Сервер долго отвечает. Попробуй еще раз.";
   if (low.includes("network")) return "Проблема сети. Проверь подключение.";
   if (low.includes("недостаточно кристаллов")) return "Недостаточно кристаллов для покупки.";
   return raw;
@@ -185,10 +205,22 @@ async function fadeVolume(target, durationMs = 300) {
 async function applyMusic() {
   if (!state.bgMusic) return;
   if (!state.bgMusicEnabled) {
-    await fadeVolume(0, 220);
-    state.bgMusic.pause();
+    const seq = ++state.musicSwitchSeq;
+    const current = state.bgMusic;
+    const previous = state.prevMusic;
+    await Promise.all([
+      fadeAudioVolume(current, current.volume, 0, 220, () => seq === state.musicSwitchSeq),
+      previous ? fadeAudioVolume(previous, previous.volume, 0, 220, () => seq === state.musicSwitchSeq) : Promise.resolve(),
+    ]);
+    current.pause();
+    if (previous) previous.pause();
     updateMusicButton();
     return;
+  }
+  if (state.prevMusic) {
+    state.prevMusic.pause();
+    state.prevMusic.currentTime = 0;
+    state.prevMusic = null;
   }
   state.bgMusic.muted = false;
   state.bgMusic.volume = 0;
@@ -204,17 +236,37 @@ async function switchTrack() {
   const nextSrc = new URL(src, window.location.origin).toString();
   if (currentSrc === nextSrc) return;
   const seq = ++state.musicSwitchSeq;
-  if (state.bgMusicEnabled) await fadeVolume(0, 170);
+  const oldAudio = state.bgMusic;
+  if (!state.bgMusicEnabled) {
+    oldAudio.src = nextSrc;
+    oldAudio.load();
+    return;
+  }
+  if (state.prevMusic) {
+    state.prevMusic.pause();
+    state.prevMusic.currentTime = 0;
+    state.prevMusic = null;
+  }
+  const newAudio = new Audio(nextSrc);
+  newAudio.loop = true;
+  newAudio.preload = "none";
+  newAudio.volume = 0;
+  newAudio.muted = false;
+  state.bgMusic = newAudio;
+  state.prevMusic = oldAudio;
+  try { await newAudio.play(); } catch {}
+  if (seq !== state.musicSwitchSeq) {
+    newAudio.pause();
+    return;
+  }
+  // Сначала плавно входит новый трек, старый еще играет.
+  await fadeAudioVolume(newAudio, 0, state.bgMusicVolume, 280, () => seq === state.musicSwitchSeq);
   if (seq !== state.musicSwitchSeq) return;
-  state.bgMusic.pause();
-  state.bgMusic.src = nextSrc;
-  state.bgMusic.currentTime = 0;
-  state.bgMusic.load();
-  if (!state.bgMusicEnabled) return;
-  state.bgMusic.volume = 0;
-  try { await state.bgMusic.play(); } catch {}
-  if (seq !== state.musicSwitchSeq) return;
-  await fadeVolume(state.bgMusicVolume, 220);
+  // Затем плавно затихает старый.
+  await fadeAudioVolume(oldAudio, oldAudio.volume, 0, 300, () => seq === state.musicSwitchSeq);
+  oldAudio.pause();
+  oldAudio.currentTime = 0;
+  if (state.prevMusic === oldAudio) state.prevMusic = null;
 }
 
 function initMusic() {
@@ -516,7 +568,7 @@ function bindUI() {
       clearError();
     } catch (e) {
       setError(prettyError(e));
-      qs("containerResult").textContent = prettyError(e);
+      qs("containerResult").textContent = "";
     } finally {
       btn.disabled = false;
     }
