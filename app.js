@@ -336,6 +336,29 @@ async function initAuth() {
 function isUnlocked(key) { return key === "smoky" || key === "hunter" || Boolean(state.profile?.unlocks?.[key]); }
 function currentGarageKey() { return state.garageCategory === "weapon" ? state.selectedWeapon : state.selectedHull; }
 function garageList() { return state.garageCategory === "weapon" ? ["smoky", "railgun", "shaft", "thunder"] : ["hunter", "titan"]; }
+function updateGarageEquipButton() {
+  const equipBtn = qs("equipBtn");
+  if (!equipBtn || !state.profile) return;
+  const key = currentGarageKey();
+  const equippedCurrent = state.garageCategory === "weapon" ? state.profile.weapon : state.profile.hull;
+  const isCurrentEquipped = key === equippedCurrent;
+  const isCurrentUnlocked = isUnlocked(key);
+  if (!isCurrentUnlocked) {
+    equipBtn.disabled = true;
+    equipBtn.classList.add("isDisabled");
+    equipBtn.textContent = "Недоступно";
+    return;
+  }
+  if (isCurrentEquipped) {
+    equipBtn.disabled = true;
+    equipBtn.classList.add("isDisabled");
+    equipBtn.textContent = "Установлено";
+    return;
+  }
+  equipBtn.disabled = false;
+  equipBtn.classList.remove("isDisabled");
+  equipBtn.textContent = "Установить";
+}
 
 function renderHud() {
   if (!state.profile) return;
@@ -381,24 +404,7 @@ function renderGarage() {
   qs("garageSelectedDesc").textContent = DESCRIPTIONS[key] || "Выберите предмет.";
   qs("garageTankImg").src = absUrl(state.profile.tank_image_url);
   const equippedCurrent = state.garageCategory === "weapon" ? state.profile.weapon : state.profile.hull;
-  const isCurrentEquipped = key === equippedCurrent;
-  const isCurrentUnlocked = isUnlocked(key);
-  const equipBtn = qs("equipBtn");
-  if (equipBtn) {
-    if (!isCurrentUnlocked) {
-      equipBtn.disabled = true;
-      equipBtn.classList.add("isDisabled");
-      equipBtn.textContent = "Недоступно";
-    } else if (isCurrentEquipped) {
-      equipBtn.disabled = true;
-      equipBtn.classList.add("isDisabled");
-      equipBtn.textContent = "Установлено";
-    } else {
-      equipBtn.disabled = false;
-      equipBtn.classList.remove("isDisabled");
-      equipBtn.textContent = "Установить";
-    }
-  }
+  updateGarageEquipButton();
   const rail = qs("garageItemsRail");
   rail.innerHTML = "";
   const equipped = equippedCurrent;
@@ -431,7 +437,7 @@ function renderShop() {
     const card = document.createElement("div");
     card.className = "shopCard";
     const buyButton = item.owned
-      ? `<span class="shopOwned">Куплено</span>`
+      ? `<button class="equipBtn isDisabled" type="button" style="margin-top:0" disabled>Куплено</button>`
       : `<button class="equipBtn" data-buy="${item.key}" style="margin-top:0">Купить</button>`;
     card.innerHTML = `
       <img src="${withCacheBust(absUrl(item.image_url))}" alt="${item.name}">
@@ -549,16 +555,12 @@ function bindUI() {
   qs("equipBtn")?.addEventListener("click", async () => {
     const key = currentGarageKey();
     const equipped = state.garageCategory === "weapon" ? state.profile?.weapon : state.profile?.hull;
-    if (key === equipped) {
-      const btn = qs("equipBtn");
-      if (btn) {
-        btn.disabled = true;
-        btn.classList.add("isDisabled");
-        btn.textContent = "Установлено";
-      }
+    if (key === equipped) return;
+    if (!isUnlocked(key)) {
+      qs("garageHint").textContent = "Сначала разблокируй этот предмет.";
+      updateGarageEquipButton();
       return;
     }
-    if (!isUnlocked(key)) { qs("garageHint").textContent = "Сначала разблокируй этот предмет."; return; }
     const weapon = state.garageCategory === "weapon" ? key : state.selectedWeapon;
     const hull = state.garageCategory === "hull" ? key : state.selectedHull;
     try {
