@@ -417,7 +417,6 @@ function renderGarage() {
     card.innerHTML = `
       <img src="${absUrl(getItemImage(itemKey))}" alt="${NAMES[itemKey] || itemKey}" />
       <div class="itemName">${NAMES[itemKey] || itemKey}</div>
-      <div class="itemStatus">${!isUnlocked(itemKey) ? "Закрыто" : itemKey === equipped ? "Установлено" : "Доступно"}</div>
     `;
     card.onclick = () => {
       if (state.garageCategory === "weapon") state.selectedWeapon = itemKey;
