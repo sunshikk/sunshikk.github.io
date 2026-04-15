@@ -129,6 +129,7 @@ function prettyError(err) {
   if (low.includes("not enough crystals") || low.includes("insufficient crystals")) return "Недостаточно кристаллов для покупки.";
   if (low.includes("not enough") && low.includes("crystal")) return "Недостаточно кристаллов для покупки.";
   if (low.includes("not enough containers")) return "Недостаточно контейнеров.";
+  if (low.includes("no containers")) return "У тебя нет контейнеров.";
   if (low.includes("already owned")) return "Этот предмет уже куплен.";
   if (low.includes("unauthorized") || low === "401") return "Сессия истекла. Открой мини-приложение заново из бота.";
   if (low.includes("invalid token")) return "Сессия недействительна. Открой мини-приложение заново из бота.";
@@ -171,8 +172,12 @@ function getItemImage(key) {
   return `/images/webapp/${imageName}`;
 }
 function applyBackgroundImage() {
-  const bgUrl = withCacheBust(absUrl(withApiBase("/images/webapp/Background.webp")));
-  document.documentElement.style.setProperty("--bg-image", `url("${bgUrl}")`);
+  const root = document.documentElement;
+  const bgUrl = absUrl(withApiBase("/images/webapp/Background.webp"));
+  const nextValue = `url("${bgUrl}")`;
+  if (root.style.getPropertyValue("--bg-image") !== nextValue) {
+    root.style.setProperty("--bg-image", nextValue);
+  }
 }
 
 function updateMusicButton() {
