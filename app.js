@@ -170,6 +170,10 @@ function getItemImage(key) {
   const imageName = ITEM_IMAGE_OVERRIDES[key] || `${key}.png`;
   return `/images/webapp/${imageName}`;
 }
+function applyBackgroundImage() {
+  const bgUrl = withCacheBust(absUrl(withApiBase("/images/webapp/Background.webp")));
+  document.documentElement.style.setProperty("--bg-image", `url("${bgUrl}")`);
+}
 
 function updateMusicButton() {
   const btn = qs("musicToggleBtn");
@@ -504,6 +508,7 @@ async function refreshAll() {
   state.profile = await api("/api/profile/me");
   state.shop = await api("/api/shop/items");
   state.containersInfo = await api("/api/containers");
+  applyBackgroundImage();
   state.selectedWeapon = state.profile.weapon;
   state.selectedHull = state.profile.hull;
   renderHud();
