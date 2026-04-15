@@ -4,23 +4,120 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tanki Online</title>
-    <link rel="stylesheet" href="./styles.css?v=11" />
+    <link rel="stylesheet" href="./styles.css?v=12" />
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script src="./config.js"></script>
   </head>
   <body>
     <div class="app" id="app">
       <header class="hud">
-        <div class="hudLeft"><div class="logo"></div><div class="userMeta"><div class="nickname" id="nickname">player</div><div class="rankLine"><img id="rankImg" class="rankIcon" alt="rank" /><span id="rankName">Звание</span></div><div class="expLine"><div class="expValue" id="expValue">0 / 0</div><div class="expTrack"><div id="expFill" class="expFill"></div></div></div></div></div>
-        <div class="hudRight"><div class="audioControl"><button id="musicToggleBtn" class="ghostBtn musicBtn" type="button"><span class="musicLed" id="musicLed" aria-hidden="true"></span><span id="musicToggleLabel">Музыка выкл</span></button><input id="musicVolume" class="musicVolume" type="range" min="0" max="100" step="1" value="35" /></div><div class="currency">💎 <span id="pillCrystals">0</span></div><div class="currency">📦 <span id="pillContainers">0</span></div></div>
+        <div class="hudLeft">
+          <div class="logo"></div>
+          <div class="userMeta">
+            <div class="nickname" id="nickname">player</div>
+            <div class="rankLine">
+              <img id="rankImg" class="rankIcon" alt="rank" />
+              <span id="rankName">Звание</span>
+            </div>
+            <div class="expLine">
+              <div class="expValue" id="expValue">0 / 0</div>
+              <div class="expTrack"><div id="expFill" class="expFill"></div></div>
+            </div>
+          </div>
+        </div>
+        <div class="hudRight">
+          <div class="audioControl">
+            <button id="musicToggleBtn" class="ghostBtn musicBtn" type="button">
+              <span class="musicLed" id="musicLed" aria-hidden="true"></span>
+              <span id="musicToggleLabel">Музыка выкл</span>
+            </button>
+            <input id="musicVolume" class="musicVolume" type="range" min="0" max="100" step="1" value="35" />
+          </div>
+          <div class="currency">💎 <span id="pillCrystals">0</span></div>
+          <div class="currency">📦 <span id="pillContainers">0</span></div>
+        </div>
       </header>
-      <nav class="mainTabs" id="tabs"><button class="mainTab" data-tab="garage">Гараж</button><button class="mainTab" data-tab="shop">Магазин</button><button class="mainTab" data-tab="containers">Контейнеры</button><button class="mainTab isActive" data-tab="profile">Профиль</button></nav>
+
+      <nav class="mainTabs" id="tabs">
+        <button class="mainTab isActive" data-tab="profile">Профиль</button>
+        <button class="mainTab" data-tab="garage">Гараж</button>
+        <button class="mainTab" data-tab="shop">Магазин</button>
+        <button class="mainTab" data-tab="containers">Контейнеры</button>
+      </nav>
+
       <section class="notice" id="panelNotice" style="display: none"><div id="notice"></div></section>
-      <main class="panel panelGarage" id="panelGarage" style="display:none"><div class="subTabs" id="garageCategoryTabs"><button class="subTab isActive" data-cat="weapon">Пушки</button><button class="subTab" data-cat="hull">Корпуса</button></div><div class="garageStage"><div class="stageInfo"><div class="stageTitle" id="garageSelectedName">—</div><div class="stageDesc" id="garageSelectedDesc">Выберите пушку или корпус</div><button id="equipBtn" class="equipBtn">Установить</button><div class="hint" id="garageHint"></div></div><div class="tankShowcase"><img id="garageTankImg" alt="tank" /></div></div><div class="itemsRail" id="garageItemsRail"></div></main>
-      <main class="panel panelShop" id="panelShop" style="display:none"><div class="shopLayout"><aside class="shopMenu" id="shopCategory"><button class="shopCat isActive" data-cat="weapon">Пушки</button><button class="shopCat" data-cat="hull">Корпуса</button></aside><section class="shopContent"><div class="shopHeader">Предложения</div><div id="shopList" class="shopList"></div></section></div></main>
-      <main class="panel panelContainers" id="panelContainers" style="display:none"><div class="subTabs containerTabs"><button class="subTab isActive">Обычный</button></div><div class="containerWrap"><img id="containerImg" class="containerImg" alt="container" /></div><div class="containerActions"><button id="openContainerBtn" class="equipBtn">Открыть контейнер</button><button id="refreshBtn" class="ghostBtn">Обновить</button></div><div class="hint" id="containerResult"></div></main>
-      <main class="panel panelProfile" id="panelProfile"><div class="statsGrid"><div class="statCard"><div class="statLabel">Бои</div><div class="statValue" id="battlesValue">0</div></div><div class="statCard"><div class="statLabel">Победы / Поражения</div><div class="statValue" id="wlValue">0 / 0</div></div><div class="statCard"><div class="statLabel">Текущий танк</div><img id="tankImg" class="profileTank" alt="tank" /></div></div></main>
+
+      <main class="panel panelProfile" id="panelProfile">
+        <div class="profileTankWrap">
+          <div class="tankGlow"></div>
+          <img id="tankImg" class="profileTank" alt="tank" />
+        </div>
+        <div class="statsGrid">
+          <div class="statCard"><div class="statLabel">Бои</div><div class="statValue" id="battlesValue">0</div></div>
+          <div class="statCard"><div class="statLabel">Победы</div><div class="statValue" id="winsValue">0</div></div>
+          <div class="statCard"><div class="statLabel">Поражения</div><div class="statValue" id="lossesValue">0</div></div>
+          <div class="statCard"><div class="statLabel">Опыт</div><div class="statValue" id="expTotalValue">0</div></div>
+          <div class="statCard"><div class="statLabel">Звание</div><div class="statValue" id="rankValue">-</div></div>
+          <div class="statCard"><div class="statLabel">Винрейт</div><div class="statValue" id="winrateValue">0%</div></div>
+        </div>
+      </main>
+
+      <main class="panel panelGarage" id="panelGarage" style="display:none">
+        <div class="subTabs" id="garageCategoryTabs">
+          <button class="subTab isActive" data-cat="weapon">Пушки</button>
+          <button class="subTab" data-cat="hull">Корпуса</button>
+        </div>
+        <div class="garageStage">
+          <div class="stageInfo">
+            <div class="stageTitle" id="garageSelectedName">—</div>
+            <div class="stageDesc" id="garageSelectedDesc">Выберите пушку или корпус</div>
+            <button id="equipBtn" class="equipBtn">Установить</button>
+            <div class="hint" id="garageHint"></div>
+          </div>
+          <div class="tankShowcase">
+            <div class="tankGlow"></div>
+            <img id="garageTankImg" alt="tank" />
+          </div>
+        </div>
+        <div class="itemsRail" id="garageItemsRail"></div>
+      </main>
+
+      <main class="panel panelShop" id="panelShop" style="display:none">
+        <div class="shopLayout">
+          <aside class="shopMenu" id="shopCategory">
+            <button class="shopCat isActive" data-cat="weapon">Пушки</button>
+            <button class="shopCat" data-cat="hull">Корпуса</button>
+          </aside>
+          <section class="shopContent">
+            <div class="shopHeader">Предложения</div>
+            <div id="shopList" class="shopList"></div>
+          </section>
+        </div>
+      </main>
+
+      <main class="panel panelContainers" id="panelContainers" style="display:none">
+        <div class="subTabs containerTabs"><button class="subTab isActive">Обычный</button></div>
+        <div class="containerWrap"><img id="containerImg" class="containerImg" alt="container" /></div>
+        <div class="containerActions">
+          <button id="openContainerBtn" class="equipBtn">Открыть контейнер</button>
+          <button id="refreshBtn" class="ghostBtn">Обновить</button>
+        </div>
+        <div class="hint" id="containerResult"></div>
+      </main>
     </div>
-    <script src="./app.js?v=11"></script>
+
+    <div class="rewardModal" id="rewardModal" style="display:none">
+      <div class="rewardCard" id="rewardCard">
+        <div class="rewardTitle">Контейнер открыт</div>
+        <div class="rewardContainerBox" id="rewardContainerBox">
+          <img id="rewardContainerImg" class="rewardContainerImg" alt="opened container" />
+          <div id="rewardDrop" class="rewardDrop">Награда</div>
+        </div>
+        <div id="rewardText" class="rewardText"></div>
+        <button id="rewardCloseBtn" class="equipBtn rewardCloseBtn" type="button">Ок</button>
+      </div>
+    </div>
+
+    <script src="./app.js?v=12"></script>
   </body>
 </html>
