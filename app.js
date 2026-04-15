@@ -67,6 +67,23 @@ function absUrl(path) {
 }
 function withCacheBust(url) { return `${url}${url.includes("?") ? "&" : "?"}v=${Date.now()}`; }
 function sleep(ms) { return new Promise((resolve) => setTimeout(resolve, ms)); }
+function waitForImageLoad(img, timeoutMs = 2000) {
+  return new Promise((resolve) => {
+    if (!img) return resolve();
+    if (img.complete && img.naturalWidth > 0) return resolve();
+    let done = false;
+    const finish = () => {
+      if (done) return;
+      done = true;
+      img.onload = null;
+      img.onerror = null;
+      resolve();
+    };
+    img.onload = finish;
+    img.onerror = finish;
+    setTimeout(finish, timeoutMs);
+  });
+}
 
 function clearError() { const p = qs("panelNotice"); if (!p) return; qs("notice").textContent = ""; p.style.display = "none"; }
 function setError(text) { const p = qs("panelNotice"); if (!p) return; qs("notice").textContent = text; p.style.display = "block"; }
@@ -268,14 +285,25 @@ function renderGarage() {
   const key = currentGarageKey();
   qs("garageSelectedName").textContent = `${NAMES[key] || key}`.toUpperCase();
   qs("garageSelectedDesc").textContent = DESCRIPTIONS[key] || "Выберите предмет.";
-  qs("garageTankImg").src = withCacheBust(absUrl(state.profile.tank_image_url));
+  qs("garageTankImg").src = absUrl(state.profile.tank_image_url);
   const equippedCurrent = state.garageCategory === "weapon" ? state.profile.weapon : state.profile.hull;
+  const isCurrentEquipped = key === equippedCurrent;
+  const isCurrentUnlocked = isUnlocked(key);
   const equipBtn = qs("equipBtn");
   if (equipBtn) {
-    const isCurrentEquipped = key === equippedCurrent;
-    equipBtn.disabled = isCurrentEquipped;
-    equipBtn.classList.toggle("isDisabled", isCurrentEquipped);
-    equipBtn.textContent = isCurrentEquipped ? "Установлено" : "Установить";
+    if (!isCurrentUnlocked) {
+      equipBtn.disabled = true;
+      equipBtn.classList.add("isDisabled");
+      equipBtn.textContent = "Недоступно";
+    } else if (isCurrentEquipped) {
+      equipBtn.disabled = true;
+      equipBtn.classList.add("isDisabled");
+      equipBtn.textContent = "Установлено";
+    } else {
+      equipBtn.disabled = false;
+      equipBtn.classList.remove("isDisabled");
+      equipBtn.textContent = "Установить";
+    }
   }
   const rail = qs("garageItemsRail");
   rail.innerHTML = "";
@@ -287,7 +315,7 @@ function renderGarage() {
     if (!isUnlocked(itemKey)) card.classList.add("isLocked");
     if (itemKey === key) card.classList.add("isSelected");
     card.innerHTML = `
-      <img src="${withCacheBust(absUrl(getItemImage(itemKey)))}" alt="${NAMES[itemKey] || itemKey}" />
+      <img src="${absUrl(getItemImage(itemKey))}" alt="${NAMES[itemKey] || itemKey}" />
       <div class="itemName">${NAMES[itemKey] || itemKey}</div>
       <div class="itemStatus">${!isUnlocked(itemKey) ? "Закрыто" : itemKey === equipped ? "Установлено" : "Доступно"}</div>
     `;
@@ -360,6 +388,7 @@ async function showRewardModal(result) {
   contImg.src = withCacheBust(absUrl(CONTAINER_OPEN_IMAGES[rarity]));
   const rewardKey = result.reward_type === "crystals" ? "crystals" : result.reward_key;
   dropImg.src = withCacheBust(absUrl(REWARD_ITEM_IMAGES[rewardKey] || "/images/webapp/crystals.png"));
+  await Promise.all([waitForImageLoad(contImg, 2600), waitForImageLoad(dropImg, 2600)]);
   modal.style.display = "flex";
   await sleep(30);
   box.classList.add("shake");
@@ -367,7 +396,7 @@ async function showRewardModal(result) {
     ? `Получено: ${NAMES[result.reward_key] || result.reward_key}`
     : `Получено кристаллов: ${result.reward_amount}`;
   text.textContent = rewardText;
-  await sleep(720);
+  await sleep(1400);
   dropImg.classList.add("show");
 }
 
