@@ -5,10 +5,10 @@ const MUSIC_STORAGE_KEY = "bg_music_enabled";
 const MUSIC_VOLUME_STORAGE_KEY = "bg_music_volume";
 const DEFAULT_MUSIC_VOLUME = 0.35;
 const TAB_MUSIC = {
-  profile: "/sounds/music/profile_music.mp3",
-  garage: "/sounds/music/garage_music.mp3",
-  shop: "/sounds/music/shop_music.mp3",
-  containers: "/sounds/music/profile_music.mp3",
+  profile: "/sounds/music/background_music.mp3",
+  garage: "/sounds/music/background_music.mp3",
+  shop: "/sounds/music/background_music.mp3",
+  containers: "/sounds/music/background_music.mp3",
 };
 const CONTAINER_OPEN_IMAGES = {
   rare: "/images/webapp/contopen_rare.png",

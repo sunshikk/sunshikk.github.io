@@ -22,10 +22,7 @@ body {
 
 body {
   margin: 0;
-  background:
-    radial-gradient(900px 520px at 8% -8%, rgba(53, 143, 255, 0.28), transparent 62%),
-    radial-gradient(760px 460px at 95% 110%, rgba(131, 84, 255, 0.22), transparent 64%),
-    linear-gradient(180deg, #0e1522 0%, #0b1220 52%, #090f1b 100%);
+  background: linear-gradient(180deg, #0c121d 0%, #0a101a 100%);
   color: var(--text);
   font: 14px/1.45 "Segoe UI", Inter, Arial, sans-serif;
   position: relative;
@@ -38,14 +35,12 @@ body::before {
   inset: 0;
   pointer-events: none;
   background:
-    repeating-linear-gradient(
-      -35deg,
-      rgba(116, 178, 255, 0.05) 0px,
-      rgba(116, 178, 255, 0.05) 1px,
-      transparent 1px,
-      transparent 16px
-    );
-  opacity: 0.6;
+    linear-gradient(rgba(8, 14, 24, 0.52), rgba(8, 14, 24, 0.62)),
+    url("/images/webapp/Background.webp") center/cover no-repeat;
+  filter: blur(6px) brightness(0.7);
+  transform: scale(1.05);
+  transform-origin: center;
+  opacity: 0.9;
   z-index: 0;
 }
 
