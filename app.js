@@ -16,6 +16,13 @@ const CONTAINER_OPEN_IMAGES = {
   ultrarare: "/images/webapp/contopen_ultrarare.png",
   legendary: "/images/webapp/contopen_legendary.png",
 };
+const REWARD_ITEM_IMAGES = {
+  crystals: "/images/webapp/crystals.png",
+  railgun: "/images/webapp/railgun.png",
+  shaft: "/images/webapp/shaft.png",
+  thunder: "/images/webapp/thunder.png",
+  titan: "/images/webapp/titan.png",
+};
 const ITEM_IMAGE_OVERRIDES = { smoky: "smoky.png", hunter: "hunter.png" };
 
 const state = {
@@ -30,6 +37,7 @@ const state = {
   selectedHull: "hunter",
   viewerName: "player",
   bgMusic: null,
+  prevMusic: null,
   bgMusicEnabled: false,
   bgMusicVolume: DEFAULT_MUSIC_VOLUME,
 };
@@ -139,13 +147,32 @@ async function switchTrack() {
   if (!state.bgMusic) return;
   const src = getTrack();
   if (state.bgMusic.src === src) return;
-  if (state.bgMusicEnabled) await fadeVolume(0, 240);
-  state.bgMusic.src = src;
-  state.bgMusic.load();
-  if (state.bgMusicEnabled) {
-    try { await state.bgMusic.play(); } catch {}
-    await fadeVolume(state.bgMusicVolume, 260);
+  if (!state.bgMusicEnabled) {
+    state.bgMusic.src = src;
+    state.bgMusic.load();
+    return;
   }
+  const oldAudio = state.bgMusic;
+  const newAudio = new Audio(src);
+  newAudio.loop = true;
+  newAudio.preload = "none";
+  newAudio.volume = 0;
+  state.prevMusic = oldAudio;
+  state.bgMusic = newAudio;
+  try { await newAudio.play(); } catch {}
+  const duration = 420;
+  const steps = 14;
+  const stepTime = Math.max(18, Math.floor(duration / steps));
+  const oldStart = oldAudio.volume;
+  for (let i = 1; i <= steps; i += 1) {
+    const t = i / steps;
+    newAudio.volume = state.bgMusicVolume * t;
+    oldAudio.volume = oldStart * (1 - t);
+    await sleep(stepTime);
+  }
+  oldAudio.pause();
+  oldAudio.currentTime = 0;
+  state.prevMusic = null;
 }
 
 function initMusic() {
@@ -206,6 +233,8 @@ function garageList() { return state.garageCategory === "weapon" ? ["smoky", "ra
 
 function renderHud() {
   if (!state.profile) return;
+  const logo = qs("logoImg");
+  if (logo && !logo.src) logo.src = withCacheBust(absUrl("/images/webapp/logo.png"));
   qs("nickname").textContent = state.viewerName;
   qs("rankName").textContent = state.profile.rank.name;
   qs("pillCrystals").textContent = String(state.profile.crystals ?? 0);
@@ -307,22 +336,23 @@ async function showRewardModal(result) {
   const card = qs("rewardCard");
   const box = qs("rewardContainerBox");
   const contImg = qs("rewardContainerImg");
-  const drop = qs("rewardDrop");
+  const dropImg = qs("rewardDropImg");
   const text = qs("rewardText");
   card.className = `rewardCard rarity-${rarity}`;
   box.classList.remove("shake");
-  drop.classList.remove("show");
+  dropImg.classList.remove("show");
   contImg.src = withCacheBust(absUrl(CONTAINER_OPEN_IMAGES[rarity]));
+  const rewardKey = result.reward_type === "crystals" ? "crystals" : result.reward_key;
+  dropImg.src = withCacheBust(absUrl(REWARD_ITEM_IMAGES[rewardKey] || "/images/webapp/crystals.png"));
   modal.style.display = "flex";
   await sleep(30);
   box.classList.add("shake");
   const rewardText = result.reward_type === "unlock"
     ? `Получено: ${NAMES[result.reward_key] || result.reward_key}`
     : `Получено кристаллов: ${result.reward_amount}`;
-  drop.textContent = rewardText;
   text.textContent = rewardText;
-  await sleep(380);
-  drop.classList.add("show");
+  await sleep(720);
+  dropImg.classList.add("show");
 }
 
 function hideRewardModal() {

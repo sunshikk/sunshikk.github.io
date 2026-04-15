@@ -61,8 +61,8 @@ body {
   background: radial-gradient(circle, rgba(255,255,255,.4) 0%, rgba(130,185,255,.18) 38%, rgba(130,185,255,0) 72%);
   filter: blur(6px);
 }
-.profileTank, #garageTankImg { position: relative; z-index: 1; width: min(520px, 95%); height: 220px; object-fit: contain; }
-.profileTankWrap { margin-bottom: 12px; }
+.profileTank, #garageTankImg { position: relative; z-index: 1; width: min(620px, 98%); height: 280px; object-fit: contain; }
+.profileTankWrap { margin-bottom: 12px; min-height: 300px; }
 
 .statsGrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
 .statCard { border: 1px solid var(--border); border-radius: 10px; background: linear-gradient(180deg, #1a2740, #172236); padding: 10px; }
@@ -129,6 +129,22 @@ body {
   transition: transform .35s ease, opacity .35s ease;
 }
 .rewardDrop.show { transform: translate(-50%, 0); opacity: 1; }
+.rewardDropImg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 110px;
+  height: 110px;
+  object-fit: contain;
+  transform: translate(-50%, -50%) scale(0.7);
+  opacity: 0;
+  filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.7));
+  transition: transform .45s ease, opacity .45s ease;
+}
+.rewardDropImg.show {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
 .rewardText { margin-top: 10px; text-align: center; font-size: 16px; font-weight: 700; }
 .rewardCloseBtn { display: block; margin: 14px auto 0; }
 .shake { animation: shake .35s linear 1; }
