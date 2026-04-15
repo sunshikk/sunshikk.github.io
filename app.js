@@ -348,6 +348,12 @@ async function showRewardModal(result) {
   const contImg = qs("rewardContainerImg");
   const dropImg = qs("rewardDropImg");
   const text = qs("rewardText");
+  if (!modal || !card || !box || !contImg || !dropImg || !text) {
+    qs("containerResult").textContent = result.reward_type === "unlock"
+      ? `Получено: ${NAMES[result.reward_key] || result.reward_key}`
+      : `Получено кристаллов: ${result.reward_amount}`;
+    return;
+  }
   card.className = `rewardCard rarity-${rarity}`;
   box.classList.remove("shake");
   dropImg.classList.remove("show");
@@ -416,7 +422,15 @@ function bindUI() {
   qs("equipBtn")?.addEventListener("click", async () => {
     const key = currentGarageKey();
     const equipped = state.garageCategory === "weapon" ? state.profile?.weapon : state.profile?.hull;
-    if (key === equipped) return;
+    if (key === equipped) {
+      const btn = qs("equipBtn");
+      if (btn) {
+        btn.disabled = true;
+        btn.classList.add("isDisabled");
+        btn.textContent = "Установлено";
+      }
+      return;
+    }
     if (!isUnlocked(key)) { qs("garageHint").textContent = "Сначала разблокируй этот предмет."; return; }
     const weapon = state.garageCategory === "weapon" ? key : state.selectedWeapon;
     const hull = state.garageCategory === "hull" ? key : state.selectedHull;
