@@ -217,7 +217,9 @@ async function applyMusic() {
       previous ? fadeAudioVolume(previous, previous.volume, 0, 220, () => seq === state.musicSwitchSeq) : Promise.resolve(),
     ]);
     current.pause();
+    current.currentTime = 0;
     if (previous) previous.pause();
+    if (previous) previous.currentTime = 0;
     updateMusicButton();
     return;
   }
@@ -228,6 +230,7 @@ async function applyMusic() {
   }
   state.bgMusic.muted = false;
   state.bgMusic.volume = 0;
+  state.bgMusic.currentTime = 0;
   try { await state.bgMusic.play(); } catch {}
   await fadeVolume(state.bgMusicVolume, 260);
   updateMusicButton();
