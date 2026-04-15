@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tanki Online</title>
-    <link rel="stylesheet" href="./styles.css?v=12" />
+    <link rel="stylesheet" href="./styles.css?v=13" />
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script src="./config.js"></script>
   </head>
@@ -48,6 +48,7 @@
       <section class="notice" id="panelNotice" style="display: none"><div id="notice"></div></section>
 
       <main class="panel panelProfile" id="panelProfile">
+        <div class="profileTankTitle">Мой танк</div>
         <div class="profileTankWrap">
           <div class="tankGlow"></div>
           <img id="tankImg" class="profileTank" alt="tank" />
@@ -57,7 +58,13 @@
           <div class="statCard"><div class="statLabel">Победы</div><div class="statValue" id="winsValue">0</div></div>
           <div class="statCard"><div class="statLabel">Поражения</div><div class="statValue" id="lossesValue">0</div></div>
           <div class="statCard"><div class="statLabel">Опыт</div><div class="statValue" id="expTotalValue">0</div></div>
-          <div class="statCard"><div class="statLabel">Звание</div><div class="statValue" id="rankValue">-</div></div>
+          <div class="statCard">
+            <div class="statLabel">Звание</div>
+            <div class="statValue rankValueRow">
+              <img id="rankValueIcon" class="rankValueIcon" alt="rank" />
+              <span id="rankValue">-</span>
+            </div>
+          </div>
           <div class="statCard"><div class="statLabel">Винрейт</div><div class="statValue" id="winrateValue">0%</div></div>
         </div>
       </main>
@@ -118,6 +125,6 @@
       </div>
     </div>
 
-    <script src="./app.js?v=12"></script>
+    <script src="./app.js?v=13"></script>
   </body>
 </html>

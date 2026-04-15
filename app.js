@@ -258,6 +258,8 @@ function renderProfile() {
   qs("lossesValue").textContent = String(losses);
   qs("expTotalValue").textContent = String(state.profile.experience || 0);
   qs("rankValue").textContent = String(state.profile.rank?.name || "-");
+  const rankValueIcon = qs("rankValueIcon");
+  if (rankValueIcon) rankValueIcon.src = withCacheBust(absUrl(state.profile.rank_image_url));
   qs("winrateValue").textContent = `${winrate}%`;
 }
 
