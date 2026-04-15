@@ -24,6 +24,11 @@ const REWARD_ITEM_IMAGES = {
   titan: "/images/webapp/titan.png",
 };
 const ITEM_IMAGE_OVERRIDES = { smoky: "smoky.png", hunter: "hunter.png" };
+const RANK_EXP_BY_ID = {
+  1: 0, 2: 50, 3: 120, 4: 200, 5: 300, 6: 420, 7: 560, 8: 720, 9: 900, 10: 1100,
+  11: 1320, 12: 1560, 13: 1820, 14: 2100, 15: 2400, 16: 2720, 17: 3060, 18: 3420, 19: 3800, 20: 4200,
+  21: 4620, 22: 5060, 23: 5520, 24: 6000, 25: 6500, 26: 7020, 27: 7560, 28: 8120, 29: 8700, 30: 9300, 31: 10000,
+};
 
 const state = {
   token: null,
@@ -40,6 +45,7 @@ const state = {
   prevMusic: null,
   bgMusicEnabled: false,
   bgMusicVolume: DEFAULT_MUSIC_VOLUME,
+  musicSwitchSeq: 0,
 };
 
 const NAMES = { smoky: "Смоки", railgun: "Рельса", shaft: "Шафт", thunder: "Гром", hunter: "Хантер", titan: "Титан" };
@@ -85,9 +91,40 @@ function waitForImageLoad(img, timeoutMs = 2000) {
   });
 }
 
-function clearError() { const p = qs("panelNotice"); if (!p) return; qs("notice").textContent = ""; p.style.display = "none"; }
-function setError(text) { const p = qs("panelNotice"); if (!p) return; qs("notice").textContent = text; p.style.display = "block"; }
-function prettyError(err) { return err instanceof TypeError ? "Сервер недоступен. Проверь подключение." : (err?.message || "Неизвестная ошибка."); }
+function hideErrorModal() {
+  const modal = qs("errorModal");
+  if (modal) modal.style.display = "none";
+}
+function clearError() {
+  const p = qs("panelNotice");
+  if (p) { qs("notice").textContent = ""; p.style.display = "none"; }
+  hideErrorModal();
+}
+function setError(text) {
+  const msg = String(text || "Неизвестная ошибка.");
+  const title = qs("errorTitle");
+  const body = qs("errorBody");
+  const modal = qs("errorModal");
+  if (title) title.textContent = "ВНИМАНИЕ!";
+  if (body) body.textContent = msg;
+  if (modal) modal.style.display = "flex";
+}
+function prettyError(err) {
+  if (err instanceof TypeError) return "Сервер недоступен. Проверь подключение к интернету.";
+  const raw = String(err?.message || "").trim();
+  const low = raw.toLowerCase();
+  if (!raw) return "Неизвестная ошибка.";
+  if (low.includes("not enough crystals") || low.includes("insufficient crystals")) return "Недостаточно кристаллов для покупки.";
+  if (low.includes("already owned")) return "Этот предмет уже куплен.";
+  if (low.includes("unauthorized") || low === "401") return "Сессия истекла. Открой мини-приложение заново из бота.";
+  if (low.includes("forbidden") || low === "403") return "Нет доступа к этому действию.";
+  if (low.includes("not found") || low === "404") return "Запрошенный ресурс не найден.";
+  if (low.includes("bad request") || low === "400") return "Некорректный запрос.";
+  if (low.includes("internal server error") || low === "500") return "Внутренняя ошибка сервера.";
+  if (low.includes("network")) return "Проблема сети. Проверь подключение.";
+  if (low.includes("недостаточно кристаллов")) return "Недостаточно кристаллов для покупки.";
+  return raw;
+}
 
 async function api(path, options = {}) {
   const headers = { "Content-Type": "application/json", ...(options.headers || {}) };
@@ -163,33 +200,21 @@ async function applyMusic() {
 async function switchTrack() {
   if (!state.bgMusic) return;
   const src = getTrack();
-  if (state.bgMusic.src === src) return;
-  if (!state.bgMusicEnabled) {
-    state.bgMusic.src = src;
-    state.bgMusic.load();
-    return;
-  }
-  const oldAudio = state.bgMusic;
-  const newAudio = new Audio(src);
-  newAudio.loop = true;
-  newAudio.preload = "none";
-  newAudio.volume = 0;
-  state.prevMusic = oldAudio;
-  state.bgMusic = newAudio;
-  try { await newAudio.play(); } catch {}
-  const duration = 420;
-  const steps = 14;
-  const stepTime = Math.max(18, Math.floor(duration / steps));
-  const oldStart = oldAudio.volume;
-  for (let i = 1; i <= steps; i += 1) {
-    const t = i / steps;
-    newAudio.volume = state.bgMusicVolume * t;
-    oldAudio.volume = oldStart * (1 - t);
-    await sleep(stepTime);
-  }
-  oldAudio.pause();
-  oldAudio.currentTime = 0;
-  state.prevMusic = null;
+  const currentSrc = state.bgMusic.src ? new URL(state.bgMusic.src, window.location.origin).toString() : "";
+  const nextSrc = new URL(src, window.location.origin).toString();
+  if (currentSrc === nextSrc) return;
+  const seq = ++state.musicSwitchSeq;
+  if (state.bgMusicEnabled) await fadeVolume(0, 170);
+  if (seq !== state.musicSwitchSeq) return;
+  state.bgMusic.pause();
+  state.bgMusic.src = nextSrc;
+  state.bgMusic.currentTime = 0;
+  state.bgMusic.load();
+  if (!state.bgMusicEnabled) return;
+  state.bgMusic.volume = 0;
+  try { await state.bgMusic.play(); } catch {}
+  if (seq !== state.musicSwitchSeq) return;
+  await fadeVolume(state.bgMusicVolume, 220);
 }
 
 function initMusic() {
@@ -257,10 +282,15 @@ function renderHud() {
   qs("pillCrystals").textContent = String(state.profile.crystals ?? 0);
   qs("pillContainers").textContent = String(state.profile.containers ?? 0);
   qs("rankImg").src = withCacheBust(absUrl(state.profile.rank_image_url));
-  const required = Number(state.profile.rank?.exp_required || 0);
+  const rankId = Number(state.profile.rank?.id || 1);
+  const currentRankExp = Number(RANK_EXP_BY_ID[rankId] ?? 0);
+  const nextRankExp = Number(RANK_EXP_BY_ID[Math.min(31, rankId + 1)] ?? currentRankExp);
   const exp = Number(state.profile.experience || 0);
-  qs("expValue").textContent = `${exp} / ${required}`;
-  qs("expFill").style.width = `${required > 0 ? Math.max(0, Math.min(100, (exp / required) * 100)) : 0}%`;
+  const maxExp = rankId >= 31 ? currentRankExp : nextRankExp;
+  const progressDen = Math.max(1, maxExp - currentRankExp);
+  const progressNum = Math.max(0, exp - currentRankExp);
+  qs("expValue").textContent = `${exp} / ${maxExp}`;
+  qs("expFill").style.width = `${Math.max(0, Math.min(100, (progressNum / progressDen) * 100))}%`;
 }
 
 function renderProfile() {
@@ -396,7 +426,7 @@ async function showRewardModal(result) {
     ? `Получено: ${NAMES[result.reward_key] || result.reward_key}`
     : `Получено кристаллов: ${result.reward_amount}`;
   text.textContent = rewardText;
-  await sleep(1400);
+  await sleep(2000);
   dropImg.classList.add("show");
 }
 
@@ -412,6 +442,9 @@ async function showTab(tab) {
     const panel = qs(`panel${key[0].toUpperCase()}${key.slice(1)}`);
     if (panel) panel.style.display = key === tab ? "block" : "none";
   });
+  if (state.token) {
+    try { await refreshAll(); } catch (e) { setError(prettyError(e)); }
+  }
   await switchTrack();
 }
 
@@ -493,6 +526,8 @@ function bindUI() {
   });
   qs("rewardCloseBtn")?.addEventListener("click", hideRewardModal);
   qs("rewardModal")?.addEventListener("click", (e) => { if (e.target === qs("rewardModal")) hideRewardModal(); });
+  qs("errorCloseBtn")?.addEventListener("click", hideErrorModal);
+  qs("errorModal")?.addEventListener("click", (e) => { if (e.target === qs("errorModal")) hideErrorModal(); });
 }
 
 async function main() {

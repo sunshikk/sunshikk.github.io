@@ -125,6 +125,22 @@
       </div>
     </div>
 
-    <script src="./app.js?v=15"></script>
+    <div class="errorModal" id="errorModal" style="display:none">
+      <div class="errorCard" role="alertdialog" aria-modal="true" aria-labelledby="errorTitle">
+        <div class="errorHead">
+          <div class="errorAccent"></div>
+          <div class="errorTitle" id="errorTitle">ВНИМАНИЕ!</div>
+        </div>
+        <div class="errorBody">
+          <div class="errorIcon" aria-hidden="true">⚠</div>
+          <div class="errorText" id="errorBody">Произошла ошибка.</div>
+        </div>
+        <div class="errorFooter">
+          <button id="errorCloseBtn" class="ghostBtn" type="button">Понятно</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="./app.js?v=16"></script>
   </body>
 </html>

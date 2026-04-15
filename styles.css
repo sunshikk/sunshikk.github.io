@@ -657,6 +657,91 @@ body::after {
   backdrop-filter: blur(3px);
 }
 
+.errorModal {
+  position: fixed;
+  inset: 0;
+  z-index: 2300;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(8, 10, 18, 0.82);
+  backdrop-filter: blur(4px);
+}
+
+.errorCard {
+  width: min(520px, 94vw);
+  border: 1px solid #6d2d3c;
+  border-radius: 0;
+  background: linear-gradient(180deg, #4b5062 0%, #484d5f 70%, #5a606f 100%);
+  box-shadow: 0 22px 48px rgba(0, 0, 0, 0.52);
+  overflow: hidden;
+}
+
+.errorHead {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: 64px;
+  background:
+    repeating-linear-gradient(-30deg, rgba(255, 94, 112, 0.28) 0 10px, transparent 10px 20px),
+    linear-gradient(180deg, #5b6071, #5a6070);
+  border-bottom: 1px solid #6a7080;
+}
+
+.errorAccent {
+  width: 6px;
+  align-self: stretch;
+  background: #f05a6f;
+}
+
+.errorTitle {
+  margin-left: 14px;
+  font-size: 38px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  color: #f4f7ff;
+  text-transform: uppercase;
+}
+
+.errorBody {
+  min-height: 300px;
+  padding: 34px 22px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 22px;
+}
+
+.errorIcon {
+  width: 108px;
+  height: 108px;
+  border: 5px solid #f05a6f;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 62px;
+  font-weight: 900;
+  color: #f05a6f;
+  text-shadow: 0 0 16px rgba(240, 90, 111, 0.35);
+}
+
+.errorText {
+  text-align: center;
+  font-size: 30px;
+  font-weight: 600;
+  color: #f2f6ff;
+}
+
+.errorFooter {
+  min-height: 54px;
+  padding: 10px 14px;
+  background: rgba(33, 38, 52, 0.38);
+  display: flex;
+  justify-content: flex-end;
+}
+
 .rewardCard {
   width: min(460px, 92vw);
   border-radius: 14px;
@@ -856,6 +941,19 @@ body::after {
   .containerActions .equipBtn,
   .containerActions .ghostBtn {
     width: 100%;
+  }
+
+  .errorTitle {
+    font-size: 28px;
+  }
+
+  .errorBody {
+    min-height: 230px;
+    padding: 22px 12px;
+  }
+
+  .errorText {
+    font-size: 22px;
   }
 }
 
