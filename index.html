@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tanki Online</title>
-    <link rel="stylesheet" href="./styles.css?v=18" />
+    <link rel="stylesheet" href="./styles.css?v=27" />
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script src="./config.js"></script>
   </head>
@@ -40,6 +40,7 @@
 
       <nav class="mainTabs" id="tabs">
         <button class="mainTab isActive" data-tab="profile">Профиль</button>
+        <button class="mainTab" data-tab="battles">Бои</button>
         <button class="mainTab" data-tab="garage">Гараж</button>
         <button class="mainTab" data-tab="shop">Магазин</button>
         <button class="mainTab" data-tab="containers">Контейнеры</button>
@@ -89,6 +90,90 @@
         <div class="itemsRail" id="garageItemsRail"></div>
       </main>
 
+      <main class="panel panelBattles" id="panelBattles" style="display:none">
+        <div class="battlesHeader">
+          <div id="battlesTitle" class="battlesTitle">ВЫБОР РЕЖИМА</div>
+        </div>
+
+        <div id="battleModesGrid" class="battleModesGrid battleModesGridSingle" aria-label="Режимы боев">
+          <button id="battleBotModeCard" class="battleModeCard isPrimary" type="button">
+            <div class="battleModeName">БОЙ С БОТОМ</div>
+            <div class="battleModeIcon">☠</div>
+          </button>
+        </div>
+
+        <div id="battleBotCard" class="battleBotCard" style="display:none">
+          <div class="battleBotCardTitle">БОЙ С БОТОМ</div>
+          <div class="battleBotCardIcon">☠</div>
+          <div class="battleBotCardActions">
+            <button id="startBotBattleBtn" class="equipBtn" type="button">Начать бой</button>
+            <button id="backToModesBtn" class="ghostBtn" type="button" style="margin-top:0">Назад</button>
+          </div>
+        </div>
+
+        <div id="battleArena" class="battleArena" style="display:none">
+          <div class="battleArenaTop">
+            <button id="battleSurrenderBtn" class="ghostBtn" type="button" style="margin-top:0">Сдаться</button>
+          </div>
+
+          <div class="battleStage">
+            <aside class="battleSide battleSideLeft">
+              <div class="battleSideTitle">ВАШ ТАНК</div>
+              <img id="battlePlayerTankImg" class="battleTankImg" alt="player tank" />
+              <div class="battleSideHp">
+                <div class="battleSideHpHead">
+                  <span class="battleSideHpLabel">HP</span>
+                  <span id="battlePlayerHpText" class="battleSideHpValue">0/0</span>
+                </div>
+                <div class="battleHpTrack"><div id="battlePlayerHpFill" class="battleHpFill isPlayer"></div></div>
+              </div>
+              <div class="battleSideMeta">
+                <div id="battlePlayerWeapon" class="battleSideLine">—</div>
+                <div id="battlePlayerHull" class="battleSideLine">—</div>
+              </div>
+            </aside>
+
+            <section class="battleCenter">
+              <div id="battleMap" class="battleMap" aria-label="Карта боя"></div>
+              <div id="battleLog" class="battleLog"></div>
+
+              <div class="battleControls">
+                <div class="battleMovePad">
+                  <button class="battlePadBtn" data-battle-move="up" type="button">⬆</button>
+                  <div class="battlePadRow">
+                    <button class="battlePadBtn" data-battle-move="left" type="button">⬅</button>
+                    <button class="battlePadBtn" data-battle-move="down" type="button">⬇</button>
+                    <button class="battlePadBtn" data-battle-move="right" type="button">➡</button>
+                  </div>
+                </div>
+                <div class="battleActionPad">
+                  <button id="battleShootBtn" class="equipBtn" type="button" style="margin-top:0">Огонь</button>
+                  <button id="battleAimBtn" class="ghostBtn" type="button" style="margin-top:10px; display:none">Прицел</button>
+                  <div id="battleTurnTimer" class="battleCooldown"></div>
+                  <div id="battleCooldown" class="battleCooldown"></div>
+                </div>
+              </div>
+            </section>
+
+            <aside class="battleSide battleSideRight">
+              <div class="battleSideTitle">ПРОТИВНИК</div>
+              <img id="battleBotTankImg" class="battleTankImg" alt="bot tank" />
+              <div class="battleSideHp">
+                <div class="battleSideHpHead">
+                  <span class="battleSideHpLabel">HP</span>
+                  <span id="battleBotHpText" class="battleSideHpValue">0/0</span>
+                </div>
+                <div class="battleHpTrack"><div id="battleBotHpFill" class="battleHpFill isBot"></div></div>
+              </div>
+              <div class="battleSideMeta">
+                <div id="battleBotWeapon" class="battleSideLine">—</div>
+                <div id="battleBotHull" class="battleSideLine">—</div>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </main>
+
       <main class="panel panelShop" id="panelShop" style="display:none">
         <div class="shopLayout">
           <aside class="shopMenu" id="shopCategory">
@@ -107,6 +192,7 @@
         <div class="containerWrap"><img id="containerImg" class="containerImg" alt="container" /></div>
         <div class="containerActions">
           <button id="openContainerBtn" class="equipBtn">Открыть контейнер</button>
+          <button id="viewContainerRewardsBtn" class="ghostBtn" type="button">Посмотреть содержимое контейнера</button>
           <button id="refreshBtn" class="ghostBtn">Обновить</button>
         </div>
         <div class="hint" id="containerResult"></div>
@@ -141,6 +227,78 @@
       </div>
     </div>
 
-    <script src="./app.js?v=24"></script>
+    <div class="purchaseModal" id="purchaseModal" style="display:none">
+      <div class="purchaseCard" role="dialog" aria-modal="true" aria-labelledby="purchaseTitle">
+        <button id="purchaseCloseTopBtn" class="purchaseCloseTop" type="button" aria-label="Закрыть">×</button>
+        <div class="purchaseIconPane">
+          <div class="purchaseCartIcon" aria-hidden="true">🛒</div>
+        </div>
+        <div class="purchaseContent">
+          <div class="purchaseTitle" id="purchaseTitle">ПОКУПКА ПРОИЗВЕДЕНА УСПЕШНО</div>
+          <div class="purchaseLabel">Вы приобрели:</div>
+          <div class="purchaseRow">
+            <span id="purchaseItemName" class="purchaseItemName">Предмет</span>
+            <span id="purchaseItemPrice" class="purchaseItemPrice">0</span>
+          </div>
+          <div class="purchaseActions">
+            <button id="purchaseCloseBtn" class="purchaseActionBtn" type="button">Закрыть</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="battleResultModal" id="battleResultModal" style="display:none">
+      <div class="battleResultCard" id="battleResultCard" role="dialog" aria-modal="true" aria-labelledby="battleResultTitle">
+        <div class="battleResultBanner" id="battleResultBanner">
+          <div id="battleResultTitle" class="battleResultTitle">ПОБЕДА</div>
+        </div>
+        <div class="battleResultBody">
+          <button id="battleResultCloseBtn" class="equipBtn" type="button" style="margin-top:0">Ок</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="rankUpModal" id="rankUpModal" style="display:none">
+      <div class="rankUpCard" role="dialog" aria-modal="true" aria-labelledby="rankUpTitle">
+        <div class="rankUpHead">
+          <div class="rankUpTitle" id="rankUpTitle">НОВОЕ ЗВАНИЕ!</div>
+        </div>
+        <div class="rankUpBody">
+          <img id="rankUpImg" class="rankUpImg" alt="rank" />
+          <div id="rankUpName" class="rankUpName">—</div>
+          <div class="rankUpGift">Подарок: <b>+5 контейнеров</b></div>
+        </div>
+        <div class="rankUpFooter">
+          <button id="rankUpCloseBtn" class="equipBtn" type="button" style="margin-top:0">Круто</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="lootModal" id="lootModal" style="display:none">
+      <div class="lootCard" role="dialog" aria-modal="true" aria-labelledby="lootTitle">
+        <button id="lootCloseTopBtn" class="lootCloseTop" type="button" aria-label="Закрыть">×</button>
+        <div class="lootSidebar">
+          <div class="lootSidebarIcon">📦</div>
+          <div class="lootSidebarLabel">Награды контейнера</div>
+          <div id="lootPreviewName" class="lootPreviewName">Обычный контейнер</div>
+          <div id="lootPreviewDesc" class="lootPreviewDesc">Выберите предмет из списка, чтобы посмотреть описание и шанс выпадения.</div>
+        </div>
+        <div class="lootContent">
+          <div class="lootHeader">
+            <div class="lootTitle" id="lootTitle">ВОЗМОЖНЫЕ НАГРАДЫ</div>
+            <div class="lootFilters" id="lootFilters">
+              <button class="lootFilterBtn isActive" type="button" data-rarity="all">Все</button>
+              <button class="lootFilterBtn rarity-rare" type="button" data-rarity="rare">Редкие</button>
+              <button class="lootFilterBtn rarity-epic" type="button" data-rarity="epic">Эпические</button>
+              <button class="lootFilterBtn rarity-ultrarare" type="button" data-rarity="ultrarare">Ультраредкие</button>
+              <button class="lootFilterBtn rarity-legendary" type="button" data-rarity="legendary">Легендарные</button>
+            </div>
+          </div>
+          <div class="lootGrid" id="lootGrid"></div>
+        </div>
+      </div>
+    </div>
+
+    <script src="./app.js?v=38"></script>
   </body>
 </html>

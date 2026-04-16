@@ -10,6 +10,9 @@ const TAB_MUSIC = {
   shop: "/sounds/music/background_music.mp3",
   containers: "/sounds/music/background_music.mp3",
 };
+const PURCHASE_SOUND_PATH = "/sounds/notify.mp3";
+const BATTLE_AMBIENT_PATH = "/sounds/ambient/space_ambient.mp3";
+const CONTAINER_CLOSED_IMAGE = "/images/webapp/container.png";
 const CONTAINER_OPEN_IMAGES = {
   rare: "/images/webapp/contopen_rare.png",
   epic: "/images/webapp/contopen_epic.png",
@@ -23,6 +26,132 @@ const REWARD_ITEM_IMAGES = {
   thunder: "/images/webapp/thunder.png",
   titan: "/images/webapp/titan.png",
 };
+const RARITY_LABELS = {
+  rare: "Редкое",
+  epic: "Эпическое",
+  ultrarare: "Ультраредкое",
+  legendary: "Легендарное",
+};
+const RARITY_ORDER = ["legendary", "ultrarare", "epic", "rare"];
+const CONTAINER_LOOT = [
+  {
+    key: "railgun",
+    type: "weapon",
+    name: "Рельса",
+    chance: "1%",
+    rarity: "legendary",
+    image: REWARD_ITEM_IMAGES.railgun,
+    description: "Легендарная пушка с самым редким шансом выпадения.",
+  },
+  {
+    key: "shaft",
+    type: "weapon",
+    name: "Шафт",
+    chance: "2%",
+    rarity: "ultrarare",
+    image: REWARD_ITEM_IMAGES.shaft,
+    description: "Ультраредкая снайперская пушка для точных попаданий.",
+  },
+  {
+    key: "thunder",
+    type: "weapon",
+    name: "Гром",
+    chance: "5%",
+    rarity: "epic",
+    image: REWARD_ITEM_IMAGES.thunder,
+    description: "Эпическая пушка с мощным уроном по площади.",
+  },
+  {
+    key: "titan",
+    type: "hull",
+    name: "Титан",
+    chance: "5%",
+    rarity: "epic",
+    image: REWARD_ITEM_IMAGES.titan,
+    description: "Эпический тяжелый корпус с высоким запасом прочности.",
+  },
+  {
+    key: "crystals_1000",
+    type: "crystals",
+    name: "Кристаллы x1000",
+    chance: "8%",
+    rarity: "epic",
+    image: REWARD_ITEM_IMAGES.crystals,
+    description: "Эпическая награда с крупной пачкой кристаллов.",
+  },
+  {
+    key: "crystals_10000",
+    type: "crystals",
+    name: "Кристаллы x10000",
+    chance: "1.2%",
+    rarity: "ultrarare",
+    image: REWARD_ITEM_IMAGES.crystals,
+    description: "Ультраредкая награда с огромным количеством кристаллов.",
+  },
+  {
+    key: "crystals_20000",
+    type: "crystals",
+    name: "Кристаллы x20000",
+    chance: "0.5%",
+    rarity: "legendary",
+    image: REWARD_ITEM_IMAGES.crystals,
+    description: "Легендарная кристальная награда с максимальной ценностью.",
+  },
+  {
+    key: "crystals_50",
+    type: "crystals",
+    name: "Кристаллы x50",
+    chance: "12.88%",
+    rarity: "rare",
+    image: REWARD_ITEM_IMAGES.crystals,
+    description: "Редкая награда с небольшим количеством кристаллов.",
+  },
+  {
+    key: "crystals_100",
+    type: "crystals",
+    name: "Кристаллы x100",
+    chance: "12.88%",
+    rarity: "rare",
+    image: REWARD_ITEM_IMAGES.crystals,
+    description: "Редкая награда со средним количеством кристаллов.",
+  },
+  {
+    key: "crystals_150",
+    type: "crystals",
+    name: "Кристаллы x150",
+    chance: "12.88%",
+    rarity: "rare",
+    image: REWARD_ITEM_IMAGES.crystals,
+    description: "Редкая награда с хорошим количеством кристаллов.",
+  },
+  {
+    key: "crystals_200",
+    type: "crystals",
+    name: "Кристаллы x200",
+    chance: "12.88%",
+    rarity: "rare",
+    image: REWARD_ITEM_IMAGES.crystals,
+    description: "Редкая награда с крупной пачкой кристаллов.",
+  },
+  {
+    key: "crystals_250",
+    type: "crystals",
+    name: "Кристаллы x250",
+    chance: "12.88%",
+    rarity: "rare",
+    image: REWARD_ITEM_IMAGES.crystals,
+    description: "Редкая награда с большим количеством кристаллов.",
+  },
+  {
+    key: "crystals_300",
+    type: "crystals",
+    name: "Кристаллы x300",
+    chance: "12.88%",
+    rarity: "rare",
+    image: REWARD_ITEM_IMAGES.crystals,
+    description: "Редкая награда с максимальным количеством кристаллов.",
+  },
+];
 const ITEM_IMAGE_OVERRIDES = { smoky: "smoky.png", hunter: "hunter.png" };
 const RANK_EXP_BY_ID = {
   1: 0, 2: 50, 3: 120, 4: 200, 5: 300, 6: 420, 7: 560, 8: 720, 9: 900, 10: 1100,
@@ -46,6 +175,17 @@ const state = {
   bgMusicEnabled: false,
   bgMusicVolume: DEFAULT_MUSIC_VOLUME,
   musicSwitchSeq: 0,
+  lootFilter: "all",
+  notifySound: null,
+  battleAmbient: null,
+  battleAmbientActive: false,
+  battleBgResumeTime: 0,
+  battleBgWasPlaying: false,
+  rewardAnimating: false,
+  webBattleActive: false,
+  battleCooldownTimer: null,
+  battleLastState: null,
+  battlePollTimer: null,
 };
 
 const NAMES = { smoky: "Смоки", railgun: "Рельса", shaft: "Шафт", thunder: "Гром", hunter: "Хантер", titan: "Титан" };
@@ -56,6 +196,12 @@ const DESCRIPTIONS = {
   thunder: "Мощный залп по площади.",
   hunter: "Универсальный корпус для баланса скорости и брони.",
   titan: "Тяжелый корпус с повышенной прочностью.",
+};
+const LOCKED_HINTS = {
+  railgun: "Эта пушка пока не открыта. Ее можно выбить из контейнера или купить в магазине.",
+  shaft: "Эта пушка пока не открыта. Ее можно выбить из контейнера или купить в магазине.",
+  thunder: "Эта пушка пока не открыта. Ее можно выбить из контейнера или купить в магазине.",
+  titan: "Этот корпус пока не открыт. Его можно выбить из контейнера или купить в магазине.",
 };
 
 function qs(id) { return document.getElementById(id); }
@@ -102,9 +248,35 @@ function waitForImageLoad(img, timeoutMs = 2000) {
     setTimeout(finish, timeoutMs);
   });
 }
+function preloadImage(url, timeoutMs = 2200) {
+  return new Promise((resolve) => {
+    if (!url) return resolve();
+    const img = new Image();
+    let done = false;
+    const finish = () => {
+      if (done) return;
+      done = true;
+      img.onload = null;
+      img.onerror = null;
+      resolve();
+    };
+    img.onload = finish;
+    img.onerror = finish;
+    img.src = url;
+    setTimeout(finish, timeoutMs);
+  });
+}
 
 function hideErrorModal() {
   const modal = qs("errorModal");
+  if (modal) modal.style.display = "none";
+}
+function hidePurchaseModal() {
+  const modal = qs("purchaseModal");
+  if (modal) modal.style.display = "none";
+}
+function hideLootModal() {
+  const modal = qs("lootModal");
   if (modal) modal.style.display = "none";
 }
 function clearError() {
@@ -159,8 +331,26 @@ async function api(path, options = {}) {
   return res.json();
 }
 
+async function apiKeepalive(path, options = {}) {
+  const headers = { "Content-Type": "application/json", ...(options.headers || {}) };
+  if (state.token) headers.Authorization = `Bearer ${state.token}`;
+  const res = await fetch(withApiBase(path), { ...options, headers, keepalive: true });
+  if (!res.ok) {
+    let msg = `${res.status}`;
+    try { const body = await res.json(); msg = body.detail || msg; } catch {}
+    throw new Error(msg);
+  }
+  try { return await res.json(); } catch { return { ok: true }; }
+}
+
 function detectRewardRarity(result) {
-  if (result.reward_type === "crystals") return "rare";
+  if (result.reward_type === "crystals") {
+    const amount = Number(result.reward_amount || 0);
+    if (amount >= 20000) return "legendary";
+    if (amount >= 10000) return "ultrarare";
+    if (amount >= 1000) return "epic";
+    return "rare";
+  }
   if (result.reward_key === "railgun") return "legendary";
   if (result.reward_key === "shaft") return "ultrarare";
   if (result.reward_key === "thunder" || result.reward_key === "titan") return "epic";
@@ -225,6 +415,12 @@ async function applyMusic() {
     current.currentTime = 0;
     if (previous) previous.pause();
     if (previous) previous.currentTime = 0;
+    if (state.battleAmbient) {
+      try { await fadeAudioVolume(state.battleAmbient, state.battleAmbient.volume, 0, 180, () => seq === state.musicSwitchSeq); } catch {}
+      state.battleAmbient.pause();
+      state.battleAmbient.currentTime = 0;
+    }
+    state.battleAmbientActive = false;
     updateMusicButton();
     return;
   }
@@ -239,6 +435,83 @@ async function applyMusic() {
   try { await state.bgMusic.play(); } catch {}
   await fadeVolume(state.bgMusicVolume, 260);
   updateMusicButton();
+}
+
+async function startBattleAmbient() {
+  if (!state.bgMusicEnabled) return;
+  if (state.battleAmbientActive) return;
+  if (!state.battleAmbient) {
+    state.battleAmbient = new Audio(absUrl(withApiBase(BATTLE_AMBIENT_PATH)));
+    state.battleAmbient.loop = true;
+    state.battleAmbient.preload = "auto";
+    state.battleAmbient.volume = 0;
+  }
+  state.battleAmbientActive = true;
+
+  // Fully mute and pause main UI music during battle.
+  if (state.bgMusic) {
+    state.battleBgResumeTime = state.bgMusic.currentTime || 0;
+    state.battleBgWasPlaying = !state.bgMusic.paused;
+    await fadeAudioVolume(state.bgMusic, state.bgMusic.volume, 0, 220);
+    state.bgMusic.pause();
+    state.bgMusic.currentTime = state.battleBgResumeTime;
+  }
+
+  try { await state.battleAmbient.play(); } catch {}
+  await fadeAudioVolume(state.battleAmbient, state.battleAmbient.volume, Math.min(0.55, state.bgMusicVolume + 0.1), 260);
+}
+
+async function stopBattleAmbient() {
+  if (!state.battleAmbient || !state.battleAmbientActive) return;
+  state.battleAmbientActive = false;
+  const a = state.battleAmbient;
+  await fadeAudioVolume(a, a.volume, 0, 220);
+  a.pause();
+  a.currentTime = 0;
+  if (state.bgMusicEnabled && state.bgMusic && state.battleBgWasPlaying) {
+    state.bgMusic.currentTime = state.battleBgResumeTime || 0;
+    state.bgMusic.volume = 0;
+    try { await state.bgMusic.play(); } catch {}
+    await fadeAudioVolume(state.bgMusic, 0, state.bgMusicVolume, 220);
+  }
+  state.battleBgWasPlaying = false;
+  state.battleBgResumeTime = 0;
+}
+
+async function playPurchaseSound() {
+  if (!state.notifySound) {
+    state.notifySound = new Audio(absUrl(withApiBase(PURCHASE_SOUND_PATH)));
+    state.notifySound.preload = "auto";
+  }
+  const sound = state.notifySound;
+  sound.pause();
+  sound.currentTime = 0;
+
+  if (!state.bgMusicEnabled || !state.bgMusic) {
+    try { await sound.play(); } catch {}
+    await new Promise((resolve) => {
+      sound.onended = () => { sound.onended = null; resolve(); };
+      sound.onerror = () => { sound.onerror = null; resolve(); };
+    });
+    return;
+  }
+
+  const music = state.bgMusic;
+  const resumeTime = music.currentTime || 0;
+  const startVolume = music.volume;
+  await fadeAudioVolume(music, startVolume, Math.min(0.06, startVolume), 180);
+  music.pause();
+  music.currentTime = resumeTime;
+
+  try { await sound.play(); } catch {}
+  await new Promise((resolve) => {
+    sound.onended = () => { sound.onended = null; resolve(); };
+    sound.onerror = () => { sound.onerror = null; resolve(); };
+  });
+
+  music.currentTime = resumeTime;
+  try { await music.play(); } catch {}
+  await fadeAudioVolume(music, Math.min(0.06, state.bgMusicVolume), state.bgMusicVolume, 220);
 }
 
 async function switchTrack() {
@@ -336,6 +609,62 @@ async function initAuth() {
 function isUnlocked(key) { return key === "smoky" || key === "hunter" || Boolean(state.profile?.unlocks?.[key]); }
 function currentGarageKey() { return state.garageCategory === "weapon" ? state.selectedWeapon : state.selectedHull; }
 function garageList() { return state.garageCategory === "weapon" ? ["smoky", "railgun", "shaft", "thunder"] : ["hunter", "titan"]; }
+function showPurchaseModal(item) {
+  const modal = qs("purchaseModal");
+  const name = qs("purchaseItemName");
+  const price = qs("purchaseItemPrice");
+  if (!modal || !name || !price || !item) return;
+  name.textContent = item.name || NAMES[item.key] || item.key;
+  price.textContent = String(item.price ?? 0);
+  modal.style.display = "flex";
+}
+function updateLootPreview(item) {
+  const name = qs("lootPreviewName");
+  const desc = qs("lootPreviewDesc");
+  if (!name || !desc) return;
+  if (!item) {
+    name.textContent = "Обычный контейнер";
+    desc.textContent = "Выберите предмет из списка, чтобы посмотреть описание и шанс выпадения.";
+    return;
+  }
+  name.textContent = item.name;
+  desc.textContent = `${item.description} Шанс выпадения: ${item.chance}. Редкость: ${RARITY_LABELS[item.rarity]}.`;
+}
+function renderContainerLoot() {
+  const grid = qs("lootGrid");
+  if (!grid) return;
+  const items = CONTAINER_LOOT
+    .filter((item) => state.lootFilter === "all" || item.rarity === state.lootFilter)
+    .sort((a, b) => {
+      const rarityDiff = RARITY_ORDER.indexOf(a.rarity) - RARITY_ORDER.indexOf(b.rarity);
+      if (rarityDiff !== 0) return rarityDiff;
+      return a.name.localeCompare(b.name, "ru");
+    });
+  grid.innerHTML = "";
+  items.forEach((item, index) => {
+    const card = document.createElement("button");
+    card.type = "button";
+    card.className = `lootItemCard rarity-${item.rarity}${index === 0 ? " isSelected" : ""}`;
+    card.innerHTML = `
+      <div class="lootChance">${item.chance}</div>
+      <img src="${withCacheBust(absUrl(item.image))}" alt="${item.name}" class="lootItemImage" />
+      <div class="lootItemFooter">${item.name}</div>
+    `;
+    card.addEventListener("click", () => {
+      grid.querySelectorAll(".lootItemCard").forEach((el) => el.classList.remove("isSelected"));
+      card.classList.add("isSelected");
+      updateLootPreview(item);
+    });
+    grid.appendChild(card);
+  });
+  updateLootPreview(items[0] || null);
+}
+function showLootModal() {
+  const modal = qs("lootModal");
+  if (!modal) return;
+  modal.style.display = "flex";
+  renderContainerLoot();
+}
 function updateGarageEquipButton() {
   const equipBtn = qs("equipBtn");
   if (!equipBtn || !state.profile) return;
@@ -400,8 +729,11 @@ function renderProfile() {
 function renderGarage() {
   if (!state.profile) return;
   const key = currentGarageKey();
+  const unlocked = isUnlocked(key);
   qs("garageSelectedName").textContent = `${NAMES[key] || key}`.toUpperCase();
-  qs("garageSelectedDesc").textContent = DESCRIPTIONS[key] || "Выберите предмет.";
+  qs("garageSelectedDesc").textContent = unlocked
+    ? (DESCRIPTIONS[key] || "Выберите предмет.")
+    : (LOCKED_HINTS[key] || "Этот предмет пока недоступен. Его можно открыть позже.");
   qs("garageTankImg").src = absUrl(state.profile.tank_image_url);
   const equippedCurrent = state.garageCategory === "weapon" ? state.profile.weapon : state.profile.hull;
   updateGarageEquipButton();
@@ -414,10 +746,15 @@ function renderGarage() {
     card.className = "itemCard";
     if (!isUnlocked(itemKey)) card.classList.add("isLocked");
     if (itemKey === key) card.classList.add("isSelected");
-    card.innerHTML = `
-      <img src="${absUrl(getItemImage(itemKey))}" alt="${NAMES[itemKey] || itemKey}" />
-      <div class="itemName">${NAMES[itemKey] || itemKey}</div>
-    `;
+    card.innerHTML = isUnlocked(itemKey)
+      ? `
+        <img src="${absUrl(getItemImage(itemKey))}" alt="${NAMES[itemKey] || itemKey}" />
+        <div class="itemName">${NAMES[itemKey] || itemKey}</div>
+      `
+      : `
+        <div class="lockedQuestionMark">?</div>
+        <div class="itemName">${NAMES[itemKey] || itemKey}</div>
+      `;
     card.onclick = () => {
       if (state.garageCategory === "weapon") state.selectedWeapon = itemKey;
       else state.selectedHull = itemKey;
@@ -449,9 +786,13 @@ function renderShop() {
   list.querySelectorAll("[data-buy]").forEach((btn) => {
     btn.addEventListener("click", async () => {
       btn.disabled = true;
+      const itemKey = btn.getAttribute("data-buy");
+      const item = state.shop?.items?.find((it) => it.key === itemKey);
       try {
-        await api("/api/shop/buy", { method: "POST", body: JSON.stringify({ item: btn.getAttribute("data-buy") }) });
+        await api("/api/shop/buy", { method: "POST", body: JSON.stringify({ item: itemKey }) });
         await refreshAll();
+        showPurchaseModal(item);
+        void playPurchaseSound();
         clearError();
       } catch (e) {
         setError(prettyError(e));
@@ -475,39 +816,70 @@ async function showRewardModal(result) {
   const contImg = qs("rewardContainerImg");
   const dropImg = qs("rewardDropImg");
   const text = qs("rewardText");
+  const okBtn = qs("rewardCloseBtn");
   if (!modal || !card || !box || !contImg || !dropImg || !text) {
     qs("containerResult").textContent = result.reward_type === "unlock"
       ? `Получено: ${NAMES[result.reward_key] || result.reward_key}`
       : `Получено кристаллов: ${result.reward_amount}`;
     return;
   }
-  card.className = `rewardCard rarity-${rarity}`;
+  card.className = "rewardCard";
+  state.rewardAnimating = true;
   box.classList.remove("shake");
   dropImg.classList.remove("show");
-  contImg.src = withCacheBust(absUrl(CONTAINER_OPEN_IMAGES[rarity]));
+  text.textContent = "";
+  contImg.src = withCacheBust(absUrl(CONTAINER_CLOSED_IMAGE));
+  contImg.classList.remove("isHidden");
+  if (okBtn) {
+    okBtn.classList.remove("isShown");
+    okBtn.disabled = true;
+  }
   const rewardKey = result.reward_type === "crystals" ? "crystals" : result.reward_key;
-  dropImg.src = withCacheBust(absUrl(REWARD_ITEM_IMAGES[rewardKey] || "/images/webapp/crystals.png"));
-  await Promise.all([waitForImageLoad(contImg, 2600), waitForImageLoad(dropImg, 2600)]);
+  const openedSrc = withCacheBust(absUrl(CONTAINER_OPEN_IMAGES[rarity] || CONTAINER_OPEN_IMAGES.rare));
+  const dropSrc = withCacheBust(absUrl(REWARD_ITEM_IMAGES[rewardKey] || "/images/webapp/crystals.png"));
+  // Preload reveal assets while shaking.
+  void preloadImage(openedSrc, 2600);
+  void preloadImage(dropSrc, 2600);
   modal.style.display = "flex";
   await sleep(30);
   box.classList.add("shake");
+  // 1 second suspense, then smooth reveal (glow + opened container + drop + text).
+  await sleep(1000);
+  card.className = `rewardCard rarity-${rarity}`; // glow appears smoothly via CSS transition
+  contImg.classList.add("isHidden");
+  await sleep(160);
+  contImg.src = openedSrc;
+  dropImg.src = dropSrc;
+  await Promise.all([waitForImageLoad(contImg, 2600), waitForImageLoad(dropImg, 2600)]);
+  contImg.classList.remove("isHidden");
   const rewardText = result.reward_type === "unlock"
     ? `Получено: ${NAMES[result.reward_key] || result.reward_key}`
     : `Получено кристаллов: ${result.reward_amount}`;
   text.textContent = rewardText;
-  await sleep(2000);
   dropImg.classList.add("show");
+  // Show "Ok" only after animation finished.
+  await sleep(520);
+  if (okBtn) {
+    okBtn.disabled = false;
+    okBtn.classList.add("isShown");
+  }
+  state.rewardAnimating = false;
 }
 
 function hideRewardModal() {
+  if (state.rewardAnimating) return;
   const modal = qs("rewardModal");
   if (modal) modal.style.display = "none";
 }
 
-async function showTab(tab) {
+async function showTab(tab, { force = false } = {}) {
+  if (!force && state.webBattleActive && tab !== "battles") {
+    setError("Нельзя переключать вкладки во время боя.");
+    return;
+  }
   state.activeTab = tab;
   document.querySelectorAll(".mainTab").forEach((b) => b.classList.toggle("isActive", b.dataset.tab === tab));
-  ["profile", "garage", "shop", "containers"].forEach((key) => {
+  ["profile", "battles", "garage", "shop", "containers"].forEach((key) => {
     const panel = qs(`panel${key[0].toUpperCase()}${key.slice(1)}`);
     if (panel) panel.style.display = key === tab ? "block" : "none";
   });
@@ -531,7 +903,265 @@ async function refreshAll() {
   renderContainers();
 }
 
+function renderBattleMap(mapSize, playerPos, botPos) {
+  const map = qs("battleMap");
+  if (!map) return;
+  const size = Number(mapSize || 5);
+  map.innerHTML = "";
+  for (let r = 0; r < size; r += 1) {
+    for (let c = 0; c < size; c += 1) {
+      const cell = document.createElement("div");
+      cell.className = "battleCell";
+      if (playerPos && playerPos[0] === r && playerPos[1] === c) {
+        cell.classList.add("isPlayer");
+        cell.textContent = "🟢";
+      } else if (botPos && botPos[0] === r && botPos[1] === c) {
+        cell.classList.add("isBot");
+        cell.textContent = "🔴";
+      } else {
+        cell.textContent = "";
+      }
+      map.appendChild(cell);
+    }
+  }
+}
+
+function setHpBar(fillEl, textEl, hp, maxHp) {
+  if (!fillEl || !textEl) return;
+  const cur = Math.max(0, Number(hp || 0));
+  const max = Math.max(1, Number(maxHp || 1));
+  textEl.textContent = `${cur}/${max}`;
+  fillEl.style.width = `${Math.max(0, Math.min(100, (cur / max) * 100))}%`;
+}
+
+function startCooldownTicker() {
+  if (state.battleCooldownTimer) return;
+  state.battleCooldownTimer = setInterval(() => {
+    const st = state.battleLastState;
+    const cd = qs("battleCooldown");
+    if (!cd) return;
+    const remaining = Number(st?.cooldown_remaining || 0);
+    cd.textContent = remaining > 0 ? `Кулдаун: ${remaining}с` : "";
+  }, 250);
+}
+
+function stopCooldownTicker() {
+  if (!state.battleCooldownTimer) return;
+  clearInterval(state.battleCooldownTimer);
+  state.battleCooldownTimer = null;
+}
+
+function lockMainTabs(locked) {
+  document.querySelectorAll(".mainTab").forEach((b) => {
+    const isBattles = b.dataset.tab === "battles";
+    const shouldLock = locked && !isBattles;
+    b.disabled = shouldLock;
+    b.classList.toggle("isDisabled", shouldLock);
+  });
+}
+
+function setBattlesTitle(isInBattle) {
+  const title = qs("battlesTitle");
+  if (!title) return;
+  title.textContent = isInBattle ? "БОЙ С БОТОМ" : "ВЫБОР РЕЖИМА";
+}
+
+function resetBattleUI() {
+  const modes = qs("battleModesGrid");
+  const botCard = qs("battleBotCard");
+  const arena = qs("battleArena");
+  if (arena) arena.style.display = "none";
+  if (botCard) botCard.style.display = "none";
+  if (modes) modes.style.display = "grid";
+  stopBattlePolling();
+  lockMainTabs(false);
+  setBattlesTitle(false);
+  state.webBattleActive = false;
+  void stopBattleAmbient();
+}
+
+function showBattleResultModal(win) {
+  const modal = qs("battleResultModal");
+  const title = qs("battleResultTitle");
+  const banner = qs("battleResultBanner");
+  if (!modal || !title || !banner) return;
+  const isWin = Boolean(win);
+  title.textContent = isWin ? "ПОБЕДА" : "ПОРАЖЕНИЕ";
+  banner.classList.toggle("isLose", !isWin);
+  modal.style.display = "flex";
+}
+
+function showRankUpModal(st) {
+  const modal = qs("rankUpModal");
+  const img = qs("rankUpImg");
+  const name = qs("rankUpName");
+  if (!modal || !img || !name) return;
+  img.src = withCacheBust(absUrl(st.new_rank_image_url || ""));
+  name.textContent = String(st.new_rank_name || "—");
+  modal.style.display = "flex";
+}
+
+function hideRankUpModal() {
+  const modal = qs("rankUpModal");
+  if (modal) modal.style.display = "none";
+}
+
+async function hideBattleResultModal() {
+  const modal = qs("battleResultModal");
+  if (modal) modal.style.display = "none";
+  // Tell server to drop finished battle so a new one can start immediately.
+  void apiKeepalive("/api/battle/ack", { method: "POST" });
+  resetBattleUI();
+  if (state.token) {
+    try { await refreshAll(); } catch (e) { setError(prettyError(e)); }
+  }
+}
+
+async function battlePollOnce() {
+  try {
+    const st = await api("/api/battle/state");
+    if (st.active) renderBattleState(st);
+  } catch {}
+}
+
+function startBattlePolling() {
+  if (state.battlePollTimer) return;
+  state.battlePollTimer = setInterval(() => {
+    if (state.activeTab !== "battles") return;
+    void battlePollOnce();
+  }, 2000);
+}
+
+function stopBattlePolling() {
+  if (!state.battlePollTimer) return;
+  clearInterval(state.battlePollTimer);
+  state.battlePollTimer = null;
+}
+
+function renderBattleState(st) {
+  state.battleLastState = st;
+  const modes = qs("battleModesGrid");
+  const botCard = qs("battleBotCard");
+  const arena = qs("battleArena");
+  if (modes) modes.style.display = "none";
+  if (botCard) botCard.style.display = "none";
+  if (arena) arena.style.display = "block";
+  setBattlesTitle(true);
+
+  renderBattleMap(st.map_size, st.player_pos, st.bot_pos);
+
+  setHpBar(qs("battlePlayerHpFill"), qs("battlePlayerHpText"), st.player_hp, st.player_hp_max);
+  setHpBar(qs("battleBotHpFill"), qs("battleBotHpText"), st.bot_hp, st.bot_hp_max);
+
+  const pImg = qs("battlePlayerTankImg");
+  if (pImg && st.player_tank_image_url) pImg.src = withCacheBust(absUrl(st.player_tank_image_url));
+  const bImg = qs("battleBotTankImg");
+  if (bImg && st.bot_tank_image_url) bImg.src = withCacheBust(absUrl(st.bot_tank_image_url));
+  const pW = qs("battlePlayerWeapon");
+  if (pW) pW.textContent = `🔫 ${st.player_weapon_name || state.profile?.weapon || "—"}`;
+  const pH = qs("battlePlayerHull");
+  if (pH) pH.textContent = `🛡 ${st.player_hull_name || state.profile?.hull || "—"}`;
+  const bW = qs("battleBotWeapon");
+  if (bW) bW.textContent = `🔫 ${st.bot_weapon_name || "—"}`;
+  const bH = qs("battleBotHull");
+  if (bH) bH.textContent = `🛡 ${st.bot_hull_name || "—"}`;
+
+  const log = qs("battleLog");
+  if (log) log.textContent = String(st.log || "");
+
+  const cd = qs("battleCooldown");
+  if (cd) {
+    const remaining = Number(st.cooldown_remaining || 0);
+    cd.textContent = remaining > 0 ? `Кулдаун: ${remaining}с` : "";
+  }
+  const isOnCooldown = Number(st.cooldown_remaining || 0) > 0;
+  const shootBtn = qs("battleShootBtn");
+  if (shootBtn) shootBtn.disabled = isOnCooldown || Boolean(st.game_over);
+  document.querySelectorAll("[data-battle-move]").forEach((b) => { b.disabled = isOnCooldown || Boolean(st.game_over); });
+
+  // Aim button (only if player weapon supports it; backend will reject otherwise, but we hide by default)
+  const aimBtn = qs("battleAimBtn");
+  if (aimBtn) {
+    // show aim toggle if player has Shaft (or any weapon with aiming) — simplest client heuristic:
+    const hasAiming = state.profile?.weapon === "shaft";
+    aimBtn.style.display = hasAiming ? "block" : "none";
+    aimBtn.textContent = st.aiming ? "Сбросить прицел" : "Прицел";
+    aimBtn.disabled = Boolean(st.cooldown_remaining > 0) || Boolean(st.game_over);
+  }
+
+  state.webBattleActive = Boolean(st.active) && !Boolean(st.game_over);
+  startCooldownTicker();
+  if (state.webBattleActive) {
+    lockMainTabs(true);
+    startBattlePolling();
+    void startBattleAmbient();
+  }
+
+  const turn = qs("battleTurnTimer");
+  if (turn) {
+    const t = Number(st.turn_remaining || 0);
+    turn.textContent = t > 0 ? `Время хода: ${t}с` : "";
+  }
+
+  if (st.game_over) {
+    state.webBattleActive = false;
+    stopCooldownTicker();
+    stopBattlePolling();
+    lockMainTabs(false);
+    void stopBattleAmbient();
+    if (aimBtn) aimBtn.disabled = true;
+    const surrenderBtn = qs("battleSurrenderBtn");
+    if (surrenderBtn) surrenderBtn.disabled = true;
+    if (st.rank_up) {
+      showRankUpModal(st);
+    } else {
+      showBattleResultModal(st.winner === "player");
+    }
+  }
+}
+
+async function battleFetchState() {
+  const st = await api("/api/battle/state");
+  if (st.active) {
+    if (state.activeTab !== "battles") await showTab("battles", { force: true });
+    renderBattleState(st);
+  }
+  return st;
+}
+
+async function battleStartBot() {
+  const st = await api("/api/battle/bot/start", { method: "POST" });
+  await showTab("battles", { force: true });
+  renderBattleState(st);
+}
+
+async function battleSendAction(action, direction = null) {
+  const payload = { action, ...(direction ? { direction } : {}) };
+  const st = await api("/api/battle/action", { method: "POST", body: JSON.stringify(payload) });
+  renderBattleState(st);
+}
+
+async function forfeitBattleIfActive() {
+  if (!state.webBattleActive) return;
+  try { await apiKeepalive("/api/battle/forfeit", { method: "POST" }); } catch {}
+  state.webBattleActive = false;
+  void stopBattleAmbient();
+}
+
 function bindUI() {
+  let surrenderBusy = false;
+  async function handleSurrender() {
+    if (surrenderBusy) return;
+    surrenderBusy = true;
+    try {
+      await battleSendAction("surrender");
+    } catch (e) {
+      setError(prettyError(e));
+    } finally {
+      surrenderBusy = false;
+    }
+  }
+
   qs("tabs")?.addEventListener("click", async (e) => {
     const b = e.target.closest(".mainTab");
     if (!b) return;
@@ -564,7 +1194,7 @@ function bindUI() {
     const hull = state.garageCategory === "hull" ? key : state.selectedHull;
     try {
       await api("/api/garage/set_tank", { method: "POST", body: JSON.stringify({ weapon, hull }) });
-      qs("garageHint").textContent = "Установлено.";
+      qs("garageHint").textContent = "";
       await refreshAll();
       clearError();
     } catch (e) {
@@ -594,6 +1224,87 @@ function bindUI() {
   qs("rewardModal")?.addEventListener("click", (e) => { if (e.target === qs("rewardModal")) hideRewardModal(); });
   qs("errorCloseBtn")?.addEventListener("click", hideErrorModal);
   qs("errorModal")?.addEventListener("click", (e) => { if (e.target === qs("errorModal")) hideErrorModal(); });
+  qs("purchaseCloseBtn")?.addEventListener("click", hidePurchaseModal);
+  qs("purchaseCloseTopBtn")?.addEventListener("click", hidePurchaseModal);
+  qs("purchaseModal")?.addEventListener("click", (e) => { if (e.target === qs("purchaseModal")) hidePurchaseModal(); });
+  qs("viewContainerRewardsBtn")?.addEventListener("click", showLootModal);
+  qs("lootCloseTopBtn")?.addEventListener("click", hideLootModal);
+  qs("lootModal")?.addEventListener("click", (e) => { if (e.target === qs("lootModal")) hideLootModal(); });
+  qs("lootFilters")?.addEventListener("click", (e) => {
+    const btn = e.target.closest(".lootFilterBtn");
+    if (!btn) return;
+    state.lootFilter = btn.dataset.rarity || "all";
+    qs("lootFilters")?.querySelectorAll(".lootFilterBtn").forEach((el) => el.classList.toggle("isActive", el === btn));
+    renderContainerLoot();
+  });
+
+  qs("battleBotModeCard")?.addEventListener("click", () => {
+    const modes = qs("battleModesGrid");
+    const botCard = qs("battleBotCard");
+    const arena = qs("battleArena");
+    if (modes) modes.style.display = "none";
+    if (arena) arena.style.display = "none";
+    if (botCard) botCard.style.display = "flex";
+  });
+
+  qs("backToModesBtn")?.addEventListener("click", () => {
+    const modes = qs("battleModesGrid");
+    const botCard = qs("battleBotCard");
+    const arena = qs("battleArena");
+    if (botCard) botCard.style.display = "none";
+    if (arena) arena.style.display = "none";
+    if (modes) modes.style.display = "grid";
+  });
+
+  qs("startBotBattleBtn")?.addEventListener("click", async () => {
+    try {
+      await battleStartBot();
+      clearError();
+    } catch (e) {
+      setError(prettyError(e));
+    }
+  });
+
+  document.querySelectorAll("[data-battle-move]")?.forEach((btn) => {
+    btn.addEventListener("click", async () => {
+      const dir = btn.getAttribute("data-battle-move");
+      try { await battleSendAction("move", dir); } catch (e) { setError(prettyError(e)); }
+    });
+  });
+
+  qs("battleShootBtn")?.addEventListener("click", async () => {
+    try { await battleSendAction("shoot"); } catch (e) { setError(prettyError(e)); }
+  });
+
+  qs("battleAimBtn")?.addEventListener("click", async () => {
+    const aiming = Boolean(state.battleLastState?.aiming);
+    try { await battleSendAction(aiming ? "cancel_aim" : "aim"); } catch (e) { setError(prettyError(e)); }
+  });
+
+  qs("battleSurrenderBtn")?.addEventListener("click", handleSurrender);
+  qs("battleSurrenderBtn")?.addEventListener("pointerup", (e) => {
+    e.preventDefault();
+    void handleSurrender();
+  });
+  qs("battleSurrenderBtn")?.addEventListener("touchend", (e) => {
+    e.preventDefault();
+    void handleSurrender();
+  }, { passive: false });
+
+  qs("battleResultCloseBtn")?.addEventListener("click", hideBattleResultModal);
+  qs("battleResultModal")?.addEventListener("click", (e) => { if (e.target === qs("battleResultModal")) hideBattleResultModal(); });
+
+  qs("rankUpCloseBtn")?.addEventListener("click", () => {
+    hideRankUpModal();
+    showBattleResultModal(state.battleLastState?.winner === "player");
+  });
+  qs("rankUpModal")?.addEventListener("click", (e) => {
+    if (e.target !== qs("rankUpModal")) return;
+    hideRankUpModal();
+    showBattleResultModal(state.battleLastState?.winner === "player");
+  });
+
+  // Don't auto-forfeit on hide/reload: active battle must be restorable on next open.
 }
 
 async function main() {
@@ -606,6 +1317,18 @@ async function main() {
     clearError();
     await switchTrack();
     if (state.bgMusicEnabled) await applyMusic();
+
+    // Pending notifications (e.g., lost by exiting battle)
+    try {
+      const notice = await api("/api/notifications/pending");
+      if (notice?.message) {
+        setError(String(notice.message));
+        if (notice.play_sound) void playPurchaseSound();
+      }
+    } catch {}
+
+    // Restore battle UI if server still has an active battle
+    try { await battleFetchState(); } catch {}
   } catch (e) {
     setError(prettyError(e));
   }

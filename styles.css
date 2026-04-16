@@ -273,6 +273,13 @@ body::after {
   box-shadow: 0 0 0 1px rgba(78, 161, 255, 0.25) inset;
 }
 
+.mainTab:disabled,
+.mainTab.isDisabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
 .mainTab:hover {
   color: #d8e4ff;
   border-color: #3a4a67;
@@ -295,6 +302,428 @@ body::after {
   padding: 12px;
   box-shadow: var(--shadow);
   backdrop-filter: blur(2px);
+}
+
+.battlesHeader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 0 10px;
+}
+
+.battlesTitle {
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #f2f7ff;
+}
+
+.battleModesGrid {
+  margin-top: 8px;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.battleModesGridSingle {
+  grid-template-columns: minmax(240px, 420px);
+  justify-content: center;
+}
+
+.battleModeCard {
+  min-height: 160px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
+  background: radial-gradient(520px 220px at 50% 45%, rgba(255, 255, 255, 0.05), transparent 62%),
+    linear-gradient(180deg, rgba(18, 28, 46, 0.9), rgba(12, 19, 33, 0.92));
+  color: #eaf2ff;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  cursor: pointer;
+  transition: transform 0.16s ease, border-color 0.16s ease, background 0.16s ease;
+}
+
+.battleModeCard:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.battleModeCard:not(:disabled):hover {
+  transform: translateY(-1px);
+  border-color: rgba(97, 170, 255, 0.55);
+}
+
+.battleModeCard.isPrimary {
+  border-color: rgba(97, 170, 255, 0.55);
+  box-shadow: 0 0 0 1px rgba(97, 170, 255, 0.2) inset;
+}
+
+.battleModeName {
+  font-size: 11px;
+  color: rgba(206, 223, 246, 0.92);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.battleModeIcon {
+  font-size: 46px;
+  color: rgba(224, 236, 255, 0.92);
+  filter: drop-shadow(0 12px 18px rgba(0, 0, 0, 0.35));
+}
+
+.battleBotCard {
+  margin-top: 10px;
+  min-height: 320px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
+  background: radial-gradient(620px 260px at 50% 45%, rgba(255, 255, 255, 0.07), transparent 62%),
+    linear-gradient(180deg, rgba(18, 28, 46, 0.95), rgba(10, 16, 28, 0.96));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: 18px 12px;
+}
+
+.battleBotCardTitle {
+  font-size: 18px;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.battleBotCardIcon {
+  font-size: 86px;
+  color: rgba(224, 236, 255, 0.92);
+}
+
+.battleBotCardActions {
+  display: flex;
+  gap: 10px;
+}
+
+.battleArena {
+  margin-top: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
+  background: linear-gradient(180deg, rgba(18, 28, 46, 0.96), rgba(10, 16, 28, 0.97));
+  padding: 12px;
+}
+
+.battleStage {
+  margin-top: 12px;
+  display: grid;
+  grid-template-columns: 260px 1fr 260px;
+  gap: 12px;
+  align-items: start;
+}
+
+.battleSide {
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
+  background: linear-gradient(180deg, rgba(18, 28, 46, 0.92), rgba(10, 16, 28, 0.94));
+  padding: 12px;
+}
+
+.battleSideTitle {
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 11px;
+  color: rgba(206, 223, 246, 0.9);
+}
+
+.battleTankImg {
+  margin-top: 10px;
+  width: 100%;
+  height: 120px;
+  object-fit: contain;
+  filter: drop-shadow(0 18px 24px rgba(0, 0, 0, 0.35));
+}
+
+.battleSideMeta {
+  margin-top: 10px;
+  display: grid;
+  gap: 6px;
+}
+
+.battleSideHp {
+  margin-top: 8px;
+}
+
+.battleSideHpHead {
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.battleSideHpLabel,
+.battleSideHpValue {
+  color: rgba(206, 223, 246, 0.9);
+  font-weight: 800;
+  font-size: 12px;
+}
+
+.battleSideLine {
+  color: rgba(224, 236, 255, 0.92);
+  font-weight: 800;
+  font-size: 12px;
+}
+
+.battleCenter {
+  min-width: 0;
+}
+
+.battleArenaTop {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.battleHpTrack {
+  height: 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  overflow: hidden;
+}
+
+.battleHpFill {
+  height: 100%;
+  width: 0%;
+  border-radius: inherit;
+  transition: width 0.18s ease;
+}
+
+.battleHpFill.isPlayer { background: linear-gradient(90deg, #49ff9d, #2bdc7c); }
+.battleHpFill.isBot { background: linear-gradient(90deg, #ff5d5d, #d93a3a); }
+
+.battleMap {
+  margin-top: 12px;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
+  padding: 10px;
+  background: radial-gradient(420px 240px at 50% 40%, rgba(97, 170, 255, 0.14), transparent 68%);
+}
+
+.battleCell {
+  aspect-ratio: 1 / 1;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.04);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+}
+
+.battleCell.isPlayer { background: rgba(73, 255, 157, 0.12); border-color: rgba(73, 255, 157, 0.35); }
+.battleCell.isBot { background: rgba(255, 93, 93, 0.12); border-color: rgba(255, 93, 93, 0.35); }
+
+.battleLog {
+  margin-top: 10px;
+  min-height: 54px;
+  padding: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
+  color: rgba(224, 236, 255, 0.9);
+  background: rgba(0, 0, 0, 0.18);
+}
+
+.battleControls {
+  margin-top: 12px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.battleMovePad {
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
+  padding: 10px;
+  display: grid;
+  gap: 10px;
+  justify-items: center;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.battlePadRow {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  align-items: center;
+}
+
+.battlePadBtn {
+  width: 52px;
+  height: 44px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(23, 35, 56, 0.9);
+  color: rgba(240, 247, 255, 0.95);
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.battlePadBtn:hover { border-color: rgba(97, 170, 255, 0.55); }
+
+.battleActionPad {
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
+  padding: 10px;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.battleCooldown {
+  margin-top: 8px;
+  min-height: 18px;
+  color: rgba(206, 223, 246, 0.82);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+@media (max-width: 900px) {
+  .battleModesGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .battleStage { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 640px) {
+  .battleControls { grid-template-columns: 1fr; }
+  .battleModeCard { min-height: 130px; }
+}
+
+.battleResultModal {
+  position: fixed;
+  inset: 0;
+  z-index: 2400;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(3, 8, 14, 0.72);
+}
+
+.battleResultCard {
+  width: min(860px, 94vw);
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: linear-gradient(180deg, rgba(18, 28, 46, 0.96), rgba(10, 16, 28, 0.97));
+  overflow: hidden;
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.55);
+}
+
+.battleResultBanner {
+  padding: 24px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(420px 160px at 50% 55%, rgba(73, 255, 157, 0.35), transparent 65%),
+    linear-gradient(90deg, rgba(22, 60, 44, 0.9), rgba(16, 34, 30, 0.9));
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.battleResultBanner.isLose {
+  background: radial-gradient(420px 160px at 50% 55%, rgba(255, 93, 93, 0.35), transparent 65%),
+    linear-gradient(90deg, rgba(62, 22, 28, 0.9), rgba(34, 16, 18, 0.9));
+}
+
+.battleResultTitle {
+  font-size: 40px;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #f4f8ff;
+  text-shadow: 0 0 18px rgba(0, 0, 0, 0.35);
+}
+
+.battleResultBody {
+  padding: 18px;
+  display: flex;
+  justify-content: center;
+}
+
+.rankUpModal {
+  position: fixed;
+  inset: 0;
+  z-index: 2450;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(3, 8, 14, 0.78);
+}
+
+.rankUpCard {
+  width: min(560px, 94vw);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 14px;
+  overflow: hidden;
+  background: linear-gradient(180deg, rgba(18, 28, 46, 0.96), rgba(10, 16, 28, 0.97));
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.55);
+}
+
+.rankUpHead {
+  padding: 16px 18px;
+  background:
+    repeating-linear-gradient(-30deg, rgba(93, 255, 173, 0.16) 0 10px, transparent 10px 20px),
+    radial-gradient(520px 200px at 50% 50%, rgba(93, 255, 173, 0.22), transparent 65%),
+    linear-gradient(180deg, rgba(18, 44, 36, 0.92), rgba(12, 24, 22, 0.92));
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.rankUpTitle {
+  font-size: 28px;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.rankUpBody {
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.rankUpImg {
+  width: 140px;
+  height: 140px;
+  object-fit: contain;
+  filter: drop-shadow(0 0 22px rgba(93, 255, 173, 0.25));
+}
+
+.rankUpName {
+  font-size: 22px;
+  font-weight: 900;
+  color: rgba(244, 248, 255, 0.98);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  text-align: center;
+}
+
+.rankUpGift {
+  color: rgba(206, 223, 246, 0.9);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.rankUpFooter {
+  padding: 14px 18px 18px;
+  display: flex;
+  justify-content: center;
 }
 
 .profileTankTitle {
@@ -501,6 +930,20 @@ body::after {
   object-fit: contain;
 }
 
+.lockedQuestionMark {
+  width: 100%;
+  height: 58px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  background: linear-gradient(180deg, #223447, #1a2a3b);
+  color: #7f97b6;
+  font-size: 42px;
+  font-weight: 800;
+  text-shadow: 0 0 16px rgba(0, 0, 0, 0.28);
+}
+
 .itemName {
   margin-top: 6px;
   font-size: 12px;
@@ -650,7 +1093,8 @@ body::after {
   align-items: center;
   justify-content: center;
   background: rgba(4, 10, 20, 0.72);
-  backdrop-filter: blur(3px);
+  /* Blur is expensive in mobile WebView; keep FPS high. */
+  backdrop-filter: none;
 }
 
 .errorModal {
@@ -738,19 +1182,353 @@ body::after {
   justify-content: flex-end;
 }
 
+.purchaseModal {
+  position: fixed;
+  inset: 0;
+  z-index: 2200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(3, 8, 14, 0.72);
+  backdrop-filter: blur(3px);
+}
+
+.purchaseCard {
+  position: relative;
+  width: min(840px, 94vw);
+  min-height: 280px;
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  background: #040707;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.48);
+}
+
+.purchaseIconPane {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background:
+    radial-gradient(circle at center, rgba(115, 255, 37, 0.18), transparent 50%),
+    linear-gradient(180deg, #030706, #07100f);
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.purchaseCartIcon {
+  color: #72ff27;
+  font-size: 92px;
+  filter: drop-shadow(0 0 20px rgba(114, 255, 39, 0.28));
+}
+
+.purchaseContent {
+  padding: 26px 28px 22px;
+  display: flex;
+  flex-direction: column;
+}
+
+.purchaseTitle {
+  color: #f6f8fd;
+  font-size: 22px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.purchaseLabel {
+  margin-top: 54px;
+  color: #d6dce7;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.purchaseRow {
+  margin-top: 10px;
+  padding: 10px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.purchaseItemName,
+.purchaseItemPrice {
+  color: #72ff27;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.purchaseActions {
+  margin-top: auto;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.purchaseActionBtn {
+  min-width: 256px;
+  padding: 16px 22px;
+  border: none;
+  border-radius: 14px;
+  background: linear-gradient(180deg, #76ff2e, #5cff18);
+  color: #0c130e;
+  font-size: 18px;
+  font-weight: 800;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.purchaseCloseTop {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  width: 38px;
+  height: 38px;
+  border: none;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.42);
+  font-size: 34px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.lootModal {
+  position: fixed;
+  inset: 0;
+  z-index: 2250;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(5, 10, 18, 0.78);
+  backdrop-filter: blur(4px);
+}
+
+.lootCard {
+  position: relative;
+  width: min(1120px, 96vw);
+  min-height: 640px;
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  background: linear-gradient(180deg, #0d1524, #0b1320);
+  border: 1px solid #26374f;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 24px 56px rgba(0, 0, 0, 0.5);
+}
+
+.lootSidebar {
+  padding: 24px 18px;
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+  background: linear-gradient(180deg, #121f33, #0d1828);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.lootSidebarIcon {
+  width: 68px;
+  height: 68px;
+  border-radius: 14px;
+  background: linear-gradient(180deg, #21344d, #18283b);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 34px;
+}
+
+.lootSidebarLabel {
+  margin-top: 18px;
+  color: #8ea6c5;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.lootPreviewName {
+  margin-top: 10px;
+  font-size: 28px;
+  font-weight: 800;
+  color: #f4f8ff;
+}
+
+.lootPreviewDesc {
+  margin-top: 14px;
+  color: #b8c7db;
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+.lootContent {
+  padding: 20px 22px 24px;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.lootHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.lootTitle {
+  font-size: 22px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.lootFilters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.lootFilterBtn {
+  padding: 8px 12px;
+  border-radius: 999px;
+  border: 1px solid #304562;
+  background: #162338;
+  color: #d5e4f8;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.lootFilterBtn.isActive {
+  background: linear-gradient(180deg, #2f4a73, #223959);
+  border-color: #61aaff;
+}
+
+.lootFilterBtn.rarity-rare.isActive { border-color: #58e7ff; }
+.lootFilterBtn.rarity-epic.isActive { border-color: #b071ff; }
+.lootFilterBtn.rarity-ultrarare.isActive { border-color: #ff5d5d; }
+.lootFilterBtn.rarity-legendary.isActive { border-color: #ffd34f; }
+
+.lootGrid {
+  margin-top: 16px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(132px, 1fr));
+  gap: 12px;
+  max-height: 500px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.lootItemCard {
+  position: relative;
+  min-height: 148px;
+  padding: 10px;
+  border-radius: 12px;
+  border: 1px solid #31445d;
+  background: linear-gradient(180deg, #1a283b, #142133);
+  color: #eff5ff;
+  cursor: pointer;
+  text-align: left;
+  transition: transform 0.16s ease, border-color 0.16s ease, box-shadow 0.16s ease;
+}
+
+.lootItemCard:hover,
+.lootItemCard.isSelected {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.3);
+}
+
+.lootItemCard.rarity-rare {
+  background: linear-gradient(180deg, rgba(34, 74, 102, 0.92), rgba(23, 39, 59, 0.94));
+  border-color: rgba(88, 231, 255, 0.55);
+}
+
+.lootItemCard.rarity-epic {
+  background: linear-gradient(180deg, rgba(77, 46, 112, 0.92), rgba(30, 29, 58, 0.94));
+  border-color: rgba(176, 113, 255, 0.55);
+}
+
+.lootItemCard.rarity-ultrarare {
+  background: linear-gradient(180deg, rgba(106, 39, 54, 0.94), rgba(46, 20, 32, 0.96));
+  border-color: rgba(255, 93, 93, 0.58);
+}
+
+.lootItemCard.rarity-legendary {
+  background: linear-gradient(180deg, rgba(105, 90, 28, 0.96), rgba(45, 37, 17, 0.98));
+  border-color: rgba(255, 211, 79, 0.68);
+}
+
+.lootChance {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  font-size: 12px;
+  font-weight: 700;
+  color: rgba(245, 248, 255, 0.92);
+}
+
+.lootItemImage {
+  width: 100%;
+  height: 86px;
+  object-fit: contain;
+  margin-top: 18px;
+}
+
+.lootItemFooter {
+  margin-top: 10px;
+  font-size: 13px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.lootCloseTop {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 40px;
+  height: 40px;
+  border: none;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.45);
+  font-size: 32px;
+  line-height: 1;
+  cursor: pointer;
+  z-index: 2;
+}
+
 .rewardCard {
   width: min(460px, 92vw);
   border-radius: 14px;
-  border: 2px solid #62a8ff;
+  border: 2px solid transparent;
   background: linear-gradient(180deg, #1a2740, #172236);
   padding: 16px;
   box-shadow: 0 16px 36px rgba(0, 0, 0, 0.45);
+  position: relative;
+  /* Do NOT clip glow (otherwise rarity highlight disappears). */
+  overflow: visible;
+  will-change: transform;
 }
 
-.rewardCard.rarity-rare { border-color: #58e7ff; box-shadow: 0 0 18px rgba(88, 231, 255, 0.4); }
-.rewardCard.rarity-epic { border-color: #b071ff; box-shadow: 0 0 18px rgba(176, 113, 255, 0.4); }
-.rewardCard.rarity-ultrarare { border-color: #ff5d5d; box-shadow: 0 0 18px rgba(255, 93, 93, 0.4); }
-.rewardCard.rarity-legendary { border-color: #ffd34f; box-shadow: 0 0 18px rgba(255, 211, 79, 0.45); }
+.rewardCard::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 520ms ease;
+  box-shadow:
+    0 0 0 2px var(--reward-glow, rgba(255, 255, 255, 0)),
+    0 0 22px var(--reward-glow-soft, rgba(0, 0, 0, 0));
+}
+
+.rewardCard.rarity-rare { --reward-glow: rgba(88, 231, 255, 0.95); --reward-glow-soft: rgba(88, 231, 255, 0.35); }
+.rewardCard.rarity-epic { --reward-glow: rgba(176, 113, 255, 0.95); --reward-glow-soft: rgba(176, 113, 255, 0.35); }
+.rewardCard.rarity-ultrarare { --reward-glow: rgba(255, 93, 93, 0.95); --reward-glow-soft: rgba(255, 93, 93, 0.36); }
+.rewardCard.rarity-legendary { --reward-glow: rgba(255, 211, 79, 0.98); --reward-glow-soft: rgba(255, 211, 79, 0.38); }
+
+.rewardCard.rarity-rare::before,
+.rewardCard.rarity-epic::before,
+.rewardCard.rarity-ultrarare::before,
+.rewardCard.rarity-legendary::before {
+  opacity: 1;
+  box-shadow:
+    0 0 0 2px var(--reward-glow),
+    0 0 22px var(--reward-glow-soft);
+}
 
 .rewardTitle {
   text-align: center;
@@ -767,12 +1545,19 @@ body::after {
   align-items: center;
   justify-content: center;
   background: radial-gradient(circle at center, rgba(255, 255, 255, 0.14), transparent 70%);
+  will-change: transform;
 }
 
 .rewardContainerImg {
   width: min(320px, 90%);
   height: 180px;
   object-fit: contain;
+  transition: opacity 260ms ease;
+  will-change: opacity;
+}
+
+.rewardContainerImg.isHidden {
+  opacity: 0;
 }
 
 .rewardDropImg {
@@ -786,6 +1571,7 @@ body::after {
   opacity: 0;
   filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.7));
   transition: transform 0.45s ease, opacity 0.45s ease;
+  will-change: transform, opacity;
 }
 
 .rewardDropImg.show {
@@ -805,15 +1591,31 @@ body::after {
   margin: 14px auto 0;
 }
 
+.rewardCloseBtn {
+  opacity: 0;
+  transform: translateY(6px);
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 220ms ease, transform 220ms ease, visibility 0s linear 220ms;
+}
+
+.rewardCloseBtn.isShown {
+  opacity: 1;
+  transform: translateY(0);
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 220ms ease, transform 220ms ease, visibility 0s linear 0s;
+}
+
 .shake { animation: shake 0.35s linear 1; }
 
 @keyframes shake {
-  0% { transform: translateX(0); }
-  20% { transform: translateX(-6px); }
-  40% { transform: translateX(6px); }
-  60% { transform: translateX(-4px); }
-  80% { transform: translateX(4px); }
-  100% { transform: translateX(0); }
+  0% { transform: translate3d(0, 0, 0); }
+  20% { transform: translate3d(-6px, 0, 0); }
+  40% { transform: translate3d(6px, 0, 0); }
+  60% { transform: translate3d(-4px, 0, 0); }
+  80% { transform: translate3d(4px, 0, 0); }
+  100% { transform: translate3d(0, 0, 0); }
 }
 
 .statsGrid {
@@ -937,6 +1739,46 @@ body::after {
   .containerActions .equipBtn,
   .containerActions .ghostBtn {
     width: 100%;
+  }
+
+  .purchaseCard {
+    grid-template-columns: 1fr;
+    min-height: 0;
+  }
+
+  .lootCard {
+    grid-template-columns: 1fr;
+    min-height: 0;
+    max-height: 92vh;
+  }
+
+  .lootSidebar {
+    border-right: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .lootGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    max-height: 420px;
+  }
+
+  .purchaseIconPane {
+    min-height: 130px;
+    border-right: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .purchaseTitle {
+    font-size: 18px;
+    padding-right: 28px;
+  }
+
+  .purchaseLabel {
+    margin-top: 22px;
+  }
+
+  .purchaseActionBtn {
+    min-width: 100%;
   }
 
   .errorTitle {
