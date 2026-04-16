@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tanki Online</title>
-    <link rel="stylesheet" href="./styles.css?v=27" />
+    <link rel="stylesheet" href="./styles.css?v=29" />
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script src="./config.js"></script>
   </head>
@@ -179,10 +179,37 @@
           <aside class="shopMenu" id="shopCategory">
             <button class="shopCat isActive" data-cat="weapon">Пушки</button>
             <button class="shopCat" data-cat="hull">Корпуса</button>
+            <button class="shopCat" data-cat="promo">Промокоды</button>
           </aside>
           <section class="shopContent">
-            <div class="shopHeader">Предложения</div>
+            <div class="shopHeader" id="shopHeader">Предложения</div>
             <div id="shopList" class="shopList"></div>
+            <div id="promoPanel" class="promoPanel" style="display:none">
+              <div class="promoHeroCard" aria-hidden="true">
+                <div class="promoHeroDots">
+                  <span class="promoHeroDot"></span>
+                  <span class="promoHeroDot"></span>
+                  <span class="promoHeroDot"></span>
+                </div>
+              </div>
+              <div class="promoRedeemCard">
+                <div class="promoTitle">Активировать промокод</div>
+                <div class="promoSubtitle">
+                  Промокоды вводятся только в веб‑магазине.
+                </div>
+                <form id="promoForm" class="promoForm">
+                  <input
+                    id="promoCodeInput"
+                    class="promoInput"
+                    type="text"
+                    placeholder="TNKI0-XXXXX-XXXXX-XXXXX"
+                    autocomplete="off"
+                  />
+                  <button id="promoSubmitBtn" class="promoBtn" type="submit">Отправить</button>
+                </form>
+                <div id="promoResult" class="promoResult"></div>
+              </div>
+            </div>
           </section>
         </div>
       </main>
@@ -231,11 +258,11 @@
       <div class="purchaseCard" role="dialog" aria-modal="true" aria-labelledby="purchaseTitle">
         <button id="purchaseCloseTopBtn" class="purchaseCloseTop" type="button" aria-label="Закрыть">×</button>
         <div class="purchaseIconPane">
-          <div class="purchaseCartIcon" aria-hidden="true">🛒</div>
+          <div id="purchaseIcon" class="purchaseCartIcon" aria-hidden="true">🛒</div>
         </div>
         <div class="purchaseContent">
           <div class="purchaseTitle" id="purchaseTitle">ПОКУПКА ПРОИЗВЕДЕНА УСПЕШНО</div>
-          <div class="purchaseLabel">Вы приобрели:</div>
+          <div class="purchaseLabel" id="purchaseLabel">Вы приобрели:</div>
           <div class="purchaseRow">
             <span id="purchaseItemName" class="purchaseItemName">Предмет</span>
             <span id="purchaseItemPrice" class="purchaseItemPrice">0</span>
@@ -299,6 +326,6 @@
       </div>
     </div>
 
-    <script src="./app.js?v=38"></script>
+    <script src="./app.js?v=40"></script>
   </body>
 </html>

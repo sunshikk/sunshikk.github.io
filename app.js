@@ -185,6 +185,7 @@ const state = {
   webBattleActive: false,
   battleCooldownTimer: null,
   battleLastState: null,
+  avatarUrl: null,
   battlePollTimer: null,
 };
 
@@ -596,7 +597,11 @@ async function initAuth() {
   if (!tg) throw new Error("Открой мини-апп из Telegram.");
   tg.ready();
   tg.expand();
-  state.viewerName = tg.initDataUnsafe?.user?.username || tg.initDataUnsafe?.user?.first_name || "player";
+  const unsafeUser = tg.initDataUnsafe?.user;
+  state.viewerName = unsafeUser?.username || unsafeUser?.first_name || "player";
+  if (unsafeUser?.photo_url) {
+    state.avatarUrl = unsafeUser.photo_url;
+  }
   if (!tg.initData) throw new Error("initData не получен. Открой WebApp кнопкой из бота.");
   const auth = await api("/api/auth/telegram", {
     method: "POST",
@@ -609,14 +614,34 @@ async function initAuth() {
 function isUnlocked(key) { return key === "smoky" || key === "hunter" || Boolean(state.profile?.unlocks?.[key]); }
 function currentGarageKey() { return state.garageCategory === "weapon" ? state.selectedWeapon : state.selectedHull; }
 function garageList() { return state.garageCategory === "weapon" ? ["smoky", "railgun", "shaft", "thunder"] : ["hunter", "titan"]; }
+function showPurchaseLikeModal({ title, label, icon, name, price }) {
+  const modal = qs("purchaseModal");
+  const titleEl = qs("purchaseTitle");
+  const labelEl = qs("purchaseLabel");
+  const iconEl = qs("purchaseIcon");
+  const nameEl = qs("purchaseItemName");
+  const priceEl = qs("purchaseItemPrice");
+  if (!modal || !nameEl || !priceEl) return;
+  if (titleEl) titleEl.textContent = String(title || "ГОТОВО");
+  if (labelEl) labelEl.textContent = String(label || "");
+  if (iconEl && icon) iconEl.textContent = String(icon);
+  nameEl.textContent = String(name || "—");
+  priceEl.textContent = String(price || "");
+  modal.style.display = "flex";
+}
 function showPurchaseModal(item) {
   const modal = qs("purchaseModal");
   const name = qs("purchaseItemName");
   const price = qs("purchaseItemPrice");
   if (!modal || !name || !price || !item) return;
-  name.textContent = item.name || NAMES[item.key] || item.key;
-  price.textContent = String(item.price ?? 0);
-  modal.style.display = "flex";
+  // Ensure default purchase look (in case promo modal changed it).
+  showPurchaseLikeModal({
+    title: "ПОКУПКА ПРОИЗВЕДЕНА УСПЕШНО",
+    label: "Вы приобрели:",
+    icon: "🛒",
+    name: item.name || NAMES[item.key] || item.key,
+    price: String(item.price ?? 0),
+  });
 }
 function updateLootPreview(item) {
   const name = qs("lootPreviewName");
@@ -692,7 +717,13 @@ function updateGarageEquipButton() {
 function renderHud() {
   if (!state.profile) return;
   const logo = qs("logoImg");
-  if (logo && !logo.src) logo.src = withCacheBust(absUrl("/images/webapp/logo.png"));
+  if (logo && !logo.src) {
+    if (state.avatarUrl) {
+      logo.src = state.avatarUrl;
+    } else {
+      logo.src = withCacheBust(absUrl("/images/webapp/logo.png"));
+    }
+  }
   qs("nickname").textContent = state.viewerName;
   qs("rankName").textContent = state.profile.rank.name;
   qs("pillCrystals").textContent = String(state.profile.crystals ?? 0);
@@ -766,15 +797,35 @@ function renderGarage() {
 
 function renderShop() {
   const list = qs("shopList");
-  if (!list || !state.shop) return;
+  const promoPanel = qs("promoPanel");
+  const shopHeader = qs("shopHeader");
+  const shopContent = promoPanel?.closest(".shopContent");
+  if (!state.shop) return;
+
+  // Вкладка промокодов использует отдельную панель без списка товаров.
+  if (state.shopCategory === "promo") {
+    if (list) list.innerHTML = "";
+    if (list) list.style.display = "none";
+    if (promoPanel) promoPanel.style.display = "flex";
+    if (shopHeader) shopHeader.style.display = "none";
+    if (shopContent) shopContent.classList.add("isPromoView");
+    return;
+  }
+
+  if (!list) return;
+  list.style.display = "grid";
+  if (promoPanel) promoPanel.style.display = "none";
+  if (shopHeader) shopHeader.style.display = "block";
+  if (shopContent) shopContent.classList.remove("isPromoView");
+
   list.innerHTML = "";
   const items = state.shop.items.filter((i) => i.category === state.shopCategory);
   for (const item of items) {
     const card = document.createElement("div");
     card.className = "shopCard";
     const buyButton = item.owned
-      ? `<button class="equipBtn isDisabled" type="button" style="margin-top:0" disabled>Куплено</button>`
-      : `<button class="equipBtn" data-buy="${item.key}" style="margin-top:0">Купить</button>`;
+      ? `<button class="promoBtn shopBuyBtn" type="button" style="margin-top:0" disabled>Куплено</button>`
+      : `<button class="promoBtn shopBuyBtn" data-buy="${item.key}" style="margin-top:0">Купить</button>`;
     card.innerHTML = `
       <img src="${withCacheBust(absUrl(item.image_url))}" alt="${item.name}">
       <div class="shopCardTitle">${item.name}</div>
@@ -1178,7 +1229,9 @@ function bindUI() {
     const b = e.target.closest(".shopCat");
     if (!b) return;
     state.shopCategory = b.dataset.cat;
-    qs("shopCategory")?.querySelectorAll(".shopCat").forEach((it) => it.classList.toggle("isActive", it.dataset.cat === state.shopCategory));
+    qs("shopCategory")
+      ?.querySelectorAll(".shopCat")
+      .forEach((it) => it.classList.toggle("isActive", it.dataset.cat === state.shopCategory));
     renderShop();
   });
   qs("equipBtn")?.addEventListener("click", async () => {
@@ -1217,6 +1270,64 @@ function bindUI() {
       btn.disabled = false;
     }
   });
+
+  // Активация промокодов (только в WebApp)
+  const promoForm = qs("promoForm");
+  const promoInput = qs("promoCodeInput");
+  const promoBtn = qs("promoSubmitBtn");
+  if (promoForm && promoInput && promoBtn) {
+    const onSubmitPromo = async (e) => {
+      if (e) e.preventDefault();
+      const code = String(promoInput.value || "").trim();
+      if (!code) {
+        setError("Введите промокод.");
+        return;
+      }
+      promoBtn.disabled = true;
+      try {
+        const res = await api("/api/promo/redeem", {
+          method: "POST",
+          body: JSON.stringify({ code }),
+        });
+        qs("promoResult").textContent = String(res.message || "Промокод успешно активирован.");
+
+        // Show a purchase-like modal for promo rewards
+        const rewardType = String(res.reward_type || "").toLowerCase();
+        const rewardKey = String(res.reward_key || "");
+        const rewardAmount = Number(res.reward_amount || 0);
+        let rewardName = "Награда";
+        let rewardValue = "";
+        if (rewardType === "crystals") {
+          rewardName = "Кристаллы";
+          rewardValue = `x${rewardAmount}`;
+        } else if (rewardType === "containers") {
+          rewardName = "Контейнеры";
+          rewardValue = `x${rewardAmount}`;
+        } else if (rewardType === "unlock") {
+          rewardName = "Разблокировка";
+          rewardValue = NAMES[rewardKey] || rewardKey || "Предмет";
+        }
+        showPurchaseLikeModal({
+          title: "ПРОМОКОД АКТИВИРОВАН",
+          label: "Вы получили:",
+          icon: "🎟",
+          name: rewardName,
+          price: rewardValue,
+        });
+
+        await refreshAll();
+        clearError();
+        promoInput.value = "";
+      } catch (e2) {
+        qs("promoResult").textContent = "";
+        setError(prettyError(e2));
+      } finally {
+        promoBtn.disabled = false;
+      }
+    };
+    promoForm.addEventListener("submit", onSubmitPromo);
+    promoBtn.addEventListener("click", onSubmitPromo);
+  }
   qs("refreshBtn")?.addEventListener("click", async () => {
     try { await refreshAll(); clearError(); } catch (e) { setError(prettyError(e)); }
   });
