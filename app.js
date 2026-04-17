@@ -488,31 +488,7 @@ async function playPurchaseSound() {
   sound.pause();
   sound.currentTime = 0;
 
-  if (!state.bgMusicEnabled || !state.bgMusic) {
-    try { await sound.play(); } catch {}
-    await new Promise((resolve) => {
-      sound.onended = () => { sound.onended = null; resolve(); };
-      sound.onerror = () => { sound.onerror = null; resolve(); };
-    });
-    return;
-  }
-
-  const music = state.bgMusic;
-  const resumeTime = music.currentTime || 0;
-  const startVolume = music.volume;
-  await fadeAudioVolume(music, startVolume, Math.min(0.06, startVolume), 180);
-  music.pause();
-  music.currentTime = resumeTime;
-
   try { await sound.play(); } catch {}
-  await new Promise((resolve) => {
-    sound.onended = () => { sound.onended = null; resolve(); };
-    sound.onerror = () => { sound.onerror = null; resolve(); };
-  });
-
-  music.currentTime = resumeTime;
-  try { await music.play(); } catch {}
-  await fadeAudioVolume(music, Math.min(0.06, state.bgMusicVolume), state.bgMusicVolume, 220);
 }
 
 async function switchTrack() {
@@ -1416,6 +1392,15 @@ function bindUI() {
   });
 
   // Don't auto-forfeit on hide/reload: active battle must be restorable on next open.
+  // If WebApp is being closed/left, notify backend with a short grace window.
+  const sendDisconnectIfActive = () => {
+    if (!state.webBattleActive) return;
+    try { void apiKeepalive("/api/battle/disconnect", { method: "POST" }); } catch {}
+  };
+  window.addEventListener("pagehide", sendDisconnectIfActive);
+  document.addEventListener("visibilitychange", () => {
+    if (document.visibilityState === "hidden") sendDisconnectIfActive();
+  });
 }
 
 async function main() {
@@ -1439,7 +1424,13 @@ async function main() {
     } catch {}
 
     // Restore battle UI if server still has an active battle
-    try { await battleFetchState(); } catch {}
+    try {
+      const st = await battleFetchState();
+      if (st?.active) {
+        // We are back (reload/open), cancel pending disconnect forfeit.
+        try { await apiKeepalive("/api/battle/reconnect", { method: "POST" }); } catch {}
+      }
+    } catch {}
   } catch (e) {
     setError(prettyError(e));
   }
