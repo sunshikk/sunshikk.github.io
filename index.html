@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tanki Online</title>
-    <link rel="stylesheet" href="./styles.css?v=29" />
+    <link rel="stylesheet" href="./styles.css?v=30" />
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script src="./config.js"></script>
   </head>
@@ -40,6 +40,7 @@
 
       <nav class="mainTabs" id="tabs">
         <button class="mainTab isActive" data-tab="profile">Профиль</button>
+        <button class="mainTab" data-tab="leaders">Лидеры</button>
         <button class="mainTab" data-tab="battles">Бои</button>
         <button class="mainTab" data-tab="garage">Гараж</button>
         <button class="mainTab" data-tab="shop">Магазин</button>
@@ -90,17 +91,64 @@
         <div class="itemsRail" id="garageItemsRail"></div>
       </main>
 
+      <main class="panel panelLeaders" id="panelLeaders" style="display:none">
+        <div class="leadersPromoLayout">
+          <div class="promoHeroCard leadersHeroCard" aria-hidden="true">
+            <div class="leadersHeroArt">
+              <div class="leadersHeroTrophy">🏆</div>
+              <div class="leadersHeroHeadline">ТОП ИГРОКИ</div>
+              <div class="leadersHeroSub">Опыт • Победы • Бои</div>
+              <div class="leadersHeroShine" aria-hidden="true"></div>
+            </div>
+          </div>
+          <div class="leadersBoardCard">
+            <div class="leadersHeader">
+              <div class="leadersTitle">ТАБЛИЦА ЛИДЕРОВ</div>
+              <div class="leadersSubtitle">Лучшие игроки сервера</div>
+            </div>
+            <div class="leadersControls" id="leadersSortTabs">
+              <button class="leadersSortBtn isActive" type="button" data-sort="experience">Опыт</button>
+              <button class="leadersSortBtn" type="button" data-sort="wins">Победы</button>
+              <button class="leadersSortBtn" type="button" data-sort="battles">Бои</button>
+            </div>
+            <div class="leadersTableWrap">
+              <div class="leadersTableHead">
+                <span>#</span><span>Игрок</span><span>Опыт</span><span>W/L</span><span>Бои</span>
+              </div>
+              <div id="leadersRows" class="leadersRows"></div>
+            </div>
+            <div id="leadersMeWrap" class="leadersMeWrap" style="display:none">
+              <div class="leadersMeLabel">Твоя позиция</div>
+              <div id="leadersMeRow" class="leadersMeRow"></div>
+            </div>
+          </div>
+        </div>
+      </main>
+
       <main class="panel panelBattles" id="panelBattles" style="display:none">
         <div class="battlesHeader">
           <div id="battlesTitle" class="battlesTitle">ВЫБОР РЕЖИМА</div>
         </div>
 
-        <div id="battleModesGrid" class="battleModesGrid battleModesGridSingle" aria-label="Режимы боев">
+        <div class="battleLobbyCreateWrap">
+          <button id="createLobbyBtn" class="promoBtn battleLobbyCreateBtn" type="button">Создать бой</button>
+        </div>
+
+        <div id="battleModesGrid" class="battleModesGrid" aria-label="Режимы боев">
           <button id="battleBotModeCard" class="battleModeCard isPrimary" type="button">
             <div class="battleModeName">БОЙ С БОТОМ</div>
             <div class="battleModeIcon">☠</div>
           </button>
+          <button id="battlePlayerModeCard" class="battleModeCard" type="button">
+            <div class="battleModeName">БОЙ С ИГРОКОМ</div>
+            <div class="battleModeIcon">⚔</div>
+          </button>
         </div>
+
+        <section id="battleLobbiesSection" class="battleLobbiesSection">
+          <div class="battleLobbiesTitle">Открытые бои</div>
+          <div id="battleLobbiesList" class="battleLobbiesList"></div>
+        </section>
 
         <div id="battleBotCard" class="battleBotCard" style="display:none">
           <div class="battleBotCardTitle">БОЙ С БОТОМ</div>
@@ -108,6 +156,17 @@
           <div class="battleBotCardActions">
             <button id="startBotBattleBtn" class="equipBtn" type="button">Начать бой</button>
             <button id="backToModesBtn" class="ghostBtn" type="button" style="margin-top:0">Назад</button>
+          </div>
+        </div>
+
+        <div id="battlePlayerCard" class="battleBotCard" style="display:none">
+          <div class="battleBotCardTitle">БОЙ С ИГРОКОМ</div>
+          <div class="battleBotCardActions" style="flex-direction:column; width:min(100%, 360px);">
+            <input id="pvpUsernameInput" class="promoInput" type="text" placeholder="@username" autocomplete="off" />
+            <button id="sendPvpInviteBtn" class="promoBtn" type="button">Отправить приглашение</button>
+            <button id="cancelPvpInviteBtn" class="ghostBtn" type="button" style="margin-top:0; display:none;">Отменить приглашение</button>
+            <button id="backToModesFromPvpBtn" class="ghostBtn" type="button" style="margin-top:0">Назад</button>
+            <div id="pvpInviteHint" class="hint" style="text-align:center;"></div>
           </div>
         </div>
 
@@ -119,6 +178,7 @@
           <div class="battleStage">
             <aside class="battleSide battleSideLeft">
               <div class="battleSideTitle">ВАШ ТАНК</div>
+              <div id="battleAimState" class="battleAimState" style="display:none">🎯 Прицел активен</div>
               <img id="battlePlayerTankImg" class="battleTankImg" alt="player tank" />
               <div class="battleSideHp">
                 <div class="battleSideHpHead">
@@ -126,6 +186,7 @@
                   <span id="battlePlayerHpText" class="battleSideHpValue">0/0</span>
                 </div>
                 <div class="battleHpTrack"><div id="battlePlayerHpFill" class="battleHpFill isPlayer"></div></div>
+                <div id="battlePlayerDamageHint" class="battleDamageHint" style="display:none"></div>
               </div>
               <div class="battleSideMeta">
                 <div id="battlePlayerWeapon" class="battleSideLine">—</div>
@@ -139,16 +200,21 @@
 
               <div class="battleControls">
                 <div class="battleMovePad">
-                  <button class="battlePadBtn" data-battle-move="up" type="button">⬆</button>
+                  <div class="battlePadRow battlePadRowTop">
+                    <span class="battlePadSpacer" aria-hidden="true"></span>
+                    <button class="battlePadBtn" data-battle-move="up" type="button" aria-label="Вверх"><span>▲</span></button>
+                    <span class="battlePadSpacer" aria-hidden="true"></span>
+                  </div>
                   <div class="battlePadRow">
-                    <button class="battlePadBtn" data-battle-move="left" type="button">⬅</button>
-                    <button class="battlePadBtn" data-battle-move="down" type="button">⬇</button>
-                    <button class="battlePadBtn" data-battle-move="right" type="button">➡</button>
+                    <button class="battlePadBtn" data-battle-move="left" type="button" aria-label="Влево"><span>◀</span></button>
+                    <button class="battlePadBtn" data-battle-move="down" type="button" aria-label="Вниз"><span>▼</span></button>
+                    <button class="battlePadBtn" data-battle-move="right" type="button" aria-label="Вправо"><span>▶</span></button>
                   </div>
                 </div>
                 <div class="battleActionPad">
                   <button id="battleShootBtn" class="equipBtn" type="button" style="margin-top:0">Огонь</button>
                   <button id="battleAimBtn" class="ghostBtn" type="button" style="margin-top:10px; display:none">Прицел</button>
+                  <div class="battleHotkeysHint">ПК: WASD/стрелки - движение, F - огонь, G - прицел</div>
                   <div id="battleTurnTimer" class="battleCooldown"></div>
                   <div id="battleCooldown" class="battleCooldown"></div>
                 </div>
@@ -156,7 +222,7 @@
             </section>
 
             <aside class="battleSide battleSideRight">
-              <div class="battleSideTitle">ПРОТИВНИК</div>
+              <div id="battleOpponentTitle" class="battleSideTitle">ПРОТИВНИК</div>
               <img id="battleBotTankImg" class="battleTankImg" alt="bot tank" />
               <div class="battleSideHp">
                 <div class="battleSideHpHead">
@@ -164,6 +230,7 @@
                   <span id="battleBotHpText" class="battleSideHpValue">0/0</span>
                 </div>
                 <div class="battleHpTrack"><div id="battleBotHpFill" class="battleHpFill isBot"></div></div>
+                <div id="battleBotDamageHint" class="battleDamageHint" style="display:none"></div>
               </div>
               <div class="battleSideMeta">
                 <div id="battleBotWeapon" class="battleSideLine">—</div>
@@ -234,7 +301,6 @@
           <img id="rewardDropImg" class="rewardDropImg" alt="reward" />
         </div>
         <div id="rewardText" class="rewardText"></div>
-        <button id="rewardCloseBtn" class="equipBtn rewardCloseBtn" type="button">Ок</button>
       </div>
     </div>
 
@@ -247,9 +313,6 @@
         <div class="errorBody">
           <div class="errorIcon" aria-hidden="true">⚠</div>
           <div class="errorText" id="errorBody">Произошла ошибка.</div>
-        </div>
-        <div class="errorFooter">
-          <button id="errorCloseBtn" class="ghostBtn" type="button">Понятно</button>
         </div>
       </div>
     </div>
@@ -280,7 +343,45 @@
           <div id="battleResultTitle" class="battleResultTitle">ПОБЕДА</div>
         </div>
         <div class="battleResultBody">
-          <button id="battleResultCloseBtn" class="equipBtn" type="button" style="margin-top:0">Ок</button>
+          <div id="battleResultIcon" class="battleResultIcon" aria-hidden="true">🏆</div>
+          <div id="battleResultText" class="battleResultText">Сражение завершено. Нажмите вне окна, чтобы продолжить.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="purchaseModal" id="surrenderModal" style="display:none">
+      <div class="purchaseCard" role="dialog" aria-modal="true" aria-labelledby="surrenderTitle">
+        <div class="purchaseIconPane">
+          <div class="purchaseCartIcon" aria-hidden="true">🏳️</div>
+        </div>
+        <div class="purchaseContent">
+          <div class="purchaseTitle" id="surrenderTitle">СДАТЬСЯ?</div>
+          <div class="purchaseLabel">Ты точно хочешь завершить бой поражением?</div>
+          <div class="purchaseActions" style="gap:10px;">
+            <button id="surrenderCancelBtn" class="ghostBtn" type="button" style="margin-top:0;">Отмена</button>
+            <button id="surrenderConfirmBtn" class="purchaseActionBtn" type="button">Сдаться</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="purchaseModal" id="pvpInviteModal" style="display:none">
+      <div class="purchaseCard" role="dialog" aria-modal="true" aria-labelledby="pvpInviteTitle">
+        <button id="pvpInviteCloseTopBtn" class="purchaseCloseTop" type="button" aria-label="Закрыть">×</button>
+        <div class="purchaseIconPane">
+          <div class="purchaseCartIcon" aria-hidden="true">⚔</div>
+        </div>
+        <div class="purchaseContent">
+          <div class="purchaseTitle" id="pvpInviteTitle">ПРИГЛАШЕНИЕ В БОЙ</div>
+          <div class="purchaseLabel" id="pvpInviteLabel">Вас пригласили в PvP бой.</div>
+          <div class="purchaseRow">
+            <span id="pvpInviteName" class="purchaseItemName">Игрок</span>
+            <span id="pvpInviteTime" class="purchaseItemPrice">120 сек</span>
+          </div>
+          <div class="purchaseActions" style="gap:10px;">
+            <button id="pvpDeclineBtn" class="ghostBtn" type="button" style="margin-top:0;">Отказаться</button>
+            <button id="pvpAcceptBtn" class="purchaseActionBtn" type="button">Играть</button>
+          </div>
         </div>
       </div>
     </div>
@@ -295,8 +396,55 @@
           <div id="rankUpName" class="rankUpName">—</div>
           <div class="rankUpGift">Подарок: <b>+5 контейнеров</b></div>
         </div>
-        <div class="rankUpFooter">
-          <button id="rankUpCloseBtn" class="equipBtn" type="button" style="margin-top:0">Круто</button>
+      </div>
+    </div>
+
+    <div class="purchaseModal" id="createLobbyModal" style="display:none">
+      <div class="purchaseCard" role="dialog" aria-modal="true" aria-labelledby="createLobbyTitle">
+        <div class="purchaseIconPane">
+          <div class="purchaseCartIcon" aria-hidden="true">⚔</div>
+        </div>
+        <div class="purchaseContent">
+          <div class="purchaseTitle" id="createLobbyTitle">СОЗДАТЬ БОЙ</div>
+          <div class="purchaseLabel">Настрой бой и жди соперника (3 минуты).</div>
+
+          <div class="promoForm" style="gap:10px;">
+            <input id="lobbyNameInput" class="promoInput" type="text" placeholder="Название боя" maxlength="32" autocomplete="off" />
+            <label class="battleLobbyAllRanks">
+              <input id="lobbyAllowAllRanks" type="checkbox" />
+              <span>Разрешить все звания</span>
+            </label>
+            <div id="lobbyRankRange" class="battleLobbyRankRange">
+              <select id="lobbyMinRank" class="battleLobbySelect"></select>
+              <span class="battleLobbyDash">—</span>
+              <select id="lobbyMaxRank" class="battleLobbySelect"></select>
+            </div>
+          </div>
+
+          <div class="purchaseActions" style="gap:10px;">
+            <button id="createLobbyCancelBtn" class="ghostBtn" type="button" style="margin-top:0;">Отмена</button>
+            <button id="createLobbyConfirmBtn" class="purchaseActionBtn" type="button">Создать</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="purchaseModal" id="joinLobbyModal" style="display:none">
+      <div class="purchaseCard" role="dialog" aria-modal="true" aria-labelledby="joinLobbyTitle">
+        <div class="purchaseIconPane">
+          <div class="purchaseCartIcon" aria-hidden="true">🎮</div>
+        </div>
+        <div class="purchaseContent">
+          <div class="purchaseTitle" id="joinLobbyTitle">ВСТУПИТЬ В БОЙ?</div>
+          <div class="purchaseLabel" id="joinLobbyLabel">Вы хотите вступить в бой?</div>
+          <div class="purchaseRow">
+            <span id="joinLobbyName" class="purchaseItemName">Бой</span>
+            <span id="joinLobbyMeta" class="purchaseItemPrice">—</span>
+          </div>
+          <div class="purchaseActions" style="gap:10px;">
+            <button id="joinLobbyCancelBtn" class="ghostBtn" type="button" style="margin-top:0;">Отмена</button>
+            <button id="joinLobbyConfirmBtn" class="purchaseActionBtn" type="button">Вступить</button>
+          </div>
         </div>
       </div>
     </div>
@@ -326,6 +474,6 @@
       </div>
     </div>
 
-    <script src="./app.js?v=40"></script>
+    <script src="./app.js?v=50"></script>
   </body>
 </html>

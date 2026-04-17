@@ -187,6 +187,19 @@ const state = {
   battleLastState: null,
   avatarUrl: null,
   battlePollTimer: null,
+  activeInviteId: null,
+  outgoingInviteId: null,
+  invitePollTimer: null,
+  battleEndModalKey: null,
+  battleMapSignature: "",
+  damageHintTimers: { player: null, bot: null },
+  markerDamageTimers: { player: null, bot: null },
+  leaderboard: null,
+  leaderboardSort: "experience",
+  leaderboardLimit: 100,
+  ranks: null,
+  lobbies: null,
+  joinLobbyId: null,
 };
 
 const NAMES = { smoky: "Смоки", railgun: "Рельса", shaft: "Шафт", thunder: "Гром", hunter: "Хантер", titan: "Титан" };
@@ -578,10 +591,12 @@ async function initAuth() {
   if (unsafeUser?.photo_url) {
     state.avatarUrl = unsafeUser.photo_url;
   }
-  if (!tg.initData) throw new Error("initData не получен. Открой WebApp кнопкой из бота.");
+  if (!tg.initData) {
+    throw new Error("initData не получен. Открой WebApp кнопкой из бота, а не обычной ссылкой в браузере.");
+  }
   const auth = await api("/api/auth/telegram", {
     method: "POST",
-    body: JSON.stringify({ initData: tg.initData }),
+    body: JSON.stringify({ initData: tg.initData, photo_url: state.avatarUrl || null }),
     headers: {},
   });
   state.token = auth.token;
@@ -733,6 +748,68 @@ function renderProfile() {
   qs("winrateValue").textContent = `${winrate}%`;
 }
 
+function leaderboardRowHtml(row, isMe = false) {
+  if (!row) return "";
+  const place = Number(row.place || 0) > 0 ? String(row.place) : "—";
+  const avatar = row.avatar_url ? absUrl(String(row.avatar_url)) : "";
+  const rankImg = row.rank_image_url ? absUrl(String(row.rank_image_url)) : "";
+  const rankName = String(row.rank_name || "Звание");
+  const name = String(row.name || "Игрок");
+  const initial = name.trim().charAt(0).toUpperCase() || "U";
+  return `<div class="leadersRow${isMe ? " isMe" : ""}">
+    <span class="leadersPlace">${place}</span>
+    <span class="leadersIdentity">
+      <span class="leadersAvatar${avatar ? "" : " isFallback"}">
+        ${avatar ? `<img src="${avatar}" alt="${name}" loading="lazy" referrerpolicy="no-referrer" crossorigin="anonymous" onerror="this.closest('.leadersAvatar')?.classList.add('isFallback');this.remove();">` : ""}
+        <span class="leadersAvatarFallback">${initial}</span>
+      </span>
+      <span class="leadersNameWrap">
+        <span class="leadersName">${name}</span>
+        <span class="leadersRank">${rankImg ? `<img class="leadersRankIcon" src="${rankImg}" alt="${rankName}">` : ""}<span>${rankName}</span></span>
+      </span>
+    </span>
+    <span class="leadersExp">${Number(row.experience || 0)}</span>
+    <span class="leadersWL">${Number(row.wins || 0)}/${Number(row.losses || 0)}</span>
+    <span class="leadersBattles">${Number(row.battles || 0)}</span>
+  </div>`;
+}
+
+function renderLeaderboard() {
+  const rows = qs("leadersRows");
+  const meWrap = qs("leadersMeWrap");
+  const meRow = qs("leadersMeRow");
+  if (!rows || !meWrap || !meRow) return;
+  const data = state.leaderboard;
+  if (!data) {
+    rows.innerHTML = '<div class="leadersEmpty">Загрузка рейтинга...</div>';
+    meWrap.style.display = "none";
+    return;
+  }
+  const top = Array.isArray(data.top) ? data.top : [];
+  if (!top.length) {
+    rows.innerHTML = '<div class="leadersEmpty">Пока нет данных рейтинга.</div>';
+  } else {
+    rows.innerHTML = top.map((row) => leaderboardRowHtml(row, false)).join("");
+  }
+  const me = data.current_player;
+  if (me && !data.in_top) {
+    meWrap.style.display = "block";
+    meRow.innerHTML = leaderboardRowHtml(me, true);
+  } else {
+    meWrap.style.display = "none";
+    meRow.innerHTML = "";
+  }
+  qs("leadersSortTabs")?.querySelectorAll(".leadersSortBtn")
+    .forEach((btn) => btn.classList.toggle("isActive", btn.dataset.sort === state.leaderboardSort));
+}
+
+async function refreshLeaderboard() {
+  state.leaderboard = await api(
+    `/api/leaderboard?sort=${encodeURIComponent(state.leaderboardSort)}&limit=${encodeURIComponent(state.leaderboardLimit)}`
+  );
+  renderLeaderboard();
+}
+
 function renderGarage() {
   if (!state.profile) return;
   const key = currentGarageKey();
@@ -843,7 +920,6 @@ async function showRewardModal(result) {
   const contImg = qs("rewardContainerImg");
   const dropImg = qs("rewardDropImg");
   const text = qs("rewardText");
-  const okBtn = qs("rewardCloseBtn");
   if (!modal || !card || !box || !contImg || !dropImg || !text) {
     qs("containerResult").textContent = result.reward_type === "unlock"
       ? `Получено: ${NAMES[result.reward_key] || result.reward_key}`
@@ -857,10 +933,6 @@ async function showRewardModal(result) {
   text.textContent = "";
   contImg.src = withCacheBust(absUrl(CONTAINER_CLOSED_IMAGE));
   contImg.classList.remove("isHidden");
-  if (okBtn) {
-    okBtn.classList.remove("isShown");
-    okBtn.disabled = true;
-  }
   const rewardKey = result.reward_type === "crystals" ? "crystals" : result.reward_key;
   const openedSrc = withCacheBust(absUrl(CONTAINER_OPEN_IMAGES[rarity] || CONTAINER_OPEN_IMAGES.rare));
   const dropSrc = withCacheBust(absUrl(REWARD_ITEM_IMAGES[rewardKey] || "/images/webapp/crystals.png"));
@@ -884,12 +956,7 @@ async function showRewardModal(result) {
     : `Получено кристаллов: ${result.reward_amount}`;
   text.textContent = rewardText;
   dropImg.classList.add("show");
-  // Show "Ok" only after animation finished.
   await sleep(520);
-  if (okBtn) {
-    okBtn.disabled = false;
-    okBtn.classList.add("isShown");
-  }
   state.rewardAnimating = false;
 }
 
@@ -906,7 +973,7 @@ async function showTab(tab, { force = false } = {}) {
   }
   state.activeTab = tab;
   document.querySelectorAll(".mainTab").forEach((b) => b.classList.toggle("isActive", b.dataset.tab === tab));
-  ["profile", "battles", "garage", "shop", "containers"].forEach((key) => {
+  ["profile", "leaders", "battles", "garage", "shop", "containers"].forEach((key) => {
     const panel = qs(`panel${key[0].toUpperCase()}${key.slice(1)}`);
     if (panel) panel.style.display = key === tab ? "block" : "none";
   });
@@ -920,6 +987,12 @@ async function refreshAll() {
   state.profile = await api("/api/profile/me");
   state.shop = await api("/api/shop/items");
   state.containersInfo = await api("/api/containers");
+  if (!state.ranks) {
+    try { state.ranks = (await api("/api/ranks"))?.ranks || []; } catch { state.ranks = []; }
+  }
+  state.leaderboard = await api(
+    `/api/leaderboard?sort=${encodeURIComponent(state.leaderboardSort)}&limit=${encodeURIComponent(state.leaderboardLimit)}`
+  );
   applyBackgroundImage();
   state.selectedWeapon = state.profile.weapon;
   state.selectedHull = state.profile.hull;
@@ -928,9 +1001,139 @@ async function refreshAll() {
   renderGarage();
   renderShop();
   renderContainers();
+  renderLeaderboard();
 }
 
-function renderBattleMap(mapSize, playerPos, botPos) {
+function ranksOptionsHtml(selectedId) {
+  const list = Array.isArray(state.ranks) ? state.ranks : [];
+  if (!list.length) return `<option value="1">Новобранец</option>`;
+  return list.map((r) => {
+    const id = Number(r.id || 1);
+    const name = String(r.name || `Rank ${id}`);
+    return `<option value="${id}"${id === Number(selectedId) ? " selected" : ""}>${name}</option>`;
+  }).join("");
+}
+
+function openCreateLobbyModal() {
+  const modal = qs("createLobbyModal");
+  const name = qs("lobbyNameInput");
+  const allow = qs("lobbyAllowAllRanks");
+  const minSel = qs("lobbyMinRank");
+  const maxSel = qs("lobbyMaxRank");
+  const rangeWrap = qs("lobbyRankRange");
+  if (!modal || !name || !allow || !minSel || !maxSel || !rangeWrap) return;
+  name.value = "";
+  allow.checked = true;
+  rangeWrap.style.opacity = "0.45";
+  rangeWrap.style.pointerEvents = "none";
+  minSel.innerHTML = ranksOptionsHtml(1);
+  maxSel.innerHTML = ranksOptionsHtml(31);
+  modal.style.display = "flex";
+}
+
+function closeCreateLobbyModal() {
+  const modal = qs("createLobbyModal");
+  if (modal) modal.style.display = "none";
+}
+
+function closeJoinLobbyModal() {
+  const modal = qs("joinLobbyModal");
+  if (modal) modal.style.display = "none";
+  state.joinLobbyId = null;
+}
+
+function lobbyRankText(lb) {
+  if (!lb) return "Все звания";
+  if (lb.allow_all_ranks) return "Все звания";
+  const minName = lb.min_rank_name || "—";
+  const maxName = lb.max_rank_name || "—";
+  return `${minName} — ${maxName}`;
+}
+
+function lobbyCardHtml(lb) {
+  const title = String(lb.name || "Бой");
+  const creator = String(lb.creator_name || "Игрок");
+  const ranks = lobbyRankText(lb);
+  const time = Math.max(0, Number(lb.expires_in || 0));
+  return `<button class="battleLobbyCard" type="button" data-lobby="${String(lb.lobby_id || "")}">
+    <div class="battleLobbyName">${title}</div>
+    <div class="battleLobbyMeta">
+      <span class="battleLobbyTag">👤 ${creator}</span>
+      <span class="battleLobbyTag">🎖 ${ranks}</span>
+      <span class="battleLobbyTag">⏳ ${time}с</span>
+    </div>
+  </button>`;
+}
+
+function renderLobbies() {
+  const section = qs("battleLobbiesSection");
+  const list = qs("battleLobbiesList");
+  const createBtnWrap = qs("createLobbyBtn")?.closest(".battleLobbyCreateWrap");
+  if (!section || !list) return;
+  const modesVisible = (qs("battleModesGrid")?.style.display || "grid") !== "none";
+  const botCardVisible = (qs("battleBotCard")?.style.display || "none") !== "none";
+  const pvpCardVisible = (qs("battlePlayerCard")?.style.display || "none") !== "none";
+  const inArena = (qs("battleArena")?.style.display || "none") !== "none";
+  const show = modesVisible && !inArena && !botCardVisible && !pvpCardVisible;
+  if (createBtnWrap) createBtnWrap.style.display = show ? "flex" : "none";
+  section.style.display = show ? "block" : "none";
+  if (!show) return;
+  const lobbies = Array.isArray(state.lobbies) ? state.lobbies : [];
+  if (!lobbies.length) {
+    list.innerHTML = `<div class="leadersEmpty" style="grid-column:1/-1;">Пока нет открытых боёв. Создай свой!</div>`;
+    return;
+  }
+  list.innerHTML = lobbies.map(lobbyCardHtml).join("");
+}
+
+async function refreshLobbies() {
+  try {
+    const data = await api("/api/battle/lobbies/list");
+    state.lobbies = data?.lobbies || [];
+  } catch {
+    state.lobbies = [];
+  }
+  renderLobbies();
+}
+
+async function createLobbyFromModal() {
+  const name = String(qs("lobbyNameInput")?.value || "").trim();
+  const allow = Boolean(qs("lobbyAllowAllRanks")?.checked);
+  const minId = Number(qs("lobbyMinRank")?.value || 1);
+  const maxId = Number(qs("lobbyMaxRank")?.value || 31);
+  await api("/api/battle/lobbies/create", {
+    method: "POST",
+    body: JSON.stringify({
+      name,
+      allow_all_ranks: allow,
+      min_rank_id: allow ? null : minId,
+      max_rank_id: allow ? null : maxId,
+    }),
+  });
+  closeCreateLobbyModal();
+  await refreshLobbies();
+  clearError();
+}
+
+function openJoinLobbyModal(lb) {
+  const modal = qs("joinLobbyModal");
+  if (!modal) return;
+  state.joinLobbyId = String(lb.lobby_id || "");
+  qs("joinLobbyName").textContent = String(lb.name || "Бой");
+  qs("joinLobbyMeta").textContent = `🎖 ${lobbyRankText(lb)}`;
+  qs("joinLobbyLabel").textContent = `Вступить в бой игрока ${String(lb.creator_name || "Игрок")}?`;
+  modal.style.display = "flex";
+}
+
+function renderBattleMap(
+  mapSize,
+  playerPos,
+  botPos,
+  playerTankImageUrl = "",
+  botTankImageUrl = "",
+  playerAiming = false,
+  botAiming = false,
+) {
   const map = qs("battleMap");
   if (!map) return;
   const size = Number(mapSize || 5);
@@ -941,10 +1144,38 @@ function renderBattleMap(mapSize, playerPos, botPos) {
       cell.className = "battleCell";
       if (playerPos && playerPos[0] === r && playerPos[1] === c) {
         cell.classList.add("isPlayer");
-        cell.textContent = "🟢";
+        const marker = document.createElement("div");
+        marker.className = "battleMarker isPlayer";
+        if (playerAiming) marker.classList.add("isAiming");
+        if (playerTankImageUrl) {
+          const img = document.createElement("img");
+          img.className = "battleMarkerImg";
+          img.src = absUrl(playerTankImageUrl);
+          img.alt = "player marker";
+          img.loading = "eager";
+          img.decoding = "async";
+          marker.appendChild(img);
+        } else {
+          marker.textContent = "YOU";
+        }
+        cell.appendChild(marker);
       } else if (botPos && botPos[0] === r && botPos[1] === c) {
         cell.classList.add("isBot");
-        cell.textContent = "🔴";
+        const marker = document.createElement("div");
+        marker.className = "battleMarker isBot";
+        if (botAiming) marker.classList.add("isAiming");
+        if (botTankImageUrl) {
+          const img = document.createElement("img");
+          img.className = "battleMarkerImg";
+          img.src = absUrl(botTankImageUrl);
+          img.alt = "opponent marker";
+          img.loading = "eager";
+          img.decoding = "async";
+          marker.appendChild(img);
+        } else {
+          marker.textContent = "OP";
+        }
+        cell.appendChild(marker);
       } else {
         cell.textContent = "";
       }
@@ -953,12 +1184,120 @@ function renderBattleMap(mapSize, playerPos, botPos) {
   }
 }
 
+function renderBattleLog(text) {
+  const log = qs("battleLog");
+  if (!log) return;
+  const raw = String(text || "").trim();
+  if (!raw) {
+    log.innerHTML = '<div class="battleLogItem">Событий пока нет.</div>';
+    return;
+  }
+  const lines = raw.split("\n").map((s) => s.trim()).filter(Boolean).slice(-7);
+  log.innerHTML = lines.map((line) => {
+    let cls = "battleLogItem";
+    if (line.includes("💥")) cls += " isHit";
+    else if (line.includes("❌") || line.includes("пораж")) cls += " isWarn";
+    else if (line.includes("🏆") || line.includes("Побед")) cls += " isWin";
+    else if (line.includes("⏱")) cls += " isTime";
+    return `<div class="${cls}">${line}</div>`;
+  }).join("");
+}
+
+function hidePvpInviteModal() {
+  const modal = qs("pvpInviteModal");
+  if (modal) modal.style.display = "none";
+  state.activeInviteId = null;
+}
+
+async function openInviteModal(inviteId) {
+  if (!inviteId) return;
+  state.activeInviteId = inviteId;
+  const info = await api(`/api/battle/player/invites/by-id/${encodeURIComponent(inviteId)}`);
+  const modal = qs("pvpInviteModal");
+  if (!modal) return;
+  qs("pvpInviteName").textContent = info.inviter_name || "Игрок";
+  qs("pvpInviteTime").textContent = `${Math.max(0, Number(info.expires_in || 0))} сек`;
+  modal.style.display = "flex";
+}
+
+async function updateOutgoingInviteState() {
+  const sendBtn = qs("sendPvpInviteBtn");
+  const cancelBtn = qs("cancelPvpInviteBtn");
+  const hint = qs("pvpInviteHint");
+  if (!sendBtn || !cancelBtn) return;
+  try {
+    const data = await api("/api/battle/player/invites/outgoing");
+    const inv = data?.invite || null;
+    state.outgoingInviteId = inv?.invite_id || null;
+    const hasOutgoing = Boolean(state.outgoingInviteId);
+    sendBtn.disabled = hasOutgoing;
+    cancelBtn.style.display = hasOutgoing ? "block" : "none";
+    if (hasOutgoing && hint) hint.textContent = `Приглашение активно (${Math.max(0, Number(inv.expires_in || 0))} сек).`;
+    if (!hasOutgoing && hint && hint.textContent.includes("Приглашение активно")) hint.textContent = "";
+  } catch {}
+}
+
+async function pollIncomingInvite() {
+  try {
+    const data = await api("/api/battle/player/invites/pending");
+    const inv = data?.invite || null;
+    if (inv && !state.webBattleActive && state.activeInviteId !== inv.invite_id) {
+      await openInviteModal(inv.invite_id);
+    }
+  } catch {}
+}
+
+async function pollPendingNotice() {
+  try {
+    const notice = await api("/api/notifications/pending");
+    if (notice?.message) {
+      setError(String(notice.message));
+      if (notice.play_sound) void playPurchaseSound();
+    }
+  } catch {}
+}
+
 function setHpBar(fillEl, textEl, hp, maxHp) {
   if (!fillEl || !textEl) return;
   const cur = Math.max(0, Number(hp || 0));
   const max = Math.max(1, Number(maxHp || 1));
   textEl.textContent = `${cur}/${max}`;
   fillEl.style.width = `${Math.max(0, Math.min(100, (cur / max) * 100))}%`;
+}
+
+function showDamageHint(side, amount) {
+  const el = qs(side === "player" ? "battlePlayerDamageHint" : "battleBotDamageHint");
+  if (!el) return;
+  const dmg = Math.max(0, Number(amount || 0));
+  if (!dmg) return;
+  el.textContent = `-${dmg} урона`;
+  el.style.display = "inline-flex";
+  el.classList.add("isShow");
+  const prevTimer = state.damageHintTimers[side];
+  if (prevTimer) clearTimeout(prevTimer);
+  state.damageHintTimers[side] = setTimeout(() => {
+    el.classList.remove("isShow");
+    el.style.display = "none";
+    state.damageHintTimers[side] = null;
+  }, 1100);
+}
+
+function showMarkerDamage(side, amount) {
+  const dmg = Math.max(0, Number(amount || 0));
+  if (!dmg) return;
+  const marker = document.querySelector(`.battleMarker.${side === "player" ? "isPlayer" : "isBot"}`);
+  if (!marker) return;
+  marker.querySelector(".battleMarkerDamage")?.remove();
+  const badge = document.createElement("div");
+  badge.className = "battleMarkerDamage";
+  badge.textContent = `-${dmg}`;
+  marker.appendChild(badge);
+  const prev = state.markerDamageTimers[side];
+  if (prev) clearTimeout(prev);
+  state.markerDamageTimers[side] = setTimeout(() => {
+    badge.remove();
+    state.markerDamageTimers[side] = null;
+  }, 900);
 }
 
 function startCooldownTicker() {
@@ -987,34 +1326,53 @@ function lockMainTabs(locked) {
   });
 }
 
-function setBattlesTitle(isInBattle) {
+function setBattlesTitle(isInBattle, isPvp = false) {
   const title = qs("battlesTitle");
   if (!title) return;
-  title.textContent = isInBattle ? "БОЙ С БОТОМ" : "ВЫБОР РЕЖИМА";
+  if (!isInBattle) {
+    title.textContent = "ВЫБОР РЕЖИМА";
+    return;
+  }
+  title.textContent = isPvp ? "БОЙ С ИГРОКОМ" : "БОЙ С БОТОМ";
 }
 
 function resetBattleUI() {
   const modes = qs("battleModesGrid");
   const botCard = qs("battleBotCard");
+  const pvpCard = qs("battlePlayerCard");
   const arena = qs("battleArena");
   if (arena) arena.style.display = "none";
   if (botCard) botCard.style.display = "none";
+  if (pvpCard) pvpCard.style.display = "none";
   if (modes) modes.style.display = "grid";
+  const surrenderBtn = qs("battleSurrenderBtn");
+  if (surrenderBtn) surrenderBtn.disabled = false;
   stopBattlePolling();
   lockMainTabs(false);
   setBattlesTitle(false);
   state.webBattleActive = false;
+  state.battleEndModalKey = null;
+  state.battleMapSignature = "";
   void stopBattleAmbient();
+  void refreshLobbies();
 }
 
 function showBattleResultModal(win) {
   const modal = qs("battleResultModal");
   const title = qs("battleResultTitle");
   const banner = qs("battleResultBanner");
+  const icon = qs("battleResultIcon");
+  const text = qs("battleResultText");
   if (!modal || !title || !banner) return;
   const isWin = Boolean(win);
   title.textContent = isWin ? "ПОБЕДА" : "ПОРАЖЕНИЕ";
   banner.classList.toggle("isLose", !isWin);
+  if (icon) icon.textContent = isWin ? "🏆" : "💥";
+  if (text) {
+    text.textContent = isWin
+      ? "Ты уничтожил соперника! Отличный бой. Нажми вне окна, чтобы продолжить."
+      : "Бой проигран, но это опыт. Нажми вне окна, чтобы вернуться и попробовать снова.";
+  }
   modal.style.display = "flex";
 }
 
@@ -1030,6 +1388,16 @@ function showRankUpModal(st) {
 
 function hideRankUpModal() {
   const modal = qs("rankUpModal");
+  if (modal) modal.style.display = "none";
+}
+
+function openSurrenderModal() {
+  const modal = qs("surrenderModal");
+  if (modal) modal.style.display = "flex";
+}
+
+function closeSurrenderModal() {
+  const modal = qs("surrenderModal");
   if (modal) modal.style.display = "none";
 }
 
@@ -1066,35 +1434,94 @@ function stopBattlePolling() {
 }
 
 function renderBattleState(st) {
+  const prev = state.battleLastState;
   state.battleLastState = st;
+  if (st.active) {
+    state.activeInviteId = null;
+    hidePvpInviteModal();
+  }
   const modes = qs("battleModesGrid");
   const botCard = qs("battleBotCard");
+  const pvpCard = qs("battlePlayerCard");
   const arena = qs("battleArena");
   if (modes) modes.style.display = "none";
   if (botCard) botCard.style.display = "none";
+  if (pvpCard) pvpCard.style.display = "none";
   if (arena) arena.style.display = "block";
-  setBattlesTitle(true);
+  setBattlesTitle(true, Boolean(st.is_pvp));
 
-  renderBattleMap(st.map_size, st.player_pos, st.bot_pos);
+  const mapSig = JSON.stringify([
+    st.map_size,
+    st.player_pos,
+    st.bot_pos,
+    st.player_tank_image_url,
+    st.bot_tank_image_url,
+    Boolean(st.aiming),
+    Boolean(st.opponent_aiming),
+  ]);
+  if (state.battleMapSignature !== mapSig) {
+    state.battleMapSignature = mapSig;
+    renderBattleMap(
+      st.map_size,
+      st.player_pos,
+      st.bot_pos,
+      st.player_tank_image_url,
+      st.bot_tank_image_url,
+      Boolean(st.aiming),
+      Boolean(st.opponent_aiming),
+    );
+  }
 
   setHpBar(qs("battlePlayerHpFill"), qs("battlePlayerHpText"), st.player_hp, st.player_hp_max);
   setHpBar(qs("battleBotHpFill"), qs("battleBotHpText"), st.bot_hp, st.bot_hp_max);
+  const prevPlayerHp = Number(prev?.player_hp ?? st.player_hp ?? 0);
+  const prevBotHp = Number(prev?.bot_hp ?? st.bot_hp ?? 0);
+  const curPlayerHp = Number(st.player_hp ?? 0);
+  const curBotHp = Number(st.bot_hp ?? 0);
+  if (prev && curPlayerHp < prevPlayerHp) {
+    const dmg = prevPlayerHp - curPlayerHp;
+    showDamageHint("player", dmg);
+    showMarkerDamage("player", dmg);
+  }
+  if (prev && curBotHp < prevBotHp) {
+    const dmg = prevBotHp - curBotHp;
+    showDamageHint("bot", dmg);
+    showMarkerDamage("bot", dmg);
+  }
 
   const pImg = qs("battlePlayerTankImg");
-  if (pImg && st.player_tank_image_url) pImg.src = withCacheBust(absUrl(st.player_tank_image_url));
+  if (pImg && st.player_tank_image_url) {
+    const next = absUrl(st.player_tank_image_url);
+    if (pImg.src !== next) pImg.src = next;
+  }
   const bImg = qs("battleBotTankImg");
-  if (bImg && st.bot_tank_image_url) bImg.src = withCacheBust(absUrl(st.bot_tank_image_url));
+  if (bImg && st.bot_tank_image_url) {
+    const next = absUrl(st.bot_tank_image_url);
+    if (bImg.src !== next) bImg.src = next;
+  }
   const pW = qs("battlePlayerWeapon");
   if (pW) pW.textContent = `🔫 ${st.player_weapon_name || state.profile?.weapon || "—"}`;
   const pH = qs("battlePlayerHull");
-  if (pH) pH.textContent = `🛡 ${st.player_hull_name || state.profile?.hull || "—"}`;
+  if (pH) {
+    const turnMark = st.is_pvp ? (st.is_player_turn ? " • Ваш ход" : "") : "";
+    pH.textContent = `🛡 ${st.player_hull_name || state.profile?.hull || "—"}${turnMark}`;
+  }
   const bW = qs("battleBotWeapon");
   if (bW) bW.textContent = `🔫 ${st.bot_weapon_name || "—"}`;
+  const aimState = qs("battleAimState");
+  if (aimState) {
+    aimState.style.display = st.aiming ? "inline-flex" : "none";
+    aimState.classList.toggle("isActive", Boolean(st.aiming));
+  }
+  const oppTitle = qs("battleOpponentTitle");
+  if (oppTitle) oppTitle.textContent = st.is_pvp ? String(st.opponent_name || "Соперник") : "ПРОТИВНИК";
   const bH = qs("battleBotHull");
-  if (bH) bH.textContent = `🛡 ${st.bot_hull_name || "—"}`;
+  if (bH) {
+    const enemyTurn = st.is_pvp ? (!st.is_player_turn ? " • Ходит сейчас" : "") : "";
+    bH.textContent = `🛡 ${st.bot_hull_name || "—"}${enemyTurn}`;
+  }
 
-  const log = qs("battleLog");
-  if (log) log.textContent = String(st.log || "");
+  renderBattleLog(st.log || "");
 
   const cd = qs("battleCooldown");
   if (cd) {
@@ -1102,9 +1529,26 @@ function renderBattleState(st) {
     cd.textContent = remaining > 0 ? `Кулдаун: ${remaining}с` : "";
   }
   const isOnCooldown = Number(st.cooldown_remaining || 0) > 0;
+  const isLockedByTurn = Boolean(st.is_pvp) && !Boolean(st.is_player_turn) && !Boolean(st.game_over);
   const shootBtn = qs("battleShootBtn");
-  if (shootBtn) shootBtn.disabled = isOnCooldown || Boolean(st.game_over);
-  document.querySelectorAll("[data-battle-move]").forEach((b) => { b.disabled = isOnCooldown || Boolean(st.game_over); });
+  if (shootBtn) shootBtn.disabled = isOnCooldown || isLockedByTurn || Boolean(st.game_over);
+  // Disable move buttons if cooldown/turn locked/game over, or if movement would go out of bounds.
+  const size = Number(st.map_size || 5);
+  const pos = Array.isArray(st.player_pos) ? st.player_pos : null;
+  const r = pos ? Number(pos[0]) : 0;
+  const c = pos ? Number(pos[1]) : 0;
+  const blocked = {
+    up: pos ? r <= 0 : false,
+    down: pos ? r >= (size - 1) : false,
+    left: pos ? c <= 0 : false,
+    right: pos ? c >= (size - 1) : false,
+  };
+  document.querySelectorAll("[data-battle-move]").forEach((b) => {
+    const dir = String(b.getAttribute("data-battle-move") || "");
+    const outOfBounds = Boolean(blocked[dir]);
+    b.disabled = isOnCooldown || isLockedByTurn || Boolean(st.game_over) || outOfBounds;
+    b.classList.toggle("isDisabled", b.disabled);
+  });
 
   // Aim button (only if player weapon supports it; backend will reject otherwise, but we hide by default)
   const aimBtn = qs("battleAimBtn");
@@ -1113,7 +1557,7 @@ function renderBattleState(st) {
     const hasAiming = state.profile?.weapon === "shaft";
     aimBtn.style.display = hasAiming ? "block" : "none";
     aimBtn.textContent = st.aiming ? "Сбросить прицел" : "Прицел";
-    aimBtn.disabled = Boolean(st.cooldown_remaining > 0) || Boolean(st.game_over);
+    aimBtn.disabled = Boolean(st.cooldown_remaining > 0) || isLockedByTurn || Boolean(st.game_over);
   }
 
   state.webBattleActive = Boolean(st.active) && !Boolean(st.game_over);
@@ -1127,7 +1571,8 @@ function renderBattleState(st) {
   const turn = qs("battleTurnTimer");
   if (turn) {
     const t = Number(st.turn_remaining || 0);
-    turn.textContent = t > 0 ? `Время хода: ${t}с` : "";
+    const turnPrefix = st.is_pvp ? (st.is_player_turn ? "Ваш ход" : "Ход соперника") : "Время хода";
+    turn.textContent = t > 0 ? `${turnPrefix}: ${t}с` : "";
   }
 
   if (st.game_over) {
@@ -1139,11 +1584,19 @@ function renderBattleState(st) {
     if (aimBtn) aimBtn.disabled = true;
     const surrenderBtn = qs("battleSurrenderBtn");
     if (surrenderBtn) surrenderBtn.disabled = true;
-    if (st.rank_up) {
-      showRankUpModal(st);
-    } else {
-      showBattleResultModal(st.winner === "player");
+    const endKey = `${st.winner || ""}|${st.rank_up ? "1" : "0"}|${String(st.log || "").length}`;
+    if (state.battleEndModalKey !== endKey) {
+      state.battleEndModalKey = endKey;
+      if (st.rank_up) {
+        showRankUpModal(st);
+      } else {
+        showBattleResultModal(st.winner === "player");
+      }
     }
+  } else {
+    state.battleEndModalKey = null;
+    const surrenderBtn = qs("battleSurrenderBtn");
+    if (surrenderBtn) surrenderBtn.disabled = false;
   }
 }
 
@@ -1193,6 +1646,83 @@ function bindUI() {
     const b = e.target.closest(".mainTab");
     if (!b) return;
     await showTab(b.dataset.tab);
+  });
+
+  // PvP lobby UI (create / list / join)
+  qs("createLobbyBtn")?.addEventListener("click", () => {
+    if (state.webBattleActive) return;
+    openCreateLobbyModal();
+  });
+  qs("createLobbyCancelBtn")?.addEventListener("click", closeCreateLobbyModal);
+  qs("createLobbyModal")?.addEventListener("click", (e) => { if (e.target === qs("createLobbyModal")) closeCreateLobbyModal(); });
+  qs("lobbyAllowAllRanks")?.addEventListener("change", () => {
+    const allow = Boolean(qs("lobbyAllowAllRanks")?.checked);
+    const rangeWrap = qs("lobbyRankRange");
+    if (!rangeWrap) return;
+    rangeWrap.style.opacity = allow ? "0.45" : "1";
+    rangeWrap.style.pointerEvents = allow ? "none" : "auto";
+  });
+  qs("createLobbyConfirmBtn")?.addEventListener("click", async () => {
+    const btn = qs("createLobbyConfirmBtn");
+    if (!btn) return;
+    btn.disabled = true;
+    try {
+      await createLobbyFromModal();
+      showPurchaseLikeModal({
+        title: "БОЙ СОЗДАН",
+        label: "Ждем соперника (3 минуты).",
+        icon: "⚔",
+        name: "Открытый бой",
+        price: "",
+      });
+      void playPurchaseSound();
+    } catch (e) {
+      setError(prettyError(e));
+    } finally {
+      btn.disabled = false;
+    }
+  });
+
+  qs("battleLobbiesList")?.addEventListener("click", (e) => {
+    const btn = e.target.closest("[data-lobby]");
+    if (!btn) return;
+    const id = String(btn.getAttribute("data-lobby") || "");
+    const lb = (Array.isArray(state.lobbies) ? state.lobbies : []).find((x) => String(x.lobby_id) === id);
+    if (!lb) return;
+    openJoinLobbyModal(lb);
+  });
+  qs("joinLobbyCancelBtn")?.addEventListener("click", closeJoinLobbyModal);
+  qs("joinLobbyModal")?.addEventListener("click", (e) => { if (e.target === qs("joinLobbyModal")) closeJoinLobbyModal(); });
+  qs("joinLobbyConfirmBtn")?.addEventListener("click", async () => {
+    if (!state.joinLobbyId) return;
+    const btn = qs("joinLobbyConfirmBtn");
+    if (!btn) return;
+    btn.disabled = true;
+    try {
+      await api(`/api/battle/lobbies/${encodeURIComponent(state.joinLobbyId)}/join`, { method: "POST" });
+      closeJoinLobbyModal();
+      await refreshLobbies();
+      await battleFetchState();
+      clearError();
+    } catch (e) {
+      setError(prettyError(e));
+      await refreshLobbies();
+    } finally {
+      btn.disabled = false;
+    }
+  });
+  qs("leadersSortTabs")?.addEventListener("click", async (e) => {
+    const btn = e.target.closest(".leadersSortBtn");
+    if (!btn) return;
+    const nextSort = String(btn.dataset.sort || "experience");
+    if (nextSort === state.leaderboardSort) return;
+    state.leaderboardSort = nextSort;
+    try {
+      await refreshLeaderboard();
+      clearError();
+    } catch (err) {
+      setError(prettyError(err));
+    }
   });
   qs("garageCategoryTabs")?.addEventListener("click", (e) => {
     const b = e.target.closest(".subTab");
@@ -1307,9 +1837,7 @@ function bindUI() {
   qs("refreshBtn")?.addEventListener("click", async () => {
     try { await refreshAll(); clearError(); } catch (e) { setError(prettyError(e)); }
   });
-  qs("rewardCloseBtn")?.addEventListener("click", hideRewardModal);
   qs("rewardModal")?.addEventListener("click", (e) => { if (e.target === qs("rewardModal")) hideRewardModal(); });
-  qs("errorCloseBtn")?.addEventListener("click", hideErrorModal);
   qs("errorModal")?.addEventListener("click", (e) => { if (e.target === qs("errorModal")) hideErrorModal(); });
   qs("purchaseCloseBtn")?.addEventListener("click", hidePurchaseModal);
   qs("purchaseCloseTopBtn")?.addEventListener("click", hidePurchaseModal);
@@ -1328,17 +1856,42 @@ function bindUI() {
   qs("battleBotModeCard")?.addEventListener("click", () => {
     const modes = qs("battleModesGrid");
     const botCard = qs("battleBotCard");
+    const pvpCard = qs("battlePlayerCard");
     const arena = qs("battleArena");
     if (modes) modes.style.display = "none";
     if (arena) arena.style.display = "none";
+    if (pvpCard) pvpCard.style.display = "none";
     if (botCard) botCard.style.display = "flex";
+  });
+
+  qs("battlePlayerModeCard")?.addEventListener("click", () => {
+    const modes = qs("battleModesGrid");
+    const botCard = qs("battleBotCard");
+    const pvpCard = qs("battlePlayerCard");
+    const arena = qs("battleArena");
+    if (modes) modes.style.display = "none";
+    if (arena) arena.style.display = "none";
+    if (botCard) botCard.style.display = "none";
+    if (pvpCard) pvpCard.style.display = "flex";
   });
 
   qs("backToModesBtn")?.addEventListener("click", () => {
     const modes = qs("battleModesGrid");
     const botCard = qs("battleBotCard");
+    const pvpCard = qs("battlePlayerCard");
     const arena = qs("battleArena");
     if (botCard) botCard.style.display = "none";
+    if (pvpCard) pvpCard.style.display = "none";
+    if (arena) arena.style.display = "none";
+    if (modes) modes.style.display = "grid";
+  });
+  qs("backToModesFromPvpBtn")?.addEventListener("click", () => {
+    const modes = qs("battleModesGrid");
+    const botCard = qs("battleBotCard");
+    const pvpCard = qs("battlePlayerCard");
+    const arena = qs("battleArena");
+    if (botCard) botCard.style.display = "none";
+    if (pvpCard) pvpCard.style.display = "none";
     if (arena) arena.style.display = "none";
     if (modes) modes.style.display = "grid";
   });
@@ -1347,6 +1900,44 @@ function bindUI() {
     try {
       await battleStartBot();
       clearError();
+    } catch (e) {
+      setError(prettyError(e));
+    }
+  });
+
+  qs("sendPvpInviteBtn")?.addEventListener("click", async () => {
+    const input = qs("pvpUsernameInput");
+    const hint = qs("pvpInviteHint");
+    const btn = qs("sendPvpInviteBtn");
+    const username = String(input?.value || "").trim();
+    if (!username) {
+      if (hint) hint.textContent = "Введите @username игрока.";
+      return;
+    }
+    btn.disabled = true;
+    try {
+      await api("/api/battle/player/invite", {
+        method: "POST",
+        body: JSON.stringify({ username }),
+      });
+      await updateOutgoingInviteState();
+      if (hint) hint.textContent = "Приглашение отправлено. Ждем ответ игрока (до 2 минут).";
+      clearError();
+    } catch (e) {
+      if (hint) hint.textContent = "";
+      setError(prettyError(e));
+    } finally {
+      btn.disabled = false;
+    }
+  });
+  qs("cancelPvpInviteBtn")?.addEventListener("click", async () => {
+    if (!state.outgoingInviteId) return;
+    try {
+      await api(`/api/battle/player/invites/${encodeURIComponent(state.outgoingInviteId)}/cancel`, { method: "POST" });
+      state.outgoingInviteId = null;
+      await updateOutgoingInviteState();
+      const hint = qs("pvpInviteHint");
+      if (hint) hint.textContent = "Приглашение отменено.";
     } catch (e) {
       setError(prettyError(e));
     }
@@ -1368,27 +1959,112 @@ function bindUI() {
     try { await battleSendAction(aiming ? "cancel_aim" : "aim"); } catch (e) { setError(prettyError(e)); }
   });
 
-  qs("battleSurrenderBtn")?.addEventListener("click", handleSurrender);
-  qs("battleSurrenderBtn")?.addEventListener("pointerup", (e) => {
-    e.preventDefault();
-    void handleSurrender();
+  qs("battleSurrenderBtn")?.addEventListener("click", openSurrenderModal);
+  qs("surrenderCancelBtn")?.addEventListener("click", closeSurrenderModal);
+  qs("surrenderConfirmBtn")?.addEventListener("click", async () => {
+    closeSurrenderModal();
+    await handleSurrender();
   });
-  qs("battleSurrenderBtn")?.addEventListener("touchend", (e) => {
-    e.preventDefault();
-    void handleSurrender();
-  }, { passive: false });
+  qs("surrenderModal")?.addEventListener("click", (e) => {
+    if (e.target === qs("surrenderModal")) closeSurrenderModal();
+  });
 
-  qs("battleResultCloseBtn")?.addEventListener("click", hideBattleResultModal);
   qs("battleResultModal")?.addEventListener("click", (e) => { if (e.target === qs("battleResultModal")) hideBattleResultModal(); });
 
-  qs("rankUpCloseBtn")?.addEventListener("click", () => {
-    hideRankUpModal();
-    showBattleResultModal(state.battleLastState?.winner === "player");
-  });
   qs("rankUpModal")?.addEventListener("click", (e) => {
     if (e.target !== qs("rankUpModal")) return;
     hideRankUpModal();
-    showBattleResultModal(state.battleLastState?.winner === "player");
+    void hideBattleResultModal();
+  });
+
+  qs("pvpInviteCloseTopBtn")?.addEventListener("click", hidePvpInviteModal);
+  qs("pvpInviteModal")?.addEventListener("click", (e) => { if (e.target === qs("pvpInviteModal")) hidePvpInviteModal(); });
+  qs("pvpDeclineBtn")?.addEventListener("click", async () => {
+    if (!state.activeInviteId) return;
+    try {
+      await api(`/api/battle/player/invites/${encodeURIComponent(state.activeInviteId)}/decline`, { method: "POST" });
+      hidePvpInviteModal();
+      state.activeInviteId = null;
+      setError("Вы отклонили приглашение в бой.");
+    } catch (e) {
+      setError(prettyError(e));
+    }
+  });
+  qs("pvpAcceptBtn")?.addEventListener("click", async () => {
+    if (!state.activeInviteId) return;
+    try {
+      await api(`/api/battle/player/invites/${encodeURIComponent(state.activeInviteId)}/accept`, { method: "POST" });
+      hidePvpInviteModal();
+      state.activeInviteId = null;
+      await updateOutgoingInviteState();
+      await battleFetchState();
+    } catch (e) {
+      setError(prettyError(e));
+    }
+  });
+
+  window.addEventListener("keydown", async (e) => {
+    if (!state.webBattleActive || state.activeTab !== "battles") return;
+    if (e.defaultPrevented) return;
+
+    const target = e.target;
+    if (target instanceof HTMLInputElement || target instanceof HTMLTextAreaElement || target instanceof HTMLSelectElement) return;
+    if (target instanceof HTMLElement && target.isContentEditable) return;
+
+    const key = String(e.key || "").toLowerCase();
+    const code = String(e.code || "");
+    const dirByCode = {
+      KeyW: "up",
+      KeyA: "left",
+      KeyS: "down",
+      KeyD: "right",
+      ArrowUp: "up",
+      ArrowLeft: "left",
+      ArrowDown: "down",
+      ArrowRight: "right",
+    };
+    const dirByKey = {
+      w: "up",
+      a: "left",
+      s: "down",
+      d: "right",
+      "ц": "up",
+      "ф": "left",
+      "ы": "down",
+      "в": "right",
+      arrowup: "up",
+      arrowleft: "left",
+      arrowdown: "down",
+      arrowright: "right",
+    };
+    const dir = dirByCode[code] || dirByKey[key];
+    const isShoot = code === "KeyF" || key === "f" || key === "а";
+    const isAimToggle = code === "KeyG" || key === "g" || key === "п";
+    if (!dir && !isShoot && !isAimToggle) return;
+
+    e.preventDefault();
+    try {
+      if (dir) {
+        await battleSendAction("move", dir);
+      } else if (isShoot) {
+        if (e.repeat) return;
+        await battleSendAction("shoot");
+      } else if (isAimToggle) {
+        if (e.repeat) return;
+        const aimingNow = Boolean(state.battleLastState?.aiming);
+        await battleSendAction(aimingNow ? "cancel_aim" : "aim");
+      }
+    } catch (err) {
+      const msg = String(err?.message || "").toLowerCase();
+      if (
+        !msg.includes("ход другого игрока")
+        && !msg.includes("cooldown")
+        && !msg.includes("кулдаун")
+        && !msg.includes("не поддерживает прицеливание")
+      ) {
+        setError(prettyError(err));
+      }
+    }
   });
 
   // Don't auto-forfeit on hide/reload: active battle must be restorable on next open.
@@ -1398,9 +2074,7 @@ function bindUI() {
     try { void apiKeepalive("/api/battle/disconnect", { method: "POST" }); } catch {}
   };
   window.addEventListener("pagehide", sendDisconnectIfActive);
-  document.addEventListener("visibilitychange", () => {
-    if (document.visibilityState === "hidden") sendDisconnectIfActive();
-  });
+  // NOTE: do not treat simple app minimize/background as a disconnect.
 }
 
 async function main() {
@@ -1409,19 +2083,30 @@ async function main() {
   await showTab("profile");
   try {
     await initAuth();
+    try { await api("/api/session/ping", { method: "POST" }); } catch {}
+    try {
+      const inviteId = new URL(window.location.href).searchParams.get("invite");
+      if (inviteId) await openInviteModal(inviteId);
+    } catch {}
     await refreshAll();
+    await refreshLobbies();
+    await updateOutgoingInviteState();
+    await pollIncomingInvite();
+    await pollPendingNotice();
+    if (!state.invitePollTimer) {
+      state.invitePollTimer = setInterval(() => {
+        void api("/api/session/ping", { method: "POST" }).catch(() => {});
+        void updateOutgoingInviteState();
+        void pollIncomingInvite();
+        void pollPendingNotice();
+        void refreshLobbies();
+        // So inviter enters PvP without manual page reload when invite gets accepted.
+        void battlePollOnce();
+      }, 1500);
+    }
     clearError();
     await switchTrack();
     if (state.bgMusicEnabled) await applyMusic();
-
-    // Pending notifications (e.g., lost by exiting battle)
-    try {
-      const notice = await api("/api/notifications/pending");
-      if (notice?.message) {
-        setError(String(notice.message));
-        if (notice.play_sound) void playPurchaseSound();
-      }
-    } catch {}
 
     // Restore battle UI if server still has an active battle
     try {
