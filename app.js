@@ -222,6 +222,12 @@ const state = {
   battleAmbientStoppedForBattleId: null,
   battleResultAckBattleId: null,
   battleResultClosing: false,
+  battleResultShownBattleId: null,
+  settings: null,
+  settingsTab: "privacy",
+  confirmOnOk: null,
+  damageAcc: null,
+  markerDamageAcc: null,
 };
 
 const NAMES = { smoky: "Смоки", railgun: "Рельса", shaft: "Шафт", thunder: "Гром", hunter: "Хантер", titan: "Титан" };
@@ -277,16 +283,25 @@ function absUrl(path) {
     return new URL(path, window.location.origin).toString();
   } catch { return path; }
 }
-/** Аватар через API (тот же origin, без CORS с Telegram CDN). */
-function avatarUrlForUser(userId, storedUrl) {
-  const uid = Number(userId || 0);
-  if (uid > 0) return absUrl(withApiBase(`/api/avatar/${uid}`));
+function normalizeStoredAvatarUrl(storedUrl) {
   const s = String(storedUrl || "").trim();
   if (!s) return "";
   if (/^https?:\/\//i.test(s)) return s;
   return absUrl(s);
 }
-function withCacheBust(url) { return `${url}${url.includes("?") ? "&" : "?"}v=${Date.now()}`; }
+function avatarProxyUrlForUser(userId) {
+  const uid = Number(userId || 0);
+  if (uid <= 0) return "";
+  return absUrl(withApiBase(`/api/avatar/${uid}`));
+}
+/** Prefer DB avatar URL first, fallback to proxy. */
+function avatarUrlForUser(userId, storedUrl) {
+  const direct = normalizeStoredAvatarUrl(storedUrl);
+  if (direct) return direct;
+  return avatarProxyUrlForUser(userId);
+}
+const ASSET_CACHE_VERSION = "54";
+function withCacheBust(url) { return `${url}${url.includes("?") ? "&" : "?"}v=${ASSET_CACHE_VERSION}`; }
 function sleep(ms) { return new Promise((resolve) => setTimeout(resolve, ms)); }
 async function fadeAudioVolume(audio, from, to, durationMs = 300, shouldContinue = () => true) {
   if (!audio) return;
@@ -343,6 +358,11 @@ function hideErrorModal() {
 function hidePurchaseModal() {
   const modal = qs("purchaseModal");
   if (modal) modal.style.display = "none";
+}
+function hideConfirmModal() {
+  const modal = qs("confirmModal");
+  if (modal) modal.style.display = "none";
+  state.confirmOnOk = null;
 }
 function hideLootModal() {
   const modal = qs("lootModal");
@@ -744,6 +764,23 @@ function showPurchaseLikeModal({ title, label, icon, name, price }) {
   priceEl.textContent = String(price || "");
   modal.style.display = "flex";
 }
+
+function showConfirmModal({ title = "ПОДТВЕРДИТЕ", label = "Вы уверены?", icon = "⚑", name = "—", meta = "", onOk = null }) {
+  const modal = qs("confirmModal");
+  if (!modal) return;
+  const t = qs("confirmTitle");
+  const l = qs("confirmLabel");
+  const i = qs("confirmIcon");
+  const n = qs("confirmName");
+  const m = qs("confirmMeta");
+  if (t) t.textContent = String(title || "ПОДТВЕРДИТЕ");
+  if (l) l.textContent = String(label || "");
+  if (i) i.textContent = String(icon || "⚑");
+  if (n) n.textContent = String(name || "—");
+  if (m) m.textContent = String(meta || "");
+  state.confirmOnOk = typeof onOk === "function" ? onOk : null;
+  modal.style.display = "flex";
+}
 function showPurchaseModal(item) {
   const modal = qs("purchaseModal");
   const name = qs("purchaseItemName");
@@ -835,16 +872,22 @@ function renderHud() {
   if (logo) {
     const fromProfile = String(state.profile?.avatar_url || "").trim();
     const fromTg = String(state.avatarUrl || "").trim();
+    const rawAvatar = fromProfile || fromTg;
+    const fallbackAvatar = rawAvatar ? avatarProxyUrlForUser(state.profile?.user_id) : "";
     const nextAvatar = state.profile?.user_id
-      ? avatarUrlForUser(state.profile.user_id, fromProfile || fromTg)
+      ? avatarUrlForUser(state.profile.user_id, rawAvatar)
       : (fromProfile ? absUrl(fromProfile) : fromTg ? absUrl(fromTg) : "");
-    const sig = `${state.profile.user_id}|${fromProfile}|${fromTg}`;
+    const sig = `${state.profile.user_id}|${nextAvatar}|${fallbackAvatar}`;
     if (sig !== state.hudAvatarSig) {
       state.hudAvatarSig = sig;
       logo.referrerPolicy = "no-referrer";
       logo.removeAttribute("crossorigin");
       logo.src = nextAvatar ? nextAvatar : withCacheBust(absUrl("/images/webapp/logo.png"));
       logo.onerror = () => {
+        if (fallbackAvatar && logo.src !== fallbackAvatar) {
+          logo.src = fallbackAvatar;
+          return;
+        }
         logo.onerror = null;
         logo.src = withCacheBust(absUrl("/images/webapp/logo.png"));
       };
@@ -923,6 +966,7 @@ function leaderboardRowHtml(row, isMe = false) {
   const place = Number(row.place || 0) > 0 ? String(row.place) : "—";
   const uid = Number(row.user_id || 0);
   const avatar = uid > 0 ? avatarUrlForUser(uid, row.avatar_url) : (row.avatar_url ? absUrl(String(row.avatar_url)) : "");
+  const avatarFallback = uid > 0 ? avatarProxyUrlForUser(uid) : "";
   const rankImg = row.rank_image_url ? absUrl(String(row.rank_image_url)) : "";
   const rankName = String(row.rank_name || "Звание");
   const name = String(row.name || "Игрок");
@@ -938,7 +982,7 @@ function leaderboardRowHtml(row, isMe = false) {
     <span class="leadersPlace">${place}</span>
     <span class="leadersIdentity">
       <span class="leadersAvatar${avatar ? "" : " isFallback"}">
-        ${avatar ? `<img src="${avatar}" alt="${name}" loading="lazy" referrerpolicy="no-referrer" onerror="this.closest('.leadersAvatar')?.classList.add('isFallback');this.remove();">` : ""}
+        ${avatar ? `<img src="${avatar}" data-alt-src="${avatarFallback}" alt="${name}" loading="lazy" referrerpolicy="no-referrer" onerror="const alt=this.dataset.altSrc||'';if(alt&&this.src!==alt){this.src=alt;return;}this.closest('.leadersAvatar')?.classList.add('isFallback');this.remove();">` : ""}
         <span class="leadersAvatarFallback">${initial}</span>
       </span>
       <span class="leadersNameWrap">
@@ -1152,14 +1196,17 @@ async function showRewardModal(result) {
   modal.style.display = "flex";
   await sleep(30);
   box.classList.add("shake");
-  // 1 second suspense, then smooth reveal (glow + opened container + drop + text).
-  await sleep(1000);
+  // Keep reveal fast on mobile to avoid long "frozen" feeling.
+  await sleep(420);
   card.className = `rewardCard rarity-${rarity}`; // glow appears smoothly via CSS transition
   contImg.classList.add("isHidden");
   await sleep(160);
   contImg.src = openedSrc;
   dropImg.src = dropSrc;
-  await Promise.all([waitForImageLoad(contImg, 2600), waitForImageLoad(dropImg, 2600)]);
+  await Promise.race([
+    Promise.all([waitForImageLoad(contImg, 900), waitForImageLoad(dropImg, 900)]),
+    sleep(520),
+  ]);
   contImg.classList.remove("isHidden");
   const rewardText = result.reward_type === "unlock"
     ? `Получено: ${NAMES[result.reward_key] || result.reward_key}`
@@ -1187,22 +1234,34 @@ async function refreshTabContext(tab) {
     return;
   }
   if (tab === "leaders") {
-    state.leaderboard = await api(`/api/leaderboard?sort=${p}&limit=${lim}`);
+    const [leaderboard, profile] = await Promise.all([
+      api(`/api/leaderboard?sort=${p}&limit=${lim}`),
+      api("/api/profile/me"),
+    ]);
+    state.leaderboard = leaderboard;
+    state.profile = profile;
     renderLeaderboard();
-    state.profile = await api("/api/profile/me");
     renderHud();
     return;
   }
   if (tab === "shop") {
-    state.shop = await api("/api/shop/items");
-    state.profile = await api("/api/profile/me");
+    const [shop, profile] = await Promise.all([
+      api("/api/shop/items"),
+      api("/api/profile/me"),
+    ]);
+    state.shop = shop;
+    state.profile = profile;
     renderHud();
     renderShop();
     return;
   }
   if (tab === "containers") {
-    state.containersInfo = await api("/api/containers");
-    state.profile = await api("/api/profile/me");
+    const [containersInfo, profile] = await Promise.all([
+      api("/api/containers"),
+      api("/api/profile/me"),
+    ]);
+    state.containersInfo = containersInfo;
+    state.profile = profile;
     renderHud();
     renderContainers();
     return;
@@ -1217,16 +1276,26 @@ async function refreshTabContext(tab) {
     return;
   }
   if (tab === "battles") {
-    state.profile = await api("/api/profile/me");
+    const [profile, st] = await Promise.all([
+      api("/api/profile/me"),
+      api("/api/battle/state").catch(() => null),
+    ]);
+    state.profile = profile;
     renderHud();
     // Force immediate lobby refresh when opening the tab.
     state.lastLobbiesFetchAt = 0;
     void refreshLobbies();
     try {
-      const st = await api("/api/battle/state");
+      if (st) {
       renderBattleState(st);
       if (st.active && !st.game_over) startBattlePolling();
+      }
     } catch {}
+    return;
+  }
+  if (tab === "settings") {
+    state.settings = await api("/api/settings");
+    renderSettings();
     return;
   }
 }
@@ -1241,7 +1310,7 @@ async function showTab(tab, { force = false } = {}) {
   }
   state.activeTab = tab;
   document.querySelectorAll(".mainTab").forEach((b) => b.classList.toggle("isActive", b.dataset.tab === tab));
-  ["profile", "leaders", "battles", "garage", "shop", "containers"].forEach((key) => {
+  ["profile", "leaders", "battles", "garage", "shop", "containers", "settings"].forEach((key) => {
     const panel = qs(`panel${key[0].toUpperCase()}${key.slice(1)}`);
     if (panel) panel.style.display = key === tab ? "block" : "none";
   });
@@ -1252,15 +1321,19 @@ async function showTab(tab, { force = false } = {}) {
 }
 
 async function refreshAll() {
-  state.profile = await api("/api/profile/me");
-  state.shop = await api("/api/shop/items");
-  state.containersInfo = await api("/api/containers");
+  const [profile, shop, containersInfo, leaderboard] = await Promise.all([
+    api("/api/profile/me"),
+    api("/api/shop/items"),
+    api("/api/containers"),
+    api(`/api/leaderboard?sort=${encodeURIComponent(state.leaderboardSort)}&limit=${encodeURIComponent(state.leaderboardLimit)}`),
+  ]);
+  state.profile = profile;
+  state.shop = shop;
+  state.containersInfo = containersInfo;
+  state.leaderboard = leaderboard;
   if (!state.ranks) {
     try { state.ranks = (await api("/api/ranks"))?.ranks || []; } catch { state.ranks = []; }
   }
-  state.leaderboard = await api(
-    `/api/leaderboard?sort=${encodeURIComponent(state.leaderboardSort)}&limit=${encodeURIComponent(state.leaderboardLimit)}`
-  );
   applyBackgroundImage();
   state.selectedWeapon = state.profile.weapon;
   state.selectedHull = state.profile.hull;
@@ -1270,6 +1343,55 @@ async function refreshAll() {
   renderShop();
   renderContainers();
   renderLeaderboard();
+}
+
+function parseAllowlistInput(text) {
+  return String(text || "")
+    .split(",")
+    .map((x) => x.trim())
+    .filter(Boolean)
+    .map((x) => x.startsWith("@") ? x.slice(1) : x)
+    .map((x) => x.toLowerCase());
+}
+
+function renderSettings() {
+  const s = state.settings || {};
+  const block = qs("setBlockInvites");
+  const allow = qs("setInvitesAllowlist");
+  const showA = qs("setShowAvatar");
+  const vis = qs("setChatVisibility");
+  if (block) block.checked = Boolean(s.block_battle_invites);
+  if (allow) allow.value = (Array.isArray(s.invites_allowlist) ? s.invites_allowlist : []).map((x) => `@${x}`).join(", ");
+  if (showA) showA.checked = Boolean(s.show_avatar ?? true);
+  if (vis) vis.value = String(s.chat_visibility || "on");
+  // Tabs
+  const privacy = qs("settingsPrivacy");
+  const chat = qs("settingsChat");
+  if (privacy) privacy.style.display = state.settingsTab === "privacy" ? "block" : "none";
+  if (chat) chat.style.display = state.settingsTab === "chat" ? "block" : "none";
+  qs("settingsTabs")?.querySelectorAll(".subTab").forEach((b) => b.classList.toggle("isActive", b.dataset.settings === state.settingsTab));
+
+  // Apply chat visibility to UI immediately
+  applyChatVisibilityToUI(String(s.chat_visibility || "on"));
+}
+
+function applyChatVisibilityToUI(mode) {
+  const m = String(mode || "on").toLowerCase();
+  const globalCard = qs("globalChatCard");
+  const battleWrap = qs("battleChatWrap");
+  if (m === "off") {
+    if (globalCard) globalCard.style.display = "none";
+    if (battleWrap) battleWrap.style.display = "none";
+    return;
+  }
+  if (m === "battle_only") {
+    if (globalCard) globalCard.style.display = "none";
+    // battle chat only visible in arena
+    if (battleWrap) battleWrap.style.display = state.webBattleActive ? "block" : "none";
+    return;
+  }
+  if (globalCard) globalCard.style.display = "block";
+  if (battleWrap) battleWrap.style.display = state.webBattleActive ? "block" : "none";
 }
 
 function escapeHtml(str) {
@@ -1310,21 +1432,30 @@ function renderGlobalChatMessages(msgs, { append = true } = {}) {
   const premBg = absUrl(PREMIUM_BADGE_PATH);
   const html = arr.map((m) => {
     const icon = absUrl(String(m.rank_image_url || ""));
+    const avatar = avatarUrlForUser(m.user_id, m.avatar_url);
+    const avatarFallback = avatarProxyUrlForUser(m.user_id);
     const name = escapeHtml(m.name || "Игрок");
+    const nameInitial = name.trim().charAt(0).toUpperCase() || "U";
     const text = escapeHtml(m.message || "");
     const nickInner = m.is_premium
-      ? `<span class="chatNickPremiumGlow"><span class="chatNick chatNickPremium">${name}:</span></span>`
-      : `<span class="chatNick">${name}:</span>`;
+      ? `<span class="chatNickPremiumGlow"><span class="chatNickInline chatNickPremium">${name}</span></span>`
+      : `<span class="chatNickInline">${name}</span>`;
     const rankCell = icon
       ? (m.is_premium
         ? `<span class="chatRankPremiumStack"><img class="chatPremiumBg" src="${premBg}" alt=""><img class="chatRankIcon" src="${icon}" alt="rank" loading="lazy" /></span>`
         : `<img class="chatRankIcon" src="${icon}" alt="rank" loading="lazy" />`)
       : `<span class="chatRankPlaceholder" aria-hidden="true"></span>`;
+    const avatarCell = `<span class="chatAvatar${avatar ? "" : " isFallback"}">
+      ${avatar ? `<img src="${avatar}" data-alt-src="${avatarFallback}" alt="${name}" loading="lazy" referrerpolicy="no-referrer" onerror="const alt=this.dataset.altSrc||'';if(alt&&this.src!==alt){this.src=alt;return;}this.closest('.chatAvatar')?.classList.add('isFallback');this.remove();">` : ""}
+      <span class="chatAvatarFallback">${nameInitial}</span>
+    </span>`;
+    const flag = `<button class="chatFlagBtn" type="button" title="Пожаловаться" data-report-scope="global" data-report-id="${escapeHtml(String(m.id ?? ""))}">⚑</button>`;
     return `<div class="chatMsg" data-chat-msg-id="${escapeHtml(String(m.id ?? ""))}">
-      ${rankCell}
-      <div class="chatMsgBody">
-        <div class="chatMsgTop">${nickInner}</div>
-        <div class="chatText">${text}</div>
+      <div class="chatInlineRow chatInlineRow--full">
+        ${avatarCell}
+        ${rankCell}
+        <div class="chatMsgLine">${nickInner}<span class="chatColon">:</span> ${text}</div>
+        ${flag}
       </div>
     </div>`;
   }).join("");
@@ -1360,18 +1491,26 @@ function renderBattleChatMessages(msgs, { append = true } = {}) {
   const premBg = absUrl(PREMIUM_BADGE_PATH);
   const html = arr.map((m) => {
     const name = escapeHtml(m.name || "Игрок");
+    const avatar = avatarUrlForUser(m.user_id, m.avatar_url);
+    const avatarFallback = avatarProxyUrlForUser(m.user_id);
+    const nameInitial = name.trim().charAt(0).toUpperCase() || "U";
     const text = escapeHtml(m.message || "");
     const rank = absUrl(String(m.rank_image_url || ""));
     const nickBlock = m.is_premium
-      ? `<span class="chatNickPremiumGlow"><b class="battleChatNick battleChatNickPremium">${name}:</b></span>`
-      : `<b class="battleChatNick">${name}:</b>`;
+      ? `<span class="chatNickPremiumGlow"><span class="chatNickInline battleChatNickPremium">${name}</span></span>`
+      : `<span class="chatNickInline">${name}</span>`;
     const rankCell = rank
       ? (m.is_premium
         ? `<span class="chatRankPremiumStack battleChatRankStack"><img class="chatPremiumBg" src="${premBg}" alt=""><img class="chatRankIcon" src="${rank}" alt="rank" loading="lazy" /></span>`
         : `<img class="chatRankIcon" src="${rank}" alt="rank" loading="lazy" />`)
       : `<span class="chatRankPlaceholder" aria-hidden="true"></span>`;
-    const body = `<span class="battleChatMsgInline">${nickBlock}<span class="battleChatMsgRest"> ${text}</span></span>`;
-    return `<div class="battleChatLine" data-chat-msg-id="${escapeHtml(String(m.id ?? ""))}">${rankCell}${body}</div>`;
+    const avatarCell = `<span class="chatAvatar chatAvatarSmall${avatar ? "" : " isFallback"}">
+      ${avatar ? `<img src="${avatar}" data-alt-src="${avatarFallback}" alt="${name}" loading="lazy" referrerpolicy="no-referrer" onerror="const alt=this.dataset.altSrc||'';if(alt&&this.src!==alt){this.src=alt;return;}this.closest('.chatAvatar')?.classList.add('isFallback');this.remove();">` : ""}
+      <span class="chatAvatarFallback">${nameInitial}</span>
+    </span>`;
+    const flag = `<button class="chatFlagBtn" type="button" title="Пожаловаться" data-report-scope="battle" data-report-id="${escapeHtml(String(m.id ?? ""))}" data-report-battle="${escapeHtml(String(state.currentBattleId || ""))}">⚑</button>`;
+    const body = `<span class="battleChatMsgInline"><span class="battleChatMsgRest">${nickBlock}<span class="chatColon">:</span> ${text}</span></span>`;
+    return `<div class="battleChatLine" data-chat-msg-id="${escapeHtml(String(m.id ?? ""))}">${avatarCell}${rankCell}${body}${flag}</div>`;
   }).join("");
   if (append) list.insertAdjacentHTML("beforeend", html);
   else list.innerHTML = html;
@@ -1392,6 +1531,7 @@ function showToast(text, { title = "ЧАТ БОЯ", ms = 2600 } = {}) {
     <div class="toastBar"><div class="toastBarFill"></div></div>
   `.trim();
   host.appendChild(el);
+  void playPurchaseSound();
   window.setTimeout(() => {
     try { el.remove(); } catch {}
   }, Math.max(800, Number(ms) || 2600));
@@ -1445,6 +1585,7 @@ function openCreateLobbyModal() {
   const maxSel = qs("lobbyMaxRank");
   const rangeWrap = qs("lobbyRankRange");
   const cov = qs("lobbyCoverMap");
+  const noStats = qs("lobbyNoStatsUpdate");
   if (!modal || !name || !allow || !minSel || !maxSel || !rangeWrap) return;
   name.value = "";
   allow.checked = true;
@@ -1453,6 +1594,7 @@ function openCreateLobbyModal() {
   minSel.innerHTML = ranksOptionsHtml(1);
   maxSel.innerHTML = ranksOptionsHtml(31);
   if (cov) cov.value = "random";
+  if (noStats) noStats.checked = false;
   modal.style.display = "flex";
 }
 
@@ -1524,12 +1666,16 @@ function lobbyCardHtml(lb) {
   const expiresAt = Date.now() + time * 1000;
   const rankStrip = lobbyRankRangeStripHtml(lb);
   const mapBrief = escapeHtml(lobbyCoverMapCaption(lb));
+  const statsTag = lb?.no_stats_update
+    ? `<span class="battleLobbyTag">📊 Стата: выкл</span>`
+    : `<span class="battleLobbyTag">📊 Стата: вкл</span>`;
   return `<button class="battleLobbyCard" type="button" data-lobby="${String(lb.lobby_id || "")}">
     <div class="battleLobbyName">${title}</div>
     <div class="battleLobbyMapBrief">${mapBrief}</div>
     <div class="battleLobbyMeta">
       <span class="battleLobbyTag battleLobbyCreatorTag">${lobbyCreatorRankRowHtml(lb)}<span class="battleLobbyCreatorName">${creator}</span></span>
       <span class="battleLobbyTag battleLobbyRangeTag">${rankStrip}</span>
+      ${statsTag}
       <span class="battleLobbyTag battleLobbyTimerTag" data-expires-at="${expiresAt}">⏳ ${time}с</span>
     </div>
   </button>`;
@@ -1564,18 +1710,33 @@ function lobbiesContentKey(lobbies) {
 }
 
 function tickLobbyTimersDom() {
+  let removedAny = false;
   document.querySelectorAll(".battleLobbyTimerTag[data-expires-at]").forEach((el) => {
     const exp = Number(el.dataset.expiresAt);
     if (!Number.isFinite(exp)) return;
     const s = Math.max(0, Math.floor((exp - Date.now()) / 1000));
     el.textContent = `⏳ ${s}с`;
+    if (s <= 0) {
+      const card = el.closest("button.battleLobbyCard");
+      if (card) {
+        removedAny = true;
+        try { card.remove(); } catch {}
+      }
+    }
   });
+  if (removedAny) {
+    // Force refresh to sync with server cleanup.
+    state.lastLobbiesFetchAt = 0;
+    void refreshLobbies(true);
+  }
 }
 
 function ensureLobbyTicker() {
-  // Disabled: frequent DOM updates here caused "constant refresh" feeling in Battles tab.
-  // Lobby timers will update on each server refreshLobbies() call or on manual refresh.
-  return;
+  if (state.lobbyTicker) return;
+  // Lightweight ticker: only updates countdown text + auto-removes expired cards.
+  state.lobbyTicker = window.setInterval(() => {
+    tickLobbyTimersDom();
+  }, 450);
 }
 
 function stopLobbyTicker() {
@@ -1623,7 +1784,10 @@ function renderLobbies() {
   const show = modesVisible && !inArena && !botCardVisible && !pvpCardVisible;
   if (createBtnWrap) createBtnWrap.style.display = show ? "flex" : "none";
   section.style.display = show ? "block" : "none";
-  if (!show) return;
+  if (!show) {
+    stopLobbyTicker();
+    return;
+  }
   const lobbies = Array.isArray(state.lobbies) ? state.lobbies : [];
   if (!lobbies.length) {
     stopLobbyTicker();
@@ -1675,6 +1839,7 @@ async function createLobbyFromModal() {
   const allow = Boolean(qs("lobbyAllowAllRanks")?.checked);
   const minId = Number(qs("lobbyMinRank")?.value || 1);
   const maxId = Number(qs("lobbyMaxRank")?.value || 31);
+  const noStatsUpdate = Boolean(qs("lobbyNoStatsUpdate")?.checked);
   let coverMap = String(qs("lobbyCoverMap")?.value || "random").trim().toLowerCase();
   if (!["random", "with", "without"].includes(coverMap)) coverMap = "random";
   const created = await api("/api/battle/lobbies/create", {
@@ -1685,6 +1850,7 @@ async function createLobbyFromModal() {
       min_rank_id: allow ? null : minId,
       max_rank_id: allow ? null : maxId,
       cover_map: coverMap,
+      no_stats_update: noStatsUpdate,
     }),
   });
   const lid = String(created?.lobby?.lobby_id || "").trim();
@@ -1953,7 +2119,9 @@ function showDamageHint(side, amount) {
   if (!el) return;
   const dmg = Math.max(0, Number(amount || 0));
   if (!dmg) return;
-  el.textContent = `-${dmg} урона`;
+  state.damageAcc ??= { player: 0, bot: 0 };
+  state.damageAcc[side] = Math.max(0, Number(state.damageAcc[side] || 0)) + dmg;
+  el.textContent = `-${state.damageAcc[side]} урона`;
   el.style.display = "inline-flex";
   el.classList.add("isShow");
   const prevTimer = state.damageHintTimers[side];
@@ -1962,24 +2130,28 @@ function showDamageHint(side, amount) {
     el.classList.remove("isShow");
     el.style.display = "none";
     state.damageHintTimers[side] = null;
+    if (state.damageAcc) state.damageAcc[side] = 0;
   }, 1100);
 }
 
 function showMarkerDamage(side, amount) {
   const dmg = Math.max(0, Number(amount || 0));
   if (!dmg) return;
+  state.markerDamageAcc ??= { player: 0, bot: 0 };
+  state.markerDamageAcc[side] = Math.max(0, Number(state.markerDamageAcc[side] || 0)) + dmg;
   const marker = document.querySelector(`.battleMarker.${side === "player" ? "isPlayer" : "isBot"}`);
   if (!marker) return;
   marker.querySelector(".battleMarkerDamage")?.remove();
   const badge = document.createElement("div");
   badge.className = "battleMarkerDamage";
-  badge.textContent = `-${dmg}`;
+  badge.textContent = `-${state.markerDamageAcc[side]}`;
   marker.appendChild(badge);
   const prev = state.markerDamageTimers[side];
   if (prev) clearTimeout(prev);
   state.markerDamageTimers[side] = setTimeout(() => {
     badge.remove();
     state.markerDamageTimers[side] = null;
+    if (state.markerDamageAcc) state.markerDamageAcc[side] = 0;
   }, 900);
 }
 
@@ -2077,13 +2249,16 @@ function resetBattleUI() {
   void refreshLobbies();
 }
 
-function showBattleResultModal(win, reasonText = "") {
+function showBattleResultModal(win, reasonText = "", battleId = "") {
   const modal = qs("battleResultModal");
   const title = qs("battleResultTitle");
   const banner = qs("battleResultBanner");
   const icon = qs("battleResultIcon");
   const text = qs("battleResultText");
   if (!modal || !title || !banner) return;
+  const bid = String(battleId || "");
+  if (bid && state.battleResultShownBattleId === bid && modal.style.display === "flex") return;
+  if (bid) state.battleResultShownBattleId = bid;
   const isWin = Boolean(win);
   title.textContent = isWin ? "ПОБЕДА" : "ПОРАЖЕНИЕ";
   banner.classList.toggle("isLose", !isWin);
@@ -2094,6 +2269,10 @@ function showBattleResultModal(win, reasonText = "") {
       : "Бой проигран, но это опыт. Нажми вне окна, чтобы вернуться и попробовать снова."));
   }
   modal.style.display = "flex";
+  modal.classList.remove("isOpen");
+  requestAnimationFrame(() => {
+    modal.classList.add("isOpen");
+  });
 }
 
 function showRankUpModal(st) {
@@ -2127,7 +2306,10 @@ async function hideBattleResultModal() {
   const battleId = String(state.currentBattleId || state.battleLastState?.battle_id || "");
   if (battleId) state.battleResultAckBattleId = battleId;
   const modal = qs("battleResultModal");
-  if (modal) modal.style.display = "none";
+  if (modal) {
+    modal.classList.remove("isOpen");
+    window.setTimeout(() => { try { modal.style.display = "none"; } catch {} }, 240);
+  }
   // Tell server to drop finished battle so a new one can start immediately.
   try {
     await apiKeepalive("/api/battle/ack", { method: "POST" });
@@ -2165,7 +2347,7 @@ function startBattlePolling() {
   if (state.battlePollTimer) return;
   state.battlePollTimer = setInterval(() => {
     void battlePollOnce();
-  }, 2000);
+  }, 350);
 }
 
 function stopBattlePolling() {
@@ -2497,7 +2679,7 @@ function renderBattleState(st) {
       }
     } else if (state.battleOutcomeModalBattleId !== battleId) {
       state.battleOutcomeModalBattleId = battleId;
-      showBattleResultModal(st.winner === "player", battleFinishReasonText(st));
+      showBattleResultModal(st.winner === "player", battleFinishReasonText(st), battleId);
     }
   } else {
     const activeBattleId = String(st.battle_id || "");
@@ -2560,6 +2742,45 @@ function bindUI() {
     if (!b) return;
     await showTab(b.dataset.tab);
   });
+
+  // Settings sub-tabs
+  qs("settingsTabs")?.addEventListener("click", (e) => {
+    const b = e.target.closest(".subTab");
+    if (!b) return;
+    const key = String(b.dataset.settings || "privacy");
+    if (!["privacy", "chat"].includes(key)) return;
+    state.settingsTab = key;
+    renderSettings();
+  });
+
+  async function saveSettingsPrivacy() {
+    const payload = {
+      block_battle_invites: Boolean(qs("setBlockInvites")?.checked),
+      invites_allowlist: parseAllowlistInput(qs("setInvitesAllowlist")?.value || ""),
+      show_avatar: Boolean(qs("setShowAvatar")?.checked),
+    };
+    try {
+      state.settings = await api("/api/settings", { method: "POST", body: JSON.stringify(payload) });
+      renderSettings();
+      showToast("Настройки сохранены.", { title: "НАСТРОЙКИ", ms: 2200 });
+    } catch (e) {
+      showToast(prettyError(e), { title: "ОШИБКА", ms: 2600 });
+    }
+  }
+  async function saveSettingsChat() {
+    const payload = {
+      chat_visibility: String(qs("setChatVisibility")?.value || "on"),
+    };
+    try {
+      state.settings = await api("/api/settings", { method: "POST", body: JSON.stringify(payload) });
+      renderSettings();
+      showToast("Настройки сохранены.", { title: "НАСТРОЙКИ", ms: 2200 });
+    } catch (e) {
+      showToast(prettyError(e), { title: "ОШИБКА", ms: 2600 });
+    }
+  }
+  qs("settingsSaveBtn")?.addEventListener("click", saveSettingsPrivacy);
+  qs("settingsSaveBtn2")?.addEventListener("click", saveSettingsChat);
 
   // PvP lobby UI (create / list / join)
   qs("createLobbyBtn")?.addEventListener("click", () => {
@@ -2643,6 +2864,45 @@ function bindUI() {
     }
   });
 
+  // Report buttons in chats (delegated)
+  const onReportClick = (e) => {
+    const btn = e.target.closest(".chatFlagBtn");
+    if (!btn) return;
+    const scope = String(btn.getAttribute("data-report-scope") || "");
+    const msgId = Number(btn.getAttribute("data-report-id") || 0);
+    const battleId = String(btn.getAttribute("data-report-battle") || "");
+    if (!msgId || !["global", "battle"].includes(scope)) return;
+    showConfirmModal({
+      title: "ЖАЛОБА",
+      label: "Отправить жалобу на это сообщение?",
+      icon: "⚑",
+      name: `Сообщение #${msgId}`,
+      meta: scope === "battle" ? "Чат боя" : "Общий чат",
+      onOk: async () => {
+        hideConfirmModal();
+        try {
+          await api("/api/chat/report", {
+            method: "POST",
+            body: JSON.stringify({ scope, message_id: msgId, battle_id: battleId || null }),
+          });
+          showToast("Жалоба отправлена администраторам.", { title: "ЖАЛОБА", ms: 2200 });
+        } catch (err) {
+          setError(prettyError(err));
+        }
+      },
+    });
+  };
+  qs("globalChatList")?.addEventListener("click", onReportClick);
+  qs("battleChatList")?.addEventListener("click", onReportClick);
+
+  qs("confirmCancelBtn")?.addEventListener("click", hideConfirmModal);
+  qs("confirmModal")?.addEventListener("click", (e) => { if (e.target === qs("confirmModal")) hideConfirmModal(); });
+  qs("confirmOkBtn")?.addEventListener("click", async () => {
+    const fn = state.confirmOnOk;
+    if (!fn) return hideConfirmModal();
+    try { await fn(); } catch {}
+  });
+
   // Battle chat
   qs("battleChatForm")?.addEventListener("submit", async (e) => {
     e.preventDefault();
@@ -2716,7 +2976,14 @@ function bindUI() {
     try {
       const result = await api("/api/containers/open", { method: "POST" });
       await showRewardModal(result);
-      await refreshAll();
+      const [profile, containersInfo] = await Promise.all([
+        api("/api/profile/me"),
+        api("/api/containers"),
+      ]);
+      state.profile = profile;
+      state.containersInfo = containersInfo;
+      renderHud();
+      renderContainers();
       clearError();
     } catch (e) {
       setError(prettyError(e));
@@ -3045,11 +3312,12 @@ async function main() {
       if (inviteId) await openInviteModal(inviteId);
     } catch {}
     await refreshAll();
+    try { state.settings = await api("/api/settings"); renderSettings(); } catch {}
     await refreshLobbies();
     // Prime global chat
     state.globalChatAfterId = 0;
     qs("globalChatList") && (qs("globalChatList").innerHTML = "");
-    await pollGlobalChat();
+    if (String(state.settings?.chat_visibility || "on") === "on") await pollGlobalChat();
     await updateOutgoingInviteState();
     await pollIncomingInvite();
     await pollPendingNotice();
@@ -3059,16 +3327,14 @@ async function main() {
         void updateOutgoingInviteState();
         void pollIncomingInvite();
         void pollPendingNotice();
-        void pollGlobalChat();
+        if (String(state.settings?.chat_visibility || "on") === "on") void pollGlobalChat();
         if (state.webBattleActive) void pollBattleChat();
         // Let inviter enter PvP without manual reload when invite gets accepted,
         // but don't constantly rerender battles UI off-tab.
-        if (state.webBattleActive) {
-          void battlePollOnce();
-        } else if (state.pendingHostLobbyId) {
+        if (!state.webBattleActive && state.pendingHostLobbyId) {
           void battleTryEnterFromLobbyHost();
         }
-      }, 1500);
+      }, 2500);
     }
     clearError();
     await switchTrack();

@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tanki Online</title>
-    <link rel="stylesheet" href="./styles.css?v=35" />
+    <link rel="stylesheet" href="./styles.css?v=40" />
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script src="./config.js"></script>
   </head>
@@ -48,6 +48,7 @@
         <button class="mainTab" data-tab="garage">Гараж</button>
         <button class="mainTab" data-tab="shop">Магазин</button>
         <button class="mainTab" data-tab="containers">Контейнеры</button>
+        <button class="mainTab" data-tab="settings">Настройки</button>
       </nav>
 
       <section class="notice" id="panelNotice" style="display: none"><div id="notice"></div></section>
@@ -333,6 +334,52 @@
         </div>
         <div class="hint" id="containerResult"></div>
       </main>
+
+      <main class="panel panelSettings" id="panelSettings" style="display:none">
+        <div class="leadersTitle" style="margin-bottom:12px;">НАСТРОЙКИ</div>
+        <div class="subTabs" id="settingsTabs" style="margin-bottom:10px;">
+          <button class="subTab isActive" data-settings="privacy" type="button">Приватность</button>
+          <button class="subTab" data-settings="chat" type="button">Чат</button>
+        </div>
+
+        <section class="card" id="settingsPrivacy">
+          <div class="shopTitle" style="margin-bottom:8px;">Приватность</div>
+          <label class="battleLobbyAllRanks" style="margin-top:6px;">
+            <input id="setBlockInvites" type="checkbox" />
+            <span>Приглашения: запретить другим приглашать меня в бой</span>
+          </label>
+          <div class="hint" style="margin-top:8px; opacity:.9;">
+            Исключения по username (через запятую):
+          </div>
+          <input id="setInvitesAllowlist" class="promoInput" type="text" placeholder="@user1, user2, user3" autocomplete="off" />
+
+          <label class="battleLobbyAllRanks" style="margin-top:10px;">
+            <input id="setShowAvatar" type="checkbox" checked />
+            <span>Аватар: показывать мой аватар всем</span>
+          </label>
+          <div class="purchaseActions" style="margin-top:12px;">
+            <button id="settingsSaveBtn" class="purchaseActionBtn" type="button">Сохранить</button>
+          </div>
+          <div class="hint" id="settingsSavedHint" style="margin-top:8px;"></div>
+        </section>
+
+        <section class="card" id="settingsChat" style="display:none;">
+          <div class="shopTitle" style="margin-bottom:8px;">Чат</div>
+          <label class="battleLobbyCoverLabel" for="setChatVisibility">Видимость чата</label>
+          <select id="setChatVisibility" class="battleLobbySelect" aria-label="Видимость чата">
+            <option value="on">Вкл (все чаты)</option>
+            <option value="battle_only">Только в боях</option>
+            <option value="off">Выкл (никакие чаты)</option>
+          </select>
+          <div class="hint" style="margin-top:8px; opacity:.9;">
+            Если чат выключен, соперник не сможет писать вам в чат боя.
+          </div>
+          <div class="purchaseActions" style="margin-top:12px;">
+            <button id="settingsSaveBtn2" class="purchaseActionBtn" type="button">Сохранить</button>
+          </div>
+          <div class="hint" id="settingsSavedHint2" style="margin-top:8px;"></div>
+        </section>
+      </main>
     </div>
 
     <div class="rewardModal" id="rewardModal" style="display:none">
@@ -467,11 +514,35 @@
               <option value="with">С укрытиями</option>
               <option value="without">Без укрытий</option>
             </select>
+            <label class="battleLobbyAllRanks">
+              <input id="lobbyNoStatsUpdate" type="checkbox" />
+              <span>Без изменения статистики и наград после боя</span>
+            </label>
           </div>
 
           <div class="purchaseActions" style="gap:10px;">
             <button id="createLobbyCancelBtn" class="ghostBtn" type="button" style="margin-top:0;">Отмена</button>
             <button id="createLobbyConfirmBtn" class="purchaseActionBtn" type="button">Создать</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="purchaseModal" id="confirmModal" style="display:none">
+      <div class="purchaseCard" role="dialog" aria-modal="true" aria-labelledby="confirmTitle">
+        <div class="purchaseIconPane">
+          <div class="purchaseCartIcon" id="confirmIcon" aria-hidden="true">⚑</div>
+        </div>
+        <div class="purchaseContent">
+          <div class="purchaseTitle" id="confirmTitle">ПОДТВЕРДИТЕ</div>
+          <div class="purchaseLabel" id="confirmLabel">Вы уверены?</div>
+          <div class="purchaseRow">
+            <div class="purchaseItemName" id="confirmName">—</div>
+            <div class="purchaseItemPrice" id="confirmMeta"></div>
+          </div>
+          <div class="purchaseActions" style="gap:10px;">
+            <button id="confirmCancelBtn" class="ghostBtn" type="button">Отмена</button>
+            <button id="confirmOkBtn" class="purchaseActionBtn" type="button">Подтвердить</button>
           </div>
         </div>
       </div>
@@ -525,6 +596,6 @@
 
     <div class="toastHost" id="toastHost" aria-live="polite" aria-atomic="true"></div>
 
-    <script src="./app.js?v=53"></script>
+    <script src="./app.js?v=64"></script>
   </body>
 </html>
