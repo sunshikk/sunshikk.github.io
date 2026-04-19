@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tanki Online</title>
-    <link rel="stylesheet" href="./styles.css?v=30" />
+    <link rel="stylesheet" href="./styles.css?v=35" />
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script src="./config.js"></script>
   </head>
@@ -16,7 +16,10 @@
           <div class="userMeta">
             <div class="nickname" id="nickname">player</div>
             <div class="rankLine">
-              <img id="rankImg" class="rankIcon" alt="rank" />
+              <span class="rankPremiumStack rankPremiumStack--hud" id="hudRankStack">
+                <img id="hudPremiumBadge" class="premiumBadgeLayer" alt="" style="display:none" />
+                <img id="rankImg" class="rankIcon rankIconFront" alt="rank" />
+              </span>
               <span id="rankName">Звание</span>
             </div>
             <div class="expLine">
@@ -61,14 +64,34 @@
           <div class="statCard"><div class="statLabel">Поражения</div><div class="statValue" id="lossesValue">0</div></div>
           <div class="statCard"><div class="statLabel">Опыт</div><div class="statValue" id="expTotalValue">0</div></div>
           <div class="statCard">
+            <div class="statLabel">Премиум</div>
+            <div class="statValue" id="premiumStatusValue">Неактивен</div>
+            <div class="statMini" id="premiumUntilValue" style="margin-top:6px; opacity:.9; color: rgba(160, 180, 210, 0.92); font-size: 12px; line-height: 1.3;"></div>
+          </div>
+          <div class="statCard">
             <div class="statLabel">Звание</div>
             <div class="statValue rankValueRow">
-              <img id="rankValueIcon" class="rankValueIcon" alt="rank" />
+              <span class="rankPremiumStack rankPremiumStack--profile" id="profileRankStack">
+                <img id="profilePremiumBadge" class="premiumBadgeLayer" alt="" style="display:none" />
+                <img id="rankValueIcon" class="rankValueIcon rankIconFront" alt="rank" />
+              </span>
               <span id="rankValue">-</span>
             </div>
           </div>
           <div class="statCard"><div class="statLabel">Винрейт</div><div class="statValue" id="winrateValue">0%</div></div>
         </div>
+
+        <section class="chatCard" id="globalChatCard">
+          <div class="chatHead">
+            <div class="chatTitle">ОБЩИЙ ЧАТ</div>
+            <div class="chatSubtitle">Пиши сообщения всем игрокам</div>
+          </div>
+          <div id="globalChatList" class="chatList"></div>
+          <form id="globalChatForm" class="chatForm">
+            <input id="globalChatInput" class="promoInput chatInput" type="text" placeholder="Написать в общий чат..." maxlength="300" autocomplete="off" />
+            <button id="globalChatSend" class="promoBtn chatSendBtn" type="submit">Отправить</button>
+          </form>
+        </section>
       </main>
 
       <main class="panel panelGarage" id="panelGarage" style="display:none">
@@ -171,13 +194,19 @@
         </div>
 
         <div id="battleArena" class="battleArena" style="display:none">
+          <div id="battleLoadingOverlay" class="battleLoadingOverlay" style="display:none" aria-hidden="true">
+            <div class="battleLoadingCard">
+              <div class="battleLoadingSpinner" aria-hidden="true"></div>
+              <div class="battleLoadingText">ЗАГРУЗКА БОЯ…</div>
+            </div>
+          </div>
           <div class="battleArenaTop">
             <button id="battleSurrenderBtn" class="ghostBtn" type="button" style="margin-top:0">Сдаться</button>
           </div>
 
           <div class="battleStage">
             <aside class="battleSide battleSideLeft">
-              <div class="battleSideTitle">ВАШ ТАНК</div>
+              <div id="battlePlayerTitle" class="battleSideTitle">ВАШ ТАНК</div>
               <div id="battleAimState" class="battleAimState" style="display:none">🎯 Прицел активен</div>
               <img id="battlePlayerTankImg" class="battleTankImg" alt="player tank" />
               <div class="battleSideHp">
@@ -219,6 +248,17 @@
                   <div id="battleCooldown" class="battleCooldown"></div>
                 </div>
               </div>
+
+              <div class="battleChatWrap battleChatInArena" id="battleChatWrap" style="display:none">
+                <div class="battleChatHead">
+                  <div class="battleChatTitle">ЧАТ БОЯ</div>
+                </div>
+                <div id="battleChatList" class="battleChatList"></div>
+                <form id="battleChatForm" class="battleChatForm">
+                  <input id="battleChatInput" class="promoInput battleChatInput" type="text" placeholder="Сообщение..." maxlength="300" autocomplete="off" />
+                  <button id="battleChatSend" class="promoBtn battleChatSend" type="submit">ОК</button>
+                </form>
+              </div>
             </section>
 
             <aside class="battleSide battleSideRight">
@@ -239,6 +279,7 @@
             </aside>
           </div>
         </div>
+
       </main>
 
       <main class="panel panelShop" id="panelShop" style="display:none">
@@ -246,6 +287,7 @@
           <aside class="shopMenu" id="shopCategory">
             <button class="shopCat isActive" data-cat="weapon">Пушки</button>
             <button class="shopCat" data-cat="hull">Корпуса</button>
+            <button class="shopCat" data-cat="premium">Премиум подписка</button>
             <button class="shopCat" data-cat="promo">Промокоды</button>
           </aside>
           <section class="shopContent">
@@ -419,6 +461,12 @@
               <span class="battleLobbyDash">—</span>
               <select id="lobbyMaxRank" class="battleLobbySelect"></select>
             </div>
+            <label class="battleLobbyCoverLabel" for="lobbyCoverMap">Выбор карты</label>
+            <select id="lobbyCoverMap" class="battleLobbySelect battleLobbyCoverSelect" aria-label="Тип карты">
+              <option value="random">Случайная (с укрытиями или без)</option>
+              <option value="with">С укрытиями</option>
+              <option value="without">Без укрытий</option>
+            </select>
           </div>
 
           <div class="purchaseActions" style="gap:10px;">
@@ -429,21 +477,22 @@
       </div>
     </div>
 
-    <div class="purchaseModal" id="joinLobbyModal" style="display:none">
-      <div class="purchaseCard" role="dialog" aria-modal="true" aria-labelledby="joinLobbyTitle">
-        <div class="purchaseIconPane">
-          <div class="purchaseCartIcon" aria-hidden="true">🎮</div>
+    <div class="purchaseModal joinLobbyModalRoot" id="joinLobbyModal" style="display:none">
+      <div class="purchaseCard joinLobbyPurchaseCard" role="dialog" aria-modal="true" aria-labelledby="joinLobbyTitle">
+        <div class="purchaseIconPane joinLobbyIconPane">
+          <div class="purchaseCartIcon joinLobbyPadIcon" aria-hidden="true">🎮</div>
         </div>
-        <div class="purchaseContent">
+        <div class="purchaseContent joinLobbyPurchaseContent">
           <div class="purchaseTitle" id="joinLobbyTitle">ВСТУПИТЬ В БОЙ?</div>
-          <div class="purchaseLabel" id="joinLobbyLabel">Вы хотите вступить в бой?</div>
-          <div class="purchaseRow">
-            <span id="joinLobbyName" class="purchaseItemName">Бой</span>
-            <span id="joinLobbyMeta" class="purchaseItemPrice">—</span>
+          <div class="purchaseLabel joinLobbySubtitle" id="joinLobbyLabel">Вы хотите вступить в бой?</div>
+          <p class="joinLobbyBattleHint" id="joinLobbyBattleHint"></p>
+          <div class="joinLobbyDataRow">
+            <span id="joinLobbyCreatorName" class="joinLobbyDataLeft"></span>
+            <div class="joinLobbyDataRight" id="joinLobbyRankMeta"></div>
           </div>
-          <div class="purchaseActions" style="gap:10px;">
-            <button id="joinLobbyCancelBtn" class="ghostBtn" type="button" style="margin-top:0;">Отмена</button>
-            <button id="joinLobbyConfirmBtn" class="purchaseActionBtn" type="button">Вступить</button>
+          <div class="purchaseActions joinLobbyPurchaseActions">
+            <button id="joinLobbyCancelBtn" class="ghostBtn joinLobbyGhostBtn" type="button">Отмена</button>
+            <button id="joinLobbyConfirmBtn" class="purchaseActionBtn joinLobbyConfirmBtn" type="button">Вступить</button>
           </div>
         </div>
       </div>
@@ -474,6 +523,8 @@
       </div>
     </div>
 
-    <script src="./app.js?v=50"></script>
+    <div class="toastHost" id="toastHost" aria-live="polite" aria-atomic="true"></div>
+
+    <script src="./app.js?v=53"></script>
   </body>
 </html>
