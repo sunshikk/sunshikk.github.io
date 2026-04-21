@@ -1,3 +1,151 @@
+
+.questResetTime {
+  margin-bottom: 14px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(126, 188, 255, 0.26);
+  background: linear-gradient(180deg, rgba(20, 33, 53, 0.82), rgba(13, 23, 40, 0.9));
+  color: #bcd1ee;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.questsList {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 14px;
+}
+
+.questCard {
+  background:
+    radial-gradient(360px 140px at 0% -20%, rgba(126, 188, 255, 0.26), transparent 58%),
+    radial-gradient(260px 120px at 100% 130%, rgba(151, 111, 255, 0.16), transparent 62%),
+    linear-gradient(180deg, rgba(22, 35, 57, 0.96), rgba(14, 23, 39, 0.97));
+  border: 1px solid rgba(124, 172, 232, 0.38);
+  border-radius: 14px;
+  padding: 13px;
+  box-shadow: 0 14px 26px rgba(0, 0, 0, 0.34), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.questCard:hover {
+  transform: translateY(-1px);
+  border-color: rgba(144, 198, 255, 0.52);
+  box-shadow: 0 18px 30px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(126, 188, 255, 0.15) inset;
+}
+
+.questCardPremium {
+  border-color: rgba(255, 210, 96, 0.6);
+  box-shadow: 0 0 0 1px rgba(255, 210, 96, 0.2) inset, 0 12px 26px rgba(0, 0, 0, 0.34);
+}
+
+.questTop,
+.questFooter,
+.questProgressRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.questTitle { font-weight: 900; font-size: 14px; letter-spacing: 0.03em; color: #eef5ff; }
+.questChip {
+  margin-top: 5px;
+  display: inline-flex;
+  align-items: center;
+  min-height: 20px;
+  padding: 0 8px;
+  border-radius: 999px;
+  border: 1px solid rgba(126, 188, 255, 0.35);
+  background: rgba(81, 139, 214, 0.16);
+  color: #cae2ff;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.questReward { color: #ffd36d; font-weight: 900; font-size: 12px; }
+.questDesc { color: #a8bdd8; margin: 8px 0; min-height: 36px; font-size: 12px; line-height: 1.35; }
+.questProgressTrack {
+  flex: 1;
+  height: 8px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+}
+.questProgressFill {
+  height: 100%;
+  background: linear-gradient(90deg, #58adff, #88d2ff);
+}
+.questProgressText { font-size: 11px; color: #97adc9; min-width: 56px; text-align: right; }
+.questStatus { font-size: 11px; color: #9db4d1; min-height: 26px; display: inline-flex; align-items: center; }
+.questClaimBtn {
+  margin-top: 0;
+  padding: 0 12px;
+  min-height: 30px;
+  min-width: 96px;
+  font-size: 11px;
+  border-radius: 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  font-weight: 800;
+  box-shadow: none;
+}
+.questClaimBtn.promoBtn {
+  min-height: 30px !important;
+  min-width: 96px !important;
+  padding: 0 12px !important;
+  font-size: 11px !important;
+  border-radius: 10px !important;
+}
+.questCardReady {
+  border-color: rgba(126, 255, 53, 0.55);
+  box-shadow: 0 0 0 1px rgba(126, 255, 53, 0.18) inset, 0 14px 28px rgba(0, 0, 0, 0.36);
+}
+.questCardReady .questChip {
+  border-color: rgba(126, 255, 53, 0.5);
+  background: rgba(126, 255, 53, 0.15);
+  color: #dbffc7;
+}
+.questCardDone {
+  opacity: 0.54;
+  filter: saturate(0.7);
+}
+.questCardCompleted:not(.questCardDone) {
+  opacity: 0.82;
+}
+.questCardCompleted .questDesc {
+  display: none;
+}
+.questCardDone .questDesc,
+.questCardDone .questProgressRow {
+  display: none;
+}
+
+.questTabAlert {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: 999px;
+  margin-left: 6px;
+  background: linear-gradient(180deg, #ff5f5f, #ff2f2f);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 900;
+  box-shadow: 0 0 14px rgba(255, 73, 73, 0.65);
+  animation: questBadgePulse 1s ease-in-out infinite;
+}
+@keyframes questBadgePulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+}
 :root {
   --bg: #0a0f18;
   --surface: #141c2b;

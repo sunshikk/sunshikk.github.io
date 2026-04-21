@@ -4,9 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tanki Online</title>
-    <link rel="stylesheet" href="./styles.css?v=40" />
+    <link rel="stylesheet" href="./styles.css?v=45" />
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script src="./config.js"></script>
+    <script src="./app.js?v=81" defer></script>
   </head>
   <body>
     <div class="app" id="app">
@@ -48,6 +49,7 @@
         <button class="mainTab" data-tab="garage">Гараж</button>
         <button class="mainTab" data-tab="shop">Магазин</button>
         <button class="mainTab" data-tab="containers">Контейнеры</button>
+        <button class="mainTab" data-tab="quests">Квесты <span id="questsTabAlert" class="questTabAlert" style="display:none;">!</span></button>
         <button class="mainTab" data-tab="settings">Настройки</button>
       </nav>
 
@@ -244,6 +246,7 @@
                 <div class="battleActionPad">
                   <button id="battleShootBtn" class="equipBtn" type="button" style="margin-top:0">Огонь</button>
                   <button id="battleAimBtn" class="ghostBtn" type="button" style="margin-top:10px; display:none">Прицел</button>
+                  <button id="battlePaladinStepBtn" class="ghostBtn" type="button" style="margin-top:10px; display:none">Ход: 1 клетка</button>
                   <div class="battleHotkeysHint">ПК: WASD/стрелки - движение, F - огонь, G - прицел</div>
                   <div id="battleTurnTimer" class="battleCooldown"></div>
                   <div id="battleCooldown" class="battleCooldown"></div>
@@ -333,6 +336,12 @@
           <button id="refreshBtn" class="ghostBtn">Обновить</button>
         </div>
         <div class="hint" id="containerResult"></div>
+      </main>
+
+      <main class="panel panelQuests" id="panelQuests" style="display:none">
+        <div class="leadersTitle" style="margin-bottom:10px;">ЕЖЕДНЕВНЫЕ КВЕСТЫ</div>
+        <div id="questsResetTime" class="questResetTime">До обновления: --ч --м</div>
+        <div id="questsList" class="questsList"></div>
       </main>
 
       <main class="panel panelSettings" id="panelSettings" style="display:none">
@@ -514,6 +523,21 @@
               <option value="with">С укрытиями</option>
               <option value="without">Без укрытий</option>
             </select>
+            <label class="battleLobbyCoverLabel" for="lobbyPvpMode">Режим боя</label>
+            <select id="lobbyPvpMode" class="battleLobbySelect battleLobbyCoverSelect" aria-label="Режим боя">
+              <option value="classic">Классический (на выбывание)</option>
+              <option value="deathmatch">Deathmatch (по киллам и таймеру)</option>
+            </select>
+            <div id="lobbyDeathmatchOptions" class="battleLobbyRankRange" style="grid-template-columns: 1fr 1fr;">
+              <div>
+                <label class="battleLobbyCoverLabel" for="lobbyMatchSeconds">⏱ Время матча (сек)</label>
+                <input id="lobbyMatchSeconds" class="promoInput" type="number" min="60" max="600" step="30" value="120" placeholder="120" />
+              </div>
+              <div>
+                <label class="battleLobbyCoverLabel" for="lobbyTargetKills">🎯 Лимит фрагов</label>
+                <input id="lobbyTargetKills" class="promoInput" type="number" min="1" max="30" step="1" value="5" placeholder="5" />
+              </div>
+            </div>
             <label class="battleLobbyAllRanks">
               <input id="lobbyNoStatsUpdate" type="checkbox" />
               <span>Без изменения статистики и наград после боя</span>
@@ -596,6 +620,6 @@
 
     <div class="toastHost" id="toastHost" aria-live="polite" aria-atomic="true"></div>
 
-    <script src="./app.js?v=64"></script>
+    <!-- app.js loaded in <head> with cache-bust -->
   </body>
 </html>
