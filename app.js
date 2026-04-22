@@ -53,154 +53,188 @@ const CONTAINER_LOOT = [
     key: "railgun",
     type: "weapon",
     name: "Рельса",
+    name_en: "Railgun",
     chance: "1%",
     rarity: "legendary",
     image: REWARD_ITEM_IMAGES.railgun,
     description: "Легендарная пушка с самым редким шансом выпадения.",
+    description_en: "Legendary weapon with the rarest drop chance.",
   },
   {
     key: "shaft",
     type: "weapon",
     name: "Шафт",
+    name_en: "Shaft",
     chance: "3%",
     rarity: "ultrarare",
     image: REWARD_ITEM_IMAGES.shaft,
     description: "Ультраредкая снайперская пушка для точных попаданий.",
+    description_en: "Ultra-rare sniper weapon for precision shots.",
   },
   {
     key: "thunder",
     type: "weapon",
     name: "Гром",
+    name_en: "Thunder",
     chance: "5%",
     rarity: "epic",
     image: REWARD_ITEM_IMAGES.thunder,
     description: "Эпическая пушка с мощным уроном по площади.",
+    description_en: "Epic weapon with powerful splash damage.",
   },
   {
     key: "ricochet",
     type: "weapon",
     name: "Рикошет",
+    name_en: "Ricochet",
     chance: "1%",
     rarity: "legendary",
     image: REWARD_ITEM_IMAGES.ricochet,
     description: "Легендарная пушка с рикошетом от укрытий и стабильным уроном.",
+    description_en: "Legendary weapon that ricochets off cover with stable damage.",
   },
   {
     key: "molot",
     type: "weapon",
     name: "Молот",
+    name_en: "Molot",
     chance: "2%",
     rarity: "ultrarare",
     image: REWARD_ITEM_IMAGES.molot,
     description: "Ультраредкая пушка: вблизи огромный урон, вдали стабильные 10 урона.",
+    description_en: "Ultra-rare weapon: huge close-range damage, at range deals stable 10 damage.",
   },
   {
     key: "titan",
     type: "hull",
     name: "Титан",
+    name_en: "Titan",
     chance: "5%",
     rarity: "epic",
     image: REWARD_ITEM_IMAGES.titan,
     description: "Эпический тяжелый корпус с высоким запасом прочности.",
+    description_en: "Epic heavy hull with high durability.",
   },
   {
     key: "dictator",
     type: "hull",
     name: "Диктатор",
+    name_en: "Dictator",
     chance: "5%",
     rarity: "epic",
     image: REWARD_ITEM_IMAGES.dictator,
     description: "Эпический корпус с 150 HP без дополнительных способностей.",
+    description_en: "Epic hull with 150 HP and no extra abilities.",
   },
   {
     key: "paladin",
     type: "hull",
     name: "Паладин",
+    name_en: "Paladin",
     chance: "1%",
     rarity: "legendary",
     image: REWARD_ITEM_IMAGES.paladin,
     description: "Легендарный штурмовой корпус с щитом и увеличенной мобильностью.",
+    description_en: "Legendary assault hull with a shield and increased mobility.",
   },
   {
     key: "crystals_1000",
     type: "crystals",
     name: "Кристаллы x1000",
+    name_en: "Crystals x1000",
     chance: "5%",
     rarity: "epic",
     image: REWARD_ITEM_IMAGES.crystals,
     description: "Эпическая награда с крупной пачкой кристаллов.",
+    description_en: "Epic reward with a big pack of crystals.",
   },
   {
     key: "crystals_10000",
     type: "crystals",
     name: "Кристаллы x10000",
+    name_en: "Crystals x10000",
     chance: "1.5%",
     rarity: "ultrarare",
     image: REWARD_ITEM_IMAGES.crystals,
     description: "Ультраредкая награда с огромным количеством кристаллов.",
+    description_en: "Ultra-rare reward with a huge amount of crystals.",
   },
   {
     key: "crystals_20000",
     type: "crystals",
     name: "Кристаллы x20000",
+    name_en: "Crystals x20000",
     chance: "0.2%",
     rarity: "legendary",
     image: REWARD_ITEM_IMAGES.crystals,
     description: "Легендарная кристальная награда с максимальной ценностью.",
+    description_en: "Legendary crystal reward with maximum value.",
   },
   {
     key: "crystals_50",
     type: "crystals",
     name: "Кристаллы x50",
+    name_en: "Crystals x50",
     chance: "11.72%",
     rarity: "rare",
     image: REWARD_ITEM_IMAGES.crystals,
     description: "Редкая награда с небольшим количеством кристаллов.",
+    description_en: "Rare reward with a small amount of crystals.",
   },
   {
     key: "crystals_100",
     type: "crystals",
     name: "Кристаллы x100",
+    name_en: "Crystals x100",
     chance: "11.72%",
     rarity: "rare",
     image: REWARD_ITEM_IMAGES.crystals,
     description: "Редкая награда со средним количеством кристаллов.",
+    description_en: "Rare reward with a medium amount of crystals.",
   },
   {
     key: "crystals_150",
     type: "crystals",
     name: "Кристаллы x150",
+    name_en: "Crystals x150",
     chance: "11.72%",
     rarity: "rare",
     image: REWARD_ITEM_IMAGES.crystals,
     description: "Редкая награда с хорошим количеством кристаллов.",
+    description_en: "Rare reward with a decent amount of crystals.",
   },
   {
     key: "crystals_200",
     type: "crystals",
     name: "Кристаллы x200",
+    name_en: "Crystals x200",
     chance: "11.72%",
     rarity: "rare",
     image: REWARD_ITEM_IMAGES.crystals,
     description: "Редкая награда с крупной пачкой кристаллов.",
+    description_en: "Rare reward with a large pack of crystals.",
   },
   {
     key: "crystals_250",
     type: "crystals",
     name: "Кристаллы x250",
+    name_en: "Crystals x250",
     chance: "11.72%",
     rarity: "rare",
     image: REWARD_ITEM_IMAGES.crystals,
     description: "Редкая награда с большим количеством кристаллов.",
+    description_en: "Rare reward with a big amount of crystals.",
   },
   {
     key: "crystals_300",
     type: "crystals",
     name: "Кристаллы x300",
+    name_en: "Crystals x300",
     chance: "11.72%",
     rarity: "rare",
     image: REWARD_ITEM_IMAGES.crystals,
     description: "Редкая награда с максимальным количеством кристаллов.",
+    description_en: "Rare reward with the maximum amount of crystals.",
   },
 ];
 const ITEM_IMAGE_OVERRIDES = { smoky: "smoky.png", hunter: "hunter.png" };
@@ -317,11 +351,140 @@ const I18N = {
     battle_victory: "ПОБЕДА",
     battle_defeat: "ПОРАЖЕНИЕ",
     notice_title: "УВЕДОМЛЕНИЕ",
+    warning: "ВНИМАНИЕ!",
+    purchase_success_title: "ПОКУПКА ПРОИЗВЕДЕНА УСПЕШНО",
+    purchase_success_label: "Вы приобрели:",
+    item: "Предмет",
     damage_unit: "урона",
     lobby_empty: "Пока нет открытых боёв. Создай свой!",
     battle_no_events: "Событий пока нет.",
     battle_you: "YOU",
     battle_op: "OP",
+    battle_your_tank: "ВАШ ТАНК",
+    battle_opponent: "ПРОТИВНИК",
+    battle_aim: "Прицел",
+    paladin_step_1: "Ход: 1 клетка",
+    confirm_label: "Вы уверены?",
+    invite_time_default: "120 сек",
+    loot_pick_item: "Выберите предмет из списка, чтобы посмотреть описание и шанс выпадения.",
+    profile_rank: "Звание",
+    profile_music_off: "Музыка выкл",
+    profile_music_on: "Музыка вкл",
+    profile_my_tank: "Мой танк",
+    stat_battles: "Бои",
+    stat_wins: "Победы",
+    stat_losses: "Поражения",
+    stat_exp: "Опыт",
+    stat_premium: "Премиум",
+    stat_premium_inactive: "Неактивен",
+    stat_winrate: "Винрейт",
+    global_chat_title: "ОБЩИЙ ЧАТ",
+    global_chat_subtitle: "Пиши сообщения всем игрокам",
+    global_chat_placeholder: "Написать в общий чат...",
+    send: "Отправить",
+    garage_weapons: "Пушки",
+    garage_hulls: "Корпуса",
+    garage_pick_item: "Выберите пушку или корпус",
+    equip: "Установить",
+    leaders_top_players: "ТОП ИГРОКИ",
+    leaders_top_sub: "Опыт • Победы • Бои",
+    leaders_table_title: "ТАБЛИЦА ЛИДЕРОВ",
+    leaders_table_sub: "Лучшие игроки сервера",
+    sort_exp: "Опыт",
+    sort_wins: "Победы",
+    leaders_head_player: "Игрок",
+    leaders_head_exp: "Опыт",
+    leaders_head_battles: "Бои",
+    leaders_you_pos: "Твоя позиция",
+    battles_create: "Создать бой",
+    battles_modes_aria: "Режимы боев",
+    battles_open: "Открытые бои",
+    start_battle: "Начать бой",
+    back: "Назад",
+    send_invite: "Отправить приглашение",
+    cancel_invite: "Отменить приглашение",
+    battle_loading: "ЗАГРУЗКА БОЯ…",
+    surrender: "Сдаться",
+    aim_active: "🎯 Прицел активен",
+    battle_map_aria: "Карта боя",
+    move_up: "Вверх",
+    move_left: "Влево",
+    move_down: "Вниз",
+    move_right: "Вправо",
+    fire: "Огонь",
+    hotkeys_hint: "ПК: WASD/стрелки - движение, F - огонь, G - прицел",
+    battle_chat_title: "ЧАТ БОЯ",
+    battle_chat_placeholder: "Сообщение...",
+    ok: "ОК",
+    shop_cat_weapon: "Пушки",
+    shop_cat_hull: "Корпуса",
+    shop_cat_premium: "Премиум подписка",
+    shop_cat_promo: "Промокоды",
+    shop_offers: "Предложения",
+    promo_title: "Активировать промокод",
+    promo_note: "Промокоды вводятся только в веб‑магазине.",
+    containers_standard: "Обычный",
+    open_container: "Открыть контейнер",
+    view_rewards: "Посмотреть содержимое контейнера",
+    refresh: "Обновить",
+    settings_title: "НАСТРОЙКИ",
+    settings_privacy_tab: "Приватность",
+    settings_chat_tab: "Чат",
+    settings_privacy_title: "Приватность",
+    settings_language: "Язык",
+    lang_ru: "Русский",
+    lang_en: "English",
+    settings_block_invites: "Приглашения: запретить другим приглашать меня в бой",
+    settings_allowlist_label: "Исключения по username (через запятую):",
+    settings_show_avatar: "Аватар: показывать мой аватар всем",
+    save: "Сохранить",
+    settings_chat_title: "Чат",
+    settings_chat_visibility: "Видимость чата",
+    chat_vis_on: "Вкл (все чаты)",
+    chat_vis_battle_only: "Только в боях",
+    chat_vis_off: "Выкл (никакие чаты)",
+    settings_chat_note: "Если чат выключен, соперник не сможет писать вам в чат боя.",
+    reward_opened: "Контейнер открыт",
+    close: "Закрыть",
+    error_default: "Произошла ошибка.",
+    battle_result_default: "Сражение завершено. Нажмите вне окна, чтобы продолжить.",
+    surrender_title: "СДАТЬСЯ?",
+    surrender_label: "Ты точно хочешь завершить бой поражением?",
+    cancel: "Отмена",
+    confirm: "Подтвердить",
+    pvp_invite_title: "ПРИГЛАШЕНИЕ В БОЙ",
+    pvp_invite_label: "Вас пригласили в PvP бой.",
+    decline: "Отказаться",
+    play: "Играть",
+    rankup_title: "НОВОЕ ЗВАНИЕ!",
+    rankup_gift: "Подарок: <b>+5 контейнеров</b>",
+    lobby_create_title: "СОЗДАТЬ БОЙ",
+    lobby_create_label: "Настрой бой и жди соперника (3 минуты).",
+    lobby_name_placeholder: "Название боя",
+    allow_all_ranks: "Разрешить все звания",
+    cover_map_label: "Выбор карты",
+    cover_map_aria: "Тип карты",
+    cover_random: "Случайная (с укрытиями или без)",
+    cover_with: "С укрытиями",
+    cover_without: "Без укрытий",
+    pvp_mode_label: "Режим боя",
+    pvp_mode_aria: "Режим боя",
+    pvp_classic: "Классический (на выбывание)",
+    pvp_deathmatch: "Deathmatch (по киллам и таймеру)",
+    match_seconds_label: "⏱ Время матча (сек)",
+    target_kills_label: "🎯 Лимит фрагов",
+    no_stats: "Без изменения статистики и наград после боя",
+    create: "Создать",
+    join_lobby_title: "ВСТУПИТЬ В БОЙ?",
+    join_lobby_label: "Вы хотите вступить в бой?",
+    join: "Вступить",
+    loot_sidebar: "Награды контейнера",
+    loot_title: "ВОЗМОЖНЫЕ НАГРАДЫ",
+    loot_all: "Все",
+    loot_rare: "Редкие",
+    loot_epic: "Эпические",
+    loot_ultrarare: "Ультраредкие",
+    loot_legendary: "Легендарные",
   },
   en: {
     tab_profile: "Profile",
@@ -351,17 +514,180 @@ const I18N = {
     battle_victory: "VICTORY",
     battle_defeat: "DEFEAT",
     notice_title: "NOTICE",
+    warning: "WARNING!",
+    purchase_success_title: "PURCHASE SUCCESSFUL",
+    purchase_success_label: "You purchased:",
+    item: "Item",
     damage_unit: "damage",
     lobby_empty: "No open battles yet. Create yours!",
     battle_no_events: "No events yet.",
     battle_you: "YOU",
     battle_op: "OP",
+    battle_your_tank: "YOUR TANK",
+    battle_opponent: "OPPONENT",
+    battle_aim: "Aim",
+    paladin_step_1: "Move: 1 tile",
+    confirm_label: "Are you sure?",
+    invite_time_default: "120s",
+    loot_pick_item: "Select an item to see its description and drop chance.",
+    profile_rank: "Rank",
+    profile_music_off: "Music off",
+    profile_music_on: "Music on",
+    profile_my_tank: "My tank",
+    stat_battles: "Battles",
+    stat_wins: "Wins",
+    stat_losses: "Losses",
+    stat_exp: "Exp",
+    stat_premium: "Premium",
+    stat_premium_inactive: "Inactive",
+    stat_winrate: "Winrate",
+    global_chat_title: "GLOBAL CHAT",
+    global_chat_subtitle: "Chat with all players",
+    global_chat_placeholder: "Write to global chat...",
+    send: "Send",
+    garage_weapons: "Weapons",
+    garage_hulls: "Hulls",
+    garage_pick_item: "Select a weapon or a hull",
+    equip: "Equip",
+    leaders_top_players: "TOP PLAYERS",
+    leaders_top_sub: "Experience • Wins • Battles",
+    leaders_table_title: "LEADERBOARD",
+    leaders_table_sub: "Best players on the server",
+    sort_exp: "Experience",
+    sort_wins: "Wins",
+    leaders_head_player: "Player",
+    leaders_head_exp: "Experience",
+    leaders_head_battles: "Battles",
+    leaders_you_pos: "Your position",
+    battles_create: "Create battle",
+    battles_modes_aria: "Battle modes",
+    battles_open: "Open battles",
+    start_battle: "Start battle",
+    back: "Back",
+    send_invite: "Send invite",
+    cancel_invite: "Cancel invite",
+    battle_loading: "LOADING BATTLE…",
+    surrender: "Surrender",
+    aim_active: "🎯 Aim active",
+    battle_map_aria: "Battle map",
+    move_up: "Up",
+    move_left: "Left",
+    move_down: "Down",
+    move_right: "Right",
+    fire: "Fire",
+    hotkeys_hint: "PC: WASD/arrows - move, F - fire, G - aim",
+    battle_chat_title: "BATTLE CHAT",
+    battle_chat_placeholder: "Message...",
+    ok: "OK",
+    shop_cat_weapon: "Weapons",
+    shop_cat_hull: "Hulls",
+    shop_cat_premium: "Premium subscription",
+    shop_cat_promo: "Promo codes",
+    shop_offers: "Offers",
+    promo_title: "Activate promo code",
+    promo_note: "Promo codes can only be entered in the web shop.",
+    containers_standard: "Standard",
+    open_container: "Open container",
+    view_rewards: "View container rewards",
+    refresh: "Refresh",
+    settings_title: "SETTINGS",
+    settings_privacy_tab: "Privacy",
+    settings_chat_tab: "Chat",
+    settings_privacy_title: "Privacy",
+    settings_language: "Language",
+    lang_ru: "Russian",
+    lang_en: "English",
+    settings_block_invites: "Invites: block others from inviting me to a battle",
+    settings_allowlist_label: "Username exceptions (comma-separated):",
+    settings_show_avatar: "Avatar: show my avatar to everyone",
+    save: "Save",
+    settings_chat_title: "Chat",
+    settings_chat_visibility: "Chat visibility",
+    chat_vis_on: "On (all chats)",
+    chat_vis_battle_only: "Battle only",
+    chat_vis_off: "Off (no chats)",
+    settings_chat_note: "If chat is disabled, the opponent won't be able to message you in battle chat.",
+    reward_opened: "Container opened",
+    close: "Close",
+    error_default: "An error occurred.",
+    battle_result_default: "Battle finished. Tap outside the window to continue.",
+    surrender_title: "SURRENDER?",
+    surrender_label: "Are you sure you want to end the battle with a defeat?",
+    cancel: "Cancel",
+    confirm: "Confirm",
+    pvp_invite_title: "BATTLE INVITE",
+    pvp_invite_label: "You've been invited to a PvP battle.",
+    decline: "Decline",
+    play: "Play",
+    rankup_title: "NEW RANK!",
+    rankup_gift: "Gift: <b>+5 containers</b>",
+    lobby_create_title: "CREATE BATTLE",
+    lobby_create_label: "Set up the battle and wait for an opponent (3 minutes).",
+    lobby_name_placeholder: "Battle name",
+    allow_all_ranks: "Allow all ranks",
+    cover_map_label: "Map selection",
+    cover_map_aria: "Map type",
+    cover_random: "Random (with/without cover)",
+    cover_with: "With cover",
+    cover_without: "No cover",
+    pvp_mode_label: "Battle mode",
+    pvp_mode_aria: "Battle mode",
+    pvp_classic: "Classic (elimination)",
+    pvp_deathmatch: "Deathmatch (kills + timer)",
+    match_seconds_label: "⏱ Match time (sec)",
+    target_kills_label: "🎯 Kill limit",
+    no_stats: "No stats/rewards updates after battle",
+    create: "Create",
+    join_lobby_title: "JOIN BATTLE?",
+    join_lobby_label: "Do you want to join the battle?",
+    join: "Join",
+    loot_sidebar: "Container rewards",
+    loot_title: "POSSIBLE REWARDS",
+    loot_all: "All",
+    loot_rare: "Rare",
+    loot_epic: "Epic",
+    loot_ultrarare: "Ultra-rare",
+    loot_legendary: "Legendary",
   },
 };
 
 function tr(key) {
   const loc = LOCALES.includes(state.locale) ? state.locale : "en";
   return (I18N[loc] && I18N[loc][key]) || I18N.en[key] || key;
+}
+
+function applyStaticI18n() {
+  try { document.body && (document.body.dataset.locale = state.locale === "ru" ? "ru" : "en"); } catch {}
+  // Text nodes
+  document.querySelectorAll("[data-i18n]").forEach((el) => {
+    const key = String(el.getAttribute("data-i18n") || "");
+    if (!key) return;
+    el.textContent = tr(key);
+  });
+  // HTML nodes (use only for trusted static markup)
+  document.querySelectorAll("[data-i18n-html]").forEach((el) => {
+    const key = String(el.getAttribute("data-i18n-html") || "");
+    if (!key) return;
+    el.innerHTML = tr(key);
+  });
+  // Placeholders
+  document.querySelectorAll("[data-i18n-placeholder]").forEach((el) => {
+    const key = String(el.getAttribute("data-i18n-placeholder") || "");
+    if (!key) return;
+    el.setAttribute("placeholder", tr(key));
+  });
+  // aria-label
+  document.querySelectorAll("[data-i18n-aria]").forEach((el) => {
+    const key = String(el.getAttribute("data-i18n-aria") || "");
+    if (!key) return;
+    el.setAttribute("aria-label", tr(key));
+  });
+  // title attribute
+  document.querySelectorAll("[data-i18n-title]").forEach((el) => {
+    const key = String(el.getAttribute("data-i18n-title") || "");
+    if (!key) return;
+    el.setAttribute("title", tr(key));
+  });
 }
 
 function trText(ru, en) {
@@ -406,6 +732,11 @@ function trRankName(name) {
 }
 
 function applyStaticI18n() {
+  try {
+    const loc = state.locale === "ru" ? "ru" : "en";
+    if (document.body) document.body.dataset.locale = loc;
+    if (document.documentElement) document.documentElement.lang = loc;
+  } catch {}
   // Tabs
   document.querySelectorAll(".mainTab").forEach((btn) => {
     const tab = String(btn.dataset.tab || "");
@@ -430,6 +761,34 @@ function applyStaticI18n() {
   const panel = document.getElementById("panelQuests");
   const title = panel?.querySelector(".leadersTitle");
   if (title) title.textContent = tr("quests_title");
+
+  // Generic static i18n by attributes
+  document.querySelectorAll("[data-i18n]").forEach((el) => {
+    if (el.classList.contains("mainTab")) return; // handled above to preserve quests badge node
+    const key = String(el.getAttribute("data-i18n") || "").trim();
+    if (!key) return;
+    el.textContent = tr(key);
+  });
+  document.querySelectorAll("[data-i18n-html]").forEach((el) => {
+    const key = String(el.getAttribute("data-i18n-html") || "").trim();
+    if (!key) return;
+    el.innerHTML = tr(key);
+  });
+  document.querySelectorAll("[data-i18n-placeholder]").forEach((el) => {
+    const key = String(el.getAttribute("data-i18n-placeholder") || "").trim();
+    if (!key) return;
+    el.setAttribute("placeholder", tr(key));
+  });
+  document.querySelectorAll("[data-i18n-aria]").forEach((el) => {
+    const key = String(el.getAttribute("data-i18n-aria") || "").trim();
+    if (!key) return;
+    el.setAttribute("aria-label", tr(key));
+  });
+  document.querySelectorAll("[data-i18n-title]").forEach((el) => {
+    const key = String(el.getAttribute("data-i18n-title") || "").trim();
+    if (!key) return;
+    el.setAttribute("title", tr(key));
+  });
 }
 
 const NAMES = {
@@ -466,29 +825,49 @@ const NAMES_EN = {
   crystals_300: "Crystals x300",
 };
 const SHOP_CATEGORY_LABELS = { weapon: "Пушка", hull: "Корпус", premium: "Премиум подписка" };
+const SHOP_CATEGORY_LABELS_EN = { weapon: "Weapon", hull: "Hull", premium: "Premium" };
 const SHOP_PREMIUM_META = {
   premium_1d: {
     title: "ПРЕМИУМ НА 1 ДЕНЬ",
+    title_en: "PREMIUM FOR 1 DAY",
     subtitle: "Ускоряй прогресс, усиливай награды и продлевай подписку без ограничений.",
+    subtitle_en: "Boost progress, improve rewards, and extend your subscription.",
     duration: "1 день",
+    duration_en: "1 day",
     accent: "Быстрый старт",
+    accent_en: "Quick start",
     icon: "👑",
   },
   premium_3d: {
     title: "ПРЕМИУМ НА 3 ДНЯ",
+    title_en: "PREMIUM FOR 3 DAYS",
     subtitle: "Оптимальный вариант на несколько игровых сессий подряд.",
+    subtitle_en: "Best choice for several play sessions.",
     duration: "3 дня",
+    duration_en: "3 days",
     accent: "Популярный выбор",
+    accent_en: "Popular choice",
     icon: "💎",
   },
   premium_10d: {
     title: "ПРЕМИУМ НА 10 ДНЕЙ",
+    title_en: "PREMIUM FOR 10 DAYS",
     subtitle: "Максимальная выгода для активной игры и длинная суммируемая подписка.",
+    subtitle_en: "Maximum value for active play and a long stackable subscription.",
     duration: "10 дней",
+    duration_en: "10 days",
     accent: "Максимум выгоды",
+    accent_en: "Best value",
     icon: "⚡",
   },
 };
+
+function premiumMetaText(meta, key) {
+  if (!meta) return "";
+  const enKey = `${key}_en`;
+  const val = state.locale === "en" ? (meta[enKey] || meta[key] || "") : (meta[key] || "");
+  return String(val || "");
+}
 const DESCRIPTIONS = {
   smoky: "Базовая пушка со стабильным уроном.",
   railgun: "Дальнобойная пушка с высоким уроном.",
@@ -685,6 +1064,54 @@ function prettyError(err) {
   return raw;
 }
 
+function translateDynamicRuToEn(text) {
+  const src = String(text || "");
+  if (state.locale !== "en" || !src) return src;
+  const replacements = [
+    ["Победа", "Victory"],
+    ["ПОБЕДА", "VICTORY"],
+    ["Поражение", "Defeat"],
+    ["ПОРАЖЕНИЕ", "DEFEAT"],
+    ["Ничья", "Draw"],
+    ["НИЧЬЯ", "DRAW"],
+    ["Игрок", "Player"],
+    ["Противник", "Opponent"],
+    ["Победитель", "Winner"],
+    ["Контейнер", "Container"],
+    ["контейнер", "container"],
+    ["утешительный", "consolation"],
+    ["опыта", "exp"],
+    ["бонусного опыта", "bonus exp"],
+    ["До:", "Until:"],
+    ["Причина:", "Reason:"],
+    ["не указана", "not specified"],
+    ["сдался", "surrendered"],
+    ["Время ожидания истекло", "Waiting time expired"],
+    ["Бой отменен", "Battle canceled"],
+    ["Сейчас ход игрока", "Current turn"],
+    ["Получено кристаллов", "Crystals received"],
+    ["Получено", "Received"],
+    ["Кристаллы", "Crystals"],
+    ["Обычный контейнер", "Standard container"],
+    ["Пожаловаться", "Report"],
+  ];
+  let out = src;
+  for (const [ru, en] of replacements) out = out.replaceAll(ru, en);
+  return out;
+}
+
+function deepTranslatePayload(value) {
+  if (state.locale !== "en") return value;
+  if (typeof value === "string") return translateDynamicRuToEn(value);
+  if (Array.isArray(value)) return value.map((v) => deepTranslatePayload(v));
+  if (value && typeof value === "object") {
+    const out = {};
+    for (const [k, v] of Object.entries(value)) out[k] = deepTranslatePayload(v);
+    return out;
+  }
+  return value;
+}
+
 async function api(path, options = {}) {
   const headers = { "Content-Type": "application/json", ...(options.headers || {}) };
   if (state.token) headers.Authorization = `Bearer ${state.token}`;
@@ -694,7 +1121,8 @@ async function api(path, options = {}) {
     try { const body = await res.json(); msg = body.detail || msg; } catch {}
     throw new Error(msg);
   }
-  return res.json();
+  const payload = await res.json();
+  return deepTranslatePayload(payload);
 }
 
 async function apiKeepalive(path, options = {}) {
@@ -745,7 +1173,9 @@ function updateMusicButton() {
   if (!btn || !label || !led) return;
   btn.classList.toggle("isOn", state.bgMusicEnabled);
   led.classList.toggle("isOn", state.bgMusicEnabled);
-  label.textContent = state.bgMusicEnabled ? "Музыка вкл" : "Музыка выкл";
+  label.textContent = state.bgMusicEnabled
+    ? trText("Музыка вкл", "Music on")
+    : trText("Музыка выкл", "Music off");
 }
 
 function saveMusic() {
@@ -987,7 +1417,7 @@ function initMusic() {
   audio.addEventListener("error", () => {
     state.bgMusicEnabled = false;
     updateMusicButton();
-    setError("Не удалось загрузить музыку.");
+    setError(trText("Не удалось загрузить музыку.", "Failed to load music."));
   });
   state.bgMusic = audio;
 
@@ -1042,7 +1472,7 @@ function showPurchaseLikeModal({ title, label, icon, name, price }) {
   const nameEl = qs("purchaseItemName");
   const priceEl = qs("purchaseItemPrice");
   if (!modal || !nameEl || !priceEl) return;
-  if (titleEl) titleEl.textContent = String(title || "ГОТОВО");
+  if (titleEl) titleEl.textContent = String(title || trText("ГОТОВО", "DONE"));
   if (labelEl) labelEl.textContent = String(label || "");
   if (iconEl && icon) iconEl.textContent = String(icon);
   nameEl.textContent = String(name || "—");
@@ -1050,7 +1480,7 @@ function showPurchaseLikeModal({ title, label, icon, name, price }) {
   modal.style.display = "flex";
 }
 
-function showConfirmModal({ title = "ПОДТВЕРДИТЕ", label = "Вы уверены?", icon = "⚑", name = "—", meta = "", onOk = null }) {
+function showConfirmModal({ title = trText("ПОДТВЕРДИТЕ", "CONFIRM"), label = trText("Вы уверены?", "Are you sure?"), icon = "⚑", name = "—", meta = "", onOk = null }) {
   const modal = qs("confirmModal");
   if (!modal) return;
   const t = qs("confirmTitle");
@@ -1058,8 +1488,8 @@ function showConfirmModal({ title = "ПОДТВЕРДИТЕ", label = "Вы ув
   const i = qs("confirmIcon");
   const n = qs("confirmName");
   const m = qs("confirmMeta");
-  if (t) t.textContent = String(title || "ПОДТВЕРДИТЕ");
-  if (l) l.textContent = String(label || "");
+  if (t) t.textContent = String(title || trText("ПОДТВЕРДИТЕ", "CONFIRM"));
+  if (l) l.textContent = String(label || trText("Вы уверены?", "Are you sure?"));
   if (i) i.textContent = String(icon || "⚑");
   if (n) n.textContent = String(name || "—");
   if (m) m.textContent = String(meta || "");
@@ -1073,8 +1503,8 @@ function showPurchaseModal(item) {
   if (!modal || !name || !price || !item) return;
   // Ensure default purchase look (in case promo modal changed it).
   showPurchaseLikeModal({
-    title: "ПОКУПКА ПРОИЗВЕДЕНА УСПЕШНО",
-    label: "Вы приобрели:",
+    title: trText("ПОКУПКА ПРОИЗВЕДЕНА УСПЕШНО", "PURCHASE SUCCESSFUL"),
+    label: trText("Вы приобрели:", "You purchased:"),
     icon: "🛒",
     name: item.name || NAMES[item.key] || item.key,
     price: String(item.price ?? 0),
@@ -1085,14 +1515,17 @@ function updateLootPreview(item) {
   const desc = qs("lootPreviewDesc");
   if (!name || !desc) return;
   if (!item) {
-    name.textContent = state.locale === "en" ? "Standard container" : "Обычный контейнер";
-    desc.textContent = state.locale === "en"
-      ? "Select an item to see its description and drop chance."
-      : "Выберите предмет из списка, чтобы посмотреть описание и шанс выпадения.";
+    name.textContent = trText("Обычный контейнер", "Standard container");
+    desc.textContent = trText(
+      "Выберите предмет из списка, чтобы посмотреть описание и шанс выпадения.",
+      "Select an item to see its description and drop chance.",
+    );
     return;
   }
   const dispName = itemName(item.key) || item.name;
-  const dispDesc = itemDescription(item.key) || item.description;
+  const dispDesc = state.locale === "en"
+    ? (item.description_en || itemDescription(item.key) || item.description || "")
+    : (itemDescription(item.key) || item.description || "");
   name.textContent = dispName;
   desc.textContent = state.locale === "en"
     ? `${dispDesc} Drop chance: ${item.chance}. Rarity: ${rarityLabel(item.rarity)}.`
@@ -1143,18 +1576,18 @@ function updateGarageEquipButton() {
   if (!isCurrentUnlocked) {
     equipBtn.disabled = true;
     equipBtn.classList.add("isDisabled");
-    equipBtn.textContent = "Недоступно";
+    equipBtn.textContent = trText("Недоступно", "Unavailable");
     return;
   }
   if (isCurrentEquipped) {
     equipBtn.disabled = true;
     equipBtn.classList.add("isDisabled");
-    equipBtn.textContent = "Установлено";
+    equipBtn.textContent = trText("Установлено", "Equipped");
     return;
   }
   equipBtn.disabled = false;
   equipBtn.classList.remove("isDisabled");
-  equipBtn.textContent = "Установить";
+  equipBtn.textContent = trText("Установить", "Equip");
 }
 
 function renderHud() {
@@ -1395,22 +1828,22 @@ function renderShop() {
     card.className = `shopCard${isPremium ? " shopCardPremium" : ""}`;
     const premiumMeta = isPremium ? (SHOP_PREMIUM_META[item.key] || {}) : null;
     const buyButton = isPremium
-      ? `<button class="promoBtn shopBuyBtn shopBuyBtnPremium" data-buy="${item.key}" style="margin-top:0">${state.locale === "en" ? "Activate" : "Оформить"}</button>`
+      ? `<button class="promoBtn shopBuyBtn shopBuyBtnPremium" data-buy="${item.key}" style="margin-top:0">${trText("Оформить", "Activate")}</button>`
       : (item.owned
-        ? `<button class="promoBtn shopBuyBtn" type="button" style="margin-top:0" disabled>${state.locale === "en" ? "Owned" : "Куплено"}</button>`
-        : `<button class="promoBtn shopBuyBtn" data-buy="${item.key}" style="margin-top:0">${state.locale === "en" ? "Buy" : "Купить"}</button>`);
+        ? `<button class="promoBtn shopBuyBtn" type="button" style="margin-top:0" disabled>${trText("Куплено", "Owned")}</button>`
+        : `<button class="promoBtn shopBuyBtn" data-buy="${item.key}" style="margin-top:0">${trText("Купить", "Buy")}</button>`);
     if (isPremium) {
       card.innerHTML = `
         <div class="shopPremiumGlow"></div>
         <div class="shopPremiumHero">
           <img src="${withCacheBust(absUrl(item.image_url))}" alt="${item.name}">
-          <div class="shopPremiumBadge">${escapeHtml(String(premiumMeta?.accent || "Премиум"))}</div>
+          <div class="shopPremiumBadge">${escapeHtml(premiumMetaText(premiumMeta, "accent") || trText("Премиум", "Premium"))}</div>
         </div>
-        <div class="shopCardTitle">${escapeHtml(String(premiumMeta?.title || item.name))}</div>
-        <div class="shopCardMeta">${escapeHtml(String(premiumMeta?.subtitle || "Подписка суммируется с уже активной."))}</div>
+        <div class="shopCardTitle">${escapeHtml(premiumMetaText(premiumMeta, "title") || String(item.name || ""))}</div>
+        <div class="shopCardMeta">${escapeHtml(premiumMetaText(premiumMeta, "subtitle") || trText("Подписка суммируется с уже активной.", "Subscription is stackable with an active one."))}</div>
         <div class="shopPremiumPerks">
-          <span class="shopPremiumChip">${escapeHtml(String(premiumMeta?.duration || item.name))}</span>
-          <span class="shopPremiumChip">${escapeHtml(String(premiumMeta?.icon || "👑"))} срок суммируется</span>
+          <span class="shopPremiumChip">${escapeHtml(premiumMetaText(premiumMeta, "duration") || String(item.name || ""))}</span>
+          <span class="shopPremiumChip">${escapeHtml(String(premiumMeta?.icon || "👑"))} ${escapeHtml(trText("срок суммируется", "stackable"))}</span>
         </div>
         <div class="shopCardActions"><span class="shopPrice">${item.price} 💎</span>${buyButton}</div>
       `;
@@ -1418,7 +1851,7 @@ function renderShop() {
       card.innerHTML = `
         <img src="${withCacheBust(absUrl(item.image_url))}" alt="${item.name}">
         <div class="shopCardTitle">${itemName(item.key) || item.name}</div>
-        <div class="shopCardMeta">${state.locale === "en" ? "Category" : "Категория"}: ${SHOP_CATEGORY_LABELS[item.category] || item.category}</div>
+        <div class="shopCardMeta">${trText("Категория", "Category")}: ${(state.locale === "en" ? (SHOP_CATEGORY_LABELS_EN[item.category] || item.category) : (SHOP_CATEGORY_LABELS[item.category] || item.category))}</div>
         <div class="shopCardActions"><span class="shopPrice">${item.price} 💎</span>${buyButton}</div>
       `;
     }
@@ -1435,10 +1868,10 @@ function renderShop() {
         if (item?.category === "premium") {
           const premiumMeta = SHOP_PREMIUM_META[item.key] || {};
           showPurchaseLikeModal({
-            title: "ПРЕМИУМ АКТИВИРОВАН",
-            label: "Подписка продлена на:",
+            title: trText("ПРЕМИУМ АКТИВИРОВАН", "PREMIUM ACTIVATED"),
+            label: trText("Подписка продлена на:", "Subscription extended by:"),
             icon: String(premiumMeta.icon || "👑"),
-            name: String(premiumMeta.duration || item.name || "Премиум"),
+            name: premiumMetaText(premiumMeta, "duration") || String(item.name || trText("Премиум", "Premium")),
             price: `${item.price} 💎`,
           });
         } else {
@@ -1462,10 +1895,10 @@ function renderContainers() {
 
 function formatQuestReset(seconds) {
   const sec = Math.max(0, Number(seconds || 0));
-  if (sec < 60) return `${Math.floor(sec)}с`;
+  if (sec < 60) return state.locale === "en" ? `${Math.floor(sec)}s` : `${Math.floor(sec)}с`;
   const h = Math.floor(sec / 3600);
   const m = Math.floor((sec % 3600) / 60);
-  return `${h}ч ${m}м`;
+  return state.locale === "en" ? `${h}h ${m}m` : `${h}ч ${m}м`;
 }
 
 function loadSeenQuestDayKey() {
@@ -1492,7 +1925,7 @@ function renderQuests() {
   reset.textContent = `${tr("reset_prefix")} ${formatQuestReset(payload.reset_in_seconds)}`;
   updateQuestsTabAlert(quests);
   if (!quests.length) {
-    list.innerHTML = `<div class="leadersEmpty">${state.locale === "en" ? "Quests will appear soon." : "Квесты скоро появятся."}</div>`;
+    list.innerHTML = `<div class="leadersEmpty">${trText("Квесты скоро появятся.", "Quests will appear soon.")}</div>`;
     return;
   }
   const sorted = [...quests].sort((a, b) => {
@@ -1570,8 +2003,12 @@ async function showRewardModal(result) {
   const text = qs("rewardText");
   if (!modal || !card || !box || !contImg || !dropImg || !text) {
     qs("containerResult").textContent = result.reward_type === "unlock"
-      ? `Получено: ${NAMES[result.reward_key] || result.reward_key}`
-      : `Получено кристаллов: ${result.reward_amount}`;
+      ? (state.locale === "en"
+        ? `Received: ${itemName(result.reward_key) || result.reward_key}`
+        : `Получено: ${NAMES[result.reward_key] || result.reward_key}`)
+      : (state.locale === "en"
+        ? `Crystals received: ${result.reward_amount}`
+        : `Получено кристаллов: ${result.reward_amount}`);
     return;
   }
   card.className = "rewardCard";
@@ -1603,8 +2040,12 @@ async function showRewardModal(result) {
   ]);
   contImg.classList.remove("isHidden");
   const rewardText = result.reward_type === "unlock"
-    ? `Получено: ${NAMES[result.reward_key] || result.reward_key}`
-    : `Получено кристаллов: ${result.reward_amount}`;
+    ? (state.locale === "en"
+      ? `Received: ${itemName(result.reward_key) || result.reward_key}`
+      : `Получено: ${NAMES[result.reward_key] || result.reward_key}`)
+    : (state.locale === "en"
+      ? `Crystals received: ${result.reward_amount}`
+      : `Получено кристаллов: ${result.reward_amount}`);
   text.textContent = rewardText;
   dropImg.classList.add("show");
   await sleep(520);
@@ -1737,7 +2178,7 @@ async function refreshTabContext(tab) {
 
 async function showTab(tab, { force = false } = {}) {
   if (!force && state.webBattleActive && tab !== "battles") {
-    setError("Нельзя переключать вкладки во время боя.");
+    setError(trText("Нельзя переключать вкладки во время боя.", "You can't switch tabs during a battle."));
     return;
   }
   if (state.activeTab === "battles" && tab !== "battles") {
@@ -1808,10 +2249,12 @@ function renderSettings() {
   const allow = qs("setInvitesAllowlist");
   const showA = qs("setShowAvatar");
   const vis = qs("setChatVisibility");
+  const loc = qs("setLocale");
   if (block) block.checked = Boolean(s.block_battle_invites);
   if (allow) allow.value = (Array.isArray(s.invites_allowlist) ? s.invites_allowlist : []).map((x) => `@${x}`).join(", ");
   if (showA) showA.checked = Boolean(s.show_avatar ?? true);
   if (vis) vis.value = String(s.chat_visibility || "on");
+  if (loc) loc.value = state.locale === "ru" ? "ru" : "en";
   // Tabs
   const privacy = qs("settingsPrivacy");
   const chat = qs("settingsChat");
@@ -1882,7 +2325,7 @@ function renderGlobalChatMessages(msgs, { append = true } = {}) {
     const icon = absUrl(String(m.rank_image_url || ""));
     const avatar = avatarUrlForUser(m.user_id, m.avatar_url);
     const avatarFallback = avatarProxyUrlForUser(m.user_id);
-    const name = escapeHtml(m.name || "Игрок");
+    const name = escapeHtml(m.name || trText("Игрок", "Player"));
     const nameInitial = name.trim().charAt(0).toUpperCase() || "U";
     const text = escapeHtml(m.message || "");
     const nickInner = m.is_premium
@@ -1897,7 +2340,7 @@ function renderGlobalChatMessages(msgs, { append = true } = {}) {
       ${avatar ? `<img src="${avatar}" data-alt-src="${avatarFallback}" alt="${name}" loading="lazy" referrerpolicy="no-referrer" onerror="const alt=this.dataset.altSrc||'';if(alt&&this.src!==alt){this.src=alt;return;}this.closest('.chatAvatar')?.classList.add('isFallback');this.remove();">` : ""}
       <span class="chatAvatarFallback">${nameInitial}</span>
     </span>`;
-    const flag = `<button class="chatFlagBtn" type="button" title="Пожаловаться" data-report-scope="global" data-report-id="${escapeHtml(String(m.id ?? ""))}">⚑</button>`;
+    const flag = `<button class="chatFlagBtn" type="button" title="${escapeHtml(trText("Пожаловаться", "Report"))}" data-report-scope="global" data-report-id="${escapeHtml(String(m.id ?? ""))}">⚑</button>`;
     return `<div class="chatMsg" data-chat-msg-id="${escapeHtml(String(m.id ?? ""))}">
       <div class="chatInlineRow chatInlineRow--full">
         ${avatarCell}
@@ -1938,7 +2381,7 @@ function renderBattleChatMessages(msgs, { append = true } = {}) {
   const wasNearBottom = (list.scrollTop + list.clientHeight) >= (list.scrollHeight - 80);
   const premBg = absUrl(PREMIUM_BADGE_PATH);
   const html = arr.map((m) => {
-    const name = escapeHtml(m.name || "Игрок");
+    const name = escapeHtml(m.name || trText("Игрок", "Player"));
     const avatar = avatarUrlForUser(m.user_id, m.avatar_url);
     const avatarFallback = avatarProxyUrlForUser(m.user_id);
     const nameInitial = name.trim().charAt(0).toUpperCase() || "U";
@@ -1956,7 +2399,7 @@ function renderBattleChatMessages(msgs, { append = true } = {}) {
       ${avatar ? `<img src="${avatar}" data-alt-src="${avatarFallback}" alt="${name}" loading="lazy" referrerpolicy="no-referrer" onerror="const alt=this.dataset.altSrc||'';if(alt&&this.src!==alt){this.src=alt;return;}this.closest('.chatAvatar')?.classList.add('isFallback');this.remove();">` : ""}
       <span class="chatAvatarFallback">${nameInitial}</span>
     </span>`;
-    const flag = `<button class="chatFlagBtn" type="button" title="Пожаловаться" data-report-scope="battle" data-report-id="${escapeHtml(String(m.id ?? ""))}" data-report-battle="${escapeHtml(String(state.currentBattleId || ""))}">⚑</button>`;
+    const flag = `<button class="chatFlagBtn" type="button" title="${escapeHtml(trText("Пожаловаться", "Report"))}" data-report-scope="battle" data-report-id="${escapeHtml(String(m.id ?? ""))}" data-report-battle="${escapeHtml(String(state.currentBattleId || ""))}">⚑</button>`;
     const body = `<span class="battleChatMsgInline"><span class="battleChatMsgRest">${nickBlock}<span class="chatColon">:</span> ${text}</span></span>`;
     return `<div class="battleChatLine" data-chat-msg-id="${escapeHtml(String(m.id ?? ""))}">${avatarCell}${rankCell}${body}${flag}</div>`;
   }).join("");
@@ -2088,8 +2531,8 @@ function lobbyCreatorRankRowHtml(lb) {
 }
 
 function lobbyRankRangeCaption(lb) {
-  if (!lb) return "Все звания";
-  if (lb.allow_all_ranks) return "Все звания";
+  if (!lb) return trText("Все звания", "All ranks");
+  if (lb.allow_all_ranks) return trText("Все звания", "All ranks");
   const a = String(lb.min_rank_name || "—").trim();
   const b = String(lb.max_rank_name || "—").trim();
   if (a && b && a === b) return a;
@@ -2116,19 +2559,22 @@ function lobbyRankRangeStripHtml(lb) {
 }
 
 function lobbyCardHtml(lb) {
-  const title = escapeHtml(String(lb.name || "Бой"));
-  const creator = escapeHtml(String(lb.creator_name || "Игрок"));
+  const title = escapeHtml(String(lb.name || trText("Бой", "Battle")));
+  const creator = escapeHtml(String(lb.creator_name || trText("Игрок", "Player")));
   const time = Math.max(0, Math.floor(Number(lb.expires_in || 0)));
   const expiresAt = Date.now() + time * 1000;
   const rankStrip = lobbyRankRangeStripHtml(lb);
   const mapBrief = escapeHtml(lobbyCoverMapCaption(lb));
   const mode = String(lb?.pvp_mode || "classic");
   const modeBrief = mode === "deathmatch"
-    ? `Режим: DM • ${Number(lb?.target_kills || 5)} килл. • ${Number(lb?.match_seconds || 120)}с`
-    : "Режим: классический";
+    ? (state.locale === "en"
+      ? `Mode: DM • ${Number(lb?.target_kills || 5)} kills • ${Number(lb?.match_seconds || 120)}s`
+      : `Режим: DM • ${Number(lb?.target_kills || 5)} килл. • ${Number(lb?.match_seconds || 120)}с`)
+    : trText("Режим: классический", "Mode: classic");
   const statsTag = lb?.no_stats_update
-    ? `<span class="battleLobbyTag">📊 Стата: выкл</span>`
-    : `<span class="battleLobbyTag">📊 Стата: вкл</span>`;
+    ? `<span class="battleLobbyTag">📊 ${trText("Стата: выкл", "Stats: off")}</span>`
+    : `<span class="battleLobbyTag">📊 ${trText("Стата: вкл", "Stats: on")}</span>`;
+  const timerSuffix = state.locale === "en" ? "s" : "с";
   return `<button class="battleLobbyCard" type="button" data-lobby="${String(lb.lobby_id || "")}">
     <div class="battleLobbyName">${title}</div>
     <div class="battleLobbyMapBrief">${mapBrief}</div>
@@ -2137,7 +2583,7 @@ function lobbyCardHtml(lb) {
       <span class="battleLobbyTag battleLobbyCreatorTag">${lobbyCreatorRankRowHtml(lb)}<span class="battleLobbyCreatorName">${creator}</span></span>
       <span class="battleLobbyTag battleLobbyRangeTag">${rankStrip}</span>
       ${statsTag}
-      <span class="battleLobbyTag battleLobbyTimerTag" data-expires-at="${expiresAt}">⏳ ${time}с</span>
+      <span class="battleLobbyTag battleLobbyTimerTag" data-expires-at="${expiresAt}">⏳ ${time}${timerSuffix}</span>
     </div>
   </button>`;
 }
@@ -2163,9 +2609,9 @@ function lobbyStaticSig(lb) {
 
 function lobbyCoverMapCaption(lb) {
   const v = String(lb?.cover_map || "random").toLowerCase();
-  if (v === "with") return "Карта: с укрытиями";
-  if (v === "without") return "Карта: без укрытий";
-  return "Карта: случайная";
+  if (v === "with") return trText("Карта: с укрытиями", "Map: with cover");
+  if (v === "without") return trText("Карта: без укрытий", "Map: no cover");
+  return trText("Карта: случайная", "Map: random");
 }
 
 function lobbiesContentKey(lobbies) {
@@ -2179,7 +2625,7 @@ function tickLobbyTimersDom() {
     const exp = Number(el.dataset.expiresAt);
     if (!Number.isFinite(exp)) return;
     const s = Math.max(0, Math.floor((exp - Date.now()) / 1000));
-    el.textContent = `⏳ ${s}с`;
+    el.textContent = `⏳ ${s}${state.locale === "en" ? "s" : "с"}`;
     if (s <= 0) {
       const card = el.closest("button.battleLobbyCard");
       if (card) {
@@ -2231,7 +2677,7 @@ function patchLobbyTimersOnly() {
     const t = Math.max(0, Math.floor(Number(lb.expires_in || 0)));
     const exp = Date.now() + t * 1000;
     el.dataset.expiresAt = String(exp);
-    el.textContent = `⏳ ${t}с`;
+    el.textContent = `⏳ ${t}${state.locale === "en" ? "s" : "с"}`;
   }
   tickLobbyTimersDom();
 }
@@ -2349,11 +2795,13 @@ function openJoinLobbyModal(lb) {
   const modal = qs("joinLobbyModal");
   if (!modal) return;
   state.joinLobbyId = String(lb.lobby_id || "");
-  const cname = String(lb.creator_name || "Игрок");
-  qs("joinLobbyLabel").textContent = `Вступить в бой игрока ${cname}?`;
+  const cname = String(lb.creator_name || trText("Игрок", "Player"));
+  qs("joinLobbyLabel").textContent = state.locale === "en"
+    ? `Join ${cname}'s battle?`
+    : `Вступить в бой игрока ${cname}?`;
   const hint = qs("joinLobbyBattleHint");
   if (hint) {
-    const title = escapeHtml(String(lb.name || "Бой"));
+    const title = escapeHtml(String(lb.name || trText("Бой", "Battle")));
     const mapLine = escapeHtml(lobbyCoverMapCaption(lb));
     hint.innerHTML = `${title}<br /><span class="joinLobbyMapHint">${mapLine}</span>`;
   }
@@ -2465,15 +2913,17 @@ function battleFinishReasonText(st) {
   const reason = String(st?.finish_reason || "");
   if (reason === "inactive_kick") {
     return st?.winner === "player"
-      ? "Победа: противник был выкинут за неактив."
-      : "Поражение: вы были выкинуты за неактив.";
+      ? trText("Победа: противник был выкинут за неактив.", "Victory: opponent was kicked for inactivity.")
+      : trText("Поражение: вы были выкинуты за неактив.", "Defeat: you were kicked for inactivity.");
   }
   if (reason === "surrender") {
     return st?.winner === "player"
-      ? "Победа: противник сдался."
-      : "Поражение: вы сдались.";
+      ? trText("Победа: противник сдался.", "Victory: opponent surrendered.")
+      : trText("Поражение: вы сдались.", "Defeat: you surrendered.");
   }
-  return st?.winner === "player" ? "Противник уничтожен в бою." : "Ваш танк уничтожен в бою.";
+  return st?.winner === "player"
+    ? trText("Противник уничтожен в бою.", "Opponent destroyed.")
+    : trText("Ваш танк уничтожен в бою.", "Your tank was destroyed.");
 }
 
 function hidePvpInviteModal() {
@@ -2496,11 +2946,11 @@ function startInviteCountdown() {
   }
   const tick = () => {
     if (!state.activeInviteExpireAt) {
-      timeEl.textContent = "0 сек";
+      timeEl.textContent = state.locale === "en" ? "0s" : "0 сек";
       return;
     }
     const left = Math.max(0, Math.ceil((state.activeInviteExpireAt - Date.now()) / 1000));
-    timeEl.textContent = `${left} сек`;
+    timeEl.textContent = state.locale === "en" ? `${left}s` : `${left} сек`;
     if (left <= 0 && state.inviteCountdownTimer) {
       clearInterval(state.inviteCountdownTimer);
       state.inviteCountdownTimer = null;
@@ -2527,7 +2977,7 @@ async function openInviteModal(inviteId) {
     return;
   }
   void playPurchaseSound();
-  const inviterName = escapeHtml(String(info.inviter_name || "Игрок"));
+  const inviterName = escapeHtml(String(info.inviter_name || trText("Игрок", "Player")));
   const inviterRank = String(info.inviter_rank_image_url || "");
   const invPrem = Boolean(info.inviter_has_premium);
   const invBg = withCacheBust(absUrl(PREMIUM_BADGE_PATH));
@@ -2555,8 +3005,13 @@ async function updateOutgoingInviteState() {
     const hasOutgoing = Boolean(state.outgoingInviteId);
     sendBtn.disabled = hasOutgoing;
     cancelBtn.style.display = hasOutgoing ? "block" : "none";
-    if (hasOutgoing && hint) hint.textContent = `Приглашение активно (${Math.max(0, Number(inv.expires_in || 0))} сек).`;
-    if (!hasOutgoing && hint && hint.textContent.includes("Приглашение активно")) hint.textContent = "";
+    if (hasOutgoing && hint) {
+      const left = Math.max(0, Number(inv.expires_in || 0));
+      hint.textContent = state.locale === "en"
+        ? `Invite is active (${left}s).`
+        : `Приглашение активно (${left} сек).`;
+    }
+    if (!hasOutgoing && hint && (hint.textContent.includes("Приглашение активно") || hint.textContent.includes("Invite is active"))) hint.textContent = "";
     // Исходящее приглашение пропало (приняли / отменили / истекло) — один раз подтянуть бой, без спама poll.
     if (prevOutgoingId && !state.outgoingInviteId) {
       void battleFetchState();
@@ -2751,8 +3206,14 @@ function showBattleResultModal(win, reasonText = "", battleId = "") {
   if (icon) icon.textContent = isWin ? "🏆" : "💥";
   if (text) {
     text.textContent = String(reasonText || (isWin
-      ? "Ты уничтожил соперника! Отличный бой. Нажми вне окна, чтобы продолжить."
-      : "Бой проигран, но это опыт. Нажми вне окна, чтобы вернуться и попробовать снова."));
+      ? trText(
+        "Ты уничтожил соперника! Отличный бой. Нажми вне окна, чтобы продолжить.",
+        "You destroyed your opponent! Great fight. Tap outside the window to continue.",
+      )
+      : trText(
+        "Бой проигран, но это опыт. Нажми вне окна, чтобы вернуться и попробовать снова.",
+        "You lost, but it's experience. Tap outside the window to return and try again.",
+      )));
   }
   modal.style.display = "flex";
   modal.classList.remove("isOpen");
@@ -3017,8 +3478,10 @@ function renderBattleState(st) {
   if (pW) pW.textContent = `🔫 ${st.player_weapon_name || state.profile?.weapon || "—"}`;
   const pH = qs("battlePlayerHull");
   if (pH) {
-    const turnMark = st.is_pvp ? (st.is_player_turn ? " • Ваш ход" : "") : "";
-    const dmMark = st.pvp_mode === "deathmatch" ? ` • Киллы: ${Number(st.player_kills || 0)}` : "";
+    const turnMark = st.is_pvp ? (st.is_player_turn ? (state.locale === "en" ? " • Your turn" : " • Ваш ход") : "") : "";
+    const dmMark = st.pvp_mode === "deathmatch"
+      ? (state.locale === "en" ? ` • Kills: ${Number(st.player_kills || 0)}` : ` • Киллы: ${Number(st.player_kills || 0)}`)
+      : "";
     pH.textContent = `🛡 ${st.player_hull_name || state.profile?.hull || "—"}${dmMark}${turnMark}`;
   }
   const bW = qs("battleBotWeapon");
@@ -3032,7 +3495,7 @@ function renderBattleState(st) {
   const playerTitle = qs("battlePlayerTitle");
   if (playerTitle) {
     if (st.is_pvp) {
-      const pName = escapeHtml(String(st.player_name || state.profile?.name || state.viewerName || "Игрок"));
+      const pName = escapeHtml(String(st.player_name || state.profile?.name || state.viewerName || trText("Игрок", "Player")));
       const pRank = String(st.player_rank_image_url || state.profile?.rank_image_url || "");
       const pStack = pRank
         ? (st.player_has_premium
@@ -3041,13 +3504,13 @@ function renderBattleState(st) {
         : "";
       playerTitle.innerHTML = `${pStack}${pName}`;
     } else {
-      playerTitle.textContent = "ВАШ ТАНК";
+      playerTitle.textContent = trText("ВАШ ТАНК", "YOUR TANK");
     }
   }
   const oppTitle = qs("battleOpponentTitle");
   if (oppTitle) {
     if (st.is_pvp) {
-      const oName = escapeHtml(String(st.opponent_name || "Соперник"));
+      const oName = escapeHtml(String(st.opponent_name || trText("Соперник", "Opponent")));
       const oRank = String(st.opponent_rank_image_url || "");
       const oStack = oRank
         ? (st.opponent_has_premium
@@ -3056,13 +3519,17 @@ function renderBattleState(st) {
         : "";
       oppTitle.innerHTML = `${oStack}${oName}`;
     } else {
-      oppTitle.textContent = "ПРОТИВНИК";
+      oppTitle.textContent = trText("ПРОТИВНИК", "OPPONENT");
     }
   }
   const bH = qs("battleBotHull");
   if (bH) {
-    const enemyTurn = st.is_pvp ? (!st.is_player_turn ? " • Ходит сейчас" : "") : "";
-    const dmEnemy = st.pvp_mode === "deathmatch" ? ` • Киллы: ${Number(st.opponent_kills || 0)}` : "";
+    const enemyTurn = st.is_pvp
+      ? (!st.is_player_turn ? (state.locale === "en" ? " • Acting now" : " • Ходит сейчас") : "")
+      : "";
+    const dmEnemy = st.pvp_mode === "deathmatch"
+      ? (state.locale === "en" ? ` • Kills: ${Number(st.opponent_kills || 0)}` : ` • Киллы: ${Number(st.opponent_kills || 0)}`)
+      : "";
     bH.textContent = `🛡 ${st.bot_hull_name || "—"}${dmEnemy}${enemyTurn}`;
   }
 
@@ -3071,7 +3538,9 @@ function renderBattleState(st) {
   const cd = qs("battleCooldown");
   if (cd) {
     const remaining = Number(st.cooldown_remaining || 0);
-    cd.textContent = remaining > 0 ? `Кулдаун: ${remaining}с` : "";
+    cd.textContent = remaining > 0
+      ? (state.locale === "en" ? `${tr("battle_cooldown")}: ${remaining}s` : `${tr("battle_cooldown")}: ${remaining}с`)
+      : "";
   }
   const isOnCooldown = Number(st.cooldown_remaining || 0) > 0;
   const isLockedByTurn = Boolean(st.is_pvp) && !Boolean(st.is_player_turn) && !Boolean(st.game_over);
@@ -3101,7 +3570,9 @@ function renderBattleState(st) {
     // show aim toggle if player has Shaft (or any weapon with aiming) — simplest client heuristic:
     const hasAiming = state.profile?.weapon === "shaft";
     aimBtn.style.display = hasAiming ? "block" : "none";
-    aimBtn.textContent = st.aiming ? "Сбросить прицел" : "Прицел";
+    aimBtn.textContent = st.aiming
+      ? trText("Сбросить прицел", "Cancel aim")
+      : trText("Прицел", "Aim");
     aimBtn.disabled = Boolean(st.cooldown_remaining > 0) || isLockedByTurn || Boolean(st.game_over);
   }
   const palBtn = qs("battlePaladinStepBtn");
@@ -3110,7 +3581,9 @@ function renderBattleState(st) {
     const isPaladin = hullName.includes("паладин");
     palBtn.style.display = isPaladin ? "block" : "none";
     if (!isPaladin) state.paladinDashMode = false;
-    palBtn.textContent = state.paladinDashMode ? "Ход: рывок x2" : "Ход: 1 клетка";
+    palBtn.textContent = state.paladinDashMode
+      ? trText("Ход: рывок x2", "Move: dash x2")
+      : trText("Ход: 1 клетка", "Move: 1 tile");
     palBtn.disabled = Boolean(st.cooldown_remaining > 0) || isLockedByTurn || Boolean(st.game_over);
   }
 
@@ -3141,13 +3614,16 @@ function renderBattleState(st) {
   if (turn) {
     if (st.is_pvp) {
       if (st.pvp_mode === "deathmatch") {
-        turn.textContent = `DM: ${Number(st.player_kills || 0)}:${Number(st.opponent_kills || 0)} • ${Math.max(0, Number(st.pvp_time_left || 0))}с`;
+        const suffix = state.locale === "en" ? "s" : "с";
+        turn.textContent = `DM: ${Number(st.player_kills || 0)}:${Number(st.opponent_kills || 0)} • ${Math.max(0, Number(st.pvp_time_left || 0))}${suffix}`;
       } else {
         turn.textContent = "";
       }
     } else {
       const t = Number(st.turn_remaining || 0);
-      turn.textContent = t > 0 ? `Время хода: ${t}с` : "";
+      turn.textContent = t > 0
+        ? (state.locale === "en" ? `Turn time: ${t}s` : `Время хода: ${t}с`)
+        : "";
     }
   }
 
@@ -3269,7 +3745,7 @@ function bindUI() {
       state.profile = await api("/api/profile/me");
       renderHud();
       renderQuests();
-      showToast("Награда за квест получена.", { title: "КВЕСТЫ", ms: 2200 });
+      showToast(trText("Награда за квест получена.", "Quest reward claimed."), { title: trText("КВЕСТЫ", "QUESTS"), ms: 2200 });
     } catch (err) {
       setError(prettyError(err));
     } finally {
@@ -3295,10 +3771,17 @@ function bindUI() {
     };
     try {
       state.settings = await api("/api/settings", { method: "POST", body: JSON.stringify(payload) });
+      // Save locale (separate endpoint) so it persists in profile + affects whole UI.
+      const nextLoc = String(qs("setLocale")?.value || state.locale || "en").toLowerCase();
+      if (nextLoc === "ru" || nextLoc === "en") {
+        await api("/api/profile/locale", { method: "POST", body: JSON.stringify({ locale: nextLoc }) });
+        state.locale = nextLoc;
+        applyStaticI18n();
+      }
       renderSettings();
-      showToast("Настройки сохранены.", { title: "НАСТРОЙКИ", ms: 2200 });
+      showToast(trText("Настройки сохранены.", "Settings saved."), { title: trText("НАСТРОЙКИ", "SETTINGS"), ms: 2200 });
     } catch (e) {
-      showToast(prettyError(e), { title: "ОШИБКА", ms: 2600 });
+      showToast(prettyError(e), { title: trText("ОШИБКА", "ERROR"), ms: 2600 });
     }
   }
   async function saveSettingsChat() {
@@ -3308,9 +3791,9 @@ function bindUI() {
     try {
       state.settings = await api("/api/settings", { method: "POST", body: JSON.stringify(payload) });
       renderSettings();
-      showToast("Настройки сохранены.", { title: "НАСТРОЙКИ", ms: 2200 });
+      showToast(trText("Настройки сохранены.", "Settings saved."), { title: trText("НАСТРОЙКИ", "SETTINGS"), ms: 2200 });
     } catch (e) {
-      showToast(prettyError(e), { title: "ОШИБКА", ms: 2600 });
+      showToast(prettyError(e), { title: trText("ОШИБКА", "ERROR"), ms: 2600 });
     }
   }
   qs("settingsSaveBtn")?.addEventListener("click", saveSettingsPrivacy);
@@ -3342,10 +3825,10 @@ function bindUI() {
     try {
       await createLobbyFromModal();
       showPurchaseLikeModal({
-        title: "БОЙ СОЗДАН",
-        label: "Ждем соперника (3 минуты).",
+        title: trText("БОЙ СОЗДАН", "BATTLE CREATED"),
+        label: trText("Ждем соперника (3 минуты).", "Waiting for an opponent (3 minutes)."),
         icon: "⚔",
-        name: "Открытый бой",
+        name: trText("Открытый бой", "Open battle"),
         price: "",
       });
       void playPurchaseSound();
@@ -3412,11 +3895,11 @@ function bindUI() {
     const battleId = String(btn.getAttribute("data-report-battle") || "");
     if (!msgId || !["global", "battle"].includes(scope)) return;
     showConfirmModal({
-      title: "ЖАЛОБА",
-      label: "Отправить жалобу на это сообщение?",
+      title: trText("ЖАЛОБА", "REPORT"),
+      label: trText("Отправить жалобу на это сообщение?", "Send a report for this message?"),
       icon: "⚑",
-      name: `Сообщение #${msgId}`,
-      meta: scope === "battle" ? "Чат боя" : "Общий чат",
+      name: state.locale === "en" ? `Message #${msgId}` : `Сообщение #${msgId}`,
+      meta: scope === "battle" ? trText("Чат боя", "Battle chat") : trText("Общий чат", "Global chat"),
       onOk: async () => {
         hideConfirmModal();
         try {
@@ -3424,7 +3907,7 @@ function bindUI() {
             method: "POST",
             body: JSON.stringify({ scope, message_id: msgId, battle_id: battleId || null }),
           });
-          showToast("Жалоба отправлена администраторам.", { title: "ЖАЛОБА", ms: 2200 });
+          showToast(trText("Жалоба отправлена администраторам.", "Report sent to admins."), { title: trText("ЖАЛОБА", "REPORT"), ms: 2200 });
         } catch (err) {
           setError(prettyError(err));
         }
@@ -3845,7 +4328,10 @@ function bindUI() {
 }
 
 async function main() {
-  state.locale = "ru";
+  if (document.readyState === "loading") {
+    await new Promise((resolve) => document.addEventListener("DOMContentLoaded", resolve, { once: true }));
+  }
+  state.locale = state.locale || "en";
   applyStaticI18n();
   state.questsSeenDayKey = loadSeenQuestDayKey();
   initMusic();

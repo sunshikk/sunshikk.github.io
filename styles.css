@@ -4183,8 +4183,15 @@ body::after {
     color: rgba(238, 245, 255, 0.96);
   }
 
-  .leadersExp::before {
+  body[data-locale="ru"] .leadersExp::before {
     content: "ОПЫТ";
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    font-weight: 900;
+    color: rgba(193, 214, 243, 0.8);
+  }
+  body[data-locale="en"] .leadersExp::before {
+    content: "EXP";
     font-size: 10px;
     letter-spacing: 0.08em;
     font-weight: 900;
@@ -4197,8 +4204,15 @@ body::after {
     font-weight: 900;
     color: rgba(193, 214, 243, 0.8);
   }
-  .leadersBattles::before {
+  body[data-locale="ru"] .leadersBattles::before {
     content: "БОИ";
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    font-weight: 900;
+    color: rgba(193, 214, 243, 0.8);
+  }
+  body[data-locale="en"] .leadersBattles::before {
+    content: "BATTLES";
     font-size: 10px;
     letter-spacing: 0.08em;
     font-weight: 900;

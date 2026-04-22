@@ -21,7 +21,7 @@
                 <img id="hudPremiumBadge" class="premiumBadgeLayer" alt="" style="display:none" />
                 <img id="rankImg" class="rankIcon rankIconFront" alt="rank" />
               </span>
-              <span id="rankName">Звание</span>
+              <span id="rankName" data-i18n="profile_rank">Звание</span>
             </div>
             <div class="expLine">
               <div class="expValue" id="expValue">0 / 0</div>
@@ -33,7 +33,7 @@
           <div class="audioControl">
             <button id="musicToggleBtn" class="ghostBtn musicBtn" type="button">
               <span class="musicLed" id="musicLed" aria-hidden="true"></span>
-              <span id="musicToggleLabel">Музыка выкл</span>
+              <span id="musicToggleLabel" data-i18n="profile_music_off">Музыка выкл</span>
             </button>
             <input id="musicVolume" class="musicVolume" type="range" min="0" max="100" step="1" value="35" />
           </div>
@@ -43,36 +43,36 @@
       </header>
 
       <nav class="mainTabs" id="tabs">
-        <button class="mainTab isActive" data-tab="profile">Профиль</button>
-        <button class="mainTab" data-tab="leaders">Лидеры</button>
-        <button class="mainTab" data-tab="battles">Бои</button>
-        <button class="mainTab" data-tab="garage">Гараж</button>
-        <button class="mainTab" data-tab="shop">Магазин</button>
-        <button class="mainTab" data-tab="containers">Контейнеры</button>
-        <button class="mainTab" data-tab="quests">Квесты <span id="questsTabAlert" class="questTabAlert" style="display:none;">!</span></button>
-        <button class="mainTab" data-tab="settings">Настройки</button>
+        <button class="mainTab isActive" data-tab="profile" data-i18n="tab_profile">Профиль</button>
+        <button class="mainTab" data-tab="leaders" data-i18n="tab_leaders">Лидеры</button>
+        <button class="mainTab" data-tab="battles" data-i18n="tab_battles">Бои</button>
+        <button class="mainTab" data-tab="garage" data-i18n="tab_garage">Гараж</button>
+        <button class="mainTab" data-tab="shop" data-i18n="tab_shop">Магазин</button>
+        <button class="mainTab" data-tab="containers" data-i18n="tab_containers">Контейнеры</button>
+        <button class="mainTab" data-tab="quests" data-i18n="tab_quests">Квесты <span id="questsTabAlert" class="questTabAlert" style="display:none;">!</span></button>
+        <button class="mainTab" data-tab="settings" data-i18n="tab_settings">Настройки</button>
       </nav>
 
       <section class="notice" id="panelNotice" style="display: none"><div id="notice"></div></section>
 
       <main class="panel panelProfile" id="panelProfile">
-        <div class="profileTankTitle">Мой танк</div>
+        <div class="profileTankTitle" data-i18n="profile_my_tank">Мой танк</div>
         <div class="profileTankWrap">
           <div class="tankGlow"></div>
           <img id="tankImg" class="profileTank" alt="tank" />
         </div>
         <div class="statsGrid">
-          <div class="statCard"><div class="statLabel">Бои</div><div class="statValue" id="battlesValue">0</div></div>
-          <div class="statCard"><div class="statLabel">Победы</div><div class="statValue" id="winsValue">0</div></div>
-          <div class="statCard"><div class="statLabel">Поражения</div><div class="statValue" id="lossesValue">0</div></div>
-          <div class="statCard"><div class="statLabel">Опыт</div><div class="statValue" id="expTotalValue">0</div></div>
+          <div class="statCard"><div class="statLabel" data-i18n="stat_battles">Бои</div><div class="statValue" id="battlesValue">0</div></div>
+          <div class="statCard"><div class="statLabel" data-i18n="stat_wins">Победы</div><div class="statValue" id="winsValue">0</div></div>
+          <div class="statCard"><div class="statLabel" data-i18n="stat_losses">Поражения</div><div class="statValue" id="lossesValue">0</div></div>
+          <div class="statCard"><div class="statLabel" data-i18n="stat_exp">Опыт</div><div class="statValue" id="expTotalValue">0</div></div>
           <div class="statCard">
-            <div class="statLabel">Премиум</div>
-            <div class="statValue" id="premiumStatusValue">Неактивен</div>
+            <div class="statLabel" data-i18n="stat_premium">Премиум</div>
+            <div class="statValue" id="premiumStatusValue" data-i18n="stat_premium_inactive">Неактивен</div>
             <div class="statMini" id="premiumUntilValue" style="margin-top:6px; opacity:.9; color: rgba(160, 180, 210, 0.92); font-size: 12px; line-height: 1.3;"></div>
           </div>
           <div class="statCard">
-            <div class="statLabel">Звание</div>
+            <div class="statLabel" data-i18n="profile_rank">Звание</div>
             <div class="statValue rankValueRow">
               <span class="rankPremiumStack rankPremiumStack--profile" id="profileRankStack">
                 <img id="profilePremiumBadge" class="premiumBadgeLayer" alt="" style="display:none" />
@@ -81,32 +81,32 @@
               <span id="rankValue">-</span>
             </div>
           </div>
-          <div class="statCard"><div class="statLabel">Винрейт</div><div class="statValue" id="winrateValue">0%</div></div>
+          <div class="statCard"><div class="statLabel" data-i18n="stat_winrate">Винрейт</div><div class="statValue" id="winrateValue">0%</div></div>
         </div>
 
         <section class="chatCard" id="globalChatCard">
           <div class="chatHead">
-            <div class="chatTitle">ОБЩИЙ ЧАТ</div>
-            <div class="chatSubtitle">Пиши сообщения всем игрокам</div>
+            <div class="chatTitle" data-i18n="global_chat_title">ОБЩИЙ ЧАТ</div>
+            <div class="chatSubtitle" data-i18n="global_chat_subtitle">Пиши сообщения всем игрокам</div>
           </div>
           <div id="globalChatList" class="chatList"></div>
           <form id="globalChatForm" class="chatForm">
-            <input id="globalChatInput" class="promoInput chatInput" type="text" placeholder="Написать в общий чат..." maxlength="300" autocomplete="off" />
-            <button id="globalChatSend" class="promoBtn chatSendBtn" type="submit">Отправить</button>
+            <input id="globalChatInput" class="promoInput chatInput" type="text" data-i18n-placeholder="global_chat_placeholder" placeholder="Написать в общий чат..." maxlength="300" autocomplete="off" />
+            <button id="globalChatSend" class="promoBtn chatSendBtn" type="submit" data-i18n="send">Отправить</button>
           </form>
         </section>
       </main>
 
       <main class="panel panelGarage" id="panelGarage" style="display:none">
         <div class="subTabs" id="garageCategoryTabs">
-          <button class="subTab isActive" data-cat="weapon">Пушки</button>
-          <button class="subTab" data-cat="hull">Корпуса</button>
+          <button class="subTab isActive" data-cat="weapon" data-i18n="garage_weapons">Пушки</button>
+          <button class="subTab" data-cat="hull" data-i18n="garage_hulls">Корпуса</button>
         </div>
         <div class="garageStage">
           <div class="stageInfo">
             <div class="stageTitle" id="garageSelectedName">—</div>
-            <div class="stageDesc" id="garageSelectedDesc">Выберите пушку или корпус</div>
-            <button id="equipBtn" class="equipBtn">Установить</button>
+            <div class="stageDesc" id="garageSelectedDesc" data-i18n="garage_pick_item">Выберите пушку или корпус</div>
+            <button id="equipBtn" class="equipBtn" data-i18n="equip">Установить</button>
             <div class="hint" id="garageHint"></div>
           </div>
           <div class="tankShowcase">
@@ -122,29 +122,29 @@
           <div class="promoHeroCard leadersHeroCard" aria-hidden="true">
             <div class="leadersHeroArt">
               <div class="leadersHeroTrophy">🏆</div>
-              <div class="leadersHeroHeadline">ТОП ИГРОКИ</div>
-              <div class="leadersHeroSub">Опыт • Победы • Бои</div>
+              <div class="leadersHeroHeadline" data-i18n="leaders_top_players">ТОП ИГРОКИ</div>
+              <div class="leadersHeroSub" data-i18n="leaders_top_sub">Опыт • Победы • Бои</div>
               <div class="leadersHeroShine" aria-hidden="true"></div>
             </div>
           </div>
           <div class="leadersBoardCard">
             <div class="leadersHeader">
-              <div class="leadersTitle">ТАБЛИЦА ЛИДЕРОВ</div>
-              <div class="leadersSubtitle">Лучшие игроки сервера</div>
+              <div class="leadersTitle" data-i18n="leaders_table_title">ТАБЛИЦА ЛИДЕРОВ</div>
+              <div class="leadersSubtitle" data-i18n="leaders_table_sub">Лучшие игроки сервера</div>
             </div>
             <div class="leadersControls" id="leadersSortTabs">
-              <button class="leadersSortBtn isActive" type="button" data-sort="experience">Опыт</button>
-              <button class="leadersSortBtn" type="button" data-sort="wins">Победы</button>
-              <button class="leadersSortBtn" type="button" data-sort="battles">Бои</button>
+              <button class="leadersSortBtn isActive" type="button" data-sort="experience" data-i18n="sort_exp">Опыт</button>
+              <button class="leadersSortBtn" type="button" data-sort="wins" data-i18n="sort_wins">Победы</button>
+              <button class="leadersSortBtn" type="button" data-sort="battles" data-i18n="stat_battles">Бои</button>
             </div>
             <div class="leadersTableWrap">
               <div class="leadersTableHead">
-                <span>#</span><span>Игрок</span><span>Опыт</span><span>W/L</span><span>Бои</span>
+                <span>#</span><span data-i18n="leaders_head_player">Игрок</span><span data-i18n="leaders_head_exp">Опыт</span><span>W/L</span><span data-i18n="leaders_head_battles">Бои</span>
               </div>
               <div id="leadersRows" class="leadersRows"></div>
             </div>
             <div id="leadersMeWrap" class="leadersMeWrap" style="display:none">
-              <div class="leadersMeLabel">Твоя позиция</div>
+              <div class="leadersMeLabel" data-i18n="leaders_you_pos">Твоя позиция</div>
               <div id="leadersMeRow" class="leadersMeRow"></div>
             </div>
           </div>
@@ -153,45 +153,45 @@
 
       <main class="panel panelBattles" id="panelBattles" style="display:none">
         <div class="battlesHeader">
-          <div id="battlesTitle" class="battlesTitle">ВЫБОР РЕЖИМА</div>
+          <div id="battlesTitle" class="battlesTitle" data-i18n="battles_title_modes">ВЫБОР РЕЖИМА</div>
         </div>
 
         <div class="battleLobbyCreateWrap">
-          <button id="createLobbyBtn" class="promoBtn battleLobbyCreateBtn" type="button">Создать бой</button>
+          <button id="createLobbyBtn" class="promoBtn battleLobbyCreateBtn" type="button" data-i18n="battles_create">Создать бой</button>
         </div>
 
-        <div id="battleModesGrid" class="battleModesGrid" aria-label="Режимы боев">
+        <div id="battleModesGrid" class="battleModesGrid" data-i18n-aria="battles_modes_aria" aria-label="Режимы боев">
           <button id="battleBotModeCard" class="battleModeCard isPrimary" type="button">
-            <div class="battleModeName">БОЙ С БОТОМ</div>
+            <div class="battleModeName" data-i18n="battles_title_bot">БОЙ С БОТОМ</div>
             <div class="battleModeIcon">☠</div>
           </button>
           <button id="battlePlayerModeCard" class="battleModeCard" type="button">
-            <div class="battleModeName">БОЙ С ИГРОКОМ</div>
+            <div class="battleModeName" data-i18n="battles_title_pvp">БОЙ С ИГРОКОМ</div>
             <div class="battleModeIcon">⚔</div>
           </button>
         </div>
 
         <section id="battleLobbiesSection" class="battleLobbiesSection">
-          <div class="battleLobbiesTitle">Открытые бои</div>
+          <div class="battleLobbiesTitle" data-i18n="battles_open">Открытые бои</div>
           <div id="battleLobbiesList" class="battleLobbiesList"></div>
         </section>
 
         <div id="battleBotCard" class="battleBotCard" style="display:none">
-          <div class="battleBotCardTitle">БОЙ С БОТОМ</div>
+          <div class="battleBotCardTitle" data-i18n="battles_title_bot">БОЙ С БОТОМ</div>
           <div class="battleBotCardIcon">☠</div>
           <div class="battleBotCardActions">
-            <button id="startBotBattleBtn" class="equipBtn" type="button">Начать бой</button>
-            <button id="backToModesBtn" class="ghostBtn" type="button" style="margin-top:0">Назад</button>
+            <button id="startBotBattleBtn" class="equipBtn" type="button" data-i18n="start_battle">Начать бой</button>
+            <button id="backToModesBtn" class="ghostBtn" type="button" style="margin-top:0" data-i18n="back">Назад</button>
           </div>
         </div>
 
         <div id="battlePlayerCard" class="battleBotCard" style="display:none">
-          <div class="battleBotCardTitle">БОЙ С ИГРОКОМ</div>
+          <div class="battleBotCardTitle" data-i18n="battles_title_pvp">БОЙ С ИГРОКОМ</div>
           <div class="battleBotCardActions" style="flex-direction:column; width:min(100%, 360px);">
             <input id="pvpUsernameInput" class="promoInput" type="text" placeholder="@username" autocomplete="off" />
-            <button id="sendPvpInviteBtn" class="promoBtn" type="button">Отправить приглашение</button>
-            <button id="cancelPvpInviteBtn" class="ghostBtn" type="button" style="margin-top:0; display:none;">Отменить приглашение</button>
-            <button id="backToModesFromPvpBtn" class="ghostBtn" type="button" style="margin-top:0">Назад</button>
+            <button id="sendPvpInviteBtn" class="promoBtn" type="button" data-i18n="send_invite">Отправить приглашение</button>
+            <button id="cancelPvpInviteBtn" class="ghostBtn" type="button" style="margin-top:0; display:none;" data-i18n="cancel_invite">Отменить приглашение</button>
+            <button id="backToModesFromPvpBtn" class="ghostBtn" type="button" style="margin-top:0" data-i18n="back">Назад</button>
             <div id="pvpInviteHint" class="hint" style="text-align:center;"></div>
           </div>
         </div>
@@ -200,17 +200,17 @@
           <div id="battleLoadingOverlay" class="battleLoadingOverlay" style="display:none" aria-hidden="true">
             <div class="battleLoadingCard">
               <div class="battleLoadingSpinner" aria-hidden="true"></div>
-              <div class="battleLoadingText">ЗАГРУЗКА БОЯ…</div>
+              <div class="battleLoadingText" data-i18n="battle_loading">ЗАГРУЗКА БОЯ…</div>
             </div>
           </div>
           <div class="battleArenaTop">
-            <button id="battleSurrenderBtn" class="ghostBtn" type="button" style="margin-top:0">Сдаться</button>
+            <button id="battleSurrenderBtn" class="ghostBtn" type="button" style="margin-top:0" data-i18n="surrender">Сдаться</button>
           </div>
 
           <div class="battleStage">
             <aside class="battleSide battleSideLeft">
-              <div id="battlePlayerTitle" class="battleSideTitle">ВАШ ТАНК</div>
-              <div id="battleAimState" class="battleAimState" style="display:none">🎯 Прицел активен</div>
+              <div id="battlePlayerTitle" class="battleSideTitle" data-i18n="battle_your_tank">ВАШ ТАНК</div>
+              <div id="battleAimState" class="battleAimState" style="display:none" data-i18n="aim_active">🎯 Прицел активен</div>
               <img id="battlePlayerTankImg" class="battleTankImg" alt="player tank" />
               <div class="battleSideHp">
                 <div class="battleSideHpHead">
@@ -227,27 +227,27 @@
             </aside>
 
             <section class="battleCenter">
-              <div id="battleMap" class="battleMap" aria-label="Карта боя"></div>
+              <div id="battleMap" class="battleMap" data-i18n-aria="battle_map_aria" aria-label="Карта боя"></div>
               <div id="battleLog" class="battleLog"></div>
 
               <div class="battleControls">
                 <div class="battleMovePad">
                   <div class="battlePadRow battlePadRowTop">
                     <span class="battlePadSpacer" aria-hidden="true"></span>
-                    <button class="battlePadBtn" data-battle-move="up" type="button" aria-label="Вверх"><span>▲</span></button>
+                    <button class="battlePadBtn" data-battle-move="up" type="button" data-i18n-aria="move_up" aria-label="Вверх"><span>▲</span></button>
                     <span class="battlePadSpacer" aria-hidden="true"></span>
                   </div>
                   <div class="battlePadRow">
-                    <button class="battlePadBtn" data-battle-move="left" type="button" aria-label="Влево"><span>◀</span></button>
-                    <button class="battlePadBtn" data-battle-move="down" type="button" aria-label="Вниз"><span>▼</span></button>
-                    <button class="battlePadBtn" data-battle-move="right" type="button" aria-label="Вправо"><span>▶</span></button>
+                    <button class="battlePadBtn" data-battle-move="left" type="button" data-i18n-aria="move_left" aria-label="Влево"><span>◀</span></button>
+                    <button class="battlePadBtn" data-battle-move="down" type="button" data-i18n-aria="move_down" aria-label="Вниз"><span>▼</span></button>
+                    <button class="battlePadBtn" data-battle-move="right" type="button" data-i18n-aria="move_right" aria-label="Вправо"><span>▶</span></button>
                   </div>
                 </div>
                 <div class="battleActionPad">
-                  <button id="battleShootBtn" class="equipBtn" type="button" style="margin-top:0">Огонь</button>
-                  <button id="battleAimBtn" class="ghostBtn" type="button" style="margin-top:10px; display:none">Прицел</button>
-                  <button id="battlePaladinStepBtn" class="ghostBtn" type="button" style="margin-top:10px; display:none">Ход: 1 клетка</button>
-                  <div class="battleHotkeysHint">ПК: WASD/стрелки - движение, F - огонь, G - прицел</div>
+                  <button id="battleShootBtn" class="equipBtn" type="button" style="margin-top:0" data-i18n="fire">Огонь</button>
+                  <button id="battleAimBtn" class="ghostBtn" type="button" style="margin-top:10px; display:none" data-i18n="battle_aim">Прицел</button>
+                  <button id="battlePaladinStepBtn" class="ghostBtn" type="button" style="margin-top:10px; display:none" data-i18n="paladin_step_1">Ход: 1 клетка</button>
+                  <div class="battleHotkeysHint" data-i18n="hotkeys_hint">ПК: WASD/стрелки - движение, F - огонь, G - прицел</div>
                   <div id="battleTurnTimer" class="battleCooldown"></div>
                   <div id="battleCooldown" class="battleCooldown"></div>
                 </div>
@@ -255,18 +255,18 @@
 
               <div class="battleChatWrap battleChatInArena" id="battleChatWrap" style="display:none">
                 <div class="battleChatHead">
-                  <div class="battleChatTitle">ЧАТ БОЯ</div>
+                  <div class="battleChatTitle" data-i18n="battle_chat_title">ЧАТ БОЯ</div>
                 </div>
                 <div id="battleChatList" class="battleChatList"></div>
                 <form id="battleChatForm" class="battleChatForm">
-                  <input id="battleChatInput" class="promoInput battleChatInput" type="text" placeholder="Сообщение..." maxlength="300" autocomplete="off" />
-                  <button id="battleChatSend" class="promoBtn battleChatSend" type="submit">ОК</button>
+                  <input id="battleChatInput" class="promoInput battleChatInput" type="text" data-i18n-placeholder="battle_chat_placeholder" placeholder="Сообщение..." maxlength="300" autocomplete="off" />
+                  <button id="battleChatSend" class="promoBtn battleChatSend" type="submit" data-i18n="ok">ОК</button>
                 </form>
               </div>
             </section>
 
             <aside class="battleSide battleSideRight">
-              <div id="battleOpponentTitle" class="battleSideTitle">ПРОТИВНИК</div>
+              <div id="battleOpponentTitle" class="battleSideTitle" data-i18n="battle_opponent">ПРОТИВНИК</div>
               <img id="battleBotTankImg" class="battleTankImg" alt="bot tank" />
               <div class="battleSideHp">
                 <div class="battleSideHpHead">
@@ -289,13 +289,13 @@
       <main class="panel panelShop" id="panelShop" style="display:none">
         <div class="shopLayout">
           <aside class="shopMenu" id="shopCategory">
-            <button class="shopCat isActive" data-cat="weapon">Пушки</button>
-            <button class="shopCat" data-cat="hull">Корпуса</button>
-            <button class="shopCat" data-cat="premium">Премиум подписка</button>
-            <button class="shopCat" data-cat="promo">Промокоды</button>
+            <button class="shopCat isActive" data-cat="weapon" data-i18n="shop_cat_weapon">Пушки</button>
+            <button class="shopCat" data-cat="hull" data-i18n="shop_cat_hull">Корпуса</button>
+            <button class="shopCat" data-cat="premium" data-i18n="shop_cat_premium">Премиум подписка</button>
+            <button class="shopCat" data-cat="promo" data-i18n="shop_cat_promo">Промокоды</button>
           </aside>
           <section class="shopContent">
-            <div class="shopHeader" id="shopHeader">Предложения</div>
+            <div class="shopHeader" id="shopHeader" data-i18n="shop_offers">Предложения</div>
             <div id="shopList" class="shopList"></div>
             <div id="promoPanel" class="promoPanel" style="display:none">
               <div class="promoHeroCard" aria-hidden="true">
@@ -306,10 +306,8 @@
                 </div>
               </div>
               <div class="promoRedeemCard">
-                <div class="promoTitle">Активировать промокод</div>
-                <div class="promoSubtitle">
-                  Промокоды вводятся только в веб‑магазине.
-                </div>
+                <div class="promoTitle" data-i18n="promo_title">Активировать промокод</div>
+                <div class="promoSubtitle" data-i18n="promo_note">Промокоды вводятся только в веб‑магазине.</div>
                 <form id="promoForm" class="promoForm">
                   <input
                     id="promoCodeInput"
@@ -318,7 +316,7 @@
                     placeholder="TNKI0-XXXXX-XXXXX-XXXXX"
                     autocomplete="off"
                   />
-                  <button id="promoSubmitBtn" class="promoBtn" type="submit">Отправить</button>
+                  <button id="promoSubmitBtn" class="promoBtn" type="submit" data-i18n="send">Отправить</button>
                 </form>
                 <div id="promoResult" class="promoResult"></div>
               </div>
@@ -328,63 +326,70 @@
       </main>
 
       <main class="panel panelContainers" id="panelContainers" style="display:none">
-        <div class="subTabs containerTabs"><button class="subTab isActive">Обычный</button></div>
+        <div class="subTabs containerTabs"><button class="subTab isActive" data-i18n="containers_standard">Обычный</button></div>
         <div class="containerWrap"><img id="containerImg" class="containerImg" alt="container" /></div>
         <div class="containerActions">
-          <button id="openContainerBtn" class="equipBtn">Открыть контейнер</button>
-          <button id="viewContainerRewardsBtn" class="ghostBtn" type="button">Посмотреть содержимое контейнера</button>
-          <button id="refreshBtn" class="ghostBtn">Обновить</button>
+          <button id="openContainerBtn" class="equipBtn" data-i18n="open_container">Открыть контейнер</button>
+          <button id="viewContainerRewardsBtn" class="ghostBtn" type="button" data-i18n="view_rewards">Посмотреть содержимое контейнера</button>
+          <button id="refreshBtn" class="ghostBtn" data-i18n="refresh">Обновить</button>
         </div>
         <div class="hint" id="containerResult"></div>
       </main>
 
       <main class="panel panelQuests" id="panelQuests" style="display:none">
-        <div class="leadersTitle" style="margin-bottom:10px;">ЕЖЕДНЕВНЫЕ КВЕСТЫ</div>
+        <div class="leadersTitle" style="margin-bottom:10px;" data-i18n="quests_title">ЕЖЕДНЕВНЫЕ КВЕСТЫ</div>
         <div id="questsResetTime" class="questResetTime">До обновления: --ч --м</div>
         <div id="questsList" class="questsList"></div>
       </main>
 
       <main class="panel panelSettings" id="panelSettings" style="display:none">
-        <div class="leadersTitle" style="margin-bottom:12px;">НАСТРОЙКИ</div>
+        <div class="leadersTitle" style="margin-bottom:12px;" data-i18n="settings_title">НАСТРОЙКИ</div>
         <div class="subTabs" id="settingsTabs" style="margin-bottom:10px;">
-          <button class="subTab isActive" data-settings="privacy" type="button">Приватность</button>
-          <button class="subTab" data-settings="chat" type="button">Чат</button>
+          <button class="subTab isActive" data-settings="privacy" type="button" data-i18n="settings_privacy_tab">Приватность</button>
+          <button class="subTab" data-settings="chat" type="button" data-i18n="settings_chat_tab">Чат</button>
         </div>
 
         <section class="card" id="settingsPrivacy">
-          <div class="shopTitle" style="margin-bottom:8px;">Приватность</div>
+          <div class="shopTitle" style="margin-bottom:8px;" data-i18n="settings_privacy_title">Приватность</div>
+
+          <label class="battleLobbyCoverLabel" for="setLocale" data-i18n="settings_language">Язык</label>
+          <select id="setLocale" class="battleLobbySelect" data-i18n-aria="settings_language" aria-label="Язык">
+            <option value="ru" data-i18n="lang_ru">Русский</option>
+            <option value="en" data-i18n="lang_en">English</option>
+          </select>
+
           <label class="battleLobbyAllRanks" style="margin-top:6px;">
             <input id="setBlockInvites" type="checkbox" />
-            <span>Приглашения: запретить другим приглашать меня в бой</span>
+            <span data-i18n="settings_block_invites">Приглашения: запретить другим приглашать меня в бой</span>
           </label>
           <div class="hint" style="margin-top:8px; opacity:.9;">
-            Исключения по username (через запятую):
+            <span data-i18n="settings_allowlist_label">Исключения по username (через запятую):</span>
           </div>
           <input id="setInvitesAllowlist" class="promoInput" type="text" placeholder="@user1, user2, user3" autocomplete="off" />
 
           <label class="battleLobbyAllRanks" style="margin-top:10px;">
             <input id="setShowAvatar" type="checkbox" checked />
-            <span>Аватар: показывать мой аватар всем</span>
+            <span data-i18n="settings_show_avatar">Аватар: показывать мой аватар всем</span>
           </label>
           <div class="purchaseActions" style="margin-top:12px;">
-            <button id="settingsSaveBtn" class="purchaseActionBtn" type="button">Сохранить</button>
+            <button id="settingsSaveBtn" class="purchaseActionBtn" type="button" data-i18n="save">Сохранить</button>
           </div>
           <div class="hint" id="settingsSavedHint" style="margin-top:8px;"></div>
         </section>
 
         <section class="card" id="settingsChat" style="display:none;">
-          <div class="shopTitle" style="margin-bottom:8px;">Чат</div>
-          <label class="battleLobbyCoverLabel" for="setChatVisibility">Видимость чата</label>
-          <select id="setChatVisibility" class="battleLobbySelect" aria-label="Видимость чата">
-            <option value="on">Вкл (все чаты)</option>
-            <option value="battle_only">Только в боях</option>
-            <option value="off">Выкл (никакие чаты)</option>
+          <div class="shopTitle" style="margin-bottom:8px;" data-i18n="settings_chat_title">Чат</div>
+          <label class="battleLobbyCoverLabel" for="setChatVisibility" data-i18n="settings_chat_visibility">Видимость чата</label>
+          <select id="setChatVisibility" class="battleLobbySelect" data-i18n-aria="settings_chat_visibility" aria-label="Видимость чата">
+            <option value="on" data-i18n="chat_vis_on">Вкл (все чаты)</option>
+            <option value="battle_only" data-i18n="chat_vis_battle_only">Только в боях</option>
+            <option value="off" data-i18n="chat_vis_off">Выкл (никакие чаты)</option>
           </select>
           <div class="hint" style="margin-top:8px; opacity:.9;">
-            Если чат выключен, соперник не сможет писать вам в чат боя.
+            <span data-i18n="settings_chat_note">Если чат выключен, соперник не сможет писать вам в чат боя.</span>
           </div>
           <div class="purchaseActions" style="margin-top:12px;">
-            <button id="settingsSaveBtn2" class="purchaseActionBtn" type="button">Сохранить</button>
+            <button id="settingsSaveBtn2" class="purchaseActionBtn" type="button" data-i18n="save">Сохранить</button>
           </div>
           <div class="hint" id="settingsSavedHint2" style="margin-top:8px;"></div>
         </section>
@@ -393,7 +398,7 @@
 
     <div class="rewardModal" id="rewardModal" style="display:none">
       <div class="rewardCard" id="rewardCard">
-        <div class="rewardTitle">Контейнер открыт</div>
+        <div class="rewardTitle" data-i18n="reward_opened">Контейнер открыт</div>
         <div class="rewardContainerBox" id="rewardContainerBox">
           <img id="rewardContainerImg" class="rewardContainerImg" alt="opened container" />
           <img id="rewardDropImg" class="rewardDropImg" alt="reward" />
@@ -406,30 +411,30 @@
       <div class="errorCard" role="alertdialog" aria-modal="true" aria-labelledby="errorTitle">
         <div class="errorHead">
           <div class="errorAccent"></div>
-          <div class="errorTitle" id="errorTitle">ВНИМАНИЕ!</div>
+          <div class="errorTitle" id="errorTitle" data-i18n="warning">ВНИМАНИЕ!</div>
         </div>
         <div class="errorBody">
           <div class="errorIcon" aria-hidden="true">⚠</div>
-          <div class="errorText" id="errorBody">Произошла ошибка.</div>
+          <div class="errorText" id="errorBody" data-i18n="error_default">Произошла ошибка.</div>
         </div>
       </div>
     </div>
 
     <div class="purchaseModal" id="purchaseModal" style="display:none">
       <div class="purchaseCard" role="dialog" aria-modal="true" aria-labelledby="purchaseTitle">
-        <button id="purchaseCloseTopBtn" class="purchaseCloseTop" type="button" aria-label="Закрыть">×</button>
+        <button id="purchaseCloseTopBtn" class="purchaseCloseTop" type="button" data-i18n-aria="close" aria-label="Закрыть">×</button>
         <div class="purchaseIconPane">
           <div id="purchaseIcon" class="purchaseCartIcon" aria-hidden="true">🛒</div>
         </div>
         <div class="purchaseContent">
-          <div class="purchaseTitle" id="purchaseTitle">ПОКУПКА ПРОИЗВЕДЕНА УСПЕШНО</div>
-          <div class="purchaseLabel" id="purchaseLabel">Вы приобрели:</div>
+          <div class="purchaseTitle" id="purchaseTitle" data-i18n="purchase_success_title">ПОКУПКА ПРОИЗВЕДЕНА УСПЕШНО</div>
+          <div class="purchaseLabel" id="purchaseLabel" data-i18n="purchase_success_label">Вы приобрели:</div>
           <div class="purchaseRow">
-            <span id="purchaseItemName" class="purchaseItemName">Предмет</span>
+            <span id="purchaseItemName" class="purchaseItemName" data-i18n="item">Предмет</span>
             <span id="purchaseItemPrice" class="purchaseItemPrice">0</span>
           </div>
           <div class="purchaseActions">
-            <button id="purchaseCloseBtn" class="purchaseActionBtn" type="button">Закрыть</button>
+            <button id="purchaseCloseBtn" class="purchaseActionBtn" type="button" data-i18n="close">Закрыть</button>
           </div>
         </div>
       </div>
@@ -438,11 +443,11 @@
     <div class="battleResultModal" id="battleResultModal" style="display:none">
       <div class="battleResultCard" id="battleResultCard" role="dialog" aria-modal="true" aria-labelledby="battleResultTitle">
         <div class="battleResultBanner" id="battleResultBanner">
-          <div id="battleResultTitle" class="battleResultTitle">ПОБЕДА</div>
+          <div id="battleResultTitle" class="battleResultTitle" data-i18n="battle_victory">ПОБЕДА</div>
         </div>
         <div class="battleResultBody">
           <div id="battleResultIcon" class="battleResultIcon" aria-hidden="true">🏆</div>
-          <div id="battleResultText" class="battleResultText">Сражение завершено. Нажмите вне окна, чтобы продолжить.</div>
+          <div id="battleResultText" class="battleResultText" data-i18n="battle_result_default">Сражение завершено. Нажмите вне окна, чтобы продолжить.</div>
         </div>
       </div>
     </div>
@@ -453,11 +458,11 @@
           <div class="purchaseCartIcon" aria-hidden="true">🏳️</div>
         </div>
         <div class="purchaseContent">
-          <div class="purchaseTitle" id="surrenderTitle">СДАТЬСЯ?</div>
-          <div class="purchaseLabel">Ты точно хочешь завершить бой поражением?</div>
+          <div class="purchaseTitle" id="surrenderTitle" data-i18n="surrender_title">СДАТЬСЯ?</div>
+          <div class="purchaseLabel" data-i18n="surrender_label">Ты точно хочешь завершить бой поражением?</div>
           <div class="purchaseActions" style="gap:10px;">
-            <button id="surrenderCancelBtn" class="ghostBtn" type="button" style="margin-top:0;">Отмена</button>
-            <button id="surrenderConfirmBtn" class="purchaseActionBtn" type="button">Сдаться</button>
+            <button id="surrenderCancelBtn" class="ghostBtn" type="button" style="margin-top:0;" data-i18n="cancel">Отмена</button>
+            <button id="surrenderConfirmBtn" class="purchaseActionBtn" type="button" data-i18n="surrender">Сдаться</button>
           </div>
         </div>
       </div>
@@ -465,20 +470,20 @@
 
     <div class="purchaseModal" id="pvpInviteModal" style="display:none">
       <div class="purchaseCard" role="dialog" aria-modal="true" aria-labelledby="pvpInviteTitle">
-        <button id="pvpInviteCloseTopBtn" class="purchaseCloseTop" type="button" aria-label="Закрыть">×</button>
+        <button id="pvpInviteCloseTopBtn" class="purchaseCloseTop" type="button" data-i18n-aria="close" aria-label="Закрыть">×</button>
         <div class="purchaseIconPane">
           <div class="purchaseCartIcon" aria-hidden="true">⚔</div>
         </div>
         <div class="purchaseContent">
-          <div class="purchaseTitle" id="pvpInviteTitle">ПРИГЛАШЕНИЕ В БОЙ</div>
-          <div class="purchaseLabel" id="pvpInviteLabel">Вас пригласили в PvP бой.</div>
+          <div class="purchaseTitle" id="pvpInviteTitle" data-i18n="pvp_invite_title">ПРИГЛАШЕНИЕ В БОЙ</div>
+          <div class="purchaseLabel" id="pvpInviteLabel" data-i18n="pvp_invite_label">Вас пригласили в PvP бой.</div>
           <div class="purchaseRow">
-            <span id="pvpInviteName" class="purchaseItemName">Игрок</span>
-            <span id="pvpInviteTime" class="purchaseItemPrice">120 сек</span>
+            <span id="pvpInviteName" class="purchaseItemName" data-i18n="leaders_head_player">Игрок</span>
+            <span id="pvpInviteTime" class="purchaseItemPrice" data-i18n="invite_time_default">120 сек</span>
           </div>
           <div class="purchaseActions" style="gap:10px;">
-            <button id="pvpDeclineBtn" class="ghostBtn" type="button" style="margin-top:0;">Отказаться</button>
-            <button id="pvpAcceptBtn" class="purchaseActionBtn" type="button">Играть</button>
+            <button id="pvpDeclineBtn" class="ghostBtn" type="button" style="margin-top:0;" data-i18n="decline">Отказаться</button>
+            <button id="pvpAcceptBtn" class="purchaseActionBtn" type="button" data-i18n="play">Играть</button>
           </div>
         </div>
       </div>
@@ -487,12 +492,12 @@
     <div class="rankUpModal" id="rankUpModal" style="display:none">
       <div class="rankUpCard" role="dialog" aria-modal="true" aria-labelledby="rankUpTitle">
         <div class="rankUpHead">
-          <div class="rankUpTitle" id="rankUpTitle">НОВОЕ ЗВАНИЕ!</div>
+          <div class="rankUpTitle" id="rankUpTitle" data-i18n="rankup_title">НОВОЕ ЗВАНИЕ!</div>
         </div>
         <div class="rankUpBody">
           <img id="rankUpImg" class="rankUpImg" alt="rank" />
           <div id="rankUpName" class="rankUpName">—</div>
-          <div class="rankUpGift">Подарок: <b>+5 контейнеров</b></div>
+          <div class="rankUpGift" data-i18n-html="rankup_gift">Подарок: <b>+5 контейнеров</b></div>
         </div>
       </div>
     </div>
@@ -503,50 +508,50 @@
           <div class="purchaseCartIcon" aria-hidden="true">⚔</div>
         </div>
         <div class="purchaseContent">
-          <div class="purchaseTitle" id="createLobbyTitle">СОЗДАТЬ БОЙ</div>
-          <div class="purchaseLabel">Настрой бой и жди соперника (3 минуты).</div>
+          <div class="purchaseTitle" id="createLobbyTitle" data-i18n="lobby_create_title">СОЗДАТЬ БОЙ</div>
+          <div class="purchaseLabel" data-i18n="lobby_create_label">Настрой бой и жди соперника (3 минуты).</div>
 
           <div class="promoForm" style="gap:10px;">
-            <input id="lobbyNameInput" class="promoInput" type="text" placeholder="Название боя" maxlength="32" autocomplete="off" />
+            <input id="lobbyNameInput" class="promoInput" type="text" data-i18n-placeholder="lobby_name_placeholder" placeholder="Название боя" maxlength="32" autocomplete="off" />
             <label class="battleLobbyAllRanks">
               <input id="lobbyAllowAllRanks" type="checkbox" />
-              <span>Разрешить все звания</span>
+              <span data-i18n="allow_all_ranks">Разрешить все звания</span>
             </label>
             <div id="lobbyRankRange" class="battleLobbyRankRange">
               <select id="lobbyMinRank" class="battleLobbySelect"></select>
               <span class="battleLobbyDash">—</span>
               <select id="lobbyMaxRank" class="battleLobbySelect"></select>
             </div>
-            <label class="battleLobbyCoverLabel" for="lobbyCoverMap">Выбор карты</label>
-            <select id="lobbyCoverMap" class="battleLobbySelect battleLobbyCoverSelect" aria-label="Тип карты">
-              <option value="random">Случайная (с укрытиями или без)</option>
-              <option value="with">С укрытиями</option>
-              <option value="without">Без укрытий</option>
+            <label class="battleLobbyCoverLabel" for="lobbyCoverMap" data-i18n="cover_map_label">Выбор карты</label>
+            <select id="lobbyCoverMap" class="battleLobbySelect battleLobbyCoverSelect" data-i18n-aria="cover_map_aria" aria-label="Тип карты">
+              <option value="random" data-i18n="cover_random">Случайная (с укрытиями или без)</option>
+              <option value="with" data-i18n="cover_with">С укрытиями</option>
+              <option value="without" data-i18n="cover_without">Без укрытий</option>
             </select>
-            <label class="battleLobbyCoverLabel" for="lobbyPvpMode">Режим боя</label>
-            <select id="lobbyPvpMode" class="battleLobbySelect battleLobbyCoverSelect" aria-label="Режим боя">
-              <option value="classic">Классический (на выбывание)</option>
-              <option value="deathmatch">Deathmatch (по киллам и таймеру)</option>
+            <label class="battleLobbyCoverLabel" for="lobbyPvpMode" data-i18n="pvp_mode_label">Режим боя</label>
+            <select id="lobbyPvpMode" class="battleLobbySelect battleLobbyCoverSelect" data-i18n-aria="pvp_mode_aria" aria-label="Режим боя">
+              <option value="classic" data-i18n="pvp_classic">Классический (на выбывание)</option>
+              <option value="deathmatch" data-i18n="pvp_deathmatch">Deathmatch (по киллам и таймеру)</option>
             </select>
             <div id="lobbyDeathmatchOptions" class="battleLobbyRankRange" style="grid-template-columns: 1fr 1fr;">
               <div>
-                <label class="battleLobbyCoverLabel" for="lobbyMatchSeconds">⏱ Время матча (сек)</label>
+                <label class="battleLobbyCoverLabel" for="lobbyMatchSeconds" data-i18n="match_seconds_label">⏱ Время матча (сек)</label>
                 <input id="lobbyMatchSeconds" class="promoInput" type="number" min="60" max="600" step="30" value="120" placeholder="120" />
               </div>
               <div>
-                <label class="battleLobbyCoverLabel" for="lobbyTargetKills">🎯 Лимит фрагов</label>
+                <label class="battleLobbyCoverLabel" for="lobbyTargetKills" data-i18n="target_kills_label">🎯 Лимит фрагов</label>
                 <input id="lobbyTargetKills" class="promoInput" type="number" min="1" max="30" step="1" value="5" placeholder="5" />
               </div>
             </div>
             <label class="battleLobbyAllRanks">
               <input id="lobbyNoStatsUpdate" type="checkbox" />
-              <span>Без изменения статистики и наград после боя</span>
+              <span data-i18n="no_stats">Без изменения статистики и наград после боя</span>
             </label>
           </div>
 
           <div class="purchaseActions" style="gap:10px;">
-            <button id="createLobbyCancelBtn" class="ghostBtn" type="button" style="margin-top:0;">Отмена</button>
-            <button id="createLobbyConfirmBtn" class="purchaseActionBtn" type="button">Создать</button>
+            <button id="createLobbyCancelBtn" class="ghostBtn" type="button" style="margin-top:0;" data-i18n="cancel">Отмена</button>
+            <button id="createLobbyConfirmBtn" class="purchaseActionBtn" type="button" data-i18n="create">Создать</button>
           </div>
         </div>
       </div>
@@ -558,15 +563,15 @@
           <div class="purchaseCartIcon" id="confirmIcon" aria-hidden="true">⚑</div>
         </div>
         <div class="purchaseContent">
-          <div class="purchaseTitle" id="confirmTitle">ПОДТВЕРДИТЕ</div>
-          <div class="purchaseLabel" id="confirmLabel">Вы уверены?</div>
+          <div class="purchaseTitle" id="confirmTitle" data-i18n="confirm">ПОДТВЕРДИТЕ</div>
+          <div class="purchaseLabel" id="confirmLabel" data-i18n="confirm_label">Вы уверены?</div>
           <div class="purchaseRow">
             <div class="purchaseItemName" id="confirmName">—</div>
             <div class="purchaseItemPrice" id="confirmMeta"></div>
           </div>
           <div class="purchaseActions" style="gap:10px;">
-            <button id="confirmCancelBtn" class="ghostBtn" type="button">Отмена</button>
-            <button id="confirmOkBtn" class="purchaseActionBtn" type="button">Подтвердить</button>
+            <button id="confirmCancelBtn" class="ghostBtn" type="button" data-i18n="cancel">Отмена</button>
+            <button id="confirmOkBtn" class="purchaseActionBtn" type="button" data-i18n="confirm">Подтвердить</button>
           </div>
         </div>
       </div>
@@ -578,16 +583,16 @@
           <div class="purchaseCartIcon joinLobbyPadIcon" aria-hidden="true">🎮</div>
         </div>
         <div class="purchaseContent joinLobbyPurchaseContent">
-          <div class="purchaseTitle" id="joinLobbyTitle">ВСТУПИТЬ В БОЙ?</div>
-          <div class="purchaseLabel joinLobbySubtitle" id="joinLobbyLabel">Вы хотите вступить в бой?</div>
+          <div class="purchaseTitle" id="joinLobbyTitle" data-i18n="join_lobby_title">ВСТУПИТЬ В БОЙ?</div>
+          <div class="purchaseLabel joinLobbySubtitle" id="joinLobbyLabel" data-i18n="join_lobby_label">Вы хотите вступить в бой?</div>
           <p class="joinLobbyBattleHint" id="joinLobbyBattleHint"></p>
           <div class="joinLobbyDataRow">
             <span id="joinLobbyCreatorName" class="joinLobbyDataLeft"></span>
             <div class="joinLobbyDataRight" id="joinLobbyRankMeta"></div>
           </div>
           <div class="purchaseActions joinLobbyPurchaseActions">
-            <button id="joinLobbyCancelBtn" class="ghostBtn joinLobbyGhostBtn" type="button">Отмена</button>
-            <button id="joinLobbyConfirmBtn" class="purchaseActionBtn joinLobbyConfirmBtn" type="button">Вступить</button>
+            <button id="joinLobbyCancelBtn" class="ghostBtn joinLobbyGhostBtn" type="button" data-i18n="cancel">Отмена</button>
+            <button id="joinLobbyConfirmBtn" class="purchaseActionBtn joinLobbyConfirmBtn" type="button" data-i18n="join">Вступить</button>
           </div>
         </div>
       </div>
@@ -595,22 +600,22 @@
 
     <div class="lootModal" id="lootModal" style="display:none">
       <div class="lootCard" role="dialog" aria-modal="true" aria-labelledby="lootTitle">
-        <button id="lootCloseTopBtn" class="lootCloseTop" type="button" aria-label="Закрыть">×</button>
+        <button id="lootCloseTopBtn" class="lootCloseTop" type="button" data-i18n-aria="close" aria-label="Закрыть">×</button>
         <div class="lootSidebar">
           <div class="lootSidebarIcon">📦</div>
-          <div class="lootSidebarLabel">Награды контейнера</div>
-          <div id="lootPreviewName" class="lootPreviewName">Обычный контейнер</div>
-          <div id="lootPreviewDesc" class="lootPreviewDesc">Выберите предмет из списка, чтобы посмотреть описание и шанс выпадения.</div>
+          <div class="lootSidebarLabel" data-i18n="loot_sidebar">Награды контейнера</div>
+          <div id="lootPreviewName" class="lootPreviewName" data-i18n="containers_standard">Обычный контейнер</div>
+          <div id="lootPreviewDesc" class="lootPreviewDesc" data-i18n="loot_pick_item">Выберите предмет из списка, чтобы посмотреть описание и шанс выпадения.</div>
         </div>
         <div class="lootContent">
           <div class="lootHeader">
-            <div class="lootTitle" id="lootTitle">ВОЗМОЖНЫЕ НАГРАДЫ</div>
+            <div class="lootTitle" id="lootTitle" data-i18n="loot_title">ВОЗМОЖНЫЕ НАГРАДЫ</div>
             <div class="lootFilters" id="lootFilters">
-              <button class="lootFilterBtn isActive" type="button" data-rarity="all">Все</button>
-              <button class="lootFilterBtn rarity-rare" type="button" data-rarity="rare">Редкие</button>
-              <button class="lootFilterBtn rarity-epic" type="button" data-rarity="epic">Эпические</button>
-              <button class="lootFilterBtn rarity-ultrarare" type="button" data-rarity="ultrarare">Ультраредкие</button>
-              <button class="lootFilterBtn rarity-legendary" type="button" data-rarity="legendary">Легендарные</button>
+              <button class="lootFilterBtn isActive" type="button" data-rarity="all" data-i18n="loot_all">Все</button>
+              <button class="lootFilterBtn rarity-rare" type="button" data-rarity="rare" data-i18n="loot_rare">Редкие</button>
+              <button class="lootFilterBtn rarity-epic" type="button" data-rarity="epic" data-i18n="loot_epic">Эпические</button>
+              <button class="lootFilterBtn rarity-ultrarare" type="button" data-rarity="ultrarare" data-i18n="loot_ultrarare">Ультраредкие</button>
+              <button class="lootFilterBtn rarity-legendary" type="button" data-rarity="legendary" data-i18n="loot_legendary">Легендарные</button>
             </div>
           </div>
           <div class="lootGrid" id="lootGrid"></div>
