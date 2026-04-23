@@ -10,13 +10,14 @@ const TAB_MUSIC = {
   profile: "/sounds/music/background_music.mp3",
   battles: "/sounds/music/battle_music.mp3",
   garage: "/sounds/music/background_music.mp3",
-  shop: "/sounds/music/background_music.mp3",
+  shop: "/sounds/music/shop_music.mp3",
   containers: "/sounds/music/background_music.mp3",
   quests: "/sounds/music/background_music.mp3",
 };
 const PURCHASE_SOUND_PATH = "/sounds/notify.mp3";
 const BATTLE_AMBIENT_PATH = "/sounds/ambient/space_ambient.mp3";
 const CONTAINER_CLOSED_IMAGE = "/images/webapp/container.png";
+const PREMIUM_CONTAINER_CLOSED_IMAGE = "/images/webapp/prem_container.png";
 const PREMIUM_BADGE_PATH = "/images/webapp/premium_ribbon.png";
 const CONTAINER_OPEN_IMAGES = {
   rare: "/images/webapp/contopen_rare.png",
@@ -26,6 +27,7 @@ const CONTAINER_OPEN_IMAGES = {
 };
 const REWARD_ITEM_IMAGES = {
   crystals: "/images/webapp/crystals.png",
+  premium: "/images/webapp/premium.png",
   railgun: "/images/webapp/railgun.png",
   shaft: "/images/webapp/shaft.png",
   thunder: "/images/webapp/thunder.png",
@@ -237,6 +239,141 @@ const CONTAINER_LOOT = [
     description_en: "Rare reward with the maximum amount of crystals.",
   },
 ];
+
+const PREMIUM_CONTAINER_LOOT = [
+  {
+    key: "prem_crystals_5000",
+    type: "crystals",
+    name: "Кристаллы 5 000",
+    name_en: "Crystals 5,000",
+    chance: "6%",
+    rarity: "legendary",
+    image: REWARD_ITEM_IMAGES.crystals,
+    description: "Легендарный кристальный дроп.",
+    description_en: "Legendary crystal drop.",
+  },
+  {
+    key: "prem_crystals_10000",
+    type: "crystals",
+    name: "Кристаллы 10 000",
+    name_en: "Crystals 10,000",
+    chance: "6%",
+    rarity: "legendary",
+    image: REWARD_ITEM_IMAGES.crystals,
+    description: "Легендарный кристальный дроп.",
+    description_en: "Legendary crystal drop.",
+  },
+  {
+    key: "prem_crystals_15000",
+    type: "crystals",
+    name: "Кристаллы 15 000",
+    name_en: "Crystals 15,000",
+    chance: "6%",
+    rarity: "legendary",
+    image: REWARD_ITEM_IMAGES.crystals,
+    description: "Легендарный кристальный дроп.",
+    description_en: "Legendary crystal drop.",
+  },
+  {
+    key: "prem_crystals_20000",
+    type: "crystals",
+    name: "Кристаллы 20 000",
+    name_en: "Crystals 20,000",
+    chance: "6%",
+    rarity: "legendary",
+    image: REWARD_ITEM_IMAGES.crystals,
+    description: "Легендарный кристальный дроп.",
+    description_en: "Legendary crystal drop.",
+  },
+  {
+    key: "prem_crystals_25000",
+    type: "crystals",
+    name: "Кристаллы 25 000",
+    name_en: "Crystals 25,000",
+    chance: "6%",
+    rarity: "legendary",
+    image: REWARD_ITEM_IMAGES.crystals,
+    description: "Легендарный кристальный дроп.",
+    description_en: "Legendary crystal drop.",
+  },
+  {
+    key: "prem_crystals_30000",
+    type: "crystals",
+    name: "Кристаллы 30 000",
+    name_en: "Crystals 30,000",
+    chance: "6%",
+    rarity: "legendary",
+    image: REWARD_ITEM_IMAGES.crystals,
+    description: "Легендарный кристальный дроп.",
+    description_en: "Legendary crystal drop.",
+  },
+  {
+    key: "premium_1d",
+    type: "premium",
+    name: "Премиум 1 день",
+    name_en: "Premium 1 day",
+    chance: "30%",
+    rarity: "legendary",
+    image: REWARD_ITEM_IMAGES.premium,
+    description: "Премиум подписка.",
+    description_en: "Premium subscription.",
+  },
+  {
+    key: "premium_3d",
+    type: "premium",
+    name: "Премиум 3 дня",
+    name_en: "Premium 3 days",
+    chance: "10%",
+    rarity: "legendary",
+    image: REWARD_ITEM_IMAGES.premium,
+    description: "Премиум подписка.",
+    description_en: "Premium subscription.",
+  },
+  {
+    key: "railgun",
+    type: "weapon",
+    name: "Рельса",
+    name_en: "Railgun",
+    chance: "6%",
+    rarity: "legendary",
+    image: REWARD_ITEM_IMAGES.railgun,
+    description: "Легендарная пушка.",
+    description_en: "Legendary weapon.",
+  },
+  {
+    key: "ricochet",
+    type: "weapon",
+    name: "Рикошет",
+    name_en: "Ricochet",
+    chance: "6%",
+    rarity: "legendary",
+    image: REWARD_ITEM_IMAGES.ricochet,
+    description: "Легендарная пушка.",
+    description_en: "Legendary weapon.",
+  },
+  {
+    key: "molot",
+    type: "weapon",
+    name: "Молот",
+    name_en: "Molot",
+    chance: "6%",
+    rarity: "legendary",
+    image: REWARD_ITEM_IMAGES.molot,
+    description: "Легендарная пушка.",
+    description_en: "Legendary weapon.",
+  },
+  {
+    key: "paladin",
+    type: "hull",
+    name: "Паладин",
+    name_en: "Paladin",
+    chance: "6%",
+    rarity: "legendary",
+    image: REWARD_ITEM_IMAGES.paladin,
+    description: "Легендарный корпус.",
+    description_en: "Legendary hull.",
+  },
+];
 const ITEM_IMAGE_OVERRIDES = { smoky: "smoky.png", hunter: "hunter.png" };
 const RANK_EXP_BY_ID = {
   1: 0, 2: 50, 3: 120, 4: 200, 5: 300, 6: 420, 7: 560, 8: 720, 9: 900, 10: 1100,
@@ -249,6 +386,7 @@ const state = {
   profile: null,
   shop: null,
   containersInfo: null,
+  containerKind: "standard", // standard | premium
   quests: null,
   activeTab: "profile",
   garageCategory: "weapon",
@@ -330,6 +468,7 @@ const I18N = {
     tab_garage: "Гараж",
     tab_shop: "Магазин",
     tab_containers: "Контейнеры",
+    containers_premium: "Премиум",
     tab_quests: "Квесты",
     tab_settings: "Настройки",
     quests_title: "ЕЖЕДНЕВНЫЕ КВЕСТЫ",
@@ -419,6 +558,7 @@ const I18N = {
     shop_cat_weapon: "Пушки",
     shop_cat_hull: "Корпуса",
     shop_cat_premium: "Премиум подписка",
+    shop_cat_premium_containers: "Премиум контейнеры",
     shop_cat_promo: "Промокоды",
     shop_offers: "Предложения",
     promo_title: "Активировать промокод",
@@ -493,6 +633,7 @@ const I18N = {
     tab_garage: "Garage",
     tab_shop: "Shop",
     tab_containers: "Containers",
+    containers_premium: "Premium",
     tab_quests: "Quests",
     tab_settings: "Settings",
     quests_title: "DAILY QUESTS",
@@ -582,6 +723,7 @@ const I18N = {
     shop_cat_weapon: "Weapons",
     shop_cat_hull: "Hulls",
     shop_cat_premium: "Premium subscription",
+    shop_cat_premium_containers: "Premium containers",
     shop_cat_promo: "Promo codes",
     shop_offers: "Offers",
     promo_title: "Activate promo code",
@@ -961,14 +1103,23 @@ function withCacheBust(url) { return `${url}${url.includes("?") ? "&" : "?"}v=${
 function sleep(ms) { return new Promise((resolve) => setTimeout(resolve, ms)); }
 async function fadeAudioVolume(audio, from, to, durationMs = 300, shouldContinue = () => true) {
   if (!audio) return;
-  const steps = 14;
-  const stepTime = Math.max(15, Math.floor(durationMs / steps));
-  audio.volume = Math.max(0, Math.min(1, from));
-  for (let i = 1; i <= steps; i += 1) {
+  const start = Math.max(0, Math.min(1, Number(from || 0)));
+  const end = Math.max(0, Math.min(1, Number(to || 0)));
+  const totalMs = Math.max(120, Number(durationMs || 0));
+  const ease = (t) => {
+    const x = Math.max(0, Math.min(1, t));
+    // Smoother than linear in Telegram WebView.
+    return x < 0.5 ? 2 * x * x : 1 - Math.pow(-2 * x + 2, 2) / 2;
+  };
+  audio.volume = start;
+  const startedAt = performance.now();
+  while (true) {
     if (!shouldContinue()) return;
-    const t = i / steps;
-    audio.volume = Math.max(0, Math.min(1, from + (to - from) * t));
-    await sleep(stepTime);
+    const elapsed = performance.now() - startedAt;
+    const p = Math.max(0, Math.min(1, elapsed / totalMs));
+    audio.volume = start + (end - start) * ease(p);
+    if (p >= 1) break;
+    await new Promise((resolve) => requestAnimationFrame(resolve));
   }
 }
 function waitForImageLoad(img, timeoutMs = 2000) {
@@ -1138,6 +1289,8 @@ async function apiKeepalive(path, options = {}) {
 }
 
 function detectRewardRarity(result) {
+  if (String(result.container_kind || "") === "premium") return "legendary";
+  if (result.reward_type === "premium") return "legendary";
   if (result.reward_type === "crystals") {
     const amount = Number(result.reward_amount || 0);
     if (amount >= 20000) return "legendary";
@@ -1189,14 +1342,7 @@ function getTrack() { return absUrl(withApiBase(TAB_MUSIC[state.activeTab] || TA
 
 async function fadeVolume(target, durationMs = 300) {
   if (!state.bgMusic) return;
-  const start = state.bgMusic.volume;
-  const steps = 12;
-  const stepTime = Math.max(15, Math.floor(durationMs / steps));
-  for (let i = 1; i <= steps; i += 1) {
-    const t = i / steps;
-    state.bgMusic.volume = start + (target - start) * t;
-    await sleep(stepTime);
-  }
+  await fadeAudioVolume(state.bgMusic, state.bgMusic.volume, target, durationMs, () => true);
 }
 
 async function applyMusic() {
@@ -1258,7 +1404,7 @@ async function startBattleAmbient() {
     state.battleBgWasPlaying = !state.bgMusic.paused;
   }
 
-  const crossMs = 1200;
+  const crossMs = 2200;
   const targetVol = Math.min(0.52, state.bgMusicVolume + 0.08);
   a.volume = 0;
   try { await a.play(); } catch {}
@@ -1298,7 +1444,7 @@ async function stopBattleAmbientInner() {
   state.battleAudioSeq += 1;
   const seq = state.battleAudioSeq;
   state.battleAmbientActive = false;
-  const crossMs = 1400;
+  const crossMs = 2200;
   const resume = Boolean(state.bgMusicEnabled && state.bgMusic && state.battleBgWasPlaying);
   const still = () => seq === state.battleAudioSeq;
   if (resume) {
@@ -1383,7 +1529,7 @@ async function switchTrack() {
     return;
   }
   // Плавный кроссфейд как при переходе в ambient боя.
-  const crossMs = 1200;
+  const crossMs = 1800;
   await Promise.all([
     fadeAudioVolume(newAudio, 0, state.bgMusicVolume, crossMs, () => seq === state.musicSwitchSeq),
     fadeAudioVolume(oldAudio, oldAudio.volume, 0, crossMs, () => seq === state.musicSwitchSeq),
@@ -1510,19 +1656,61 @@ function showPurchaseModal(item) {
     price: String(item.price ?? 0),
   });
 }
+
+async function starsBuy(itemKey) {
+  if (!Telegram?.WebApp?.openInvoice) {
+    throw new Error(trText("Откройте WebApp внутри Telegram.", "Open this WebApp inside Telegram."));
+  }
+  const inv = await api("/api/stars/invoice", { method: "POST", body: JSON.stringify({ item: itemKey }) });
+  const url = String(inv.invoice_url || "").trim();
+  if (!url) throw new Error(trText("Не удалось создать инвойс.", "Failed to create invoice."));
+  const status = await new Promise((resolve) => {
+    try {
+      Telegram.WebApp.openInvoice(url, (s) => resolve(String(s || "")));
+    } catch {
+      resolve("failed");
+    }
+  });
+  if (status !== "paid") {
+    throw new Error(status === "cancelled"
+      ? trText("Покупка отменена.", "Purchase cancelled.")
+      : trText("Оплата не прошла.", "Payment failed."));
+  }
+  await refreshAll();
+}
+
+function displayItemName(itemOrKey) {
+  const key = typeof itemOrKey === "string" ? itemOrKey : String(itemOrKey?.key || "");
+  const obj = typeof itemOrKey === "string" ? null : itemOrKey;
+  if (obj && (obj.name || obj.name_en)) return state.locale === "en" ? (obj.name_en || obj.name || key) : (obj.name || obj.name_en || key);
+  if (key === "premium_container") return trText("Премиум контейнер", "Premium container");
+  if (key === "premium_1d") return trText("Премиум 1 день", "Premium 1 day");
+  if (key === "premium_3d") return trText("Премиум 3 дня", "Premium 3 days");
+  if (key === "premium_10d") return trText("Премиум 10 дней", "Premium 10 days");
+  if (key.startsWith("prem_crystals_")) {
+    const amount = key.replace("prem_crystals_", "");
+    const num = Number(amount || 0);
+    return state.locale === "en"
+      ? `Crystals ${num.toLocaleString("en-US")}`
+      : `Кристаллы ${num.toLocaleString("ru-RU")}`;
+  }
+  return itemName(key) || key;
+}
 function updateLootPreview(item) {
   const name = qs("lootPreviewName");
   const desc = qs("lootPreviewDesc");
   if (!name || !desc) return;
   if (!item) {
-    name.textContent = trText("Обычный контейнер", "Standard container");
+    name.textContent = state.containerKind === "premium"
+      ? trText("Премиум контейнер", "Premium container")
+      : trText("Обычный контейнер", "Standard container");
     desc.textContent = trText(
       "Выберите предмет из списка, чтобы посмотреть описание и шанс выпадения.",
       "Select an item to see its description and drop chance.",
     );
     return;
   }
-  const dispName = itemName(item.key) || item.name;
+  const dispName = displayItemName(item);
   const dispDesc = state.locale === "en"
     ? (item.description_en || itemDescription(item.key) || item.description || "")
     : (itemDescription(item.key) || item.description || "");
@@ -1534,12 +1722,14 @@ function updateLootPreview(item) {
 function renderContainerLoot() {
   const grid = qs("lootGrid");
   if (!grid) return;
-  const items = CONTAINER_LOOT
+  const base = state.containerKind === "premium" ? PREMIUM_CONTAINER_LOOT : CONTAINER_LOOT;
+  const items = base
     .filter((item) => state.lootFilter === "all" || item.rarity === state.lootFilter)
     .sort((a, b) => {
       const rarityDiff = RARITY_ORDER.indexOf(a.rarity) - RARITY_ORDER.indexOf(b.rarity);
       if (rarityDiff !== 0) return rarityDiff;
-      return itemName(a.key).localeCompare(itemName(b.key), state.locale === "en" ? "en" : "ru");
+      return String(displayItemName(a))
+        .localeCompare(String(displayItemName(b)), state.locale === "en" ? "en" : "ru");
     });
   grid.innerHTML = "";
   items.forEach((item, index) => {
@@ -1548,8 +1738,8 @@ function renderContainerLoot() {
     card.className = `lootItemCard rarity-${item.rarity}${index === 0 ? " isSelected" : ""}`;
     card.innerHTML = `
       <div class="lootChance">${item.chance}</div>
-      <img src="${withCacheBust(absUrl(item.image))}" alt="${itemName(item.key)}" class="lootItemImage" />
-      <div class="lootItemFooter">${itemName(item.key)}</div>
+      <img src="${withCacheBust(absUrl(item.image))}" alt="${displayItemName(item)}" class="lootItemImage" />
+      <div class="lootItemFooter">${displayItemName(item)}</div>
     `;
     card.addEventListener("click", () => {
       grid.querySelectorAll(".lootItemCard").forEach((el) => el.classList.remove("isSelected"));
@@ -1697,7 +1887,9 @@ function leaderboardRowHtml(row, isMe = false) {
   const rankImg = row.rank_image_url ? absUrl(String(row.rank_image_url)) : "";
   const rankName = trRankName(String(row.rank_name || "Звание"));
   const name = String(row.name || trText("Игрок", "Player"));
-  const initial = name.trim().charAt(0).toUpperCase() || "U";
+  const normalizedName = name.trim();
+  const looksGenericName = /^игрок\b/i.test(normalizedName) || /^player\b/i.test(normalizedName);
+  const initial = looksGenericName ? "👤" : (normalizedName.charAt(0).toUpperCase() || "U");
   const isPrem = Boolean(row.is_premium);
   const premSrc = absUrl(PREMIUM_BADGE_PATH);
   const rankInner = rankImg
@@ -1803,6 +1995,9 @@ function renderShop() {
   const shopHeader = qs("shopHeader");
   const shopContent = promoPanel?.closest(".shopContent");
   if (!state.shop) return;
+  if (shopContent) {
+    shopContent.classList.toggle("isPremiumContainersView", state.shopCategory === "premium_containers");
+  }
 
   // Вкладка промокодов использует отдельную панель без списка товаров.
   if (state.shopCategory === "promo") {
@@ -1819,19 +2014,72 @@ function renderShop() {
   if (promoPanel) promoPanel.style.display = "none";
   if (shopHeader) shopHeader.style.display = "block";
   if (shopContent) shopContent.classList.remove("isPromoView");
+  if (shopHeader) {
+    if (state.shopCategory === "premium") {
+      shopHeader.textContent = trText("Премиум подписка: ⭐ Stars + альтернатива за кристаллы", "Premium subscription: ⭐ Stars + crystal alternative");
+    } else if (state.shopCategory === "premium_containers") {
+      shopHeader.textContent = trText("Премиум контейнеры: только за ⭐ Stars", "Premium containers: only ⭐ Stars");
+    } else {
+      shopHeader.textContent = trText("Товары за кристаллы", "Items for crystals");
+    }
+  }
 
   list.innerHTML = "";
+  if (state.shopCategory === "premium" || state.shopCategory === "premium_containers") {
+    const warning = document.createElement("div");
+    warning.className = "starsRecordWarning";
+    warning.textContent = trText(
+      "При совершении покупки через Stars обязательно проводите запись экрана всего процесса покупки, в противном случае при обращении в поддержку ваш запрос не будет рассмотрен без доказательств.",
+      "When purchasing via Stars, record the full screen during the purchase process. Support requests without proof may be declined."
+    );
+    list.appendChild(warning);
+  }
+  if (state.shopCategory === "premium_containers") {
+    const card = document.createElement("div");
+    card.className = "shopCard shopPremiumContainerShowcase";
+    card.innerHTML = `
+      <div class="premiumContainerBgFx"></div>
+      <div class="premiumContainerHero">
+        <img src="${withCacheBust(absUrl(PREMIUM_CONTAINER_CLOSED_IMAGE))}" alt="premium container" class="premiumContainerHeroImg">
+      </div>
+      <div class="shopCardTitle">${trText("Премиум контейнер", "Premium container")}</div>
+      <div class="shopCardMeta">${trText("Только легендарные награды", "Legendary rewards only")}</div>
+      <div class="premiumContainerDrops">
+        <span class="shopPremiumChip">💎 5k / 10k / 15k / 20k / 25k / 30k</span>
+        <span class="shopPremiumChip">👑 1–3 ${trText("дня", "days")}</span>
+        <span class="shopPremiumChip">🔫 ${trText("Рельса, Рикошет, Молот", "Railgun, Ricochet, Molot")}</span>
+        <span class="shopPremiumChip">🛡 ${trText("Паладин", "Paladin")}</span>
+      </div>
+      <div class="shopCardActions">
+        <span class="shopPriceStars">49 ⭐</span>
+        <button class="promoBtn starsBuyBtn" data-stars-buy="premium_container" style="margin-top:0">${trText("Купить за ⭐ Stars", "Buy with ⭐ Stars")}</button>
+      </div>
+    `;
+    list.appendChild(card);
+  }
   const items = state.shop.items.filter((i) => i.category === state.shopCategory);
   for (const item of items) {
     const card = document.createElement("div");
     const isPremium = item.category === "premium";
     card.className = `shopCard${isPremium ? " shopCardPremium" : ""}`;
     const premiumMeta = isPremium ? (SHOP_PREMIUM_META[item.key] || {}) : null;
+    const hasStars = Number(item.stars_price || 0) > 0;
+    const starsPrice = hasStars ? `${Number(item.stars_price)} ⭐` : "";
+    const crystalsPrice = `${Number(item.price || 0)} 💎`;
     const buyButton = isPremium
-      ? `<button class="promoBtn shopBuyBtn shopBuyBtnPremium" data-buy="${item.key}" style="margin-top:0">${trText("Оформить", "Activate")}</button>`
+      ? `
+        <div class="shopBuyDual">
+          <button class="promoBtn shopBuyBtn shopBuyBtnPremium" data-stars-buy="${item.key}" style="margin-top:0">
+            ${trText("Оформить за ⭐", "Activate with ⭐")} · ${starsPrice || "—"}
+          </button>
+          <button class="ghostBtn shopBuyBtn shopBuyBtnAlt" data-buy="${item.key}" style="margin-top:0">
+            ${trText("Или за 💎", "Or with 💎")} · ${crystalsPrice}
+          </button>
+        </div>
+      `
       : (item.owned
         ? `<button class="promoBtn shopBuyBtn" type="button" style="margin-top:0" disabled>${trText("Куплено", "Owned")}</button>`
-        : `<button class="promoBtn shopBuyBtn" data-buy="${item.key}" style="margin-top:0">${trText("Купить", "Buy")}</button>`);
+        : `<button class="promoBtn shopBuyBtn" data-buy="${item.key}" style="margin-top:0">${trText("Купить", "Buy")} · ${crystalsPrice}</button>`);
     if (isPremium) {
       card.innerHTML = `
         <div class="shopPremiumGlow"></div>
@@ -1845,14 +2093,20 @@ function renderShop() {
           <span class="shopPremiumChip">${escapeHtml(premiumMetaText(premiumMeta, "duration") || String(item.name || ""))}</span>
           <span class="shopPremiumChip">${escapeHtml(String(premiumMeta?.icon || "👑"))} ${escapeHtml(trText("срок суммируется", "stackable"))}</span>
         </div>
-        <div class="shopCardActions"><span class="shopPrice">${item.price} 💎</span>${buyButton}</div>
+        <div class="shopCardActions">
+          <span class="shopPrice">
+            <span class="shopPriceStars">${starsPrice || "—"}</span>
+            <span class="shopPriceCrystals">${crystalsPrice}</span>
+          </span>
+          ${buyButton}
+        </div>
       `;
     } else {
       card.innerHTML = `
         <img src="${withCacheBust(absUrl(item.image_url))}" alt="${item.name}">
-        <div class="shopCardTitle">${itemName(item.key) || item.name}</div>
+        <div class="shopCardTitle">${displayItemName(item)}</div>
         <div class="shopCardMeta">${trText("Категория", "Category")}: ${(state.locale === "en" ? (SHOP_CATEGORY_LABELS_EN[item.category] || item.category) : (SHOP_CATEGORY_LABELS[item.category] || item.category))}</div>
-        <div class="shopCardActions"><span class="shopPrice">${item.price} 💎</span>${buyButton}</div>
+        <div class="shopCardActions"><span class="shopPrice">${crystalsPrice}</span>${buyButton}</div>
       `;
     }
     list.appendChild(card);
@@ -1886,11 +2140,96 @@ function renderShop() {
       }
     });
   });
+
+  list.querySelectorAll("[data-stars-buy]").forEach((btn) => {
+    btn.addEventListener("click", async () => {
+      btn.disabled = true;
+      const itemKey = btn.getAttribute("data-stars-buy");
+      const item = state.shop?.items?.find((it) => it.key === itemKey);
+      try {
+        await starsBuy(itemKey);
+        if (item?.category === "premium") {
+          const premiumMeta = SHOP_PREMIUM_META[item.key] || {};
+          showPurchaseLikeModal({
+            title: trText("ПРЕМИУМ АКТИВИРОВАН", "PREMIUM ACTIVATED"),
+            label: trText("Подписка продлена на:", "Subscription extended by:"),
+            icon: String(premiumMeta.icon || "👑"),
+            name: premiumMetaText(premiumMeta, "duration") || String(item.name || trText("Премиум", "Premium")),
+            price: `${Number(item.stars_price || 0)} ⭐`,
+          });
+        } else {
+          showPurchaseLikeModal({
+            title: trText("ПОКУПКА ПРОИЗВЕДЕНА УСПЕШНО", "PURCHASE SUCCESSFUL"),
+            label: trText("Вы приобрели:", "You purchased:"),
+            icon: "⭐",
+            name: item?.name || itemName(itemKey) || itemKey,
+            price: `${Number(item?.stars_price || 0)} ⭐`,
+          });
+        }
+        void playPurchaseSound();
+        clearError();
+      } catch (e) {
+        setError(prettyError(e));
+      } finally {
+        btn.disabled = false;
+      }
+    });
+  });
+
 }
 
 function renderContainers() {
   if (!state.containersInfo) return;
-  qs("containerImg").src = withCacheBust(absUrl(state.containersInfo.container_image_url));
+  const img = qs("containerImg");
+  const meta = qs("containerMetaRow");
+  const info = state.containersInfo;
+  const isPremium = state.containerKind === "premium";
+  qs("panelContainers")?.classList.toggle("isPremiumContainerView", isPremium);
+  if (img) {
+    img.src = withCacheBust(absUrl(isPremium ? (info.premium_container_image_url || PREMIUM_CONTAINER_CLOSED_IMAGE) : info.container_image_url));
+  }
+  if (meta) {
+    const std = Number(info.containers || 0);
+    const prem = Number(info.premium_containers || 0);
+    const active = isPremium ? prem : std;
+    const label = isPremium ? trText("Премиум контейнеры", "Premium containers") : trText("Контейнеры", "Containers");
+    const buyBtn = isPremium
+      ? `<button class="promoBtn starsBuyBtn" type="button" data-stars-buy="premium_container">${trText("Купить за ⭐", "Buy with ⭐")}</button>`
+      : "";
+    const premiumInfo = isPremium ? `
+      <div class="premiumContainerShowInfo">
+        <div class="premiumContainerShowTitle">${trText("Премиум контейнер", "Premium container")}</div>
+        <div class="premiumContainerShowSub">${trText("Только легендарные награды", "Legendary rewards only")}</div>
+        <div class="premiumContainerDrops">
+          <span class="shopPremiumChip">💎 5k / 10k / 15k / 20k / 25k / 30k</span>
+          <span class="shopPremiumChip">👑 1-3 ${trText("дня", "days")}</span>
+          <span class="shopPremiumChip">🔫 ${trText("Рельса, Рикошет, Молот", "Railgun, Ricochet, Molot")}</span>
+          <span class="shopPremiumChip">🛡 ${trText("Паладин", "Paladin")}</span>
+        </div>
+      </div>
+    ` : "";
+    meta.innerHTML = `
+      <div class="containerMetaLeft">
+        <div class="containerMetaTitle">${label}</div>
+        <div class="containerMetaCounts">
+          <span class="containerPill">📦 ${std}</span>
+          <span class="containerPill isPremium">✨ ${prem}</span>
+        </div>
+      </div>
+      <div class="containerMetaRight">
+        <div class="containerMetaActive">${trText("Доступно", "Available")}: <b>${active}</b></div>
+        ${buyBtn}
+      </div>
+      ${premiumInfo}
+    `;
+  }
+  // Disable open button when no containers for selected kind
+  const openBtn = qs("openContainerBtn");
+  if (openBtn) {
+    const hasAny = isPremium ? Number(info.premium_containers || 0) > 0 : Number(info.containers || 0) > 0;
+    openBtn.disabled = !hasAny;
+    openBtn.classList.toggle("isDisabled", !hasAny);
+  }
 }
 
 function formatQuestReset(seconds) {
@@ -2002,13 +2341,21 @@ async function showRewardModal(result) {
   const dropImg = qs("rewardDropImg");
   const text = qs("rewardText");
   if (!modal || !card || !box || !contImg || !dropImg || !text) {
-    qs("containerResult").textContent = result.reward_type === "unlock"
-      ? (state.locale === "en"
+    let fallbackText = "";
+    if (result.reward_type === "unlock") {
+      fallbackText = state.locale === "en"
         ? `Received: ${itemName(result.reward_key) || result.reward_key}`
-        : `Получено: ${NAMES[result.reward_key] || result.reward_key}`)
-      : (state.locale === "en"
+        : `Получено: ${NAMES[result.reward_key] || result.reward_key}`;
+    } else if (result.reward_type === "premium") {
+      fallbackText = state.locale === "en"
+        ? `Premium received: ${result.reward_amount} day(s)`
+        : `Получен премиум: ${result.reward_amount} дн.`;
+    } else {
+      fallbackText = state.locale === "en"
         ? `Crystals received: ${result.reward_amount}`
-        : `Получено кристаллов: ${result.reward_amount}`);
+        : `Получено кристаллов: ${result.reward_amount}`;
+    }
+    qs("containerResult").textContent = fallbackText;
     return;
   }
   card.className = "rewardCard";
@@ -2016,10 +2363,16 @@ async function showRewardModal(result) {
   box.classList.remove("shake");
   dropImg.classList.remove("show");
   text.textContent = "";
-  contImg.src = withCacheBust(absUrl(CONTAINER_CLOSED_IMAGE));
+  const isPremiumContainer = String(result.container_kind || "") === "premium";
+  const closedSrc = withCacheBust(absUrl(isPremiumContainer ? PREMIUM_CONTAINER_CLOSED_IMAGE : CONTAINER_CLOSED_IMAGE));
+  const openedSrc = withCacheBust(absUrl(
+    isPremiumContainer
+      ? "/images/webapp/prem_containeropen.png"
+      : (CONTAINER_OPEN_IMAGES[rarity] || CONTAINER_OPEN_IMAGES.rare)
+  ));
+  contImg.src = closedSrc;
   contImg.classList.remove("isHidden");
-  const rewardKey = result.reward_type === "crystals" ? "crystals" : result.reward_key;
-  const openedSrc = withCacheBust(absUrl(CONTAINER_OPEN_IMAGES[rarity] || CONTAINER_OPEN_IMAGES.rare));
+  const rewardKey = result.reward_type === "crystals" ? "crystals" : (result.reward_type === "premium" ? "premium" : result.reward_key);
   const dropSrc = withCacheBust(absUrl(REWARD_ITEM_IMAGES[rewardKey] || "/images/webapp/crystals.png"));
   // Preload reveal assets while shaking.
   void preloadImage(openedSrc, 2600);
@@ -2030,6 +2383,9 @@ async function showRewardModal(result) {
   // Keep reveal fast on mobile to avoid long "frozen" feeling.
   await sleep(420);
   card.className = `rewardCard rarity-${rarity}`; // glow appears smoothly via CSS transition
+  box.classList.remove("rewardBurst");
+  box.classList.add("rewardBurst");
+  window.setTimeout(() => box.classList.remove("rewardBurst"), 260);
   contImg.classList.add("isHidden");
   await sleep(160);
   contImg.src = openedSrc;
@@ -2043,9 +2399,13 @@ async function showRewardModal(result) {
     ? (state.locale === "en"
       ? `Received: ${itemName(result.reward_key) || result.reward_key}`
       : `Получено: ${NAMES[result.reward_key] || result.reward_key}`)
-    : (state.locale === "en"
-      ? `Crystals received: ${result.reward_amount}`
-      : `Получено кристаллов: ${result.reward_amount}`);
+    : result.reward_type === "premium"
+      ? (state.locale === "en"
+        ? `Premium received: ${result.reward_amount} day(s)`
+        : `Получен премиум: ${result.reward_amount} дн.`)
+      : (state.locale === "en"
+        ? `Crystals received: ${result.reward_amount}`
+        : `Получено кристаллов: ${result.reward_amount}`);
   text.textContent = rewardText;
   dropImg.classList.add("show");
   await sleep(520);
@@ -2176,27 +2536,87 @@ async function refreshTabContext(tab) {
   }
 }
 
+let tabSwitchSeq = 0;
 async function showTab(tab, { force = false } = {}) {
   if (!force && state.webBattleActive && tab !== "battles") {
     setError(trText("Нельзя переключать вкладки во время боя.", "You can't switch tabs during a battle."));
     return;
   }
-  if (state.activeTab === "battles" && tab !== "battles") {
+  const prevTab = state.activeTab;
+  if (prevTab === "battles" && tab !== "battles") {
     stopLobbiesPolling();
   }
   state.activeTab = tab;
   document.querySelectorAll(".mainTab").forEach((b) => b.classList.toggle("isActive", b.dataset.tab === tab));
-  ["profile", "leaders", "battles", "garage", "shop", "containers", "quests", "settings"].forEach((key) => {
-    const panel = qs(`panel${key[0].toUpperCase()}${key.slice(1)}`);
-    if (panel) panel.style.display = key === tab ? "block" : "none";
+  const panelKeys = ["profile", "leaders", "battles", "garage", "shop", "containers", "quests", "settings"];
+  const panelByKey = (key) => qs(`panel${key[0].toUpperCase()}${key.slice(1)}`);
+  const prevPanel = panelByKey(prevTab);
+  const nextPanel = panelByKey(tab);
+  const seq = ++tabSwitchSeq;
+  const lowFpsMode = window.matchMedia?.("(pointer: coarse)")?.matches || false;
+  panelKeys.forEach((key) => {
+    const panel = panelByKey(key);
+    if (!panel) return;
+    if (panel !== prevPanel && panel !== nextPanel) {
+      panel.style.display = "none";
+      try { panel.getAnimations().forEach((a) => a.cancel()); } catch {}
+    }
   });
+  if (prevPanel && prevPanel !== nextPanel) {
+    try { prevPanel.getAnimations().forEach((a) => a.cancel()); } catch {}
+    if (!lowFpsMode) {
+      prevPanel.animate(
+        [
+          { opacity: 1, transform: "scale(1)", filter: "blur(0px)" },
+          { opacity: 0, transform: "scale(0.997)", filter: "blur(0.6px)" },
+        ],
+        { duration: 220, easing: "cubic-bezier(0.22, 1, 0.36, 1)", fill: "forwards" }
+      );
+    } else {
+      prevPanel.animate(
+        [{ opacity: 1 }, { opacity: 0 }],
+        { duration: 120, easing: "linear", fill: "forwards" }
+      );
+    }
+    window.setTimeout(() => {
+      if (tabSwitchSeq !== seq) return;
+      prevPanel.style.display = "none";
+      prevPanel.style.opacity = "";
+      prevPanel.style.transform = "";
+      prevPanel.style.filter = "";
+    }, lowFpsMode ? 120 : 220);
+  }
+  if (nextPanel) {
+    nextPanel.style.display = "block";
+    nextPanel.style.opacity = "0";
+    nextPanel.style.transform = lowFpsMode ? "" : "scale(0.997)";
+    nextPanel.style.filter = lowFpsMode ? "" : "blur(0.6px)";
+    try { nextPanel.getAnimations().forEach((a) => a.cancel()); } catch {}
+  }
   if (state.token) {
     try { await refreshTabContext(tab); } catch (e) { setError(prettyError(e)); }
+  }
+  if (tabSwitchSeq !== seq) return;
+  if (nextPanel) {
+    if (!lowFpsMode) {
+      nextPanel.animate(
+        [
+          { opacity: 0, transform: "scale(0.997)", filter: "blur(0.6px)" },
+          { opacity: 1, transform: "scale(1)", filter: "blur(0px)" },
+        ],
+        { duration: 240, easing: "cubic-bezier(0.22, 1, 0.36, 1)", fill: "forwards" }
+      );
+    } else {
+      nextPanel.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 130, easing: "linear", fill: "forwards" });
+    }
   }
   if (tab === "quests" && state.quests?.day_key) {
     markQuestDaySeen(state.quests.day_key);
     updateQuestsTabAlert(Array.isArray(state.quests?.quests) ? state.quests.quests : []);
   }
+  try {
+    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+  } catch {}
   await switchTrack();
 }
 
@@ -3996,7 +4416,8 @@ function bindUI() {
     const btn = qs("openContainerBtn");
     btn.disabled = true;
     try {
-      const result = await api("/api/containers/open", { method: "POST" });
+      const kind = state.containerKind === "premium" ? "premium" : "standard";
+      const result = await api(`/api/containers/open?kind=${encodeURIComponent(kind)}`, { method: "POST" });
       await showRewardModal(result);
       const [profile, containersInfo] = await Promise.all([
         api("/api/profile/me"),
@@ -4092,6 +4513,40 @@ function bindUI() {
     state.lootFilter = btn.dataset.rarity || "all";
     qs("lootFilters")?.querySelectorAll(".lootFilterBtn").forEach((el) => el.classList.toggle("isActive", el === btn));
     renderContainerLoot();
+  });
+
+  // Container kind tabs (standard / premium)
+  qs("containerKindTabs")?.addEventListener("click", (e) => {
+    const b = e.target.closest(".subTab");
+    if (!b) return;
+    const kind = String(b.dataset.kind || "standard");
+    state.containerKind = kind === "premium" ? "premium" : "standard";
+    qs("containerKindTabs")?.querySelectorAll(".subTab")
+      .forEach((it) => it.classList.toggle("isActive", it.dataset.kind === state.containerKind));
+    renderContainers();
+  });
+
+  // Buy premium container with Stars
+  document.addEventListener("click", async (e) => {
+    const btn = e.target.closest("[data-stars-buy='premium_container']");
+    if (!btn) return;
+    btn.disabled = true;
+    try {
+      await starsBuy("premium_container");
+      showPurchaseLikeModal({
+        title: trText("ПОКУПКА ПРОИЗВЕДЕНА УСПЕШНО", "PURCHASE SUCCESSFUL"),
+        label: trText("Вы приобрели:", "You purchased:"),
+        icon: "⭐",
+        name: trText("Премиум контейнер", "Premium container"),
+        price: "49 ⭐",
+      });
+      void playPurchaseSound();
+      clearError();
+    } catch (err) {
+      setError(prettyError(err));
+    } finally {
+      btn.disabled = false;
+    }
   });
 
   qs("battleBotModeCard")?.addEventListener("click", () => {

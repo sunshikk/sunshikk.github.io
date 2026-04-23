@@ -292,6 +292,7 @@
             <button class="shopCat isActive" data-cat="weapon" data-i18n="shop_cat_weapon">Пушки</button>
             <button class="shopCat" data-cat="hull" data-i18n="shop_cat_hull">Корпуса</button>
             <button class="shopCat" data-cat="premium" data-i18n="shop_cat_premium">Премиум подписка</button>
+            <button class="shopCat" data-cat="premium_containers" data-i18n="shop_cat_premium_containers">Премиум контейнеры</button>
             <button class="shopCat" data-cat="promo" data-i18n="shop_cat_promo">Промокоды</button>
           </aside>
           <section class="shopContent">
@@ -326,13 +327,17 @@
       </main>
 
       <main class="panel panelContainers" id="panelContainers" style="display:none">
-        <div class="subTabs containerTabs"><button class="subTab isActive" data-i18n="containers_standard">Обычный</button></div>
+        <div class="subTabs containerTabs" id="containerKindTabs">
+          <button class="subTab isActive" data-kind="standard" data-i18n="containers_standard">Обычный</button>
+          <button class="subTab rarity-legendary" data-kind="premium" data-i18n="containers_premium">Премиум</button>
+        </div>
         <div class="containerWrap"><img id="containerImg" class="containerImg" alt="container" /></div>
         <div class="containerActions">
           <button id="openContainerBtn" class="equipBtn" data-i18n="open_container">Открыть контейнер</button>
           <button id="viewContainerRewardsBtn" class="ghostBtn" type="button" data-i18n="view_rewards">Посмотреть содержимое контейнера</button>
           <button id="refreshBtn" class="ghostBtn" data-i18n="refresh">Обновить</button>
         </div>
+        <div class="containerMetaRow" id="containerMetaRow"></div>
         <div class="hint" id="containerResult"></div>
       </main>
 
