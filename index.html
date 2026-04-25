@@ -4,10 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tanki Online</title>
-    <link rel="stylesheet" href="./styles.css?v=45" />
+    <link rel="stylesheet" href="./styles.css?v=55" />
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script src="./config.js"></script>
-    <script src="./app.js?v=81" defer></script>
+    <script src="./app.js?v=92" defer></script>
   </head>
   <body>
     <div class="app" id="app">
@@ -56,6 +56,9 @@
       <section class="notice" id="panelNotice" style="display: none"><div id="notice"></div></section>
 
       <main class="panel panelProfile" id="panelProfile">
+        <div class="profileQuickBattleWrap">
+          <button id="profileQuickBattleBtn" class="promoBtn quickBattleCta" type="button" data-i18n="battles_quick">⚡ БЫСТРЫЙ БОЙ</button>
+        </div>
         <div class="profileTankTitle" data-i18n="profile_my_tank">Мой танк</div>
         <div class="profileTankWrap">
           <div class="tankGlow"></div>
@@ -153,31 +156,37 @@
 
       <main class="panel panelBattles" id="panelBattles" style="display:none">
         <div class="battlesHeader">
-          <div id="battlesTitle" class="battlesTitle" data-i18n="battles_title_modes">ВЫБОР РЕЖИМА</div>
+          <div id="battlesTitle" class="battlesTitle" data-i18n="battles_title_modes">БЫСТРЫЙ БОЙ</div>
         </div>
 
         <div class="battleLobbyCreateWrap">
-          <button id="createLobbyBtn" class="promoBtn battleLobbyCreateBtn" type="button" data-i18n="battles_create">Создать бой</button>
+          <button id="quickBattleBtn" class="promoBtn battleLobbyCreateBtn quickBattleCta" type="button" data-i18n="battles_quick">БЫСТРЫЙ БОЙ</button>
         </div>
 
+        <div class="battleSectionTitle" data-i18n="battles_modes_title">РЕЖИМЫ ИГРЫ</div>
         <div id="battleModesGrid" class="battleModesGrid" data-i18n-aria="battles_modes_aria" aria-label="Режимы боев">
           <button id="battleBotModeCard" class="battleModeCard isPrimary" type="button">
-            <div class="battleModeName" data-i18n="battles_title_bot">БОЙ С БОТОМ</div>
+            <div class="battleModeName" data-i18n="battles_training_bot">ТРЕНИРОВКА С БОТОМ</div>
             <div class="battleModeIcon">☠</div>
           </button>
           <button id="battlePlayerModeCard" class="battleModeCard" type="button">
-            <div class="battleModeName" data-i18n="battles_title_pvp">БОЙ С ИГРОКОМ</div>
+            <div class="battleModeName" data-i18n="battles_with_friend">ИГРА С ДРУГОМ</div>
             <div class="battleModeIcon">⚔</div>
           </button>
         </div>
 
+        <div class="battleSectionTitle" data-i18n="battles_or_create">ИЛИ ЖЕ СОЗДАТЬ СВОЙ БОЙ</div>
+        <div class="battleLobbyCreateWrap battleLobbyCreateWrapCustom">
+          <button id="createLobbyBtn" class="ghostBtn battleLobbyCreateBtn battleCustomCreateBtn" type="button" data-i18n="battles_custom_create">СОЗДАТЬ КАСТОМНЫЙ БОЙ</button>
+        </div>
+
         <section id="battleLobbiesSection" class="battleLobbiesSection">
-          <div class="battleLobbiesTitle" data-i18n="battles_open">Открытые бои</div>
+          <div class="battleLobbiesTitle" data-i18n="battles_custom_list">КАСТОМНЫЕ БОИ</div>
           <div id="battleLobbiesList" class="battleLobbiesList"></div>
         </section>
 
         <div id="battleBotCard" class="battleBotCard" style="display:none">
-          <div class="battleBotCardTitle" data-i18n="battles_title_bot">БОЙ С БОТОМ</div>
+          <div class="battleBotCardTitle" data-i18n="battles_training_bot">ТРЕНИРОВКА С БОТОМ</div>
           <div class="battleBotCardIcon">☠</div>
           <div class="battleBotCardActions">
             <button id="startBotBattleBtn" class="equipBtn" type="button" data-i18n="start_battle">Начать бой</button>
@@ -186,7 +195,7 @@
         </div>
 
         <div id="battlePlayerCard" class="battleBotCard" style="display:none">
-          <div class="battleBotCardTitle" data-i18n="battles_title_pvp">БОЙ С ИГРОКОМ</div>
+          <div class="battleBotCardTitle" data-i18n="battles_with_friend">ИГРА С ДРУГОМ</div>
           <div class="battleBotCardActions" style="flex-direction:column; width:min(100%, 360px);">
             <input id="pvpUsernameInput" class="promoInput" type="text" placeholder="@username" autocomplete="off" />
             <button id="sendPvpInviteBtn" class="promoBtn" type="button" data-i18n="send_invite">Отправить приглашение</button>
@@ -492,6 +501,23 @@
           </div>
         </div>
       </div>
+    </div>
+
+    <!-- quick match widget lives inside Battles panel -->
+
+    <div id="quickMatchWidget" class="quickMatchWidget" style="display:none" aria-live="polite">
+      <div class="quickMatchWidgetTitle" data-i18n="quick_match_title">БЫСТРЫЙ БОЙ</div>
+      <div class="quickMatchWidgetBody">
+        <div class="quickMatchWidgetLine">
+          <span data-i18n="quick_match_avg">Среднее время ожидания</span>
+          <b id="quickMatchAvg">—</b>
+        </div>
+        <div class="quickMatchWidgetLine">
+          <span data-i18n="quick_match_current">Текущее время ожидания</span>
+          <b id="quickMatchCurrent">00 с</b>
+        </div>
+      </div>
+      <button id="quickMatchCancelBtn" class="quickMatchWidgetCancel" type="button" data-i18n="quick_match_cancel">ОТМЕНА</button>
     </div>
 
     <div class="rankUpModal" id="rankUpModal" style="display:none">

@@ -56,7 +56,7 @@ const CONTAINER_LOOT = [
     type: "weapon",
     name: "Рельса",
     name_en: "Railgun",
-    chance: "1%",
+    chance: "0.15%",
     rarity: "legendary",
     image: REWARD_ITEM_IMAGES.railgun,
     description: "Легендарная пушка с самым редким шансом выпадения.",
@@ -67,7 +67,7 @@ const CONTAINER_LOOT = [
     type: "weapon",
     name: "Шафт",
     name_en: "Shaft",
-    chance: "3%",
+    chance: "0.4%",
     rarity: "ultrarare",
     image: REWARD_ITEM_IMAGES.shaft,
     description: "Ультраредкая снайперская пушка для точных попаданий.",
@@ -78,7 +78,7 @@ const CONTAINER_LOOT = [
     type: "weapon",
     name: "Гром",
     name_en: "Thunder",
-    chance: "5%",
+    chance: "1.1%",
     rarity: "epic",
     image: REWARD_ITEM_IMAGES.thunder,
     description: "Эпическая пушка с мощным уроном по площади.",
@@ -89,7 +89,7 @@ const CONTAINER_LOOT = [
     type: "weapon",
     name: "Рикошет",
     name_en: "Ricochet",
-    chance: "1%",
+    chance: "0.2%",
     rarity: "legendary",
     image: REWARD_ITEM_IMAGES.ricochet,
     description: "Легендарная пушка с рикошетом от укрытий и стабильным уроном.",
@@ -100,7 +100,7 @@ const CONTAINER_LOOT = [
     type: "weapon",
     name: "Молот",
     name_en: "Molot",
-    chance: "2%",
+    chance: "0.35%",
     rarity: "ultrarare",
     image: REWARD_ITEM_IMAGES.molot,
     description: "Ультраредкая пушка: вблизи огромный урон, вдали стабильные 10 урона.",
@@ -111,7 +111,7 @@ const CONTAINER_LOOT = [
     type: "hull",
     name: "Титан",
     name_en: "Titan",
-    chance: "5%",
+    chance: "0.9%",
     rarity: "epic",
     image: REWARD_ITEM_IMAGES.titan,
     description: "Эпический тяжелый корпус с высоким запасом прочности.",
@@ -122,7 +122,7 @@ const CONTAINER_LOOT = [
     type: "hull",
     name: "Диктатор",
     name_en: "Dictator",
-    chance: "5%",
+    chance: "0.6%",
     rarity: "epic",
     image: REWARD_ITEM_IMAGES.dictator,
     description: "Эпический корпус с 150 HP без дополнительных способностей.",
@@ -133,7 +133,7 @@ const CONTAINER_LOOT = [
     type: "hull",
     name: "Паладин",
     name_en: "Paladin",
-    chance: "1%",
+    chance: "0.22%",
     rarity: "legendary",
     image: REWARD_ITEM_IMAGES.paladin,
     description: "Легендарный штурмовой корпус с щитом и увеличенной мобильностью.",
@@ -144,7 +144,7 @@ const CONTAINER_LOOT = [
     type: "crystals",
     name: "Кристаллы x1000",
     name_en: "Crystals x1000",
-    chance: "5%",
+    chance: "2.25%",
     rarity: "epic",
     image: REWARD_ITEM_IMAGES.crystals,
     description: "Эпическая награда с крупной пачкой кристаллов.",
@@ -155,7 +155,7 @@ const CONTAINER_LOOT = [
     type: "crystals",
     name: "Кристаллы x10000",
     name_en: "Crystals x10000",
-    chance: "1.5%",
+    chance: "0.3%",
     rarity: "ultrarare",
     image: REWARD_ITEM_IMAGES.crystals,
     description: "Ультраредкая награда с огромным количеством кристаллов.",
@@ -166,7 +166,7 @@ const CONTAINER_LOOT = [
     type: "crystals",
     name: "Кристаллы x20000",
     name_en: "Crystals x20000",
-    chance: "0.2%",
+    chance: "0.03%",
     rarity: "legendary",
     image: REWARD_ITEM_IMAGES.crystals,
     description: "Легендарная кристальная награда с максимальной ценностью.",
@@ -177,7 +177,7 @@ const CONTAINER_LOOT = [
     type: "crystals",
     name: "Кристаллы x50",
     name_en: "Crystals x50",
-    chance: "11.72%",
+    chance: "15.58%",
     rarity: "rare",
     image: REWARD_ITEM_IMAGES.crystals,
     description: "Редкая награда с небольшим количеством кристаллов.",
@@ -188,7 +188,7 @@ const CONTAINER_LOOT = [
     type: "crystals",
     name: "Кристаллы x100",
     name_en: "Crystals x100",
-    chance: "11.72%",
+    chance: "15.58%",
     rarity: "rare",
     image: REWARD_ITEM_IMAGES.crystals,
     description: "Редкая награда со средним количеством кристаллов.",
@@ -199,7 +199,7 @@ const CONTAINER_LOOT = [
     type: "crystals",
     name: "Кристаллы x150",
     name_en: "Crystals x150",
-    chance: "11.72%",
+    chance: "15.58%",
     rarity: "rare",
     image: REWARD_ITEM_IMAGES.crystals,
     description: "Редкая награда с хорошим количеством кристаллов.",
@@ -210,7 +210,7 @@ const CONTAINER_LOOT = [
     type: "crystals",
     name: "Кристаллы x200",
     name_en: "Crystals x200",
-    chance: "11.72%",
+    chance: "15.58%",
     rarity: "rare",
     image: REWARD_ITEM_IMAGES.crystals,
     description: "Редкая награда с крупной пачкой кристаллов.",
@@ -221,7 +221,7 @@ const CONTAINER_LOOT = [
     type: "crystals",
     name: "Кристаллы x250",
     name_en: "Crystals x250",
-    chance: "11.72%",
+    chance: "15.58%",
     rarity: "rare",
     image: REWARD_ITEM_IMAGES.crystals,
     description: "Редкая награда с большим количеством кристаллов.",
@@ -232,7 +232,7 @@ const CONTAINER_LOOT = [
     type: "crystals",
     name: "Кристаллы x300",
     name_en: "Crystals x300",
-    chance: "11.72%",
+    chance: "15.58%",
     rarity: "rare",
     image: REWARD_ITEM_IMAGES.crystals,
     description: "Редкая награда с максимальным количеством кристаллов.",
@@ -246,7 +246,7 @@ const PREMIUM_CONTAINER_LOOT = [
     type: "crystals",
     name: "Кристаллы 5 000",
     name_en: "Crystals 5,000",
-    chance: "6%",
+    chance: "2.5%",
     rarity: "legendary",
     image: REWARD_ITEM_IMAGES.crystals,
     description: "Легендарный кристальный дроп.",
@@ -257,7 +257,7 @@ const PREMIUM_CONTAINER_LOOT = [
     type: "crystals",
     name: "Кристаллы 10 000",
     name_en: "Crystals 10,000",
-    chance: "6%",
+    chance: "2.5%",
     rarity: "legendary",
     image: REWARD_ITEM_IMAGES.crystals,
     description: "Легендарный кристальный дроп.",
@@ -268,7 +268,7 @@ const PREMIUM_CONTAINER_LOOT = [
     type: "crystals",
     name: "Кристаллы 15 000",
     name_en: "Crystals 15,000",
-    chance: "6%",
+    chance: "2.5%",
     rarity: "legendary",
     image: REWARD_ITEM_IMAGES.crystals,
     description: "Легендарный кристальный дроп.",
@@ -279,7 +279,7 @@ const PREMIUM_CONTAINER_LOOT = [
     type: "crystals",
     name: "Кристаллы 20 000",
     name_en: "Crystals 20,000",
-    chance: "6%",
+    chance: "2.5%",
     rarity: "legendary",
     image: REWARD_ITEM_IMAGES.crystals,
     description: "Легендарный кристальный дроп.",
@@ -290,7 +290,7 @@ const PREMIUM_CONTAINER_LOOT = [
     type: "crystals",
     name: "Кристаллы 25 000",
     name_en: "Crystals 25,000",
-    chance: "6%",
+    chance: "2.5%",
     rarity: "legendary",
     image: REWARD_ITEM_IMAGES.crystals,
     description: "Легендарный кристальный дроп.",
@@ -301,7 +301,7 @@ const PREMIUM_CONTAINER_LOOT = [
     type: "crystals",
     name: "Кристаллы 30 000",
     name_en: "Crystals 30,000",
-    chance: "6%",
+    chance: "2.5%",
     rarity: "legendary",
     image: REWARD_ITEM_IMAGES.crystals,
     description: "Легендарный кристальный дроп.",
@@ -323,7 +323,7 @@ const PREMIUM_CONTAINER_LOOT = [
     type: "premium",
     name: "Премиум 3 дня",
     name_en: "Premium 3 days",
-    chance: "10%",
+    chance: "8%",
     rarity: "legendary",
     image: REWARD_ITEM_IMAGES.premium,
     description: "Премиум подписка.",
@@ -334,7 +334,7 @@ const PREMIUM_CONTAINER_LOOT = [
     type: "weapon",
     name: "Рельса",
     name_en: "Railgun",
-    chance: "6%",
+    chance: "1.5%",
     rarity: "legendary",
     image: REWARD_ITEM_IMAGES.railgun,
     description: "Легендарная пушка.",
@@ -345,7 +345,7 @@ const PREMIUM_CONTAINER_LOOT = [
     type: "weapon",
     name: "Рикошет",
     name_en: "Ricochet",
-    chance: "6%",
+    chance: "1.5%",
     rarity: "legendary",
     image: REWARD_ITEM_IMAGES.ricochet,
     description: "Легендарная пушка.",
@@ -356,7 +356,7 @@ const PREMIUM_CONTAINER_LOOT = [
     type: "weapon",
     name: "Молот",
     name_en: "Molot",
-    chance: "6%",
+    chance: "1.5%",
     rarity: "legendary",
     image: REWARD_ITEM_IMAGES.molot,
     description: "Легендарная пушка.",
@@ -367,13 +367,78 @@ const PREMIUM_CONTAINER_LOOT = [
     type: "hull",
     name: "Паладин",
     name_en: "Paladin",
-    chance: "6%",
+    chance: "1.5%",
     rarity: "legendary",
     image: REWARD_ITEM_IMAGES.paladin,
     description: "Легендарный корпус.",
     description_en: "Legendary hull.",
   },
 ];
+
+function syncLootChancesFromApi(info) {
+  if (!info || typeof info !== "object") return;
+  const std = info.chances && typeof info.chances === "object" ? info.chances : null;
+  const prem = info.premium_chances && typeof info.premium_chances === "object" ? info.premium_chances : null;
+
+  if (std) {
+    const stdMap = {
+      railgun: "railgun",
+      shaft: "shaft",
+      thunder: "thunder",
+      ricochet: "ricochet",
+      molot: "molot",
+      titan: "titan",
+      dictator: "dictator",
+      paladin: "paladin",
+      crystals_1000: "crystals_1000",
+      crystals_10000: "crystals_10000",
+      crystals_20000: "crystals_20000",
+    };
+    CONTAINER_LOOT.forEach((item) => {
+      const apiKey = stdMap[item.key];
+      if (!apiKey) return;
+      const val = Number(std[apiKey]);
+      if (Number.isFinite(val) && val >= 0) {
+        item.chance = `${val}%`;
+      }
+    });
+    const small = Number(std.crystals_small);
+    if (Number.isFinite(small) && small >= 0) {
+      const eachSmall = (small / 6).toFixed(2);
+      CONTAINER_LOOT.forEach((item) => {
+        if (["crystals_50", "crystals_100", "crystals_150", "crystals_200", "crystals_250", "crystals_300"].includes(item.key)) {
+          item.chance = `${eachSmall}%`;
+        }
+      });
+    }
+  }
+
+  if (prem) {
+    const premMap = {
+      prem_crystals_5000: "crystals_5k",
+      prem_crystals_10000: "crystals_10k",
+      prem_crystals_15000: "crystals_15k",
+      prem_crystals_20000: "crystals_20k",
+      prem_crystals_25000: "crystals_25k",
+      prem_crystals_30000: "crystals_30k",
+      premium_1d: "premium_1d",
+      premium_3d: "premium_3d",
+      railgun: "railgun",
+      ricochet: "ricochet",
+      molot: "molot",
+      paladin: "paladin",
+    };
+    PREMIUM_CONTAINER_LOOT.forEach((item) => {
+      const apiKey = premMap[item.key];
+      if (!apiKey) return;
+      const val = Number(prem[apiKey]);
+      if (Number.isFinite(val) && val >= 0) {
+        item.chance = `${val}%`;
+      }
+    });
+  }
+}
+
 const ITEM_IMAGE_OVERRIDES = { smoky: "smoky.png", hunter: "hunter.png" };
 const RANK_EXP_BY_ID = {
   1: 0, 2: 50, 3: 120, 4: 200, 5: 300, 6: 420, 7: 560, 8: 720, 9: 900, 10: 1100,
@@ -428,7 +493,7 @@ const state = {
   hudAvatarSig: "",
   leaderboard: null,
   leaderboardSort: "experience",
-  leaderboardLimit: 100,
+  leaderboardLimit: 10,
   ranks: null,
   lobbies: null,
   lobbyTicker: null,
@@ -458,6 +523,9 @@ const state = {
   damageAcc: null,
   markerDamageAcc: null,
   paladinDashMode: false,
+  quickMatchController: null,
+  quickMatchTimer: null,
+  quickMatchStartedAt: 0,
 };
 
 const I18N = {
@@ -484,9 +552,20 @@ const I18N = {
     err_open_in_telegram: "Открой мини-апп из Telegram.",
     err_initdata_missing: "initData не получен. Открой WebApp кнопкой из бота, а не обычной ссылкой в браузере.",
     battle_cooldown: "Кулдаун",
-    battles_title_modes: "ВЫБОР РЕЖИМА",
+    battles_title_modes: "БЫСТРЫЙ БОЙ",
     battles_title_pvp: "БОЙ С ИГРОКОМ",
     battles_title_bot: "БОЙ С БОТОМ",
+    battles_quick: "БЫСТРЫЙ БОЙ",
+    battles_modes_title: "РЕЖИМЫ ИГРЫ",
+    battles_or_create: "ИЛИ ЖЕ СОЗДАТЬ СВОЙ БОЙ",
+    battles_training_bot: "ТРЕНИРОВКА С БОТОМ",
+    battles_with_friend: "ИГРА С ДРУГОМ",
+    battles_custom_create: "СОЗДАТЬ КАСТОМНЫЙ БОЙ",
+    battles_custom_list: "КАСТОМНЫЕ БОИ",
+    quick_match_title: "БЫСТРЫЙ БОЙ",
+    quick_match_avg: "Среднее время ожидания",
+    quick_match_current: "Текущее время ожидания",
+    quick_match_cancel: "ОТМЕНА",
     battle_victory: "ПОБЕДА",
     battle_defeat: "ПОРАЖЕНИЕ",
     notice_title: "УВЕДОМЛЕНИЕ",
@@ -649,9 +728,20 @@ const I18N = {
     err_open_in_telegram: "Open this mini app from Telegram.",
     err_initdata_missing: "initData is missing. Open the WebApp using the bot button (not a regular browser link).",
     battle_cooldown: "Cooldown",
-    battles_title_modes: "MODE SELECT",
+    battles_title_modes: "QUICK BATTLE",
     battles_title_pvp: "BATTLE VS PLAYER",
     battles_title_bot: "BATTLE VS BOT",
+    battles_quick: "QUICK BATTLE",
+    battles_modes_title: "GAME MODES",
+    battles_or_create: "OR CREATE YOUR OWN BATTLE",
+    battles_training_bot: "TRAINING VS BOT",
+    battles_with_friend: "PLAY WITH A FRIEND",
+    battles_custom_create: "CREATE CUSTOM BATTLE",
+    battles_custom_list: "CUSTOM BATTLES",
+    quick_match_title: "QUICK BATTLE",
+    quick_match_avg: "Average waiting time",
+    quick_match_current: "Current waiting time",
+    quick_match_cancel: "CANCEL",
     battle_victory: "VICTORY",
     battle_defeat: "DEFEAT",
     notice_title: "NOTICE",
@@ -1057,6 +1147,23 @@ const LOCKED_HINTS_EN = {
 
 function itemName(key) {
   return state.locale === "en" ? (NAMES_EN[key] || NAMES[key] || key) : (NAMES[key] || key);
+}
+function itemKeyFromAnyName(raw) {
+  const v = String(raw || "").trim();
+  if (!v) return "";
+  const low = v.toLowerCase();
+  if (NAMES[low] || NAMES_EN[low]) return low;
+  for (const [k, n] of Object.entries(NAMES)) {
+    if (String(n || "").toLowerCase() === low) return k;
+  }
+  for (const [k, n] of Object.entries(NAMES_EN)) {
+    if (String(n || "").toLowerCase() === low) return k;
+  }
+  return "";
+}
+function localizedItemName(rawOrKey) {
+  const key = itemKeyFromAnyName(rawOrKey);
+  return key ? itemName(key) : String(rawOrKey || "—");
 }
 function itemDescription(key) {
   return state.locale === "en" ? (DESCRIPTIONS_EN[key] || DESCRIPTIONS[key] || "") : (DESCRIPTIONS[key] || "");
@@ -1671,12 +1778,12 @@ async function starsBuy(itemKey) {
       resolve("failed");
     }
   });
+  if (status === "cancelled") return false;
   if (status !== "paid") {
-    throw new Error(status === "cancelled"
-      ? trText("Покупка отменена.", "Purchase cancelled.")
-      : trText("Оплата не прошла.", "Payment failed."));
+    throw new Error(trText("Оплата не прошла.", "Payment failed."));
   }
   await refreshAll();
+  return true;
 }
 
 function displayItemName(itemOrKey) {
@@ -1854,6 +1961,11 @@ function renderProfile() {
   const rankValueIcon = qs("rankValueIcon");
   if (rankValueIcon) rankValueIcon.src = withCacheBust(absUrl(state.profile.rank_image_url));
   qs("winrateValue").textContent = `${winrate}%`;
+  const tTitle = document.querySelector("#panelProfile .profileTankTitle");
+  if (tTitle) {
+    const p = Number(state.profile.tank_power || 0);
+    tTitle.textContent = state.locale === "en" ? `My tank • Power ${p}` : `Мой танк • Сила ${p}`;
+  }
 
   const premStatus = qs("premiumStatusValue");
   const premUntil = qs("premiumUntilValue");
@@ -1960,6 +2072,11 @@ function renderGarage() {
     ? (itemDescription(key) || (state.locale === "en" ? "Select an item." : "Выберите предмет."))
     : itemLockedHint(key);
   qs("garageTankImg").src = absUrl(state.profile.tank_image_url);
+  const p = Number(state.profile.tank_power || 0);
+  const hint = qs("garageHint");
+  if (hint) {
+    hint.textContent = state.locale === "en" ? `Tank power: ${p}` : `Сила танка: ${p}`;
+  }
   const equippedCurrent = state.garageCategory === "weapon" ? state.profile.weapon : state.profile.hull;
   updateGarageEquipButton();
   const rail = qs("garageItemsRail");
@@ -2142,12 +2259,15 @@ function renderShop() {
   });
 
   list.querySelectorAll("[data-stars-buy]").forEach((btn) => {
-    btn.addEventListener("click", async () => {
+    btn.addEventListener("click", async (ev) => {
+      ev.preventDefault();
+      ev.stopPropagation();
       btn.disabled = true;
       const itemKey = btn.getAttribute("data-stars-buy");
       const item = state.shop?.items?.find((it) => it.key === itemKey);
       try {
-        await starsBuy(itemKey);
+        const paid = await starsBuy(itemKey);
+        if (!paid) return;
         if (item?.category === "premium") {
           const premiumMeta = SHOP_PREMIUM_META[item.key] || {};
           showPurchaseLikeModal({
@@ -2474,6 +2594,7 @@ async function refreshTabContext(tab) {
       api("/api/profile/me"),
     ]);
     state.containersInfo = containersInfo;
+    syncLootChancesFromApi(containersInfo);
     state.profile = profile;
     const loc = String(state.profile?.locale || "").toLowerCase();
     if (loc === "ru" || loc === "en") {
@@ -2538,6 +2659,10 @@ async function refreshTabContext(tab) {
 
 let tabSwitchSeq = 0;
 async function showTab(tab, { force = false } = {}) {
+  if (!force && state.quickMatchController && tab !== "battles") {
+    setError(trText("Пока идет поиск быстрого боя, переключение вкладок недоступно.", "You can't switch tabs while quick battle search is running."));
+    return;
+  }
   if (!force && state.webBattleActive && tab !== "battles") {
     setError(trText("Нельзя переключать вкладки во время боя.", "You can't switch tabs during a battle."));
     return;
@@ -2637,6 +2762,7 @@ async function refreshAll() {
   }
   state.shop = shop;
   state.containersInfo = containersInfo;
+  syncLootChancesFromApi(containersInfo);
   state.leaderboard = leaderboard;
   state.quests = quests;
   if (!state.ranks) {
@@ -3106,6 +3232,7 @@ function renderLobbies() {
   const section = qs("battleLobbiesSection");
   const list = qs("battleLobbiesList");
   const createBtnWrap = qs("createLobbyBtn")?.closest(".battleLobbyCreateWrap");
+  const quickBtnWrap = qs("quickBattleBtn")?.closest(".battleLobbyCreateWrap");
   if (!section || !list) return;
   const modesVisible = (qs("battleModesGrid")?.style.display || "grid") !== "none";
   const botCardVisible = (qs("battleBotCard")?.style.display || "none") !== "none";
@@ -3113,7 +3240,11 @@ function renderLobbies() {
   const inArena = (qs("battleArena")?.style.display || "none") !== "none" || Boolean(state.webBattleActive);
   const show = modesVisible && !inArena && !botCardVisible && !pvpCardVisible;
   if (createBtnWrap) createBtnWrap.style.display = show ? "flex" : "none";
+  if (quickBtnWrap) quickBtnWrap.style.display = show ? "flex" : "none";
   section.style.display = show ? "block" : "none";
+  // Quick match search widget only makes sense on the main modes screen.
+  const qWidget = qs("quickMatchWidget");
+  if (qWidget && !show) qWidget.style.display = "none";
   if (!show) {
     stopLobbyTicker();
     return;
@@ -3310,6 +3441,47 @@ function renderBattleMap(
   }
 }
 
+function localizeBattleLogLine(line) {
+  if (state.locale !== "en") return String(line || "");
+  let out = String(line || "");
+  const rules = [
+    [/бой начался/gi, "battle started"],
+    [/карта: с укрытиями/gi, "map: with cover"],
+    [/карта: без укрытий/gi, "map: no cover"],
+    [/приз боя: контейнеры \(премиум усиливает награду\)\./gi, "battle prize: containers (premium boosts rewards)."],
+    [/приз боя: опыт \(x2 при победе\)\./gi, "battle prize: experience (x2 on victory)."],
+    [/приз боя: без бонуса \(только запись победы\/поражения\)\./gi, "battle prize: no bonus (win/loss record only)."],
+    [/прицеливание включено\./gi, "aim enabled."],
+    [/прицеливание выключено\./gi, "aim disabled."],
+    [/движение вверх\./gi, "move up."],
+    [/движение вниз\./gi, "move down."],
+    [/движение влево\./gi, "move left."],
+    [/движение вправо\./gi, "move right."],
+    [/рывок Паладина/gi, "Paladin dash"],
+    [/укрытие блокирует выстрел по прямой!/gi, "cover blocks line shot!"],
+    [/рикошетное попадание!/gi, "ricochet hit!"],
+    [/рикошет попал!/gi, "ricochet connected!"],
+    [/рикошет не попал!/gi, "ricochet missed!"],
+    [/попадание!/gi, "hit!"],
+    [/промах!/gi, "miss!"],
+    [/шанс был/gi, "chance was"],
+    [/шанс/gi, "chance"],
+    [/урон/gi, "damage"],
+    [/победа!/gi, "victory!"],
+    [/поражение!/gi, "defeat!"],
+    [/щит Паладина у цели поглотил выстрел!/gi, "target's Paladin shield absorbed the shot!"],
+    [/щит Паладина активирован: следующий входящий выстрел будет заблокирован\./gi, "Paladin shield activated: next incoming shot will be blocked."],
+    [/сдался\./gi, "surrendered."],
+    [/новое звание получено!/gi, "new rank unlocked!"],
+    [/контейнер x/gi, "container x"],
+    [/утешительный контейнер x/gi, "consolation container x"],
+    [/\+(\d+)\sопыта/gi, "+$1 exp"],
+    [/\+(\d+)\sбонусного опыта/gi, "+$1 bonus exp"],
+  ];
+  rules.forEach(([re, to]) => { out = out.replace(re, to); });
+  return out;
+}
+
 function renderBattleLog(text) {
   const log = qs("battleLog");
   if (!log) return;
@@ -3318,14 +3490,43 @@ function renderBattleLog(text) {
     log.innerHTML = `<div class="battleLogItem">${tr("battle_no_events")}</div>`;
     return;
   }
-  const lines = raw.split("\n").map((s) => s.trim()).filter(Boolean).slice(-7);
+  const lines = raw.split("\n").map((s) => localizeBattleLogLine(s.trim())).filter(Boolean).slice(-12);
   log.innerHTML = lines.map((line) => {
+    let icon = "";
+    let content = line;
+    const m = content.match(/^([^\w\s])\s+(.*)$/);
+    if (m) {
+      icon = String(m[1] || "");
+      content = String(m[2] || "");
+    }
+    // Normalize icon for "cover blocked" lines to match PvP style.
+    if (/укрытие блокирует/i.test(content)) icon = "☑";
+
+    // Split "Name: message" to style like PvP/custom battles.
+    let name = "";
+    let msg = content;
+    const idx = content.indexOf(":");
+    if (idx > 0 && idx < 32) {
+      name = content.slice(0, idx).trim();
+      msg = content.slice(idx + 1).trim();
+    }
+
     let cls = "battleLogItem";
-    if (line.includes("💥")) cls += " isHit";
-    else if (line.includes("❌") || line.includes("пораж")) cls += " isWarn";
-    else if (line.includes("🏆") || line.includes("Побед")) cls += " isWin";
+    if (line.includes("💥") || /попадани/i.test(line)) cls += " isHit";
+    else if (line.includes("❌") || /промах/i.test(line) || /пораж/i.test(line)) cls += " isWarn";
+    else if (line.includes("🏆") || /побед/i.test(line)) cls += " isWin";
     else if (line.includes("⏱")) cls += " isTime";
-    return `<div class="${cls}">${line}</div>`;
+
+    const safeName = escapeHtml(name);
+    const safeMsg = escapeHtml(msg);
+    const safeIcon = escapeHtml(icon || (name ? "👤" : "◻"));
+    return `<div class="${cls}">
+      <span class="battleLogIcon" aria-hidden="true">${safeIcon}</span>
+      <span class="battleLogText">
+        ${safeName ? `<span class="battleLogName">${safeName}</span><span class="battleLogSep">:</span> ` : ""}
+        <span class="battleLogMsg">${safeMsg}</span>
+      </span>
+    </div>`;
   }).join("");
 }
 
@@ -3541,14 +3742,41 @@ function lockMainTabs(locked) {
   });
 }
 
-function setBattlesTitle(isInBattle, isPvp = false) {
+function lockBattleSearchActions(locked) {
+  const ids = [
+    "quickBattleBtn",
+    "profileQuickBattleBtn",
+    "battleBotModeCard",
+    "battlePlayerModeCard",
+    "createLobbyBtn",
+    "sendPvpInviteBtn",
+    "joinLobbyConfirmBtn",
+    "backToModesBtn",
+    "backToModesFromPvpBtn",
+    "startBotBattleBtn",
+  ];
+  ids.forEach((id) => {
+    const el = qs(id);
+    if (!el) return;
+    if (id === "quickMatchCancelBtn") return;
+    el.disabled = Boolean(locked);
+    el.classList.toggle("isDisabled", Boolean(locked));
+  });
+}
+
+function setBattlesTitle(isInBattle, stOrIsPvp = false) {
   const title = qs("battlesTitle");
   if (!title) return;
   if (!isInBattle) {
-    title.textContent = tr("battles_title_modes");
+    title.style.display = "none";
+    title.textContent = "";
     return;
   }
-  title.textContent = isPvp ? tr("battles_title_pvp") : tr("battles_title_bot");
+  title.style.display = "";
+  const st = (stOrIsPvp && typeof stOrIsPvp === "object") ? stOrIsPvp : null;
+  const isPvp = st ? Boolean(st.is_pvp) : Boolean(stOrIsPvp);
+  const isQuick = st ? Boolean(st.quick_mode) : false;
+  title.textContent = isQuick ? tr("battles_quick") : (isPvp ? tr("battles_with_friend") : tr("battles_training_bot"));
 }
 
 function showBattleLoadingOverlay(visible) {
@@ -3570,6 +3798,7 @@ function exitBattleArenaToModes() {
   if (pvpCard) pvpCard.style.display = "none";
   if (modes) modes.style.display = "grid";
   setBattlesTitle(false);
+  document.querySelectorAll(".battleSectionTitle").forEach((el) => { el.style.display = ""; });
   renderLobbies();
 }
 
@@ -3796,7 +4025,8 @@ function renderBattleState(st) {
   if (botCard) botCard.style.display = "none";
   if (pvpCard) pvpCard.style.display = "none";
   if (arena) arena.style.display = "block";
-  setBattlesTitle(true, Boolean(st.is_pvp));
+  setBattlesTitle(true, st);
+  document.querySelectorAll(".battleSectionTitle").forEach((el) => { el.style.display = "none"; });
   // Hide "create battle" immediately when entering arena.
   renderLobbies();
 
@@ -3895,17 +4125,18 @@ function renderBattleState(st) {
     if (bImg.src !== next) bImg.src = next;
   }
   const pW = qs("battlePlayerWeapon");
-  if (pW) pW.textContent = `🔫 ${st.player_weapon_name || state.profile?.weapon || "—"}`;
+  if (pW) pW.textContent = `🔫 ${localizedItemName(st.player_weapon_name || state.profile?.weapon || "—")}`;
   const pH = qs("battlePlayerHull");
   if (pH) {
     const turnMark = st.is_pvp ? (st.is_player_turn ? (state.locale === "en" ? " • Your turn" : " • Ваш ход") : "") : "";
     const dmMark = st.pvp_mode === "deathmatch"
       ? (state.locale === "en" ? ` • Kills: ${Number(st.player_kills || 0)}` : ` • Киллы: ${Number(st.player_kills || 0)}`)
       : "";
-    pH.textContent = `🛡 ${st.player_hull_name || state.profile?.hull || "—"}${dmMark}${turnMark}`;
+    const pPower = Number(st.player_tank_power || 0);
+    pH.textContent = `🛡 ${localizedItemName(st.player_hull_name || state.profile?.hull || "—")} • ${state.locale === "en" ? "Power" : "Сила"} ${pPower}${dmMark}${turnMark}`;
   }
   const bW = qs("battleBotWeapon");
-  if (bW) bW.textContent = `🔫 ${st.bot_weapon_name || "—"}`;
+  if (bW) bW.textContent = `🔫 ${localizedItemName(st.bot_weapon_name || "—")}`;
   const aimState = qs("battleAimState");
   if (aimState) {
     aimState.style.display = st.aiming ? "inline-flex" : "none";
@@ -3914,7 +4145,7 @@ function renderBattleState(st) {
   const premSrc = absUrl(state.profile?.premium_badge_url || PREMIUM_BADGE_PATH);
   const playerTitle = qs("battlePlayerTitle");
   if (playerTitle) {
-    if (st.is_pvp) {
+    if (st.is_pvp || st.quick_mode) {
       const pName = escapeHtml(String(st.player_name || state.profile?.name || state.viewerName || trText("Игрок", "Player")));
       const pRank = String(st.player_rank_image_url || state.profile?.rank_image_url || "");
       const pStack = pRank
@@ -3929,7 +4160,7 @@ function renderBattleState(st) {
   }
   const oppTitle = qs("battleOpponentTitle");
   if (oppTitle) {
-    if (st.is_pvp) {
+    if (st.is_pvp || st.quick_mode) {
       const oName = escapeHtml(String(st.opponent_name || trText("Соперник", "Opponent")));
       const oRank = String(st.opponent_rank_image_url || "");
       const oStack = oRank
@@ -3939,7 +4170,7 @@ function renderBattleState(st) {
         : "";
       oppTitle.innerHTML = `${oStack}${oName}`;
     } else {
-      oppTitle.textContent = trText("ПРОТИВНИК", "OPPONENT");
+      oppTitle.textContent = String(st.opponent_name || trText("ПРОТИВНИК", "OPPONENT"));
     }
   }
   const bH = qs("battleBotHull");
@@ -3950,7 +4181,8 @@ function renderBattleState(st) {
     const dmEnemy = st.pvp_mode === "deathmatch"
       ? (state.locale === "en" ? ` • Kills: ${Number(st.opponent_kills || 0)}` : ` • Киллы: ${Number(st.opponent_kills || 0)}`)
       : "";
-    bH.textContent = `🛡 ${st.bot_hull_name || "—"}${dmEnemy}${enemyTurn}`;
+    const bPower = Number(st.bot_tank_power || 0);
+    bH.textContent = `🛡 ${localizedItemName(st.bot_hull_name || "—")} • ${state.locale === "en" ? "Power" : "Сила"} ${bPower}${dmEnemy}${enemyTurn}`;
   }
 
   renderBattleLog(st.log || "");
@@ -3964,8 +4196,12 @@ function renderBattleState(st) {
   }
   const isOnCooldown = Number(st.cooldown_remaining || 0) > 0;
   const isLockedByTurn = Boolean(st.is_pvp) && !Boolean(st.is_player_turn) && !Boolean(st.game_over);
+  const isLockedByBotThinking = Boolean(st.quick_mode) && Boolean(st.awaiting_bot_action) && !Boolean(st.game_over);
   const shootBtn = qs("battleShootBtn");
-  if (shootBtn) shootBtn.disabled = isOnCooldown || isLockedByTurn || Boolean(st.game_over);
+  if (shootBtn) {
+    shootBtn.disabled = isOnCooldown || isLockedByTurn || isLockedByBotThinking || Boolean(st.game_over);
+    shootBtn.classList.toggle("isDisabled", shootBtn.disabled);
+  }
   // Disable move buttons if cooldown/turn locked/game over, or if movement would go out of bounds.
   const size = Number(st.map_size || 5);
   const pos = Array.isArray(st.player_pos) ? st.player_pos : null;
@@ -3980,7 +4216,7 @@ function renderBattleState(st) {
   document.querySelectorAll("[data-battle-move]").forEach((b) => {
     const dir = String(b.getAttribute("data-battle-move") || "");
     const outOfBounds = Boolean(blocked[dir]);
-    b.disabled = isOnCooldown || isLockedByTurn || Boolean(st.game_over) || outOfBounds;
+    b.disabled = isOnCooldown || isLockedByTurn || isLockedByBotThinking || Boolean(st.game_over) || outOfBounds;
     b.classList.toggle("isDisabled", b.disabled);
   });
 
@@ -3993,18 +4229,25 @@ function renderBattleState(st) {
     aimBtn.textContent = st.aiming
       ? trText("Сбросить прицел", "Cancel aim")
       : trText("Прицел", "Aim");
-    aimBtn.disabled = Boolean(st.cooldown_remaining > 0) || isLockedByTurn || Boolean(st.game_over);
+    aimBtn.disabled = Boolean(st.cooldown_remaining > 0) || isLockedByTurn || isLockedByBotThinking || Boolean(st.game_over);
+    aimBtn.classList.toggle("isDisabled", aimBtn.disabled);
   }
   const palBtn = qs("battlePaladinStepBtn");
   if (palBtn) {
-    const hullName = String(st.player_hull_name || "").toLowerCase();
-    const isPaladin = hullName.includes("паладин");
+    const hullKey = itemKeyFromAnyName(st.player_hull_name || "");
+    const isPaladin = hullKey === "paladin";
     palBtn.style.display = isPaladin ? "block" : "none";
     if (!isPaladin) state.paladinDashMode = false;
     palBtn.textContent = state.paladinDashMode
       ? trText("Ход: рывок x2", "Move: dash x2")
       : trText("Ход: 1 клетка", "Move: 1 tile");
-    palBtn.disabled = Boolean(st.cooldown_remaining > 0) || isLockedByTurn || Boolean(st.game_over);
+    palBtn.disabled = Boolean(st.cooldown_remaining > 0) || isLockedByTurn || isLockedByBotThinking || Boolean(st.game_over);
+    palBtn.classList.toggle("isDisabled", palBtn.disabled);
+  }
+  const surrenderBtn = qs("battleSurrenderBtn");
+  if (surrenderBtn) {
+    surrenderBtn.disabled = isLockedByBotThinking || Boolean(st.game_over);
+    surrenderBtn.classList.toggle("isDisabled", surrenderBtn.disabled);
   }
 
   state.webBattleActive = Boolean(st.active) && !Boolean(st.game_over);
@@ -4066,6 +4309,9 @@ function renderBattleState(st) {
     state.battleMusicStartedForId = null;
     showBattleLoadingOverlay(false);
     state.webBattleActive = false;
+    stopBattlePolling();
+    // Battle is finished: hide arena immediately, keep result modal only.
+    exitBattleArenaToModes();
     stopCooldownTicker();
     lockMainTabs(false);
     if (aimBtn) aimBtn.disabled = true;
@@ -4116,6 +4362,47 @@ async function battleStartBot() {
   const st = await api("/api/battle/bot/start", { method: "POST" });
   await showTab("battles", { force: true });
   renderBattleState(st);
+}
+
+function closeQuickMatchModal() {
+  const widget = qs("quickMatchWidget");
+  if (widget) widget.style.display = "none";
+  if (state.quickMatchTimer) {
+    clearInterval(state.quickMatchTimer);
+    state.quickMatchTimer = null;
+  }
+  state.quickMatchStartedAt = 0;
+  state.quickMatchController = null;
+}
+
+function openQuickMatchModal() {
+  const widget = qs("quickMatchWidget");
+  if (!widget) return;
+  state.quickMatchStartedAt = Date.now();
+  widget.style.display = "grid";
+  const avg = qs("quickMatchAvg");
+  const cur = qs("quickMatchCurrent");
+  state.quickMatchAvgSeconds = Math.max(6, Math.min(40, Math.floor(8 + Math.random() * 19)));
+  if (avg) avg.textContent = state.locale === "en" ? `${state.quickMatchAvgSeconds} s` : `${state.quickMatchAvgSeconds} с`;
+  if (cur) cur.textContent = state.locale === "en" ? "00 s" : "00 с";
+  if (state.quickMatchTimer) clearInterval(state.quickMatchTimer);
+  state.quickMatchTimer = setInterval(() => {
+    const elapsed = Math.max(0, Math.floor((Date.now() - Number(state.quickMatchStartedAt || Date.now())) / 1000));
+    const val = String(elapsed).padStart(2, "0");
+    if (cur) cur.textContent = state.locale === "en" ? `${val} s` : `${val} с`;
+  }, 300);
+}
+
+async function battleStartQuick(options = {}) {
+  const st = await api("/api/battle/quick/start", { method: "POST", ...(options || {}) });
+  await showTab("battles", { force: true });
+  renderBattleState(st);
+}
+
+async function battleCancelQuickSearch() {
+  try {
+    await api("/api/battle/quick/cancel", { method: "POST" });
+  } catch {}
 }
 
 async function battleSendAction(action, direction = null) {
@@ -4221,7 +4508,7 @@ function bindUI() {
 
   // PvP lobby UI (create / list / join)
   qs("createLobbyBtn")?.addEventListener("click", () => {
-    if (state.webBattleActive) return;
+    if (state.webBattleActive || state.quickMatchController) return;
     openCreateLobbyModal();
   });
   qs("createLobbyCancelBtn")?.addEventListener("click", closeCreateLobbyModal);
@@ -4260,6 +4547,7 @@ function bindUI() {
   });
 
   qs("battleLobbiesList")?.addEventListener("click", (e) => {
+    if (state.quickMatchController) return;
     const btn = e.target.closest("[data-lobby]");
     if (!btn) return;
     const id = String(btn.getAttribute("data-lobby") || "");
@@ -4270,6 +4558,7 @@ function bindUI() {
   qs("joinLobbyCancelBtn")?.addEventListener("click", closeJoinLobbyModal);
   qs("joinLobbyModal")?.addEventListener("click", (e) => { if (e.target === qs("joinLobbyModal")) closeJoinLobbyModal(); });
   qs("joinLobbyConfirmBtn")?.addEventListener("click", async () => {
+    if (state.quickMatchController) return;
     if (!state.joinLobbyId) return;
     const btn = qs("joinLobbyConfirmBtn");
     if (!btn) return;
@@ -4425,6 +4714,7 @@ function bindUI() {
       ]);
       state.profile = profile;
       state.containersInfo = containersInfo;
+      syncLootChancesFromApi(containersInfo);
       renderHud();
       renderContainers();
       clearError();
@@ -4532,7 +4822,8 @@ function bindUI() {
     if (!btn) return;
     btn.disabled = true;
     try {
-      await starsBuy("premium_container");
+      const paid = await starsBuy("premium_container");
+      if (!paid) return;
       showPurchaseLikeModal({
         title: trText("ПОКУПКА ПРОИЗВЕДЕНА УСПЕШНО", "PURCHASE SUCCESSFUL"),
         label: trText("Вы приобрели:", "You purchased:"),
@@ -4550,6 +4841,7 @@ function bindUI() {
   });
 
   qs("battleBotModeCard")?.addEventListener("click", () => {
+    if (state.quickMatchController) return;
     const modes = qs("battleModesGrid");
     const botCard = qs("battleBotCard");
     const pvpCard = qs("battlePlayerCard");
@@ -4558,10 +4850,45 @@ function bindUI() {
     if (arena) arena.style.display = "none";
     if (pvpCard) pvpCard.style.display = "none";
     if (botCard) botCard.style.display = "flex";
+    // Hide quick battle header/CTA while inside a mode card.
+    const quickWrap = qs("quickBattleBtn")?.closest(".battleLobbyCreateWrap");
+    if (quickWrap) quickWrap.style.display = "none";
+    document.querySelectorAll(".battleSectionTitle").forEach((el) => { el.style.display = "none"; });
     renderLobbies();
   });
 
+  const startQuickBattleFlow = async () => {
+    if (state.quickMatchController) return;
+    const controller = new AbortController();
+    state.quickMatchController = controller;
+    lockMainTabs(true);
+    lockBattleSearchActions(true);
+    openQuickMatchModal();
+    try {
+      await battleStartQuick({ signal: controller.signal });
+      clearError();
+    } catch (e) {
+      if (String(e?.name || "") !== "AbortError") {
+        setError(prettyError(e));
+      }
+    } finally {
+      closeQuickMatchModal();
+      lockMainTabs(Boolean(state.webBattleActive));
+      lockBattleSearchActions(false);
+    }
+  };
+  qs("quickBattleBtn")?.addEventListener("click", startQuickBattleFlow);
+  qs("profileQuickBattleBtn")?.addEventListener("click", startQuickBattleFlow);
+  qs("quickMatchCancelBtn")?.addEventListener("click", async () => {
+    await battleCancelQuickSearch();
+    try { state.quickMatchController?.abort(); } catch {}
+    lockBattleSearchActions(false);
+    closeQuickMatchModal();
+  });
+  // Quick match is a top-right widget now (not a modal overlay).
+
   qs("battlePlayerModeCard")?.addEventListener("click", () => {
+    if (state.quickMatchController) return;
     const modes = qs("battleModesGrid");
     const botCard = qs("battleBotCard");
     const pvpCard = qs("battlePlayerCard");
@@ -4570,10 +4897,14 @@ function bindUI() {
     if (arena) arena.style.display = "none";
     if (botCard) botCard.style.display = "none";
     if (pvpCard) pvpCard.style.display = "flex";
+    const quickWrap = qs("quickBattleBtn")?.closest(".battleLobbyCreateWrap");
+    if (quickWrap) quickWrap.style.display = "none";
+    document.querySelectorAll(".battleSectionTitle").forEach((el) => { el.style.display = "none"; });
     renderLobbies();
   });
 
   qs("backToModesBtn")?.addEventListener("click", () => {
+    if (state.quickMatchController) return;
     const modes = qs("battleModesGrid");
     const botCard = qs("battleBotCard");
     const pvpCard = qs("battlePlayerCard");
@@ -4582,9 +4913,13 @@ function bindUI() {
     if (pvpCard) pvpCard.style.display = "none";
     if (arena) arena.style.display = "none";
     if (modes) modes.style.display = "grid";
+    const quickWrap = qs("quickBattleBtn")?.closest(".battleLobbyCreateWrap");
+    if (quickWrap) quickWrap.style.display = "flex";
+    document.querySelectorAll(".battleSectionTitle").forEach((el) => { el.style.display = ""; });
     renderLobbies();
   });
   qs("backToModesFromPvpBtn")?.addEventListener("click", () => {
+    if (state.quickMatchController) return;
     const modes = qs("battleModesGrid");
     const botCard = qs("battleBotCard");
     const pvpCard = qs("battlePlayerCard");
@@ -4593,10 +4928,14 @@ function bindUI() {
     if (pvpCard) pvpCard.style.display = "none";
     if (arena) arena.style.display = "none";
     if (modes) modes.style.display = "grid";
+    const quickWrap = qs("quickBattleBtn")?.closest(".battleLobbyCreateWrap");
+    if (quickWrap) quickWrap.style.display = "flex";
+    document.querySelectorAll(".battleSectionTitle").forEach((el) => { el.style.display = ""; });
     renderLobbies();
   });
 
   qs("startBotBattleBtn")?.addEventListener("click", async () => {
+    if (state.quickMatchController) return;
     try {
       await battleStartBot();
       clearError();
@@ -4606,6 +4945,7 @@ function bindUI() {
   });
 
   qs("sendPvpInviteBtn")?.addEventListener("click", async () => {
+    if (state.quickMatchController) return;
     const input = qs("pvpUsernameInput");
     const hint = qs("pvpInviteHint");
     const btn = qs("sendPvpInviteBtn");
