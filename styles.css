@@ -1816,7 +1816,7 @@ button.isDisabled,
   background:
     linear-gradient(102deg, rgba(40, 138, 72, 0.88) 0 2.4%, transparent 2.4% 100%),
     linear-gradient(180deg, rgba(0,0,0,0.46), rgba(0,0,0,0.28)),
-    url("../images/webapp/Background.webp");
+    url("/images/webapp/Background.webp");
   background-size: cover;
   background-position: center;
   backdrop-filter: blur(2px);
