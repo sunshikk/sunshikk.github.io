@@ -114,8 +114,8 @@ const CONTAINER_LOOT = [
     chance: "0.9%",
     rarity: "epic",
     image: REWARD_ITEM_IMAGES.titan,
-    description: "Эпический тяжелый корпус с высоким запасом прочности.",
-    description_en: "Epic heavy hull with high durability.",
+    description: "Эпический тяжелый корпус с 175 HP и высоким запасом прочности.",
+    description_en: "Epic heavy hull with 175 HP and high durability.",
   },
   {
     key: "dictator",
@@ -526,11 +526,14 @@ const state = {
   quickMatchController: null,
   quickMatchTimer: null,
   quickMatchStartedAt: 0,
+  quickMatchSearching: false,
+  quickMatchHideTimer: null,
 };
 
 const I18N = {
   ru: {
     tab_profile: "Профиль",
+    tab_referrals: "Рефералы",
     tab_leaders: "Лидеры",
     tab_battles: "Бои",
     tab_garage: "Гараж",
@@ -565,6 +568,7 @@ const I18N = {
     quick_match_title: "БЫСТРЫЙ БОЙ",
     quick_match_avg: "Среднее время ожидания",
     quick_match_current: "Текущее время ожидания",
+    quick_match_status: "Поиск соперника",
     quick_match_cancel: "ОТМЕНА",
     battle_victory: "ПОБЕДА",
     battle_defeat: "ПОРАЖЕНИЕ",
@@ -596,6 +600,26 @@ const I18N = {
     stat_premium: "Премиум",
     stat_premium_inactive: "Неактивен",
     stat_winrate: "Винрейт",
+    ref_title: "РЕФЕРАЛЬНАЯ СИСТЕМА",
+    ref_hint: "Приглашай друзей: +80💎 и +1📦 за каждого, этапные бонусы на 3/7/12/20.",
+    ref_hero_title: "Приглашай друзей и забирай награды",
+    ref_hero_sub: "Делись ссылкой, отслеживай прогресс и получай бонусы за этапы.",
+    ref_stat_invited: "Приглашено",
+    ref_stat_rewarded: "Награждено",
+    ref_stat_slots: "Осталось слотов",
+    ref_link_title: "Твоя реферальная ссылка",
+    ref_reward_each_you_title: "За каждого реферала (вам)",
+    ref_reward_each_you_desc: "+80 кристаллов и +1 контейнер",
+    ref_reward_each_friend_title: "Новому игроку",
+    ref_reward_each_friend_desc: "+1 контейнер за вход по вашей ссылке",
+    ref_reward_milestone_title: "Этапные бонусы",
+    ref_reward_milestone_desc: "Премиум и премиум контейнеры на ключевых этапах",
+    ref_milestones_title: "Этапы наград",
+    ref_milestone_done: "Получено",
+    ref_milestone_next: "Следующая цель",
+    ref_milestone_locked: "Не достигнуто",
+    ref_copy: "Копировать ссылку",
+    ref_copy_ok: "Ссылка скопирована",
     global_chat_title: "ОБЩИЙ ЧАТ",
     global_chat_subtitle: "Пиши сообщения всем игрокам",
     global_chat_placeholder: "Написать в общий чат...",
@@ -635,10 +659,17 @@ const I18N = {
     battle_chat_placeholder: "Сообщение...",
     ok: "ОК",
     shop_cat_weapon: "Пушки",
+    shop_cat_weapon_meta: "Боевые орудия за кристаллы",
     shop_cat_hull: "Корпуса",
+    shop_cat_hull_meta: "Платформы под разные стили игры",
     shop_cat_premium: "Премиум подписка",
+    shop_cat_premium_meta: "Stars или альтернатива за кристаллы",
     shop_cat_premium_containers: "Премиум контейнеры",
+    shop_cat_premium_containers_meta: "Легендарный дроп за Stars",
     shop_cat_promo: "Промокоды",
+    shop_cat_promo_meta: "Активация бонусных кодов",
+    shop_menu_label: "Витрина",
+    shop_menu_note: "Выбери раздел и оффер.",
     shop_offers: "Предложения",
     promo_title: "Активировать промокод",
     promo_note: "Промокоды вводятся только в веб‑магазине.",
@@ -707,6 +738,7 @@ const I18N = {
   },
   en: {
     tab_profile: "Profile",
+    tab_referrals: "Referrals",
     tab_leaders: "Leaders",
     tab_battles: "Battles",
     tab_garage: "Garage",
@@ -741,6 +773,7 @@ const I18N = {
     quick_match_title: "QUICK BATTLE",
     quick_match_avg: "Average waiting time",
     quick_match_current: "Current waiting time",
+    quick_match_status: "Searching for opponent",
     quick_match_cancel: "CANCEL",
     battle_victory: "VICTORY",
     battle_defeat: "DEFEAT",
@@ -772,6 +805,26 @@ const I18N = {
     stat_premium: "Premium",
     stat_premium_inactive: "Inactive",
     stat_winrate: "Winrate",
+    ref_title: "REFERRAL SYSTEM",
+    ref_hint: "Invite friends: +80💎 and +1📦 each, milestone bonuses at 3/7/12/20.",
+    ref_hero_title: "Invite friends and claim rewards",
+    ref_hero_sub: "Share your link, track progress, unlock milestone bonuses.",
+    ref_stat_invited: "Invited",
+    ref_stat_rewarded: "Rewarded",
+    ref_stat_slots: "Slots left",
+    ref_link_title: "Your referral link",
+    ref_reward_each_you_title: "Per referral (you)",
+    ref_reward_each_you_desc: "+80 crystals and +1 container",
+    ref_reward_each_friend_title: "For new player",
+    ref_reward_each_friend_desc: "+1 container for joining via your link",
+    ref_reward_milestone_title: "Milestone rewards",
+    ref_reward_milestone_desc: "Premium and premium containers on key milestones",
+    ref_milestones_title: "Reward milestones",
+    ref_milestone_done: "Claimed",
+    ref_milestone_next: "Next goal",
+    ref_milestone_locked: "Locked",
+    ref_copy: "Copy link",
+    ref_copy_ok: "Link copied",
     global_chat_title: "GLOBAL CHAT",
     global_chat_subtitle: "Chat with all players",
     global_chat_placeholder: "Write to global chat...",
@@ -811,10 +864,17 @@ const I18N = {
     battle_chat_placeholder: "Message...",
     ok: "OK",
     shop_cat_weapon: "Weapons",
+    shop_cat_weapon_meta: "Crystal weapon offers",
     shop_cat_hull: "Hulls",
+    shop_cat_hull_meta: "Hull platforms for different playstyles",
     shop_cat_premium: "Premium subscription",
+    shop_cat_premium_meta: "Stars or crystal alternative",
     shop_cat_premium_containers: "Premium containers",
+    shop_cat_premium_containers_meta: "Legendary-only drop for Stars",
     shop_cat_promo: "Promo codes",
+    shop_cat_promo_meta: "Activate bonus codes",
+    shop_menu_label: "Showcase",
+    shop_menu_note: "Pick a section and offer.",
     shop_offers: "Offers",
     promo_title: "Activate promo code",
     promo_note: "Promo codes can only be entered in the web shop.",
@@ -974,6 +1034,7 @@ function applyStaticI18n() {
     const tab = String(btn.dataset.tab || "");
     const map = {
       profile: "tab_profile",
+      referrals: "tab_referrals",
       leaders: "tab_leaders",
       battles: "tab_battles",
       garage: "tab_garage",
@@ -1056,8 +1117,20 @@ const NAMES_EN = {
   crystals_250: "Crystals x250",
   crystals_300: "Crystals x300",
 };
-const SHOP_CATEGORY_LABELS = { weapon: "Пушка", hull: "Корпус", premium: "Премиум подписка" };
-const SHOP_CATEGORY_LABELS_EN = { weapon: "Weapon", hull: "Hull", premium: "Premium" };
+const SHOP_CATEGORY_LABELS = {
+  weapon: "Пушки",
+  hull: "Корпуса",
+  premium: "Премиум подписка",
+  premium_containers: "Премиум контейнеры",
+  promo: "Промокоды",
+};
+const SHOP_CATEGORY_LABELS_EN = {
+  weapon: "Weapons",
+  hull: "Hulls",
+  premium: "Premium subscription",
+  premium_containers: "Premium containers",
+  promo: "Promo codes",
+};
 const SHOP_PREMIUM_META = {
   premium_1d: {
     title: "ПРЕМИУМ НА 1 ДЕНЬ",
@@ -1100,6 +1173,111 @@ function premiumMetaText(meta, key) {
   const val = state.locale === "en" ? (meta[enKey] || meta[key] || "") : (meta[key] || "");
   return String(val || "");
 }
+
+function shopCategoryLabel(category) {
+  if (state.locale === "en") return SHOP_CATEGORY_LABELS_EN[category] || category;
+  return SHOP_CATEGORY_LABELS[category] || category;
+}
+
+function shopShowcaseConfig(category, itemCount = 0) {
+  const configs = {
+    weapon: {
+      eyebrow: "ARSENAL",
+      title: trText("Боевые пушки", "Combat weapons"),
+      subtitle: trText(
+        "Подбирай вооружение за кристаллы и усиливай сборку под свой стиль боя.",
+        "Choose crystal-priced weapons and sharpen your build for your playstyle."
+      ),
+      stats: [
+        [trText("Валюта", "Currency"), "💎"],
+        [trText("Позиций", "Items"), String(itemCount)],
+        [trText("Фокус", "Focus"), trText("Урон и дальность", "Damage and range")],
+      ],
+    },
+    hull: {
+      eyebrow: "HANGAR",
+      title: trText("Корпуса и броня", "Hulls and armor"),
+      subtitle: trText(
+        "Собирай платформу под скорость, выживаемость и особые тактики.",
+        "Build around speed, durability, and special tactical perks."
+      ),
+      stats: [
+        [trText("Валюта", "Currency"), "💎"],
+        [trText("Позиций", "Items"), String(itemCount)],
+        [trText("Фокус", "Focus"), trText("HP и мобильность", "HP and mobility")],
+      ],
+    },
+    premium: {
+      eyebrow: "PRIME",
+      title: trText("Премиум доступ", "Premium access"),
+      subtitle: trText(
+        "Продлевай подписку через Stars или активируй альтернативу за кристаллы.",
+        "Extend premium with Stars or activate the crystal alternative."
+      ),
+      stats: [
+        [trText("Оплата", "Payment"), trText("⭐ Stars + 💎", "⭐ Stars + 💎")],
+        [trText("Офферов", "Offers"), String(itemCount)],
+        [trText("Фокус", "Focus"), trText("Срок суммируется", "Stackable duration")],
+      ],
+    },
+    premium_containers: {
+      eyebrow: "LEGEND",
+      title: trText("Премиум контейнеры", "Premium containers"),
+      subtitle: trText(
+        "Отдельная витрина с легендарным дропом и покупкой только за Stars.",
+        "A dedicated showcase with legendary-only drops, available for Stars."
+      ),
+      stats: [
+        [trText("Оплата", "Payment"), "⭐ Stars"],
+        [trText("Дроп", "Loot"), trText("Только легендарный", "Legendary only")],
+        [trText("Фокус", "Focus"), trText("Топ-награды", "Top-tier rewards")],
+      ],
+    },
+    promo: {
+      eyebrow: "ACCESS",
+      title: trText("Промокоды и бонусы", "Promo codes and bonuses"),
+      subtitle: trText(
+        "Активируй коды, чтобы получать награды и открывать редкие предметы.",
+        "Activate codes to claim rewards and unlock rare items."
+      ),
+      stats: [
+        [trText("Режим", "Mode"), trText("Активация кода", "Code activation")],
+        [trText("Награда", "Reward"), trText("Бонусы и unlocks", "Bonuses and unlocks")],
+        [trText("Где", "Where"), trText("Веб-магазин", "Web shop")],
+      ],
+    },
+  };
+  return configs[category] || {
+    eyebrow: "SHOP",
+    title: trText("Предложения", "Offers"),
+    subtitle: trText("Выбирай раздел магазина и усиливай сборку танка.", "Choose a shop section and upgrade your build."),
+    stats: [
+      [trText("Раздел", "Section"), shopCategoryLabel(category)],
+      [trText("Позиций", "Items"), String(itemCount)],
+    ],
+  };
+}
+
+function renderShopShowcase(category, items) {
+  const cfg = shopShowcaseConfig(category, Array.isArray(items) ? items.length : 0);
+  const eyebrow = qs("shopShowcaseEyebrow");
+  const title = qs("shopShowcaseTitle");
+  const subtitle = qs("shopShowcaseSubtitle");
+  const meta = qs("shopShowcaseMeta");
+  if (eyebrow) eyebrow.textContent = cfg.eyebrow;
+  if (title) title.textContent = cfg.title;
+  if (subtitle) subtitle.textContent = cfg.subtitle;
+  if (meta) {
+    meta.innerHTML = (cfg.stats || [])
+      .map(([label, value]) => `
+        <div class="shopShowcaseStat">
+          <span class="shopShowcaseStatLabel">${escapeHtml(String(label || ""))}</span>
+          <span class="shopShowcaseStatValue">${escapeHtml(String(value || ""))}</span>
+        </div>
+      `)
+      .join("");
+  }
+}
 const DESCRIPTIONS = {
   smoky: "Базовая пушка со стабильным уроном.",
   railgun: "Дальнобойная пушка с высоким уроном.",
@@ -1108,7 +1286,7 @@ const DESCRIPTIONS = {
   ricochet: "Сбалансированная скорострельная пушка.",
   molot: "Вблизи почти гарантированно попадает и наносит огромный урон, вдали наносит 10 урона.",
   hunter: "Универсальный корпус для баланса скорости и брони.",
-  titan: "Тяжелый корпус с повышенной прочностью.",
+  titan: "Тяжелый корпус с 175 HP и повышенной прочностью.",
   paladin: "Штурмовой корпус с щитом и +1 клеткой передвижения.",
   dictator: "Тяжелый корпус с 150 HP без дополнительных свойств.",
 };
@@ -1120,7 +1298,7 @@ const DESCRIPTIONS_EN = {
   ricochet: "Balanced rapid-fire weapon.",
   molot: "Huge close-range hit chance with massive damage; at range deals stable 10 damage.",
   hunter: "Universal hull balancing speed and armor.",
-  titan: "Heavy hull with increased durability.",
+  titan: "Heavy hull with 175 HP and increased durability.",
   paladin: "Assault hull with shield and +1 movement cell.",
   dictator: "Heavy hull with 150 HP and no extra abilities.",
 };
@@ -1208,6 +1386,35 @@ function avatarUrlForUser(userId, storedUrl) {
 const ASSET_CACHE_VERSION = "54";
 function withCacheBust(url) { return `${url}${url.includes("?") ? "&" : "?"}v=${ASSET_CACHE_VERSION}`; }
 function sleep(ms) { return new Promise((resolve) => setTimeout(resolve, ms)); }
+async function fadeInOpacity(el, durationMs = 600) {
+  if (!el) return;
+  try {
+    el.getAnimations?.().forEach((animation) => animation.cancel());
+  } catch {}
+  el.style.transition = "";
+  el.style.visibility = "visible";
+  el.style.opacity = "0";
+  if (typeof el.animate !== "function") {
+    el.style.transition = `opacity ${Math.max(0, Number(durationMs || 0))}ms ease-out`;
+    await new Promise((resolve) => requestAnimationFrame(resolve));
+    el.style.opacity = "1";
+    await sleep(Math.max(0, Number(durationMs || 0)));
+    el.style.transition = "";
+    return;
+  }
+  const animation = el.animate(
+    [{ opacity: 0 }, { opacity: 1 }],
+    {
+      duration: Math.max(0, Number(durationMs || 0)),
+      easing: "ease-out",
+      fill: "forwards",
+    }
+  );
+  try {
+    await animation.finished;
+  } catch {}
+  el.style.opacity = "1";
+}
 async function fadeAudioVolume(audio, from, to, durationMs = 300, shouldContinue = () => true) {
   if (!audio) return;
   const start = Math.max(0, Math.min(1, Number(from || 0)));
@@ -1413,9 +1620,38 @@ function detectRewardRarity(result) {
   return "rare";
 }
 
+const REWARD_REVEAL_TIMINGS = {
+  rare: { preDelay: 0, glowMs: 680, swapMs: 180, dropDelay: 170, dropFadeMs: 720, textDelay: 120, textFadeMs: 520, settleMs: 180 },
+  epic: { preDelay: 1500, glowMs: 900, swapMs: 210, dropDelay: 220, dropFadeMs: 760, textDelay: 140, textFadeMs: 540, settleMs: 200 },
+  ultrarare: { preDelay: 2000, glowMs: 1120, swapMs: 240, dropDelay: 260, dropFadeMs: 820, textDelay: 150, textFadeMs: 560, settleMs: 220 },
+  legendary: { preDelay: 3000, glowMs: 1600, swapMs: 280, dropDelay: 320, dropFadeMs: 900, textDelay: 180, textFadeMs: 600, settleMs: 240 },
+};
+
+function rewardTextFromResult(result) {
+  if (result.reward_type === "unlock") {
+    return state.locale === "en"
+      ? `Received: ${itemName(result.reward_key) || result.reward_key}`
+      : `Получено: ${NAMES[result.reward_key] || result.reward_key}`;
+  }
+  if (result.reward_type === "premium") {
+    return state.locale === "en"
+      ? `Premium received: ${result.reward_amount} day(s)`
+      : `Получен премиум: ${result.reward_amount} дн.`;
+  }
+  return state.locale === "en"
+    ? `Crystals received: ${result.reward_amount}`
+    : `Получено кристаллов: ${result.reward_amount}`;
+}
+
 function getItemImage(key) {
   const imageName = ITEM_IMAGE_OVERRIDES[key] || `${key}.png`;
   return `/images/webapp/${imageName}`;
+}
+
+function getTankComboImage(weapon, hull) {
+  const w = String(weapon || "smoky").trim().toLowerCase();
+  const h = String(hull || "hunter").trim().toLowerCase();
+  return `/images/webapp/${w}_${h}.png`;
 }
 function applyBackgroundImage() {
   const root = document.documentElement;
@@ -1887,6 +2123,12 @@ function updateGarageEquipButton() {
   equipBtn.textContent = trText("Установить", "Equip");
 }
 
+function resetGaragePreviewSelection() {
+  if (!state.profile) return;
+  state.selectedWeapon = String(state.profile.weapon || "smoky");
+  state.selectedHull = String(state.profile.hull || "hunter");
+}
+
 function renderHud() {
   if (!state.profile) return;
   const logo = qs("logoImg");
@@ -1988,6 +2230,62 @@ function renderProfile() {
         : `До: ${dateStr} ${timeStr} • Осталось: ${daysLeft} дн.`;
     }
   }
+
+}
+
+function renderReferrals() {
+  if (!state.profile) return;
+  const invited = Number(state.profile.referral_invited_total || 0);
+  const rewarded = Number(state.profile.referral_rewarded_total || 0);
+  const left = Number(state.profile.referral_remaining_slots || 0);
+  const totalSlots = rewarded + left;
+
+  const refInput = qs("refLinkInput");
+  if (refInput) refInput.value = String(state.profile.referral_link || "");
+  const refStats = qs("refStatsLine");
+  if (refStats) {
+    refStats.textContent = state.locale === "en"
+      ? `Invited: ${invited} • Rewarded: ${rewarded} • Slots left: ${left}/${totalSlots || 20}`
+      : `Приглашено: ${invited} • Награждено: ${rewarded} • Осталось слотов: ${left}/${totalSlots || 20}`;
+  }
+  qs("refInvitedValue").textContent = String(invited);
+  qs("refRewardedValue").textContent = String(rewarded);
+  qs("refSlotsValue").textContent = `${left}/${totalSlots || 20}`;
+
+  const milestones = [
+    { target: 3, icon: "👑", rewardRu: "+1 день премиума", rewardEn: "+1 premium day" },
+    { target: 7, icon: "👑", rewardRu: "+2 дня премиума", rewardEn: "+2 premium days" },
+    { target: 12, icon: "🎖", rewardRu: "+1 премиум контейнер", rewardEn: "+1 premium container" },
+    { target: 20, icon: "🏆", rewardRu: "+2 премиум контейнера", rewardEn: "+2 premium containers" },
+  ];
+  const list = qs("refMilestonesList");
+  if (!list) return;
+  list.innerHTML = "";
+  const nextTarget = milestones.find((m) => rewarded < m.target)?.target || null;
+  for (const m of milestones) {
+    const done = rewarded >= m.target;
+    const stateLabel = done
+      ? tr("ref_milestone_done")
+      : (nextTarget === m.target ? tr("ref_milestone_next") : tr("ref_milestone_locked"));
+    const card = document.createElement("article");
+    card.className = `refMilestoneCard${done ? " isDone" : ""}${nextTarget === m.target ? " isNext" : ""}`;
+    const progressText = done
+      ? `${m.target}/${m.target}`
+      : `${Math.min(rewarded, m.target)}/${m.target}`;
+    card.innerHTML = `
+      <div class="refMilestoneTop">
+        <div class="refMilestoneIcon">${m.icon}</div>
+        <div class="refMilestoneTarget">${m.target}</div>
+      </div>
+      <div class="refMilestoneReward">${state.locale === "en" ? m.rewardEn : m.rewardRu}</div>
+      <div class="refMilestoneMeta">
+        <span class="refMilestoneState">${stateLabel}</span>
+        <span class="refMilestoneProgress">${progressText}</span>
+      </div>
+      <div class="refMilestoneBar"><i style="width:${Math.max(0, Math.min(100, (Math.min(rewarded, m.target) / m.target) * 100))}%"></i></div>
+    `;
+    list.appendChild(card);
+  }
 }
 
 function leaderboardRowHtml(row, isMe = false) {
@@ -2067,15 +2365,26 @@ function renderGarage() {
   if (!state.profile) return;
   const key = currentGarageKey();
   const unlocked = isUnlocked(key);
+  const previewWeapon = String(state.selectedWeapon || state.profile.weapon || "smoky");
+  const previewHull = String(state.selectedHull || state.profile.hull || "hunter");
+  const isPreviewChanged = previewWeapon !== String(state.profile.weapon || "smoky")
+    || previewHull !== String(state.profile.hull || "hunter");
   qs("garageSelectedName").textContent = `${itemName(key)}`.toUpperCase();
   qs("garageSelectedDesc").textContent = unlocked
     ? (itemDescription(key) || (state.locale === "en" ? "Select an item." : "Выберите предмет."))
     : itemLockedHint(key);
-  qs("garageTankImg").src = absUrl(state.profile.tank_image_url);
+  qs("garageTankImg").src = withCacheBust(absUrl(getTankComboImage(previewWeapon, previewHull)));
+  qs("garageTankImg").dataset.preview = isPreviewChanged ? "1" : "0";
+  qs("garageTankImg").closest(".tankShowcase")?.classList.toggle("isPreviewMode", isPreviewChanged);
   const p = Number(state.profile.tank_power || 0);
   const hint = qs("garageHint");
   if (hint) {
-    hint.textContent = state.locale === "en" ? `Tank power: ${p}` : `Сила танка: ${p}`;
+    hint.textContent = isPreviewChanged
+      ? trText(
+          `Превью сборки: ${itemName(previewWeapon)} + ${itemName(previewHull)}. Нажми "Установить", чтобы применить.`,
+          `Preview build: ${itemName(previewWeapon)} + ${itemName(previewHull)}. Press "Equip" to apply.`
+        )
+      : (state.locale === "en" ? `Tank power: ${p}` : `Сила танка: ${p}`);
   }
   const equippedCurrent = state.garageCategory === "weapon" ? state.profile.weapon : state.profile.hull;
   updateGarageEquipButton();
@@ -2112,6 +2421,8 @@ function renderShop() {
   const shopHeader = qs("shopHeader");
   const shopContent = promoPanel?.closest(".shopContent");
   if (!state.shop) return;
+  const categoryItems = state.shop.items.filter((i) => i.category === state.shopCategory);
+  renderShopShowcase(state.shopCategory, categoryItems);
   if (shopContent) {
     shopContent.classList.toggle("isPremiumContainersView", state.shopCategory === "premium_containers");
   }
@@ -2132,13 +2443,7 @@ function renderShop() {
   if (shopHeader) shopHeader.style.display = "block";
   if (shopContent) shopContent.classList.remove("isPromoView");
   if (shopHeader) {
-    if (state.shopCategory === "premium") {
-      shopHeader.textContent = trText("Премиум подписка: ⭐ Stars + альтернатива за кристаллы", "Premium subscription: ⭐ Stars + crystal alternative");
-    } else if (state.shopCategory === "premium_containers") {
-      shopHeader.textContent = trText("Премиум контейнеры: только за ⭐ Stars", "Premium containers: only ⭐ Stars");
-    } else {
-      shopHeader.textContent = trText("Товары за кристаллы", "Items for crystals");
-    }
+    shopHeader.textContent = `${shopCategoryLabel(state.shopCategory)} · ${categoryItems.length}`;
   }
 
   list.innerHTML = "";
@@ -2156,33 +2461,45 @@ function renderShop() {
     card.className = "shopCard shopPremiumContainerShowcase";
     card.innerHTML = `
       <div class="premiumContainerBgFx"></div>
-      <div class="premiumContainerHero">
-        <img src="${withCacheBust(absUrl(PREMIUM_CONTAINER_CLOSED_IMAGE))}" alt="premium container" class="premiumContainerHeroImg">
-      </div>
-      <div class="shopCardTitle">${trText("Премиум контейнер", "Premium container")}</div>
-      <div class="shopCardMeta">${trText("Только легендарные награды", "Legendary rewards only")}</div>
-      <div class="premiumContainerDrops">
-        <span class="shopPremiumChip">💎 5k / 10k / 15k / 20k / 25k / 30k</span>
-        <span class="shopPremiumChip">👑 1–3 ${trText("дня", "days")}</span>
-        <span class="shopPremiumChip">🔫 ${trText("Рельса, Рикошет, Молот", "Railgun, Ricochet, Molot")}</span>
-        <span class="shopPremiumChip">🛡 ${trText("Паладин", "Paladin")}</span>
-      </div>
-      <div class="shopCardActions">
-        <span class="shopPriceStars">49 ⭐</span>
-        <button class="promoBtn starsBuyBtn" data-stars-buy="premium_container" style="margin-top:0">${trText("Купить за ⭐ Stars", "Buy with ⭐ Stars")}</button>
+      <div class="premiumContainerShowcaseLayout">
+        <div class="premiumContainerVisual">
+          <div class="premiumContainerHero">
+            <img src="${withCacheBust(absUrl(PREMIUM_CONTAINER_CLOSED_IMAGE))}" alt="premium container" class="premiumContainerHeroImg">
+          </div>
+        </div>
+        <div class="premiumContainerInfo">
+          <div class="premiumContainerKicker">${trText("Легендарный дроп", "Legendary drop")}</div>
+          <div class="shopCardTitle">${trText("Премиум контейнер", "Premium container")}</div>
+          <div class="shopCardMeta">${trText("Только легендарные награды", "Legendary rewards only")}</div>
+          <div class="premiumContainerDrops">
+            <span class="shopPremiumChip">💎 5k / 10k / 15k / 20k / 25k / 30k</span>
+            <span class="shopPremiumChip">👑 1–3 ${trText("дня", "days")}</span>
+            <span class="shopPremiumChip">🔫 ${trText("Рельса, Рикошет, Молот", "Railgun, Ricochet, Molot")}</span>
+            <span class="shopPremiumChip">🛡 ${trText("Паладин", "Paladin")}</span>
+          </div>
+          <div class="shopCardActions premiumContainerActions">
+            <span class="shopPrice premiumContainerPrice"><span class="shopPriceStars">49 ⭐</span></span>
+            <button class="promoBtn starsBuyBtn" data-stars-buy="premium_container" style="margin-top:0">${trText("Купить за ⭐ Stars", "Buy with ⭐ Stars")}</button>
+          </div>
+        </div>
       </div>
     `;
     list.appendChild(card);
   }
-  const items = state.shop.items.filter((i) => i.category === state.shopCategory);
-  for (const item of items) {
+  for (const item of categoryItems) {
     const card = document.createElement("div");
     const isPremium = item.category === "premium";
-    card.className = `shopCard${isPremium ? " shopCardPremium" : ""}`;
+    card.className = `shopCard${isPremium ? " shopCardPremium" : ` shopCardItem shopCardItem--${item.category}`}${item.owned ? " isOwned" : ""}`;
     const premiumMeta = isPremium ? (SHOP_PREMIUM_META[item.key] || {}) : null;
     const hasStars = Number(item.stars_price || 0) > 0;
     const starsPrice = hasStars ? `${Number(item.stars_price)} ⭐` : "";
     const crystalsPrice = `${Number(item.price || 0)} 💎`;
+    const itemLabel = item.category === "weapon"
+      ? trText("Пушка", "Weapon")
+      : (item.category === "hull" ? trText("Корпус", "Hull") : shopCategoryLabel(item.category));
+    const itemMetaText = state.locale === "en"
+      ? (item.description_en || itemDescription(item.key) || item.description || "")
+      : (item.description || itemDescription(item.key) || item.description_en || "");
     const buyButton = isPremium
       ? `
         <div class="shopBuyDual">
@@ -2220,9 +2537,16 @@ function renderShop() {
       `;
     } else {
       card.innerHTML = `
-        <img src="${withCacheBust(absUrl(item.image_url))}" alt="${item.name}">
-        <div class="shopCardTitle">${displayItemName(item)}</div>
-        <div class="shopCardMeta">${trText("Категория", "Category")}: ${(state.locale === "en" ? (SHOP_CATEGORY_LABELS_EN[item.category] || item.category) : (SHOP_CATEGORY_LABELS[item.category] || item.category))}</div>
+        <div class="shopCardMedia">
+          <div class="shopCardMediaGlow"></div>
+          <img src="${withCacheBust(absUrl(item.image_url))}" alt="${item.name}">
+          <span class="shopCardBadge">${escapeHtml(itemLabel)}</span>
+          ${item.owned ? `<span class="shopOwnedPill">${trText("Куплено", "Owned")}</span>` : ""}
+        </div>
+        <div class="shopCardBody">
+          <div class="shopCardTitle">${displayItemName(item)}</div>
+          <div class="shopCardMeta">${escapeHtml(String(itemMetaText || trText("Доступно в магазине за кристаллы.", "Available in the shop for crystals.")))}</div>
+        </div>
         <div class="shopCardActions"><span class="shopPrice">${crystalsPrice}</span>${buyButton}</div>
       `;
     }
@@ -2401,8 +2725,11 @@ function renderQuests() {
     const status = !q.available
       ? tr("quest_status_premium_only")
       : (q.claimed ? tr("quest_status_claimed") : (q.completed ? tr("quest_status_ready") : tr("quest_status_progress")));
+    const disabledQuestLabel = !q.available
+      ? tr("quest_status_premium_only")
+      : (q.claimed ? tr("quest_claimed") : tr("quest_status_progress"));
     const btn = (!q.available || q.claimed || !q.completed)
-      ? `<button class="promoBtn questClaimBtn" type="button" disabled>${q.claimed ? tr("quest_claimed") : tr("quest_claim_take")}</button>`
+      ? `<button class="promoBtn questClaimBtn" type="button" disabled>${disabledQuestLabel}</button>`
       : `<button class="promoBtn questClaimBtn" type="button" data-quest-claim="${escapeHtml(String(q.quest_id || ""))}">${tr("quest_claim_take")}</button>`;
     const chip = q.premium_only ? tr("quest_chip_premium") : tr("quest_chip_common");
     return `
@@ -2454,6 +2781,7 @@ async function syncQuestBadge(force = false) {
 
 async function showRewardModal(result) {
   const rarity = detectRewardRarity(result);
+  const timing = REWARD_REVEAL_TIMINGS[rarity] || REWARD_REVEAL_TIMINGS.rare;
   const modal = qs("rewardModal");
   const card = qs("rewardCard");
   const box = qs("rewardContainerBox");
@@ -2461,27 +2789,23 @@ async function showRewardModal(result) {
   const dropImg = qs("rewardDropImg");
   const text = qs("rewardText");
   if (!modal || !card || !box || !contImg || !dropImg || !text) {
-    let fallbackText = "";
-    if (result.reward_type === "unlock") {
-      fallbackText = state.locale === "en"
-        ? `Received: ${itemName(result.reward_key) || result.reward_key}`
-        : `Получено: ${NAMES[result.reward_key] || result.reward_key}`;
-    } else if (result.reward_type === "premium") {
-      fallbackText = state.locale === "en"
-        ? `Premium received: ${result.reward_amount} day(s)`
-        : `Получен премиум: ${result.reward_amount} дн.`;
-    } else {
-      fallbackText = state.locale === "en"
-        ? `Crystals received: ${result.reward_amount}`
-        : `Получено кристаллов: ${result.reward_amount}`;
-    }
-    qs("containerResult").textContent = fallbackText;
+    qs("containerResult").textContent = rewardTextFromResult(result);
     return;
   }
   card.className = "rewardCard";
+  card.style.setProperty("--reward-glow-ms", `${Number(timing.glowMs || 680)}ms`);
   state.rewardAnimating = true;
-  box.classList.remove("shake");
-  dropImg.classList.remove("show");
+  box.className = "rewardContainerBox";
+  dropImg.className = "rewardDropImg";
+  contImg.className = "rewardContainerImg";
+  text.className = "rewardText";
+  try { dropImg.getAnimations?.().forEach((animation) => animation.cancel()); } catch {}
+  try { text.getAnimations?.().forEach((animation) => animation.cancel()); } catch {}
+  dropImg.removeAttribute("src");
+  dropImg.style.opacity = "0";
+  dropImg.style.visibility = "hidden";
+  text.style.opacity = "0";
+  text.style.visibility = "hidden";
   text.textContent = "";
   const isPremiumContainer = String(result.container_kind || "") === "premium";
   const closedSrc = withCacheBust(absUrl(isPremiumContainer ? PREMIUM_CONTAINER_CLOSED_IMAGE : CONTAINER_CLOSED_IMAGE));
@@ -2494,47 +2818,63 @@ async function showRewardModal(result) {
   contImg.classList.remove("isHidden");
   const rewardKey = result.reward_type === "crystals" ? "crystals" : (result.reward_type === "premium" ? "premium" : result.reward_key);
   const dropSrc = withCacheBust(absUrl(REWARD_ITEM_IMAGES[rewardKey] || "/images/webapp/crystals.png"));
-  // Preload reveal assets while shaking.
+  // Preload reveal assets while the rarity charge builds up.
   void preloadImage(openedSrc, 2600);
   void preloadImage(dropSrc, 2600);
   modal.style.display = "flex";
   await sleep(30);
-  box.classList.add("shake");
-  // Keep reveal fast on mobile to avoid long "frozen" feeling.
-  await sleep(420);
-  card.className = `rewardCard rarity-${rarity}`; // glow appears smoothly via CSS transition
-  box.classList.remove("rewardBurst");
-  box.classList.add("rewardBurst");
-  window.setTimeout(() => box.classList.remove("rewardBurst"), 260);
+  box.classList.add("isCharging");
+  if (Number(timing.preDelay || 0) > 0) {
+    await sleep(Number(timing.preDelay || 0));
+  }
+  card.className = `rewardCard rarity-${rarity} isPrimed`;
+  box.classList.add("isPrimed");
+  await sleep(Number(timing.glowMs || 680));
+  card.classList.add("isReveal");
+  box.classList.remove("isCharging");
+  box.classList.add("isReveal");
   contImg.classList.add("isHidden");
-  await sleep(160);
+  await sleep(Number(timing.swapMs || 180));
   contImg.src = openedSrc;
   dropImg.src = dropSrc;
   await Promise.race([
     Promise.all([waitForImageLoad(contImg, 900), waitForImageLoad(dropImg, 900)]),
-    sleep(520),
+    sleep(650),
   ]);
   contImg.classList.remove("isHidden");
-  const rewardText = result.reward_type === "unlock"
-    ? (state.locale === "en"
-      ? `Received: ${itemName(result.reward_key) || result.reward_key}`
-      : `Получено: ${NAMES[result.reward_key] || result.reward_key}`)
-    : result.reward_type === "premium"
-      ? (state.locale === "en"
-        ? `Premium received: ${result.reward_amount} day(s)`
-        : `Получен премиум: ${result.reward_amount} дн.`)
-      : (state.locale === "en"
-        ? `Crystals received: ${result.reward_amount}`
-        : `Получено кристаллов: ${result.reward_amount}`);
-  text.textContent = rewardText;
-  dropImg.classList.add("show");
-  await sleep(520);
+  if (Number(timing.dropDelay || 0) > 0) {
+    await sleep(Number(timing.dropDelay || 0));
+  }
+  box.classList.add("rewardBurst", `rewardBurst--${rarity}`);
+  window.setTimeout(() => {
+    try { box.classList.remove("rewardBurst", `rewardBurst--${rarity}`); } catch {}
+  }, 720);
+  text.textContent = rewardTextFromResult(result);
+  await Promise.all([
+    fadeInOpacity(dropImg, Number(timing.dropFadeMs || 720)),
+    fadeInOpacity(text, Number(timing.textFadeMs || 520)),
+  ]);
+  await sleep(Number(timing.settleMs || 420));
   state.rewardAnimating = false;
 }
 
 function hideRewardModal() {
   if (state.rewardAnimating) return;
   const modal = qs("rewardModal");
+  const dropImg = qs("rewardDropImg");
+  const text = qs("rewardText");
+  if (dropImg) {
+    try { dropImg.getAnimations?.().forEach((animation) => animation.cancel()); } catch {}
+    dropImg.style.opacity = "0";
+    dropImg.style.visibility = "hidden";
+    dropImg.removeAttribute("src");
+  }
+  if (text) {
+    try { text.getAnimations?.().forEach((animation) => animation.cancel()); } catch {}
+    text.style.opacity = "0";
+    text.style.visibility = "hidden";
+    text.textContent = "";
+  }
   if (modal) modal.style.display = "none";
 }
 
@@ -2552,6 +2892,18 @@ async function refreshTabContext(tab) {
     }
     renderHud();
     renderProfile();
+    return;
+  }
+  if (tab === "referrals") {
+    state.profile = await api("/api/profile/me");
+    const loc = String(state.profile?.locale || "").toLowerCase();
+    if (loc === "ru" || loc === "en") {
+      const changed = state.locale !== loc;
+      state.locale = loc;
+      if (changed) applyStaticI18n();
+    }
+    renderHud();
+    renderReferrals();
     return;
   }
   if (tab === "leaders") {
@@ -2671,9 +3023,12 @@ async function showTab(tab, { force = false } = {}) {
   if (prevTab === "battles" && tab !== "battles") {
     stopLobbiesPolling();
   }
+  if (prevTab === "garage" && tab !== "garage") {
+    resetGaragePreviewSelection();
+  }
   state.activeTab = tab;
   document.querySelectorAll(".mainTab").forEach((b) => b.classList.toggle("isActive", b.dataset.tab === tab));
-  const panelKeys = ["profile", "leaders", "battles", "garage", "shop", "containers", "quests", "settings"];
+  const panelKeys = ["profile", "referrals", "leaders", "battles", "garage", "shop", "containers", "quests", "settings"];
   const panelByKey = (key) => qs(`panel${key[0].toUpperCase()}${key.slice(1)}`);
   const prevPanel = panelByKey(prevTab);
   const nextPanel = panelByKey(tab);
@@ -3244,7 +3599,14 @@ function renderLobbies() {
   section.style.display = show ? "block" : "none";
   // Quick match search widget only makes sense on the main modes screen.
   const qWidget = qs("quickMatchWidget");
-  if (qWidget && !show) qWidget.style.display = "none";
+  if (qWidget) {
+    const widgetVisible = show && Boolean(state.quickMatchSearching);
+    qWidget.style.setProperty("display", widgetVisible ? "grid" : "none", "important");
+    qWidget.hidden = !widgetVisible;
+    qWidget.setAttribute("aria-hidden", widgetVisible ? "false" : "true");
+    qWidget.classList.toggle("isHidden", !widgetVisible);
+    qWidget.classList.toggle("isOpen", widgetVisible);
+  }
   if (!show) {
     stopLobbyTicker();
     return;
@@ -3803,11 +4165,13 @@ function exitBattleArenaToModes() {
 }
 
 function resetBattleUI() {
+  closeQuickMatchModal();
   exitBattleArenaToModes();
   const surrenderBtn = qs("battleSurrenderBtn");
   if (surrenderBtn) surrenderBtn.disabled = false;
   stopBattlePolling();
   lockMainTabs(false);
+  lockBattleSearchActions(false);
   setBattlesTitle(false);
   state.webBattleActive = false;
   state.currentBattleId = null;
@@ -3841,6 +4205,7 @@ function resetBattleUI() {
 
 function showBattleResultModal(win, reasonText = "", battleId = "") {
   const modal = qs("battleResultModal");
+  const card = qs("battleResultCard");
   const title = qs("battleResultTitle");
   const banner = qs("battleResultBanner");
   const icon = qs("battleResultIcon");
@@ -3852,7 +4217,11 @@ function showBattleResultModal(win, reasonText = "", battleId = "") {
   const isWin = Boolean(win);
   title.textContent = isWin ? tr("battle_victory") : tr("battle_defeat");
   banner.classList.toggle("isLose", !isWin);
-  if (icon) icon.textContent = isWin ? "🏆" : "💥";
+  if (card) {
+    card.classList.toggle("isWin", isWin);
+    card.classList.toggle("isLose", !isWin);
+  }
+  if (icon) icon.textContent = isWin ? "🏆" : "✦";
   if (text) {
     text.textContent = String(reasonText || (isWin
       ? trText(
@@ -3961,9 +4330,11 @@ function renderBattleState(st) {
   state.battleLastState = st;
 
   if (st.active !== true) {
+    closeQuickMatchModal();
     exitBattleArenaToModes();
     stopBattlePolling();
     lockMainTabs(false);
+    lockBattleSearchActions(false);
     state.webBattleActive = false;
     state.currentBattleId = null;
     state.battleChatAfterId = 0;
@@ -4017,6 +4388,7 @@ function renderBattleState(st) {
   }
   const battleChatWrap = qs("battleChatWrap");
   if (battleChatWrap) battleChatWrap.style.display = "block";
+  closeQuickMatchModal();
   const modes = qs("battleModesGrid");
   const botCard = qs("battleBotCard");
   const pvpCard = qs("battlePlayerCard");
@@ -4254,6 +4626,7 @@ function renderBattleState(st) {
   startCooldownTicker();
   if (state.webBattleActive) {
     lockMainTabs(true);
+    lockBattleSearchActions(true);
     startBattlePolling();
     const bid = String(st.battle_id || "");
     if (bid && state.battleMusicStartedForId !== bid) {
@@ -4314,6 +4687,7 @@ function renderBattleState(st) {
     exitBattleArenaToModes();
     stopCooldownTicker();
     lockMainTabs(false);
+    lockBattleSearchActions(false);
     if (aimBtn) aimBtn.disabled = true;
     const surrenderBtn = qs("battleSurrenderBtn");
     if (surrenderBtn) surrenderBtn.disabled = true;
@@ -4366,20 +4740,49 @@ async function battleStartBot() {
 
 function closeQuickMatchModal() {
   const widget = qs("quickMatchWidget");
-  if (widget) widget.style.display = "none";
+  state.quickMatchSearching = false;
+  if (state.quickMatchHideTimer) {
+    clearTimeout(state.quickMatchHideTimer);
+    state.quickMatchHideTimer = null;
+  }
+  if (widget) {
+    widget.classList.add("isHidden");
+    widget.style.setProperty("display", "none", "important");
+    widget.hidden = true;
+    widget.setAttribute("aria-hidden", "true");
+    widget.classList.remove("isOpen");
+  }
   if (state.quickMatchTimer) {
     clearInterval(state.quickMatchTimer);
     state.quickMatchTimer = null;
   }
   state.quickMatchStartedAt = 0;
   state.quickMatchController = null;
+  state.quickMatchHideTimer = window.setTimeout(() => {
+    const lateWidget = qs("quickMatchWidget");
+    if (!lateWidget) return;
+    lateWidget.classList.add("isHidden");
+    lateWidget.style.setProperty("display", "none", "important");
+    lateWidget.hidden = true;
+    lateWidget.setAttribute("aria-hidden", "true");
+    state.quickMatchHideTimer = null;
+  }, 180);
 }
 
 function openQuickMatchModal() {
   const widget = qs("quickMatchWidget");
   if (!widget) return;
+  if (state.quickMatchHideTimer) {
+    clearTimeout(state.quickMatchHideTimer);
+    state.quickMatchHideTimer = null;
+  }
+  state.quickMatchSearching = true;
   state.quickMatchStartedAt = Date.now();
-  widget.style.display = "grid";
+  widget.classList.remove("isHidden");
+  widget.hidden = false;
+  widget.setAttribute("aria-hidden", "false");
+  widget.style.setProperty("display", "grid", "important");
+  widget.classList.add("isOpen");
   const avg = qs("quickMatchAvg");
   const cur = qs("quickMatchCurrent");
   state.quickMatchAvgSeconds = Math.max(6, Math.min(40, Math.floor(8 + Math.random() * 19)));
@@ -4390,7 +4793,7 @@ function openQuickMatchModal() {
     const elapsed = Math.max(0, Math.floor((Date.now() - Number(state.quickMatchStartedAt || Date.now())) / 1000));
     const val = String(elapsed).padStart(2, "0");
     if (cur) cur.textContent = state.locale === "en" ? `${val} s` : `${val} с`;
-  }, 300);
+  }, 1000);
 }
 
 async function battleStartQuick(options = {}) {
@@ -4505,6 +4908,22 @@ function bindUI() {
   }
   qs("settingsSaveBtn")?.addEventListener("click", saveSettingsPrivacy);
   qs("settingsSaveBtn2")?.addEventListener("click", saveSettingsChat);
+  qs("copyRefBtn")?.addEventListener("click", async () => {
+    const raw = String(qs("refLinkInput")?.value || "").trim();
+    if (!raw) return;
+    try {
+      await navigator.clipboard.writeText(raw);
+      showToast(tr("ref_copy_ok"));
+    } catch (_) {
+      try {
+        const inp = qs("refLinkInput");
+        inp?.focus();
+        inp?.select();
+        document.execCommand("copy");
+        showToast(tr("ref_copy_ok"));
+      } catch (_) {}
+    }
+  });
 
   // PvP lobby UI (create / list / join)
   qs("createLobbyBtn")?.addEventListener("click", () => {
@@ -4863,6 +5282,9 @@ function bindUI() {
     state.quickMatchController = controller;
     lockMainTabs(true);
     lockBattleSearchActions(true);
+    if (state.activeTab !== "battles") {
+      await showTab("battles", { force: true });
+    }
     openQuickMatchModal();
     try {
       await battleStartQuick({ signal: controller.signal });
@@ -4874,16 +5296,20 @@ function bindUI() {
     } finally {
       closeQuickMatchModal();
       lockMainTabs(Boolean(state.webBattleActive));
-      lockBattleSearchActions(false);
+      lockBattleSearchActions(Boolean(state.webBattleActive));
+      renderLobbies();
     }
   };
   qs("quickBattleBtn")?.addEventListener("click", startQuickBattleFlow);
   qs("profileQuickBattleBtn")?.addEventListener("click", startQuickBattleFlow);
   qs("quickMatchCancelBtn")?.addEventListener("click", async () => {
-    await battleCancelQuickSearch();
-    try { state.quickMatchController?.abort(); } catch {}
+    const controller = state.quickMatchController;
+    lockMainTabs(false);
     lockBattleSearchActions(false);
     closeQuickMatchModal();
+    try { controller?.abort(); } catch {}
+    await battleCancelQuickSearch();
+    renderLobbies();
   });
   // Quick match is a top-right widget now (not a modal overlay).
 

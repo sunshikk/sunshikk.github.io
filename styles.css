@@ -11,6 +11,5176 @@
   letter-spacing: 0.02em;
 }
 
+/* ===== Final Game Pass ===== */
+body {
+  background:
+    radial-gradient(1280px 560px at 18% -8%, rgba(112, 198, 255, 0.13), transparent 60%),
+    radial-gradient(980px 460px at 100% 8%, rgba(155, 144, 255, 0.11), transparent 58%),
+    radial-gradient(880px 420px at 50% 100%, rgba(120, 239, 203, 0.08), transparent 62%),
+    linear-gradient(180deg, #050a13 0%, #09111f 52%, #060a13 100%);
+  color: #eef5ff;
+}
+
+body::before {
+  background:
+    linear-gradient(rgba(5, 10, 19, 0.34), rgba(5, 11, 22, 0.8)),
+    radial-gradient(780px 280px at 50% 100%, rgba(123, 198, 255, 0.14), transparent 72%),
+    var(--bg-image) center/cover no-repeat;
+  filter: blur(1.5px) brightness(0.46) saturate(1.08);
+  transform: scale(1.08);
+  opacity: 0.9;
+}
+
+body::after {
+  opacity: 0.18;
+}
+
+.app {
+  max-width: 1240px;
+  padding: 18px 18px 28px;
+}
+
+.hud {
+  padding: 14px 16px;
+  border-radius: 22px;
+  border: 1px solid rgba(150, 201, 255, 0.2);
+  background:
+    radial-gradient(540px 180px at 0% 0%, rgba(123, 198, 255, 0.16), transparent 64%),
+    radial-gradient(520px 220px at 100% 100%, rgba(155, 144, 255, 0.11), transparent 68%),
+    linear-gradient(180deg, rgba(16, 26, 46, 0.92), rgba(9, 15, 29, 0.96));
+  box-shadow: 0 24px 56px rgba(2, 8, 20, 0.44), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(18px) saturate(118%);
+}
+
+.nickname {
+  font-size: 16px;
+  font-weight: 800;
+  color: #f4f8ff;
+  letter-spacing: 0.02em;
+}
+
+.hudRight {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.audioControl,
+.currency {
+  min-height: 46px;
+  padding: 0 12px;
+  border-radius: 16px;
+  border: 1px solid rgba(123, 198, 255, 0.18);
+  background: linear-gradient(180deg, rgba(22, 35, 57, 0.84), rgba(12, 21, 36, 0.9));
+}
+
+.currency {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 900;
+  color: #eff6ff;
+}
+
+.mainTabs {
+  margin-top: 12px;
+  padding: 10px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(112px, 1fr));
+  gap: 8px;
+  border-radius: 22px;
+  border: 1px solid rgba(123, 198, 255, 0.16);
+  background:
+    radial-gradient(620px 200px at 50% 0%, rgba(123, 198, 255, 0.08), transparent 72%),
+    linear-gradient(180deg, rgba(11, 19, 33, 0.86), rgba(8, 14, 24, 0.92));
+  box-shadow: 0 16px 34px rgba(0, 0, 0, 0.28);
+}
+
+.mainTab {
+  min-height: 50px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  border: 1px solid rgba(123, 198, 255, 0.14);
+  background: linear-gradient(180deg, rgba(24, 38, 60, 0.94), rgba(13, 22, 38, 0.96));
+  color: rgba(207, 223, 244, 0.82);
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.mainTab.isActive {
+  color: #f7fbff;
+  border-color: rgba(157, 214, 255, 0.54);
+  background:
+    radial-gradient(240px 120px at 50% 0%, rgba(123, 198, 255, 0.2), transparent 70%),
+    linear-gradient(180deg, rgba(52, 84, 132, 0.98), rgba(28, 49, 82, 0.98));
+  box-shadow: 0 12px 28px rgba(44, 92, 170, 0.24), 0 0 0 1px rgba(123, 198, 255, 0.16) inset;
+}
+
+.notice,
+.panel {
+  position: relative;
+  overflow: hidden;
+}
+
+.panel {
+  margin-top: 14px;
+  padding: 18px;
+  border-radius: 26px;
+  border: 1px solid rgba(123, 198, 255, 0.26);
+  background:
+    radial-gradient(980px 320px at 0% 0%, rgba(123, 198, 255, 0.12), transparent 66%),
+    radial-gradient(760px 320px at 100% 100%, rgba(153, 112, 255, 0.1), transparent 70%),
+    linear-gradient(180deg, rgba(10, 16, 29, 0.9), rgba(7, 12, 21, 0.96));
+  box-shadow: 0 22px 52px rgba(0, 0, 0, 0.42), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(12px);
+}
+
+.panel::before,
+.notice::before {
+  content: "";
+  position: absolute;
+  inset: 10px;
+  border-radius: 18px;
+  border: 1px solid rgba(160, 214, 255, 0.12);
+  pointer-events: none;
+}
+
+.stageInfo,
+.tankShowcase,
+.shopMenu,
+.shopContent,
+.containerWrap,
+.statCard,
+.itemCard,
+.shopCard,
+.battleBotCard,
+.battleArena,
+.battleSide,
+.battleMovePad,
+.battleActionPad,
+.leadersTableWrap,
+.leadersMeWrap,
+.leadersBoardCard,
+.promoRedeemCard,
+.promoHeroCard,
+.shopShowcase,
+.chatCard,
+.refHero,
+.refLinkCard,
+.refRewardCard,
+.refMilestoneCard,
+.questCard,
+.card,
+.battleModeCard {
+  border-radius: 20px !important;
+  border: 1px solid rgba(123, 198, 255, 0.16) !important;
+  background:
+    radial-gradient(520px 180px at 0% 0%, rgba(123, 198, 255, 0.12), transparent 64%),
+    linear-gradient(180deg, rgba(18, 29, 46, 0.94), rgba(10, 17, 31, 0.98)) !important;
+  box-shadow: 0 18px 34px rgba(0, 0, 0, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.04) !important;
+}
+
+.promoBtn,
+.equipBtn,
+.ghostBtn,
+.shopBuyBtn,
+.purchaseActionBtn {
+  min-height: 48px;
+  border-radius: 14px;
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+}
+
+.promoBtn,
+.equipBtn {
+  background: linear-gradient(180deg, #a3ff70, #62f01f) !important;
+  color: #091108 !important;
+  border: 1px solid rgba(182, 255, 154, 0.86) !important;
+}
+
+.ghostBtn,
+.shopBuyBtnAlt {
+  background: linear-gradient(180deg, rgba(34, 50, 76, 0.98), rgba(18, 29, 46, 0.98)) !important;
+  color: #ecf3ff !important;
+  border: 1px solid rgba(123, 198, 255, 0.2) !important;
+}
+
+.subTabs {
+  padding: 8px;
+  border-radius: 18px;
+  border: 1px solid rgba(123, 198, 255, 0.12);
+  background: linear-gradient(180deg, rgba(12, 20, 35, 0.82), rgba(8, 14, 25, 0.9));
+}
+
+.subTab {
+  min-height: 44px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.subTab.isActive {
+  background: radial-gradient(220px 90px at 50% 0%, rgba(123, 198, 255, 0.16), transparent 70%), linear-gradient(180deg, rgba(50, 77, 118, 0.97), rgba(25, 42, 68, 0.98));
+}
+
+.profileTankTitle,
+.stageTitle,
+.leadersTitle,
+.battlesTitle,
+.shopShowcaseTitle,
+.promoTitle,
+.refHeroTitle,
+.battleBotCardTitle {
+  color: #f5f9ff;
+  font-weight: 900;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.profileTankWrap,
+.tankShowcase {
+  min-height: 360px;
+  padding: 18px;
+}
+
+.statsGrid {
+  gap: 12px;
+}
+
+.statCard {
+  min-height: 112px;
+  padding: 16px 16px 14px;
+}
+
+.statValue {
+  margin-top: 10px;
+  font-size: 28px;
+  font-weight: 900;
+  line-height: 1.04;
+  color: #f5f9ff;
+}
+
+.chatCard,
+.refLinkCard,
+.card,
+.refHero,
+.refRewardCard,
+.refMilestoneCard,
+.questCard {
+  padding: 18px;
+}
+
+.promoInput {
+  border-radius: 14px;
+  background: linear-gradient(180deg, rgba(10, 17, 29, 0.92), rgba(15, 24, 39, 0.96));
+}
+
+.itemsRail {
+  margin-top: 14px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(132px, 1fr));
+  gap: 12px;
+}
+
+.itemCard {
+  min-height: 118px;
+  padding: 12px;
+}
+
+.battleModesGrid {
+  gap: 12px;
+}
+
+.battleModeCard {
+  min-height: 170px;
+  padding: 16px 14px;
+}
+
+.shopLayout {
+  gap: 18px;
+}
+
+.shopMenu {
+  padding: 14px;
+}
+
+.shopCat {
+  min-height: 76px;
+}
+
+.shopShowcase {
+  padding: 22px;
+  grid-template-columns: minmax(0, 1.6fr) minmax(344px, 0.9fr);
+}
+
+.shopShowcaseTitle {
+  font-size: 38px;
+}
+
+.shopShowcaseStat {
+  min-height: 96px;
+  padding: 12px;
+}
+
+.shopShowcaseStatValue {
+  font-size: 14px;
+  line-height: 1.12;
+  overflow-wrap: anywhere;
+}
+
+.shopList {
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+.shopCard,
+.shopCardBody,
+.shopCardTitle,
+.shopCardMeta,
+.shopPremiumChip,
+.shopShowcaseStatValue,
+.shopShowcaseStatLabel {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.shopCardMedia {
+  min-height: 176px;
+}
+
+.shopCardItem .shopCardMedia img {
+  height: 132px;
+}
+
+.shopCardActions {
+  grid-template-columns: 112px minmax(0, 1fr);
+}
+
+.shopCardActions .shopBuyBtn {
+  width: 100%;
+  min-width: 0;
+  white-space: normal;
+  line-height: 1.14;
+  align-self: stretch;
+}
+
+.shopPrice {
+  width: 100%;
+  justify-content: center;
+}
+
+.shopPremiumContainerShowcase {
+  padding: 24px;
+}
+
+.premiumContainerShowcaseLayout {
+  grid-template-columns: minmax(420px, 1.15fr) minmax(320px, 0.9fr);
+  gap: 26px;
+}
+
+.premiumContainerVisual {
+  min-height: 320px;
+}
+
+.premiumContainerHero {
+  min-height: 300px;
+}
+
+.premiumContainerHeroImg {
+  width: min(680px, 100%);
+  height: 300px;
+}
+
+.premiumContainerActions {
+  grid-template-columns: 120px minmax(0, 320px) !important;
+  justify-content: flex-start;
+}
+
+.premiumContainerPrice .shopPriceStars {
+  margin-right: 0;
+}
+
+.containerWrap {
+  min-height: 320px;
+}
+
+.questsList {
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+
+@media (max-width: 900px) {
+  .app {
+    padding: 12px 12px 24px;
+  }
+
+  .mainTabs {
+    grid-template-columns: repeat(auto-fit, minmax(96px, 1fr));
+  }
+
+  .panel {
+    padding: 14px;
+  }
+
+  .profileTankWrap,
+  .tankShowcase {
+    min-height: 300px;
+  }
+
+  .shopShowcase {
+    grid-template-columns: 1fr;
+  }
+
+  .shopCardActions {
+    grid-template-columns: 104px minmax(0, 1fr);
+  }
+
+  .premiumContainerShowcaseLayout {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+}
+
+@media (max-width: 640px) {
+  .app {
+    padding: 8px 8px 20px;
+  }
+
+  .mainTabs {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .mainTab {
+    min-height: 46px;
+    font-size: 11px;
+  }
+
+  .panel {
+    border-radius: 22px;
+    padding: 12px;
+  }
+
+  .profileTankWrap,
+  .tankShowcase {
+    min-height: 248px;
+    padding: 12px;
+  }
+
+  .stageTitle,
+  .leadersTitle,
+  .promoTitle,
+  .refHeroTitle,
+  .battlesTitle,
+  .shopShowcaseTitle {
+    font-size: 24px;
+  }
+
+  .itemsRail {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .shopCardActions,
+  .premiumContainerActions {
+    grid-template-columns: 1fr !important;
+  }
+
+  .premiumContainerVisual {
+    min-height: 240px;
+  }
+
+  .premiumContainerHero {
+    min-height: 220px;
+  }
+
+  .premiumContainerHeroImg {
+    height: 220px;
+  }
+}
+
+/* Final UI polish overrides */
+
+.mainTab,
+.subTab,
+.promoBtn,
+.equipBtn,
+.ghostBtn,
+.shopBuyBtn,
+.purchaseActionBtn,
+.questClaimBtn {
+  font-weight: 680 !important;
+  letter-spacing: 0.02em !important;
+}
+
+.leadersTitle,
+.battlesTitle,
+.shopShowcaseTitle,
+.profileTankTitle,
+.stageTitle,
+.purchaseTitle,
+.questTitle,
+.shopTitle,
+.nickname,
+.currency {
+  font-weight: 760 !important;
+  letter-spacing: 0.015em !important;
+}
+
+.stageInfo,
+.tankShowcase,
+.shopMenu,
+.shopContent,
+.containerWrap,
+.statCard,
+.itemCard,
+.shopCard,
+.battleBotCard,
+.battleArena,
+.battleSide,
+.leadersTableWrap,
+.leadersMeWrap,
+.leadersBoardCard,
+.promoRedeemCard,
+.promoHeroCard,
+.shopShowcase,
+.chatCard,
+.refHero,
+.refLinkCard,
+.refRewardCard,
+.refMilestoneCard,
+.questCard,
+.card,
+.battleModeCard,
+.rewardCard,
+.errorCard,
+.battleResultCard {
+  transition:
+    transform 380ms cubic-bezier(.22,.78,.16,1),
+    box-shadow 380ms cubic-bezier(.22,.78,.16,1),
+    border-color 320ms ease,
+    background 380ms ease !important;
+  will-change: transform, box-shadow;
+}
+
+.containerWrap,
+.shopCard,
+.questCard,
+.battleModeCard {
+  position: relative;
+  overflow: hidden;
+}
+
+.containerWrap::after,
+.shopCard::after,
+.questCard::after,
+.battleModeCard::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(120deg, transparent 0%, rgba(255, 255, 255, 0.06) 48%, transparent 70%);
+  opacity: 0;
+  transform: translateX(-34%);
+  transition: opacity 320ms ease, transform 540ms cubic-bezier(.22,.78,.16,1);
+}
+
+.containerWrap:hover,
+.shopCard:hover,
+.questCard:hover,
+.battleModeCard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 24px 44px rgba(2, 10, 24, 0.38), inset 0 1px 0 rgba(255, 255, 255, 0.04) !important;
+}
+
+.containerWrap:hover::after,
+.shopCard:hover::after,
+.questCard:hover::after,
+.battleModeCard:hover::after {
+  opacity: 1;
+  transform: translateX(16%);
+}
+
+.battleResultModal {
+  background:
+    radial-gradient(860px 320px at 50% 50%, rgba(30, 56, 94, 0.16), transparent 72%),
+    rgba(2, 6, 14, 0.8) !important;
+  backdrop-filter: blur(10px) saturate(112%);
+}
+
+.battleResultCard {
+  width: min(820px, 94vw) !important;
+  border-radius: 28px !important;
+  border: 1px solid rgba(134, 196, 255, 0.22) !important;
+  background:
+    radial-gradient(760px 280px at 50% -10%, rgba(129, 213, 255, 0.14), transparent 66%),
+    radial-gradient(640px 260px at 100% 100%, rgba(132, 116, 255, 0.12), transparent 72%),
+    linear-gradient(180deg, rgba(10, 18, 34, 0.98), rgba(6, 10, 20, 0.99)) !important;
+  box-shadow: 0 34px 74px rgba(0, 0, 0, 0.54), 0 0 0 1px rgba(255, 255, 255, 0.04) inset !important;
+}
+
+.battleResultCard::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.05), transparent 26%, transparent 74%, rgba(255, 255, 255, 0.03));
+  opacity: 0.84;
+}
+
+.battleResultCard.isWin {
+  border-color: rgba(90, 219, 152, 0.3) !important;
+  box-shadow: 0 34px 74px rgba(0, 0, 0, 0.54), 0 0 0 1px rgba(90, 219, 152, 0.08) inset, 0 0 42px rgba(60, 174, 130, 0.08) !important;
+}
+
+.battleResultCard.isLose {
+  border-color: rgba(255, 94, 94, 0.24) !important;
+  background:
+    radial-gradient(760px 300px at 50% -10%, rgba(255, 90, 90, 0.16), transparent 66%),
+    radial-gradient(620px 240px at 100% 100%, rgba(118, 28, 52, 0.18), transparent 72%),
+    linear-gradient(180deg, rgba(20, 11, 18, 0.985), rgba(8, 7, 13, 0.995)) !important;
+  box-shadow: 0 34px 82px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 78, 96, 0.08) inset, 0 0 46px rgba(150, 24, 44, 0.12) !important;
+}
+
+.battleResultBanner {
+  min-height: 132px;
+  padding: 26px 22px !important;
+  background:
+    radial-gradient(460px 190px at 50% 50%, rgba(78, 231, 152, 0.26), transparent 68%),
+    linear-gradient(180deg, rgba(18, 54, 41, 0.96), rgba(10, 23, 21, 0.98)) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+.battleResultBanner.isLose {
+  background:
+    radial-gradient(500px 200px at 50% 52%, rgba(255, 92, 92, 0.22), transparent 66%),
+    linear-gradient(180deg, rgba(63, 18, 28, 0.98), rgba(21, 10, 14, 0.995)) !important;
+  border-bottom-color: rgba(255, 112, 112, 0.14) !important;
+}
+
+.battleResultTitle {
+  font-size: clamp(34px, 6vw, 52px) !important;
+  font-weight: 820 !important;
+  letter-spacing: 0.045em !important;
+  text-transform: uppercase;
+  color: #f7fbff !important;
+  text-shadow: 0 10px 30px rgba(0, 0, 0, 0.32);
+}
+
+.battleResultBody {
+  padding: 30px 28px 32px !important;
+  gap: 16px !important;
+}
+
+.battleResultIcon {
+  width: 108px;
+  height: 108px;
+  display: grid !important;
+  place-items: center;
+  border-radius: 30px;
+  font-size: 54px !important;
+  line-height: 1 !important;
+  color: #ffe7a0;
+  background:
+    radial-gradient(circle at 50% 40%, rgba(255, 236, 158, 0.26), transparent 56%),
+    linear-gradient(180deg, rgba(42, 52, 82, 0.92), rgba(15, 21, 36, 0.96));
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 20px 42px rgba(0, 0, 0, 0.34), inset 0 1px 0 rgba(255, 255, 255, 0.07);
+  filter: none !important;
+}
+
+.battleResultCard.isWin .battleResultIcon {
+  color: #ffe598;
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.34), 0 0 32px rgba(71, 209, 148, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.battleResultCard.isLose .battleResultIcon {
+  color: #ff9c87;
+  background:
+    radial-gradient(circle at 50% 42%, rgba(255, 149, 80, 0.28), transparent 56%),
+    linear-gradient(180deg, rgba(63, 24, 24, 0.94), rgba(18, 10, 14, 0.98));
+  border-color: rgba(255, 110, 110, 0.16);
+  box-shadow: 0 24px 50px rgba(0, 0, 0, 0.44), 0 0 36px rgba(173, 24, 42, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+.battleResultText {
+  max-width: 600px !important;
+  font-size: 16px !important;
+  font-weight: 590 !important;
+  line-height: 1.58 !important;
+  color: rgba(226, 236, 248, 0.88) !important;
+}
+
+.errorModal {
+  background:
+    radial-gradient(760px 280px at 50% 40%, rgba(129, 14, 39, 0.18), transparent 68%),
+    rgba(5, 4, 10, 0.84) !important;
+  backdrop-filter: blur(12px) saturate(112%) !important;
+}
+
+.errorCard {
+  width: min(500px, 92vw) !important;
+  border-radius: 26px !important;
+  border: 1px solid rgba(191, 52, 74, 0.38) !important;
+  background:
+    radial-gradient(540px 220px at 50% -10%, rgba(138, 14, 43, 0.22), transparent 66%),
+    linear-gradient(180deg, rgba(26, 8, 16, 0.985), rgba(10, 6, 10, 0.995)) !important;
+  box-shadow: 0 30px 72px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 86, 116, 0.05) inset, 0 0 54px rgba(109, 12, 33, 0.16) !important;
+  overflow: hidden;
+}
+
+.errorHead {
+  min-height: 86px !important;
+  padding: 0 24px !important;
+  gap: 16px;
+  background:
+    radial-gradient(360px 120px at 0% 50%, rgba(255, 77, 107, 0.18), transparent 68%),
+    linear-gradient(180deg, rgba(58, 14, 26, 0.98), rgba(31, 8, 13, 0.995)) !important;
+  border-bottom: 1px solid rgba(255, 94, 122, 0.14) !important;
+}
+
+.errorAccent {
+  width: 14px !important;
+  height: 14px;
+  align-self: auto !important;
+  border-radius: 999px;
+  background: radial-gradient(circle, #ff7d94 0%, #ea3b5b 54%, #8d112d 100%) !important;
+  box-shadow: 0 0 24px rgba(234, 59, 91, 0.46);
+  animation: dangerPulse 2.4s ease-in-out infinite;
+}
+
+.errorTitle {
+  margin-left: 0 !important;
+  font-size: clamp(24px, 5vw, 38px) !important;
+  font-weight: 820 !important;
+  letter-spacing: 0.04em !important;
+  color: #fff4f6 !important;
+}
+
+.errorBody {
+  padding: 28px 26px 30px !important;
+  display: grid;
+  justify-items: center;
+  gap: 18px;
+  background:
+    radial-gradient(420px 200px at 50% 10%, rgba(136, 14, 40, 0.12), transparent 70%),
+    linear-gradient(180deg, rgba(16, 8, 13, 0.7), rgba(9, 5, 8, 0));
+}
+
+.errorIcon {
+  width: 136px;
+  height: 136px;
+  display: grid !important;
+  place-items: center;
+  border-radius: 34px;
+  border: 1px solid rgba(255, 96, 126, 0.18);
+  background:
+    radial-gradient(circle at 50% 42%, rgba(255, 111, 140, 0.22), transparent 58%),
+    linear-gradient(180deg, rgba(56, 12, 24, 0.94), rgba(21, 8, 14, 0.98));
+  color: #ff718d !important;
+  font-size: 72px !important;
+  box-shadow: 0 24px 54px rgba(0, 0, 0, 0.42), 0 0 38px rgba(158, 18, 48, 0.18);
+}
+
+.errorText {
+  max-width: 360px;
+  text-align: center;
+  font-size: 19px !important;
+  font-weight: 620 !important;
+  line-height: 1.5 !important;
+  color: rgba(255, 230, 235, 0.94) !important;
+}
+
+.questResetTime {
+  margin-bottom: 12px;
+  font-size: 12px !important;
+  font-weight: 620 !important;
+  color: rgba(197, 213, 234, 0.68) !important;
+}
+
+.questsList {
+  display: grid;
+  gap: 12px;
+}
+
+.questCard {
+  padding: 16px !important;
+  min-height: 0 !important;
+  gap: 12px !important;
+  border-radius: 18px !important;
+}
+
+.questTop,
+.questFooter {
+  gap: 12px !important;
+  align-items: center !important;
+}
+
+.questTitle {
+  font-size: 17px !important;
+  font-weight: 750 !important;
+  line-height: 1.25 !important;
+}
+
+.questChip {
+  min-height: 24px;
+  padding: 0 10px !important;
+  font-size: 11px !important;
+  font-weight: 680 !important;
+}
+
+.questReward {
+  flex-shrink: 0;
+  min-height: 32px;
+  padding: 0 12px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 211, 98, 0.1);
+  border: 1px solid rgba(255, 211, 98, 0.16);
+  color: #ffd980 !important;
+  font-size: 13px !important;
+  font-weight: 720 !important;
+}
+
+.questDesc {
+  margin-top: -2px;
+  font-size: 13px !important;
+  line-height: 1.45 !important;
+  color: rgba(206, 220, 239, 0.74) !important;
+}
+
+.questProgressRow {
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 10px !important;
+  align-items: center !important;
+}
+
+.questProgressTrack {
+  height: 10px !important;
+}
+
+.questProgressText {
+  font-size: 12px !important;
+  font-weight: 650 !important;
+  color: rgba(215, 229, 246, 0.82) !important;
+}
+
+.questStatus {
+  min-height: 0 !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  color: rgba(202, 217, 237, 0.76) !important;
+}
+
+.questClaimBtn {
+  min-height: 40px !important;
+  padding: 0 16px !important;
+  border-radius: 12px !important;
+  font-size: 12px !important;
+}
+
+.shopLayout {
+  gap: 16px !important;
+}
+
+.shopMenu {
+  padding: 16px !important;
+  gap: 10px !important;
+}
+
+.shopMenuIntro {
+  gap: 6px !important;
+  margin-bottom: 6px !important;
+}
+
+.shopMenuTitle {
+  font-size: 28px !important;
+  font-weight: 780 !important;
+}
+
+.shopMenuNote {
+  font-size: 12px !important;
+  line-height: 1.45 !important;
+  color: rgba(203, 216, 236, 0.7) !important;
+}
+
+.shopCat {
+  min-height: 68px !important;
+  padding: 12px 14px !important;
+  gap: 12px !important;
+  border-radius: 16px !important;
+}
+
+.shopCatIcon {
+  width: 40px !important;
+  height: 40px !important;
+  font-size: 18px !important;
+}
+
+.shopCatTitle {
+  font-size: 14px !important;
+  font-weight: 720 !important;
+}
+
+.shopCatMeta {
+  font-size: 11px !important;
+  line-height: 1.35 !important;
+  color: rgba(207, 220, 239, 0.68) !important;
+}
+
+.shopContent {
+  padding: 16px !important;
+  gap: 14px !important;
+}
+
+.shopShowcase {
+  padding: 18px !important;
+  gap: 16px !important;
+}
+
+.shopShowcaseTitle {
+  font-size: clamp(28px, 4.6vw, 40px) !important;
+}
+
+.shopShowcaseSubtitle {
+  font-size: 14px !important;
+  line-height: 1.48 !important;
+  color: rgba(211, 224, 242, 0.74) !important;
+}
+
+.shopShowcaseMeta {
+  gap: 10px !important;
+}
+
+.shopShowcaseStat {
+  min-height: 82px !important;
+  padding: 12px !important;
+  border-radius: 16px !important;
+}
+
+.shopShowcaseStatValue {
+  font-size: 20px !important;
+  font-weight: 760 !important;
+}
+
+.shopShowcaseStatLabel {
+  font-size: 11px !important;
+  font-weight: 580 !important;
+}
+
+.shopList {
+  gap: 12px !important;
+}
+
+.shopCard {
+  padding: 14px !important;
+  gap: 12px !important;
+}
+
+.shopCardMedia {
+  min-height: 146px !important;
+  border-radius: 16px !important;
+}
+
+.shopCardTitle {
+  font-size: 17px !important;
+  font-weight: 740 !important;
+  line-height: 1.25 !important;
+}
+
+.shopCardMeta {
+  font-size: 12px !important;
+  line-height: 1.45 !important;
+  font-weight: 560 !important;
+}
+
+.shopCardActions {
+  gap: 10px !important;
+  align-items: stretch !important;
+}
+
+.shopPrice,
+.premiumContainerPrice {
+  min-height: 42px !important;
+  padding: 0 12px !important;
+  font-size: 14px !important;
+  font-weight: 730 !important;
+}
+
+.shopBuyBtnAlt,
+.starsBuyBtn {
+  min-height: 42px !important;
+  border-radius: 12px !important;
+  font-size: 12px !important;
+}
+
+.shopPremiumContainerShowcase {
+  border-radius: 22px !important;
+}
+
+.premiumContainerShowcaseLayout {
+  gap: 18px !important;
+}
+
+.premiumContainerVisual {
+  min-height: 252px !important;
+  padding: 8px !important;
+}
+
+.premiumContainerHero {
+  min-height: 208px !important;
+}
+
+.premiumContainerHeroImg {
+  height: 234px !important;
+}
+
+.premiumContainerShowTitle {
+  font-size: 17px !important;
+  font-weight: 760 !important;
+}
+
+.premiumContainerShowSub {
+  font-size: 12px !important;
+  font-weight: 580 !important;
+}
+
+.containerTabs {
+  gap: 8px !important;
+}
+
+.containerTabs .subTab {
+  min-height: 42px !important;
+  padding: 10px 14px !important;
+  font-size: 12px !important;
+}
+
+.containerWrap {
+  min-height: 208px !important;
+  border-radius: 20px !important;
+  background:
+    radial-gradient(420px 220px at 50% 45%, rgba(94, 167, 255, 0.22), transparent 72%),
+    linear-gradient(180deg, rgba(22, 33, 56, 0.96), rgba(14, 22, 39, 0.99)) !important;
+}
+
+.containerImg {
+  width: min(340px, 88%) !important;
+  height: 170px !important;
+  animation: standardContainerFloat 3.6s ease-in-out infinite;
+  filter: drop-shadow(0 16px 26px rgba(0, 0, 0, 0.34));
+}
+
+.containerActions {
+  gap: 8px !important;
+  margin-top: 10px !important;
+}
+
+.containerActions .equipBtn,
+.containerActions .ghostBtn {
+  min-height: 42px !important;
+  padding: 0 14px !important;
+  border-radius: 12px !important;
+  font-size: 12px !important;
+}
+
+.containerMetaRow {
+  margin-top: 10px !important;
+  padding: 10px 12px !important;
+  gap: 10px !important;
+  border-radius: 16px !important;
+}
+
+.containerMetaTitle {
+  font-size: 11px !important;
+  font-weight: 740 !important;
+  letter-spacing: 0.04em !important;
+}
+
+.containerPill {
+  min-height: 28px;
+  padding: 0 10px !important;
+  font-size: 12px !important;
+  font-weight: 700 !important;
+}
+
+.containerMetaActive {
+  font-size: 12px !important;
+  font-weight: 620 !important;
+}
+
+.rewardModal {
+  background:
+    radial-gradient(900px 340px at 50% 42%, rgba(67, 102, 170, 0.16), transparent 72%),
+    rgba(3, 7, 16, 0.82) !important;
+  backdrop-filter: blur(12px) saturate(114%);
+}
+
+.rewardCard {
+  --reward-glow: rgba(88, 231, 255, 0.98);
+  --reward-glow-soft: rgba(88, 231, 255, 0.24);
+  width: min(560px, 92vw) !important;
+  padding: 24px 22px 22px !important;
+  border-radius: 30px !important;
+  border: 1px solid rgba(127, 194, 255, 0.22) !important;
+  background:
+    radial-gradient(600px 220px at 50% -10%, rgba(138, 212, 255, 0.14), transparent 68%),
+    radial-gradient(520px 220px at 100% 100%, rgba(140, 126, 255, 0.12), transparent 74%),
+    linear-gradient(180deg, rgba(12, 20, 38, 0.98), rgba(7, 11, 22, 0.995)) !important;
+  box-shadow: 0 30px 74px rgba(0, 0, 0, 0.58), 0 0 0 1px rgba(255, 255, 255, 0.04) inset !important;
+  overflow: hidden;
+}
+
+.rewardCard::before {
+  content: "";
+  position: absolute;
+  inset: -14%;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transform: scale(0.9);
+  background:
+    radial-gradient(circle at 50% 46%, var(--reward-glow-soft) 0%, rgba(255, 255, 255, 0.02) 34%, transparent 66%),
+    radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.08), transparent 68%);
+  filter: blur(8px);
+}
+
+.rewardCard.rarity-rare { --reward-glow: rgba(88, 231, 255, 0.98); --reward-glow-soft: rgba(88, 231, 255, 0.26); }
+.rewardCard.rarity-epic { --reward-glow: rgba(176, 113, 255, 0.98); --reward-glow-soft: rgba(176, 113, 255, 0.28); }
+.rewardCard.rarity-ultrarare { --reward-glow: rgba(255, 93, 93, 0.98); --reward-glow-soft: rgba(255, 93, 93, 0.28); }
+.rewardCard.rarity-legendary { --reward-glow: rgba(255, 211, 79, 0.99); --reward-glow-soft: rgba(255, 211, 79, 0.32); }
+
+.rewardCard.isPrimed::before {
+  animation: rewardRarityGlow var(--reward-glow-ms, 680ms) cubic-bezier(.16,.84,.2,1) forwards;
+}
+
+.rewardCard.rarity-legendary.isPrimed::before {
+  animation: rewardLegendaryHaloFinal calc(var(--reward-glow-ms, 1600ms) * 1.18) cubic-bezier(.14,.82,.18,1) forwards;
+}
+
+.rewardCard.isReveal {
+  border-color: color-mix(in srgb, var(--reward-glow) 50%, rgba(255, 255, 255, 0.12)) !important;
+  box-shadow: 0 34px 84px rgba(0, 0, 0, 0.58), 0 0 0 1px rgba(255, 255, 255, 0.05) inset, 0 0 56px var(--reward-glow-soft) !important;
+}
+
+.rewardTitle {
+  font-size: 20px !important;
+  font-weight: 760 !important;
+  letter-spacing: 0.03em !important;
+}
+
+.rewardContainerBox {
+  width: min(360px, 100%) !important;
+  height: 234px !important;
+  margin: 18px auto 0 !important;
+  border-radius: 26px !important;
+  border: 1px solid rgba(146, 199, 255, 0.16) !important;
+  background:
+    radial-gradient(320px 180px at 50% 44%, rgba(106, 171, 255, 0.12), transparent 68%),
+    linear-gradient(180deg, rgba(16, 26, 47, 0.94), rgba(10, 17, 31, 0.98)) !important;
+  overflow: hidden;
+}
+
+.rewardContainerBox::before {
+  content: "";
+  position: absolute;
+  inset: -8%;
+  pointer-events: none;
+  opacity: 0;
+  transform: scale(0.92);
+  background:
+    radial-gradient(circle at 50% 46%, var(--reward-glow-soft) 0%, transparent 60%),
+    radial-gradient(circle at 50% 50%, color-mix(in srgb, var(--reward-glow) 56%, transparent) 0%, transparent 72%);
+  filter: blur(12px);
+}
+
+.rewardContainerBox.isPrimed::before {
+  opacity: 1;
+  transform: scale(1.04);
+  transition:
+    opacity var(--reward-glow-ms, 680ms) cubic-bezier(.16,.84,.2,1),
+    transform var(--reward-glow-ms, 680ms) cubic-bezier(.16,.84,.2,1);
+}
+
+.rewardContainerImg,
+.rewardDropImg {
+  transition:
+    transform 420ms cubic-bezier(.22,.78,.16,1),
+    opacity 320ms ease,
+    filter 380ms ease !important;
+}
+
+.rewardContainerBox.isCharging .rewardContainerImg {
+  animation: rewardContainerCharge 1.26s ease-in-out infinite;
+}
+
+.rewardContainerBox.isReveal .rewardContainerImg {
+  filter: drop-shadow(0 18px 34px rgba(0, 0, 0, 0.34));
+}
+
+.rewardContainerImg.isHidden {
+  opacity: 0 !important;
+  transform: translateY(10px) scale(0.92) !important;
+}
+
+.rewardDropImg.show {
+  opacity: 1 !important;
+  transform: translateY(0) scale(1) !important;
+  animation: rewardDropRise 520ms cubic-bezier(.18,.88,.24,1);
+}
+
+.rewardContainerBox.rewardBurst::after {
+  content: "";
+  position: absolute;
+  inset: -12%;
+  pointer-events: none;
+  border-radius: inherit;
+  background:
+    radial-gradient(circle at 50% 50%, color-mix(in srgb, var(--reward-glow) 34%, transparent) 0%, transparent 58%),
+    radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.3) 0%, transparent 38%);
+  animation: rewardBurstFx 720ms ease-out forwards;
+}
+
+.rewardText {
+  margin-top: 18px !important;
+  font-size: 16px !important;
+  font-weight: 620 !important;
+  line-height: 1.52 !important;
+  color: rgba(232, 240, 250, 0.92) !important;
+}
+
+@keyframes rewardRarityGlow {
+  0% {
+    opacity: 0;
+    transform: scale(0.9);
+    filter: blur(16px);
+  }
+  55% {
+    opacity: 0.92;
+    transform: scale(1.03);
+    filter: blur(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1.08);
+    filter: blur(8px);
+  }
+}
+
+@keyframes rewardLegendaryHaloFinal {
+  0% {
+    opacity: 0;
+    transform: scale(0.84);
+    filter: blur(20px);
+  }
+  38% {
+    opacity: 0.48;
+    transform: scale(0.96);
+    filter: blur(16px);
+  }
+  72% {
+    opacity: 0.92;
+    transform: scale(1.06);
+    filter: blur(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1.12);
+    filter: blur(8px);
+  }
+}
+
+@keyframes rewardContainerCharge {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+    filter: drop-shadow(0 12px 22px rgba(0, 0, 0, 0.3));
+  }
+  50% {
+    transform: translateY(-7px) scale(1.025);
+    filter: drop-shadow(0 18px 28px color-mix(in srgb, var(--reward-glow) 32%, rgba(0, 0, 0, 0.18)));
+  }
+}
+
+@keyframes rewardDropRise {
+  0% {
+    opacity: 0;
+    transform: translateY(26px) scale(0.82);
+  }
+  70% {
+    opacity: 1;
+    transform: translateY(-4px) scale(1.04);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes rewardBurstFx {
+  0% {
+    opacity: 0;
+    transform: scale(0.76);
+  }
+  28% {
+    opacity: 0.9;
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.18);
+  }
+}
+
+@keyframes dangerPulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.9;
+  }
+  50% {
+    transform: scale(1.16);
+    opacity: 1;
+  }
+}
+
+@keyframes standardContainerFloat {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+@media (max-width: 640px) {
+  .battleResultCard {
+    width: min(94vw, 520px) !important;
+    border-radius: 24px !important;
+  }
+
+  .battleResultBanner {
+    min-height: 106px;
+    padding: 18px 16px !important;
+  }
+
+  .battleResultTitle {
+    font-size: 17vw !important;
+    line-height: 0.94 !important;
+  }
+
+  .battleResultBody {
+    padding: 20px 16px 22px !important;
+    gap: 12px !important;
+  }
+
+  .battleResultIcon {
+    width: 82px;
+    height: 82px;
+    border-radius: 24px;
+    font-size: 40px !important;
+  }
+
+  .battleResultText {
+    font-size: 13px !important;
+    line-height: 1.5 !important;
+  }
+
+  .errorCard {
+    width: min(92vw, 420px) !important;
+    border-radius: 22px !important;
+  }
+
+  .errorHead {
+    min-height: 72px !important;
+    padding: 0 18px !important;
+    gap: 12px;
+  }
+
+  .errorIcon {
+    width: 110px;
+    height: 110px;
+    border-radius: 28px;
+    font-size: 58px !important;
+  }
+
+  .errorBody {
+    padding: 22px 18px 24px !important;
+    gap: 14px;
+  }
+
+  .errorText {
+    font-size: 16px !important;
+  }
+
+  .questsList {
+    gap: 10px;
+  }
+
+  .questCard {
+    padding: 12px !important;
+    gap: 10px !important;
+  }
+
+  .questTop {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .questTitle {
+    font-size: 15px !important;
+  }
+
+  .questChip,
+  .questStatus,
+  .questProgressText,
+  .questDesc {
+    font-size: 11px !important;
+  }
+
+  .questReward {
+    min-height: 28px;
+    padding: 0 10px;
+    font-size: 12px !important;
+  }
+
+  .questFooter {
+    align-items: stretch !important;
+  }
+
+  .questClaimBtn {
+    min-height: 36px !important;
+    padding: 0 12px !important;
+    font-size: 11px !important;
+  }
+
+  .shopLayout {
+    gap: 12px !important;
+  }
+
+  .shopMenu,
+  .shopContent {
+    padding: 12px !important;
+  }
+
+  .shopMenuIntro {
+    gap: 4px !important;
+    margin-bottom: 4px !important;
+  }
+
+  .shopMenuTitle {
+    font-size: 22px !important;
+  }
+
+  .shopMenuNote {
+    font-size: 11px !important;
+  }
+
+  .shopCat {
+    min-height: 56px !important;
+    padding: 10px 12px !important;
+    gap: 10px !important;
+    border-radius: 14px !important;
+  }
+
+  .shopCatIcon {
+    width: 34px !important;
+    height: 34px !important;
+    font-size: 16px !important;
+  }
+
+  .shopCatTitle {
+    font-size: 13px !important;
+  }
+
+  .shopCatMeta {
+    font-size: 10px !important;
+    line-height: 1.28 !important;
+  }
+
+  .shopShowcase {
+    padding: 14px !important;
+    gap: 12px !important;
+  }
+
+  .shopShowcaseTitle {
+    font-size: 24px !important;
+  }
+
+  .shopShowcaseSubtitle {
+    font-size: 12px !important;
+  }
+
+  .shopShowcaseMeta {
+    gap: 8px !important;
+  }
+
+  .shopShowcaseStat {
+    min-height: 68px !important;
+    padding: 10px !important;
+  }
+
+  .shopShowcaseStatValue {
+    font-size: 17px !important;
+  }
+
+  .shopShowcaseStatLabel {
+    font-size: 10px !important;
+  }
+
+  .shopList {
+    gap: 10px !important;
+  }
+
+  .shopCard {
+    padding: 12px !important;
+    gap: 10px !important;
+  }
+
+  .shopCardMedia {
+    min-height: 108px !important;
+  }
+
+  .shopCardTitle {
+    font-size: 15px !important;
+  }
+
+  .shopCardMeta {
+    font-size: 11px !important;
+  }
+
+  .shopCardActions {
+    grid-template-columns: 1fr !important;
+    gap: 8px !important;
+  }
+
+  .shopPrice,
+  .premiumContainerPrice,
+  .shopBuyBtnAlt,
+  .starsBuyBtn {
+    min-height: 38px !important;
+    font-size: 11px !important;
+  }
+
+  .premiumContainerShowcaseLayout {
+    gap: 14px !important;
+  }
+
+  .premiumContainerVisual {
+    min-height: 200px !important;
+  }
+
+  .premiumContainerHero {
+    min-height: 170px !important;
+  }
+
+  .premiumContainerHeroImg {
+    height: 184px !important;
+    transform: scale(1.08) !important;
+  }
+
+  .premiumContainerShowTitle {
+    font-size: 15px !important;
+  }
+
+  .premiumContainerShowSub {
+    font-size: 11px !important;
+  }
+
+  .containerTabs {
+    gap: 6px !important;
+  }
+
+  .containerTabs .subTab {
+    min-height: 36px !important;
+    padding: 8px 12px !important;
+    font-size: 11px !important;
+  }
+
+  .containerWrap {
+    min-height: 170px !important;
+    margin-top: 10px !important;
+  }
+
+  .containerImg {
+    width: min(270px, 82%) !important;
+    height: 132px !important;
+  }
+
+  .containerActions {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 8px !important;
+  }
+
+  .containerActions .equipBtn,
+  .containerActions .ghostBtn {
+    min-height: 36px !important;
+    padding: 0 12px !important;
+    font-size: 11px !important;
+  }
+
+  .containerMetaRow {
+    grid-template-columns: 1fr !important;
+    padding: 10px !important;
+    gap: 8px !important;
+  }
+
+  .containerMetaRight {
+    align-items: stretch !important;
+  }
+
+  .containerPill {
+    min-height: 24px;
+    font-size: 11px !important;
+  }
+
+  .rewardCard {
+    width: min(92vw, 440px) !important;
+    padding: 18px 16px 18px !important;
+    border-radius: 24px !important;
+  }
+
+  .rewardTitle {
+    font-size: 17px !important;
+  }
+
+  .rewardContainerBox {
+    width: min(290px, 100%) !important;
+    height: 188px !important;
+    margin-top: 14px !important;
+    border-radius: 22px !important;
+  }
+
+  .rewardText {
+    margin-top: 14px !important;
+    font-size: 13px !important;
+  }
+}
+
+/* ===== Final UI polish: battles, errors, quests, shop, containers ===== */
+.battleResultModal {
+  background:
+    radial-gradient(820px 320px at 50% 12%, rgba(120, 239, 203, 0.08), transparent 72%),
+    rgba(2, 7, 14, 0.82) !important;
+  backdrop-filter: blur(14px) saturate(115%) !important;
+}
+
+.battleResultCard {
+  position: relative;
+  width: min(720px, 94vw) !important;
+  border-radius: 24px !important;
+  border: 1px solid rgba(146, 205, 255, 0.18) !important;
+  background:
+    linear-gradient(180deg, rgba(8, 14, 27, 0.98), rgba(7, 10, 20, 0.99)) !important;
+  box-shadow: 0 36px 72px rgba(0, 0, 0, 0.62), inset 0 1px 0 rgba(255, 255, 255, 0.04) !important;
+  overflow: hidden !important;
+}
+
+.battleResultCard::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(520px 220px at 50% 12%, rgba(120, 239, 203, 0.14), transparent 68%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.03), transparent 36%);
+}
+
+.battleResultCard.isLose::before {
+  background:
+    radial-gradient(520px 220px at 50% 12%, rgba(255, 84, 114, 0.16), transparent 68%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.02), transparent 34%);
+}
+
+.battleResultCard.isLose {
+  border-color: rgba(255, 98, 126, 0.22) !important;
+}
+
+.battleResultBanner {
+  position: relative;
+  padding: 24px 20px 18px !important;
+  background:
+    linear-gradient(180deg, rgba(12, 64, 49, 0.84), rgba(9, 28, 24, 0.9)) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
+}
+
+.battleResultBanner::after {
+  content: "";
+  position: absolute;
+  left: 24px;
+  right: 24px;
+  bottom: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+}
+
+.battleResultBanner.isLose {
+  background:
+    linear-gradient(180deg, rgba(72, 12, 20, 0.9), rgba(22, 8, 12, 0.92)) !important;
+}
+
+.battleResultTitle {
+  font-size: 38px !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.1em !important;
+  text-shadow: 0 0 24px rgba(0, 0, 0, 0.34) !important;
+}
+
+.battleResultBody {
+  position: relative;
+  min-height: 250px;
+  padding: 26px 24px 28px !important;
+  display: grid !important;
+  justify-items: center !important;
+  align-content: center !important;
+  gap: 14px !important;
+  background:
+    radial-gradient(360px 180px at 50% 34%, rgba(255, 255, 255, 0.04), transparent 72%);
+}
+
+.battleResultBody::before {
+  content: "";
+  position: absolute;
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.06), transparent 70%);
+  filter: blur(10px);
+  pointer-events: none;
+}
+
+.battleResultIcon {
+  position: relative;
+  z-index: 1;
+  width: 108px;
+  height: 108px;
+  display: grid !important;
+  place-items: center;
+  border-radius: 28px;
+  border: 1px solid rgba(120, 239, 203, 0.22);
+  background:
+    linear-gradient(180deg, rgba(120, 239, 203, 0.12), rgba(13, 34, 30, 0.2));
+  color: #d8fff0;
+  font-size: 52px !important;
+  line-height: 1 !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06), 0 0 30px rgba(120, 239, 203, 0.12);
+}
+
+.battleResultCard.isLose .battleResultIcon {
+  border-color: rgba(255, 98, 126, 0.24);
+  background:
+    linear-gradient(180deg, rgba(255, 84, 114, 0.12), rgba(40, 8, 14, 0.22));
+  color: #ffd6de;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05), 0 0 34px rgba(255, 84, 114, 0.12);
+}
+
+.battleResultText {
+  position: relative;
+  z-index: 1;
+  margin-top: 0 !important;
+  max-width: 520px !important;
+  font-size: 17px !important;
+  line-height: 1.5 !important;
+  font-weight: 600 !important;
+  color: rgba(231, 239, 251, 0.94) !important;
+}
+
+.errorModal {
+  background:
+    radial-gradient(520px 260px at 50% 18%, rgba(183, 18, 44, 0.2), transparent 70%),
+    rgba(3, 4, 8, 0.88) !important;
+  backdrop-filter: blur(12px) saturate(120%) !important;
+}
+
+.errorCard {
+  position: relative;
+  width: min(540px, 94vw) !important;
+  border-radius: 20px !important;
+  border: 1px solid rgba(255, 84, 114, 0.24) !important;
+  background:
+    linear-gradient(180deg, rgba(24, 6, 10, 0.98), rgba(10, 4, 7, 0.99)) !important;
+  box-shadow:
+    0 36px 70px rgba(0, 0, 0, 0.62),
+    0 0 0 1px rgba(255, 92, 114, 0.06) inset,
+    0 0 60px rgba(122, 0, 25, 0.18) !important;
+  overflow: hidden !important;
+}
+
+.errorCard::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(460px 160px at 50% 22%, rgba(255, 65, 95, 0.16), transparent 68%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.03), transparent 34%);
+}
+
+.errorHead {
+  position: relative;
+  min-height: 72px !important;
+  padding: 0 18px !important;
+  gap: 14px !important;
+  background:
+    linear-gradient(180deg, rgba(76, 10, 20, 0.92), rgba(35, 5, 11, 0.96)) !important;
+  border-bottom: 1px solid rgba(255, 94, 112, 0.18) !important;
+}
+
+.errorHead::after {
+  content: "";
+  position: absolute;
+  left: 18px;
+  right: 18px;
+  bottom: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 94, 112, 0.5), transparent);
+}
+
+.errorAccent {
+  width: 10px !important;
+  height: 10px !important;
+  border-radius: 50% !important;
+  align-self: auto !important;
+  background: #ff526d !important;
+  box-shadow: 0 0 18px rgba(255, 82, 109, 0.8) !important;
+}
+
+.errorTitle {
+  margin-left: 0 !important;
+  font-size: 30px !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.08em !important;
+  color: #fff1f4 !important;
+  text-shadow: 0 0 24px rgba(255, 82, 109, 0.18) !important;
+}
+
+.errorBody {
+  min-height: 260px !important;
+  padding: 28px 20px 26px !important;
+  gap: 16px !important;
+  background:
+    radial-gradient(300px 160px at 50% 34%, rgba(255, 68, 98, 0.12), transparent 72%),
+    linear-gradient(180deg, rgba(20, 4, 8, 0.32), transparent) !important;
+}
+
+.errorIcon {
+  width: 120px !important;
+  height: 120px !important;
+  border-radius: 28px !important;
+  border: 1px solid rgba(255, 84, 114, 0.22) !important;
+  background: linear-gradient(180deg, rgba(255, 75, 104, 0.08), rgba(40, 5, 13, 0.18)) !important;
+  color: #ff637d !important;
+  font-size: 58px !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06), 0 0 32px rgba(255, 40, 80, 0.16) !important;
+}
+
+.errorText {
+  max-width: 420px !important;
+  font-size: 22px !important;
+  line-height: 1.3 !important;
+  font-weight: 700 !important;
+  color: #fff3f5 !important;
+}
+
+.questsList {
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)) !important;
+  gap: 10px !important;
+}
+
+.questCard {
+  padding: 11px 11px 10px !important;
+  border-radius: 12px !important;
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.05) !important;
+}
+
+.questTop,
+.questFooter,
+.questProgressRow {
+  gap: 8px !important;
+}
+
+.questTop {
+  align-items: flex-start !important;
+}
+
+.questTitle {
+  font-size: 13px !important;
+  line-height: 1.2 !important;
+  letter-spacing: 0.02em !important;
+}
+
+.questChip {
+  margin-top: 4px !important;
+  min-height: 18px !important;
+  padding: 0 7px !important;
+  font-size: 9px !important;
+  letter-spacing: 0.04em !important;
+}
+
+.questReward {
+  font-size: 11px !important;
+  white-space: nowrap;
+}
+
+.questDesc {
+  margin: 6px 0 !important;
+  min-height: 0 !important;
+  font-size: 11px !important;
+  line-height: 1.3 !important;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
+.questProgressTrack {
+  height: 7px !important;
+}
+
+.questProgressText,
+.questStatus {
+  font-size: 10px !important;
+  min-height: 0 !important;
+}
+
+.questClaimBtn,
+.questClaimBtn.promoBtn {
+  min-height: 28px !important;
+  min-width: 84px !important;
+  padding: 0 10px !important;
+  font-size: 10px !important;
+  border-radius: 9px !important;
+}
+
+.shopShowcase {
+  padding: 18px !important;
+  gap: 16px !important;
+}
+
+.shopShowcaseTitle {
+  font-size: 32px !important;
+}
+
+.shopShowcaseStat {
+  min-height: 84px !important;
+  padding: 10px 12px !important;
+}
+
+.shopCard {
+  padding: 12px !important;
+  gap: 10px !important;
+}
+
+.shopCardMedia {
+  min-height: 140px !important;
+  padding: 12px 12px 10px !important;
+}
+
+.shopCardItem .shopCardMedia img {
+  height: 114px !important;
+}
+
+.shopCardMeta {
+  min-height: 0 !important;
+}
+
+.shopCardActions {
+  gap: 8px !important;
+}
+
+.shopPrice,
+.premiumContainerPrice {
+  min-height: 36px !important;
+}
+
+.rewardModal {
+  background:
+    radial-gradient(760px 300px at 50% 16%, rgba(123, 198, 255, 0.08), transparent 72%),
+    rgba(3, 7, 14, 0.82) !important;
+  backdrop-filter: blur(14px) saturate(115%) !important;
+}
+
+.rewardCard {
+  width: min(480px, 92vw) !important;
+  border-radius: 22px !important;
+  border: 1px solid rgba(154, 206, 255, 0.16) !important;
+  background:
+    linear-gradient(180deg, rgba(11, 18, 34, 0.98), rgba(8, 13, 26, 0.99)) !important;
+  padding: 18px 18px 16px !important;
+  box-shadow: 0 28px 56px rgba(0, 0, 0, 0.52), inset 0 1px 0 rgba(255, 255, 255, 0.04) !important;
+  overflow: visible !important;
+  --reward-glow-ms: 760ms;
+}
+
+.rewardCard::before {
+  inset: 0 !important;
+  opacity: 0;
+  transform: scale(0.96);
+  background:
+    radial-gradient(340px 180px at 50% 24%, var(--reward-glow-soft, rgba(0, 0, 0, 0)), transparent 72%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.03), transparent 38%);
+  transition:
+    opacity var(--reward-glow-ms) ease,
+    box-shadow var(--reward-glow-ms) ease,
+    transform var(--reward-glow-ms) ease !important;
+}
+
+.rewardCard.rarity-rare { --reward-glow: rgba(88, 231, 255, 0.98); --reward-glow-soft: rgba(88, 231, 255, 0.28); }
+.rewardCard.rarity-epic { --reward-glow: rgba(176, 113, 255, 0.98); --reward-glow-soft: rgba(176, 113, 255, 0.3); }
+.rewardCard.rarity-ultrarare { --reward-glow: rgba(255, 93, 93, 0.98); --reward-glow-soft: rgba(255, 93, 93, 0.3); }
+.rewardCard.rarity-legendary { --reward-glow: rgba(255, 211, 79, 0.99); --reward-glow-soft: rgba(255, 211, 79, 0.32); }
+
+.rewardCard.isPrimed::before {
+  opacity: 1;
+  transform: scale(1);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.05),
+    0 0 0 1px var(--reward-glow),
+    0 0 34px var(--reward-glow-soft);
+}
+
+.rewardCard.isReveal {
+  transform: translateY(-2px) scale(1.01);
+  transition: transform 420ms ease;
+}
+
+.rewardCard.rarity-legendary.isPrimed::before {
+  animation: rewardLegendaryHalo 1800ms ease-in-out infinite alternate;
+}
+
+@keyframes rewardLegendaryHalo {
+  0% { box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05), 0 0 0 1px var(--reward-glow), 0 0 26px var(--reward-glow-soft); }
+  100% { box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05), 0 0 0 1px var(--reward-glow), 0 0 54px var(--reward-glow-soft); }
+}
+
+.rewardTitle {
+  margin-bottom: 12px !important;
+  font-size: 17px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.12em !important;
+  text-transform: uppercase;
+  opacity: 0.86;
+}
+
+.rewardContainerBox {
+  min-height: 250px !important;
+  border-radius: 18px !important;
+  background:
+    radial-gradient(circle at 50% 36%, rgba(255, 255, 255, 0.12), transparent 62%),
+    linear-gradient(180deg, rgba(18, 27, 45, 0.82), rgba(11, 16, 30, 0.96)) !important;
+  overflow: hidden;
+}
+
+.rewardContainerBox::before {
+  content: "";
+  position: absolute;
+  inset: -10% -12%;
+  pointer-events: none;
+  opacity: 0;
+  transform: scale(0.92);
+  background: radial-gradient(circle at 50% 50%, var(--reward-glow-soft, rgba(0, 0, 0, 0)), transparent 62%);
+  transition: opacity var(--reward-glow-ms) ease, transform var(--reward-glow-ms) ease;
+}
+
+.rewardContainerBox.isPrimed::before {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.rewardContainerImg {
+  width: min(330px, 88%) !important;
+  height: 190px !important;
+  transition: opacity 220ms ease, transform 360ms ease, filter 360ms ease !important;
+}
+
+.rewardContainerBox.isCharging .rewardContainerImg {
+  animation: rewardContainerCharge 1600ms ease-in-out infinite;
+  filter: drop-shadow(0 18px 30px rgba(0, 0, 0, 0.32)) drop-shadow(0 0 18px var(--reward-glow-soft, rgba(255, 255, 255, 0.14)));
+}
+
+.rewardContainerBox.isReveal .rewardContainerImg {
+  transform: translateY(-10px) scale(1.045);
+}
+
+.rewardContainerImg.isHidden {
+  opacity: 0 !important;
+  transform: translateY(-14px) scale(0.9) !important;
+}
+
+.rewardDropImg {
+  top: 50% !important;
+  width: 124px !important;
+  height: 124px !important;
+  transform: translate(-50%, -48%) scale(0.58) rotate(-8deg);
+  opacity: 0;
+  filter: drop-shadow(0 0 18px rgba(255, 255, 255, 0.34)) drop-shadow(0 0 28px var(--reward-glow-soft, rgba(255, 255, 255, 0.16)));
+  transition: transform 680ms cubic-bezier(0.18, 0.84, 0.22, 1), opacity 360ms ease !important;
+}
+
+.rewardDropImg.show {
+  opacity: 1;
+  transform: translate(-50%, -54%) scale(1) rotate(0deg);
+}
+
+.rewardContainerBox.rewardBurst::after {
+  inset: 6% 8% !important;
+  background: radial-gradient(circle at center, rgba(255, 255, 255, 0.24), var(--reward-glow-soft, rgba(255, 255, 255, 0.14)) 28%, transparent 72%) !important;
+  animation: rewardBurstFx 720ms cubic-bezier(0.18, 0.86, 0.22, 1) !important;
+}
+
+@keyframes rewardContainerCharge {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-8px) scale(1.018); }
+}
+
+@keyframes rewardBurstFx {
+  0% { opacity: 0.16; transform: scale(0.74); }
+  40% { opacity: 0.92; transform: scale(1); }
+  100% { opacity: 0; transform: scale(1.24); }
+}
+
+.rewardText {
+  margin-top: 12px !important;
+  font-size: 17px !important;
+  line-height: 1.35 !important;
+  font-weight: 600 !important;
+  color: #f1f7ff !important;
+}
+
+@media (max-width: 640px) {
+  .battleResultCard {
+    width: min(100%, 96vw) !important;
+    border-radius: 18px !important;
+  }
+
+  .battleResultBanner {
+    padding: 18px 14px 14px !important;
+  }
+
+  .battleResultTitle {
+    font-size: 30px !important;
+  }
+
+  .battleResultBody {
+    min-height: 0 !important;
+    padding: 18px 14px 20px !important;
+    gap: 12px !important;
+  }
+
+  .battleResultIcon {
+    width: 82px;
+    height: 82px;
+    border-radius: 20px;
+    font-size: 40px !important;
+  }
+
+  .battleResultText {
+    font-size: 14px !important;
+    line-height: 1.4 !important;
+  }
+
+  .errorCard {
+    border-radius: 18px !important;
+  }
+
+  .errorHead {
+    min-height: 62px !important;
+    padding: 0 16px !important;
+  }
+
+  .errorTitle {
+    font-size: 26px !important;
+  }
+
+  .errorBody {
+    min-height: 220px !important;
+    padding: 20px 14px 22px !important;
+    gap: 14px !important;
+  }
+
+  .errorIcon {
+    width: 88px !important;
+    height: 88px !important;
+    border-radius: 22px !important;
+    font-size: 44px !important;
+  }
+
+  .errorText {
+    font-size: 18px !important;
+    line-height: 1.28 !important;
+  }
+
+  .questsList {
+    grid-template-columns: 1fr !important;
+    gap: 8px !important;
+  }
+
+  .questCard {
+    padding: 10px !important;
+  }
+
+  .shopMenu {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px !important;
+    padding: 8px !important;
+  }
+
+  .shopMenuIntro {
+    grid-column: 1 / -1;
+    padding: 0 2px 6px !important;
+  }
+
+  .shopMenuTitle {
+    font-size: 18px !important;
+  }
+
+  .shopMenuNote {
+    margin-top: 4px !important;
+    font-size: 11px !important;
+  }
+
+  .shopCat {
+    grid-template-columns: 32px minmax(0, 1fr) !important;
+    min-height: 54px !important;
+    padding: 8px !important;
+    gap: 8px !important;
+    border-radius: 12px !important;
+  }
+
+  .shopCatIcon {
+    width: 32px !important;
+    height: 32px !important;
+    border-radius: 10px !important;
+    font-size: 14px !important;
+  }
+
+  .shopCatTitle {
+    font-size: 12px !important;
+    line-height: 1.12 !important;
+  }
+
+  .shopCatMeta {
+    display: none !important;
+  }
+
+  .shopContent {
+    padding: 8px !important;
+  }
+
+  .shopShowcase {
+    padding: 12px !important;
+    gap: 10px !important;
+    border-radius: 14px !important;
+  }
+
+  .shopShowcaseTitle {
+    font-size: 20px !important;
+  }
+
+  .shopShowcaseSubtitle {
+    font-size: 12px !important;
+    line-height: 1.35 !important;
+  }
+
+  .shopShowcaseMeta {
+    gap: 8px !important;
+  }
+
+  .shopShowcaseStat {
+    padding: 10px 12px !important;
+    border-radius: 12px !important;
+  }
+
+  .shopShowcaseStatValue {
+    font-size: 15px !important;
+  }
+
+  .shopShowcaseStatLabel {
+    font-size: 10px !important;
+  }
+
+  .shopList {
+    gap: 8px !important;
+  }
+
+  .shopCard {
+    padding: 10px !important;
+    gap: 8px !important;
+    border-radius: 14px !important;
+  }
+
+  .shopCardMedia {
+    min-height: 112px !important;
+    padding: 10px 10px 8px !important;
+    border-radius: 12px !important;
+  }
+
+  .shopCardItem .shopCardMedia img {
+    height: 92px !important;
+  }
+
+  .shopCardBadge,
+  .shopOwnedPill {
+    top: 8px !important;
+    min-height: 20px !important;
+    padding: 0 8px !important;
+    font-size: 9px !important;
+  }
+
+  .shopCardTitle {
+    font-size: 13px !important;
+  }
+
+  .shopCardMeta {
+    min-height: 0 !important;
+    font-size: 11px !important;
+    line-height: 1.3 !important;
+  }
+
+  .shopPrice,
+  .premiumContainerPrice {
+    min-height: 34px !important;
+    padding: 0 10px !important;
+    font-size: 11px !important;
+    border-radius: 10px !important;
+  }
+
+  .shopCardActions .shopBuyBtn,
+  .shopBuyBtnAlt,
+  .starsBuyBtn {
+    min-height: 36px !important;
+    padding: 8px 10px !important;
+    font-size: 11px !important;
+    border-radius: 10px !important;
+  }
+
+  .shopPremiumContainerShowcase {
+    padding: 10px 10px 12px !important;
+  }
+
+  .premiumContainerVisual {
+    min-height: 0 !important;
+    padding: 4px !important;
+    border-radius: 14px !important;
+  }
+
+  .premiumContainerHero {
+    min-height: 170px !important;
+  }
+
+  .premiumContainerHeroImg {
+    height: 176px !important;
+    transform: scale(1.08) !important;
+  }
+
+  .premiumContainerKicker {
+    min-height: 22px !important;
+    padding: 0 8px !important;
+    font-size: 9px !important;
+    letter-spacing: 0.08em !important;
+  }
+
+  .shopPremiumContainerShowcase .shopCardTitle,
+  .premiumContainerShowTitle {
+    font-size: 18px !important;
+  }
+
+  .shopPremiumContainerShowcase .shopCardMeta,
+  .premiumContainerShowSub {
+    font-size: 12px !important;
+  }
+
+  .premiumContainerDrops {
+    gap: 6px !important;
+  }
+
+  .containerTabs {
+    gap: 6px !important;
+    padding: 6px !important;
+  }
+
+  .containerTabs .subTab {
+    min-height: 34px !important;
+    padding: 7px 10px !important;
+    font-size: 11px !important;
+    border-radius: 10px !important;
+  }
+
+  .containerWrap {
+    min-height: 170px !important;
+    margin-top: 10px !important;
+  }
+
+  .containerImg {
+    width: min(280px, 88%) !important;
+    height: 140px !important;
+  }
+
+  .containerActions {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 8px !important;
+    margin-top: 10px !important;
+  }
+
+  .containerActions .equipBtn,
+  .containerActions .ghostBtn {
+    width: 100% !important;
+    min-height: 38px !important;
+    padding: 8px 10px !important;
+    font-size: 11px !important;
+    border-radius: 10px !important;
+  }
+
+  .containerMetaRow {
+    margin-top: 10px !important;
+    padding: 10px !important;
+    gap: 8px !important;
+    border-radius: 12px !important;
+  }
+
+  .containerMetaTitle {
+    font-size: 10px !important;
+  }
+
+  .containerMetaActive {
+    font-size: 12px !important;
+  }
+
+  .containerPill {
+    gap: 5px !important;
+    padding: 6px 9px !important;
+    font-size: 11px !important;
+  }
+
+  .rewardCard {
+    width: min(94vw, 420px) !important;
+    border-radius: 18px !important;
+    padding: 14px 14px 12px !important;
+  }
+
+  .rewardTitle {
+    font-size: 14px !important;
+    letter-spacing: 0.08em !important;
+  }
+
+  .rewardContainerBox {
+    min-height: 210px !important;
+    border-radius: 14px !important;
+  }
+
+  .rewardContainerImg {
+    width: min(260px, 84%) !important;
+    height: 150px !important;
+  }
+
+  .rewardDropImg {
+    width: 96px !important;
+    height: 96px !important;
+  }
+
+  .rewardText {
+    font-size: 14px !important;
+  }
+}
+
+.quickMatchWidget.isHidden,
+#quickMatchWidget.isHidden {
+  display: none !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  visibility: hidden !important;
+}
+
+button,
+.mainTab,
+.subTab,
+.promoBtn,
+.equipBtn,
+.ghostBtn,
+.shopBuyBtn,
+.purchaseActionBtn,
+.quickMatchWidgetCancel {
+  font-weight: 600 !important;
+  letter-spacing: 0.02em !important;
+}
+
+.nickname,
+.currency,
+.leadersTitle,
+.battlesTitle,
+.shopShowcaseTitle,
+.profileTankTitle,
+.stageTitle,
+.purchaseTitle,
+.questTitle,
+.shopTitle,
+.leadersHeroHeadline,
+.quickMatchWidgetTitle,
+.errorTitle,
+.battleResultTitle {
+  font-weight: 700 !important;
+  letter-spacing: 0.01em !important;
+}
+
+.leadersSubtitle,
+.leadersHeroSub,
+.quickMatchWidgetMetricLabel,
+.quickMatchWidgetKicker,
+.hint,
+.purchaseLabel,
+.shopCardMeta,
+.battleLobbyMeta,
+.battleLobbyMapBrief {
+  font-weight: 500 !important;
+  letter-spacing: 0.01em !important;
+}
+
+.statValue,
+.quickMatchWidgetMetric b,
+.leadersPlace,
+.leadersName,
+.shopPriceCrystals,
+.shopPriceStars {
+  font-weight: 700 !important;
+}
+
+/* ===== Final polish pass ===== */
+body {
+  color: #eef5ff !important;
+  background:
+    radial-gradient(1280px 560px at 18% -8%, rgba(112, 198, 255, 0.13), transparent 60%),
+    radial-gradient(980px 460px at 100% 8%, rgba(155, 144, 255, 0.11), transparent 58%),
+    radial-gradient(880px 420px at 50% 100%, rgba(120, 239, 203, 0.08), transparent 62%),
+    linear-gradient(180deg, #050a13 0%, #09111f 52%, #060a13 100%) !important;
+}
+
+body::before {
+  background:
+    linear-gradient(rgba(5, 10, 19, 0.34), rgba(5, 11, 22, 0.8)),
+    radial-gradient(780px 280px at 50% 100%, rgba(123, 198, 255, 0.14), transparent 72%),
+    var(--bg-image) center/cover no-repeat !important;
+  filter: blur(1.5px) brightness(0.46) saturate(1.08) !important;
+  opacity: 0.9 !important;
+}
+
+body::after {
+  opacity: 0.22 !important;
+}
+
+.hud,
+.mainTabs,
+.panel {
+  border-color: rgba(150, 201, 255, 0.2) !important;
+  box-shadow: 0 24px 56px rgba(2, 8, 20, 0.44), inset 0 1px 0 rgba(255, 255, 255, 0.05) !important;
+  backdrop-filter: blur(18px) saturate(118%) !important;
+}
+
+.hud {
+  background:
+    radial-gradient(540px 180px at 0% 0%, rgba(123, 198, 255, 0.16), transparent 64%),
+    radial-gradient(520px 220px at 100% 100%, rgba(155, 144, 255, 0.11), transparent 68%),
+    linear-gradient(180deg, rgba(16, 26, 46, 0.92), rgba(9, 15, 29, 0.96)) !important;
+}
+
+.mainTabs {
+  background:
+    radial-gradient(620px 200px at 50% 0%, rgba(123, 198, 255, 0.07), transparent 72%),
+    linear-gradient(180deg, rgba(12, 19, 35, 0.82), rgba(8, 14, 25, 0.92)) !important;
+}
+
+.panel {
+  background:
+    radial-gradient(980px 320px at 0% 0%, rgba(123, 198, 255, 0.1), transparent 66%),
+    radial-gradient(760px 300px at 100% 100%, rgba(155, 144, 255, 0.08), transparent 70%),
+    linear-gradient(180deg, rgba(10, 16, 30, 0.86), rgba(7, 12, 23, 0.95)) !important;
+}
+
+.panelReferrals {
+  background:
+    radial-gradient(720px 260px at 10% 8%, rgba(123, 198, 255, 0.14), transparent 64%),
+    radial-gradient(560px 220px at 100% 100%, rgba(171, 141, 255, 0.11), transparent 68%),
+    linear-gradient(180deg, rgba(10, 17, 32, 0.93), rgba(7, 12, 24, 0.98)) !important;
+}
+
+.panelLeaders {
+  background:
+    radial-gradient(780px 260px at 0% 0%, rgba(106, 203, 255, 0.14), transparent 62%),
+    radial-gradient(620px 240px at 100% 12%, rgba(255, 194, 118, 0.1), transparent 62%),
+    linear-gradient(180deg, rgba(10, 17, 32, 0.93), rgba(7, 12, 24, 0.98)) !important;
+}
+
+.panelBattles {
+  background:
+    radial-gradient(820px 280px at 86% 12%, rgba(255, 160, 92, 0.11), transparent 62%),
+    radial-gradient(720px 260px at 0% 100%, rgba(123, 198, 255, 0.08), transparent 68%),
+    linear-gradient(180deg, rgba(10, 16, 27, 0.94), rgba(7, 11, 20, 0.98)) !important;
+}
+
+.stageInfo,
+.tankShowcase,
+.shopMenu,
+.shopContent,
+.containerWrap,
+.statCard,
+.itemCard,
+.shopCard,
+.battleBotCard,
+.battleArena,
+.battleSide,
+.battleMovePad,
+.battleActionPad,
+.leadersTableWrap,
+.leadersMeWrap,
+.leadersBoardCard,
+.promoRedeemCard,
+.promoHeroCard,
+.shopShowcase,
+.chatCard,
+.refHero,
+.refLinkCard,
+.refRewardCard,
+.refMilestoneCard,
+.questCard,
+.card,
+.battleModeCard,
+.purchaseCard,
+.rankUpCard,
+.rewardCard,
+.battleResultCard {
+  border-color: rgba(149, 201, 255, 0.16) !important;
+  background:
+    radial-gradient(520px 180px at 0% 0%, rgba(123, 198, 255, 0.1), transparent 64%),
+    radial-gradient(340px 160px at 100% 100%, rgba(155, 144, 255, 0.06), transparent 70%),
+    linear-gradient(180deg, rgba(17, 27, 48, 0.9), rgba(10, 17, 32, 0.97)) !important;
+  box-shadow: 0 18px 34px rgba(0, 0, 0, 0.26), inset 0 1px 0 rgba(255, 255, 255, 0.04) !important;
+}
+
+.mainTab,
+.subTab,
+.promoBtn,
+.equipBtn,
+.ghostBtn,
+.shopBuyBtn,
+.purchaseActionBtn,
+.quickMatchWidgetCancel {
+  font-weight: 700 !important;
+  letter-spacing: 0.03em !important;
+}
+
+.mainTab {
+  border-color: rgba(149, 201, 255, 0.12) !important;
+  background: linear-gradient(180deg, rgba(21, 34, 58, 0.92), rgba(13, 22, 38, 0.96)) !important;
+  color: rgba(213, 227, 247, 0.78) !important;
+}
+
+.mainTab.isActive,
+.subTab.isActive {
+  border-color: rgba(181, 224, 255, 0.5) !important;
+  background:
+    radial-gradient(260px 110px at 50% 0%, rgba(144, 214, 255, 0.18), transparent 70%),
+    linear-gradient(180deg, rgba(66, 93, 146, 0.96), rgba(34, 53, 86, 0.98)) !important;
+  box-shadow: 0 12px 26px rgba(34, 84, 162, 0.22), 0 0 0 1px rgba(144, 214, 255, 0.12) inset !important;
+}
+
+.promoBtn,
+.equipBtn,
+.quickBattleCta,
+.purchaseActionBtn,
+.shopBuyBtn,
+.questClaimBtn {
+  border: 1px solid rgba(201, 241, 255, 0.78) !important;
+  background:
+    radial-gradient(180px 80px at 50% 0%, rgba(255, 255, 255, 0.28), transparent 72%),
+    linear-gradient(135deg, #95ecff 0%, #7cb8ff 50%, #8d84ff 100%) !important;
+  color: #071321 !important;
+  box-shadow: 0 16px 30px rgba(72, 123, 255, 0.24), inset 0 1px 0 rgba(255, 255, 255, 0.26) !important;
+}
+
+.ghostBtn,
+.shopBuyBtnAlt,
+.quickMatchWidgetCancel {
+  border: 1px solid rgba(149, 201, 255, 0.18) !important;
+  background: linear-gradient(180deg, rgba(27, 41, 64, 0.96), rgba(14, 24, 40, 0.98)) !important;
+  color: #eef5ff !important;
+}
+
+.nickname,
+.currency,
+.statValue,
+.questTitle,
+.shopTitle,
+.battleLobbyName,
+.leadersName,
+.purchaseTitle,
+.profileTankTitle,
+.stageTitle,
+.leadersTitle,
+.battlesTitle,
+.shopShowcaseTitle,
+.promoTitle,
+.refHeroTitle,
+.battleBotCardTitle,
+.leadersHeroHeadline,
+.quickMatchWidgetTitle,
+.errorTitle,
+.battleResultTitle,
+.premiumContainerShowTitle,
+.containerMetaTitle {
+  font-weight: 800 !important;
+  letter-spacing: 0.02em !important;
+}
+
+.hint,
+.leadersSubtitle,
+.leadersHeroSub,
+.battleLobbyMeta,
+.shopCardMeta,
+.purchaseLabel,
+.quickMatchWidgetMetricLabel,
+.quickMatchWidgetKicker {
+  color: rgba(210, 224, 245, 0.74) !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.02em !important;
+}
+
+.leadersHeroCard {
+  justify-content: stretch !important;
+}
+
+.leadersHeroArt {
+  width: 100% !important;
+  max-width: none !important;
+  min-height: 212px !important;
+  border-color: rgba(184, 222, 255, 0.14) !important;
+  background:
+    radial-gradient(620px 240px at 18% 18%, rgba(123, 198, 255, 0.16), transparent 62%),
+    radial-gradient(560px 220px at 84% 76%, rgba(153, 112, 255, 0.12), transparent 60%),
+    linear-gradient(180deg, rgba(18, 27, 42, 0.9), rgba(10, 15, 26, 0.96)) !important;
+}
+
+.quickMatchWidget {
+  top: 24px !important;
+  right: 16px !important;
+  width: min(500px, calc(100vw - 24px)) !important;
+  max-width: calc(100vw - 24px) !important;
+  padding: 14px 14px 14px 16px !important;
+  border-radius: 22px !important;
+  border: 1px solid rgba(155, 214, 255, 0.22) !important;
+  grid-template-columns: minmax(0, 1fr) 112px !important;
+  grid-template-areas:
+    "top cancel"
+    "body cancel"
+    "status cancel" !important;
+  gap: 10px 12px !important;
+  background:
+    linear-gradient(132deg, rgba(10, 17, 31, 0.94), rgba(11, 20, 38, 0.9) 52%, rgba(31, 20, 51, 0.84) 100%),
+    radial-gradient(280px 120px at 84% 84%, rgba(155, 144, 255, 0.18), transparent 72%),
+    radial-gradient(260px 120px at 12% 18%, rgba(123, 198, 255, 0.14), transparent 74%),
+    url("/images/webapp/Background.webp") center/cover no-repeat !important;
+  box-shadow: 0 22px 44px rgba(0, 0, 0, 0.42), 0 0 0 1px rgba(168, 215, 255, 0.08) inset !important;
+  backdrop-filter: blur(16px) saturate(118%) !important;
+}
+
+.quickMatchWidgetTop {
+  gap: 10px !important;
+}
+
+.quickMatchWidgetEmblem {
+  width: 40px !important;
+  height: 40px !important;
+  border-radius: 12px !important;
+  border-color: rgba(153, 215, 255, 0.24) !important;
+  background: linear-gradient(180deg, rgba(129, 222, 255, 0.16), rgba(78, 107, 255, 0.12)) !important;
+  color: #bbecff !important;
+  font-size: 18px !important;
+}
+
+.quickMatchWidgetKicker {
+  font-size: 9px !important;
+  letter-spacing: 0.14em !important;
+}
+
+.quickMatchWidgetTitle {
+  font-size: 20px !important;
+  line-height: 1.05 !important;
+  text-shadow: none !important;
+}
+
+.quickMatchWidgetBody {
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 8px !important;
+}
+
+.quickMatchWidgetMetric {
+  min-height: 64px !important;
+  padding: 10px 12px !important;
+  border-radius: 14px !important;
+  border-color: rgba(155, 214, 255, 0.12) !important;
+  background: linear-gradient(180deg, rgba(15, 24, 41, 0.76), rgba(10, 16, 29, 0.88)) !important;
+  gap: 6px !important;
+}
+
+.quickMatchWidgetMetricLabel {
+  font-size: 10px !important;
+  line-height: 1.25 !important;
+  text-transform: none !important;
+}
+
+.quickMatchWidgetMetric b {
+  color: #f3f8ff !important;
+  font-size: 22px !important;
+  font-weight: 800 !important;
+  text-shadow: none !important;
+}
+
+.quickMatchWidgetStatus {
+  min-height: 28px !important;
+  padding: 0 10px !important;
+  border-color: rgba(120, 239, 203, 0.18) !important;
+  background: rgba(120, 239, 203, 0.08) !important;
+  color: rgba(219, 255, 245, 0.92) !important;
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.06em !important;
+}
+
+.quickMatchWidgetStatusDot {
+  width: 7px !important;
+  height: 7px !important;
+  background: #78efcb !important;
+  box-shadow: 0 0 12px rgba(120, 239, 203, 0.58) !important;
+}
+
+.quickMatchWidgetCancel {
+  width: 112px !important;
+  min-height: 100% !important;
+  border-radius: 16px !important;
+  font-size: 12px !important;
+}
+
+@media (max-width: 900px) {
+  .quickMatchWidget {
+    top: 14px !important;
+    right: 10px !important;
+    width: min(460px, calc(100vw - 20px)) !important;
+    max-width: calc(100vw - 20px) !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .mainTab,
+  .subTab,
+  .promoBtn,
+  .equipBtn,
+  .ghostBtn,
+  .shopBuyBtn,
+  .purchaseActionBtn {
+    letter-spacing: 0.02em !important;
+  }
+
+  .quickMatchWidget {
+    top: 10px !important;
+    right: 8px !important;
+    left: 8px !important;
+    width: auto !important;
+    max-width: none !important;
+    padding: 10px 10px 10px 12px !important;
+    border-radius: 18px !important;
+    grid-template-columns: minmax(0, 1fr) 94px !important;
+    grid-template-areas:
+      "top cancel"
+      "body cancel"
+      "status status" !important;
+    gap: 8px 10px !important;
+  }
+
+  .quickMatchWidgetTop {
+    gap: 8px !important;
+    align-items: flex-start !important;
+  }
+
+  .quickMatchWidgetEmblem {
+    width: 34px !important;
+    height: 34px !important;
+    border-radius: 10px !important;
+    font-size: 15px !important;
+  }
+
+  .quickMatchWidgetKicker {
+    display: none !important;
+  }
+
+  .quickMatchWidgetTitle {
+    font-size: 16px !important;
+    line-height: 1.1 !important;
+  }
+
+  .quickMatchWidgetBody {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 8px !important;
+  }
+
+  .quickMatchWidgetMetric {
+    min-height: 52px !important;
+    padding: 8px 9px !important;
+    border-radius: 12px !important;
+    gap: 4px !important;
+  }
+
+  .quickMatchWidgetMetricLabel {
+    font-size: 9px !important;
+    line-height: 1.2 !important;
+  }
+
+  .quickMatchWidgetMetric b {
+    font-size: 17px !important;
+  }
+
+  .quickMatchWidgetStatus {
+    width: 100% !important;
+    justify-content: center !important;
+    font-size: 9px !important;
+    padding: 0 8px !important;
+  }
+
+  .quickMatchWidgetCancel {
+    width: 94px !important;
+    min-height: 100% !important;
+    padding: 10px 8px !important;
+    border-radius: 12px !important;
+    font-size: 11px !important;
+  }
+
+  .leadersHeroArt {
+    min-height: 176px !important;
+    padding: 16px !important;
+  }
+
+  .leadersHeroHeadline {
+    font-size: 20px !important;
+  }
+}
+
+/* ===== 2026 refinement pass ===== */
+:root {
+  --web-shell-bg: #060b14;
+  --web-panel-a: rgba(12, 19, 36, 0.9);
+  --web-panel-b: rgba(8, 13, 25, 0.96);
+  --web-card-a: rgba(17, 27, 48, 0.88);
+  --web-card-b: rgba(10, 17, 32, 0.96);
+  --web-line: rgba(150, 201, 255, 0.2);
+  --web-line-strong: rgba(188, 225, 255, 0.42);
+  --web-text: #eef5ff;
+  --web-text-soft: rgba(210, 224, 245, 0.74);
+  --web-cyan: #90d6ff;
+  --web-violet: #9b90ff;
+  --web-mint: #78efcb;
+  --web-shadow-lg: 0 24px 56px rgba(2, 8, 20, 0.44);
+}
+
+body {
+  color: var(--web-text);
+  background:
+    radial-gradient(1280px 560px at 18% -8%, rgba(112, 198, 255, 0.13), transparent 60%),
+    radial-gradient(980px 460px at 100% 8%, rgba(155, 144, 255, 0.11), transparent 58%),
+    radial-gradient(880px 420px at 50% 100%, rgba(120, 239, 203, 0.08), transparent 62%),
+    linear-gradient(180deg, #050a13 0%, #09111f 52%, #060a13 100%) !important;
+}
+
+body::before {
+  background:
+    linear-gradient(rgba(5, 10, 19, 0.34), rgba(5, 11, 22, 0.8)),
+    radial-gradient(780px 280px at 50% 100%, rgba(123, 198, 255, 0.14), transparent 72%),
+    var(--bg-image) center/cover no-repeat !important;
+  filter: blur(1.5px) brightness(0.46) saturate(1.08) !important;
+  opacity: 0.9 !important;
+}
+
+body::after {
+  opacity: 0.22 !important;
+  background:
+    linear-gradient(180deg, rgba(149, 197, 255, 0.035), transparent 26%, transparent 74%, rgba(151, 127, 255, 0.04)),
+    radial-gradient(circle at 22% 20%, rgba(255, 255, 255, 0.08) 0 1px, transparent 1px),
+    radial-gradient(circle at 76% 22%, rgba(255, 255, 255, 0.06) 0 1px, transparent 1px),
+    radial-gradient(circle at 58% 76%, rgba(255, 255, 255, 0.05) 0 1px, transparent 1px) !important;
+  background-size: auto, 132px 132px, 176px 176px, 118px 118px !important;
+}
+
+.hud,
+.mainTabs,
+.panel {
+  border-color: var(--web-line) !important;
+  box-shadow: var(--web-shadow-lg), inset 0 1px 0 rgba(255, 255, 255, 0.05) !important;
+  backdrop-filter: blur(18px) saturate(118%) !important;
+}
+
+.hud {
+  background:
+    radial-gradient(540px 180px at 0% 0%, rgba(123, 198, 255, 0.16), transparent 64%),
+    radial-gradient(520px 220px at 100% 100%, rgba(155, 144, 255, 0.11), transparent 68%),
+    linear-gradient(180deg, rgba(16, 26, 46, 0.92), rgba(9, 15, 29, 0.96)) !important;
+}
+
+.mainTabs {
+  background:
+    radial-gradient(620px 200px at 50% 0%, rgba(123, 198, 255, 0.07), transparent 72%),
+    linear-gradient(180deg, rgba(12, 19, 35, 0.82), rgba(8, 14, 25, 0.92)) !important;
+}
+
+.panel {
+  background:
+    radial-gradient(980px 320px at 0% 0%, rgba(123, 198, 255, 0.1), transparent 66%),
+    radial-gradient(760px 300px at 100% 100%, rgba(155, 144, 255, 0.08), transparent 70%),
+    linear-gradient(180deg, rgba(10, 16, 30, 0.86), rgba(7, 12, 23, 0.95)) !important;
+}
+
+.panel::before,
+.notice::before {
+  border-color: rgba(190, 225, 255, 0.1) !important;
+}
+
+.panelProfile {
+  background:
+    radial-gradient(760px 260px at 12% 14%, rgba(107, 211, 255, 0.14), transparent 64%),
+    radial-gradient(520px 240px at 88% 100%, rgba(120, 239, 203, 0.08), transparent 70%),
+    linear-gradient(180deg, rgba(9, 16, 31, 0.93), rgba(6, 11, 22, 0.98)) !important;
+}
+
+.panelReferrals {
+  background:
+    radial-gradient(720px 260px at 10% 8%, rgba(123, 198, 255, 0.14), transparent 64%),
+    radial-gradient(560px 220px at 100% 100%, rgba(171, 141, 255, 0.11), transparent 68%),
+    linear-gradient(180deg, rgba(10, 17, 32, 0.93), rgba(7, 12, 24, 0.98)) !important;
+}
+
+.panelLeaders {
+  background:
+    radial-gradient(780px 260px at 0% 0%, rgba(106, 203, 255, 0.14), transparent 62%),
+    radial-gradient(620px 240px at 100% 12%, rgba(255, 194, 118, 0.1), transparent 62%),
+    linear-gradient(180deg, rgba(10, 17, 32, 0.93), rgba(7, 12, 24, 0.98)) !important;
+}
+
+.panelBattles {
+  background:
+    radial-gradient(820px 280px at 86% 12%, rgba(255, 160, 92, 0.11), transparent 62%),
+    radial-gradient(720px 260px at 0% 100%, rgba(123, 198, 255, 0.08), transparent 68%),
+    linear-gradient(180deg, rgba(10, 16, 27, 0.94), rgba(7, 11, 20, 0.98)) !important;
+}
+
+.panelGarage {
+  background:
+    radial-gradient(720px 280px at 86% 16%, rgba(147, 126, 255, 0.12), transparent 64%),
+    radial-gradient(620px 240px at 0% 100%, rgba(123, 198, 255, 0.1), transparent 68%),
+    linear-gradient(180deg, rgba(8, 15, 28, 0.94), rgba(6, 11, 22, 0.98)) !important;
+}
+
+.panelShop {
+  background:
+    radial-gradient(760px 280px at 0% 0%, rgba(123, 198, 255, 0.1), transparent 66%),
+    radial-gradient(720px 280px at 100% 100%, rgba(120, 239, 203, 0.08), transparent 68%),
+    linear-gradient(180deg, rgba(9, 15, 29, 0.94), rgba(7, 12, 22, 0.98)) !important;
+}
+
+.panelContainers {
+  background:
+    radial-gradient(760px 280px at 50% 0%, rgba(255, 204, 120, 0.11), transparent 64%),
+    radial-gradient(680px 260px at 0% 100%, rgba(123, 198, 255, 0.08), transparent 68%),
+    linear-gradient(180deg, rgba(10, 15, 24, 0.94), rgba(7, 11, 20, 0.98)) !important;
+}
+
+.panelQuests {
+  background:
+    radial-gradient(760px 280px at 0% 0%, rgba(120, 239, 203, 0.1), transparent 64%),
+    radial-gradient(720px 280px at 100% 100%, rgba(123, 198, 255, 0.08), transparent 68%),
+    linear-gradient(180deg, rgba(9, 15, 26, 0.94), rgba(7, 11, 19, 0.98)) !important;
+}
+
+.panelSettings {
+  background:
+    radial-gradient(760px 280px at 0% 0%, rgba(123, 198, 255, 0.12), transparent 64%),
+    radial-gradient(720px 280px at 100% 100%, rgba(155, 144, 255, 0.08), transparent 68%),
+    linear-gradient(180deg, rgba(10, 16, 29, 0.94), rgba(7, 11, 21, 0.98)) !important;
+}
+
+.stageInfo,
+.tankShowcase,
+.shopMenu,
+.shopContent,
+.containerWrap,
+.statCard,
+.itemCard,
+.shopCard,
+.battleBotCard,
+.battleArena,
+.battleSide,
+.battleMovePad,
+.battleActionPad,
+.leadersTableWrap,
+.leadersMeWrap,
+.leadersBoardCard,
+.promoRedeemCard,
+.promoHeroCard,
+.shopShowcase,
+.chatCard,
+.refHero,
+.refLinkCard,
+.refRewardCard,
+.refMilestoneCard,
+.questCard,
+.card,
+.battleModeCard,
+.purchaseCard,
+.rankUpCard,
+.rewardCard,
+.battleResultCard {
+  border-color: rgba(149, 201, 255, 0.16) !important;
+  background:
+    radial-gradient(520px 180px at 0% 0%, rgba(123, 198, 255, 0.1), transparent 64%),
+    radial-gradient(340px 160px at 100% 100%, rgba(155, 144, 255, 0.06), transparent 70%),
+    linear-gradient(180deg, rgba(17, 27, 48, 0.9), rgba(10, 17, 32, 0.97)) !important;
+  box-shadow: 0 18px 34px rgba(0, 0, 0, 0.26), inset 0 1px 0 rgba(255, 255, 255, 0.04) !important;
+}
+
+.mainTab,
+.subTab {
+  font-weight: 700 !important;
+  letter-spacing: 0.04em !important;
+}
+
+.mainTab {
+  border-color: rgba(149, 201, 255, 0.12) !important;
+  background: linear-gradient(180deg, rgba(21, 34, 58, 0.92), rgba(13, 22, 38, 0.96)) !important;
+  color: rgba(213, 227, 247, 0.78) !important;
+}
+
+.mainTab.isActive,
+.subTab.isActive {
+  border-color: rgba(181, 224, 255, 0.5) !important;
+  background:
+    radial-gradient(260px 110px at 50% 0%, rgba(144, 214, 255, 0.18), transparent 70%),
+    linear-gradient(180deg, rgba(66, 93, 146, 0.96), rgba(34, 53, 86, 0.98)) !important;
+  box-shadow: 0 12px 26px rgba(34, 84, 162, 0.22), 0 0 0 1px rgba(144, 214, 255, 0.12) inset !important;
+}
+
+.promoBtn,
+.equipBtn,
+.quickBattleCta,
+.purchaseActionBtn,
+.shopBuyBtn,
+.questClaimBtn {
+  border: 1px solid rgba(201, 241, 255, 0.78) !important;
+  background:
+    radial-gradient(180px 80px at 50% 0%, rgba(255, 255, 255, 0.28), transparent 72%),
+    linear-gradient(135deg, #95ecff 0%, #7cb8ff 50%, #8d84ff 100%) !important;
+  color: #071321 !important;
+  box-shadow: 0 16px 30px rgba(72, 123, 255, 0.24), inset 0 1px 0 rgba(255, 255, 255, 0.26) !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.03em !important;
+}
+
+.ghostBtn,
+.shopBuyBtnAlt {
+  border: 1px solid rgba(149, 201, 255, 0.18) !important;
+  background: linear-gradient(180deg, rgba(27, 41, 64, 0.96), rgba(14, 24, 40, 0.98)) !important;
+  color: #eef5ff !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.03em !important;
+}
+
+.nickname,
+.currency,
+.statValue,
+.questTitle,
+.shopTitle,
+.battleLobbyName,
+.leadersName,
+.purchaseTitle,
+.profileTankTitle,
+.stageTitle,
+.leadersTitle,
+.battlesTitle,
+.shopShowcaseTitle,
+.promoTitle,
+.refHeroTitle,
+.battleBotCardTitle,
+.leadersHeroHeadline,
+.quickMatchWidgetTitle,
+.errorTitle,
+.battleResultTitle,
+.premiumContainerShowTitle,
+.containerMetaTitle {
+  font-weight: 800 !important;
+  letter-spacing: 0.02em !important;
+}
+
+.hint,
+.leadersSubtitle,
+.leadersHeroSub,
+.battleLobbyMeta,
+.shopCardMeta,
+.purchaseLabel,
+.quickMatchWidgetMetricLabel,
+.quickMatchWidgetKicker {
+  color: var(--web-text-soft) !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.02em !important;
+}
+
+.leadersHeroCard {
+  justify-content: stretch !important;
+}
+
+.leadersHeroArt {
+  width: 100% !important;
+  max-width: none !important;
+  min-height: 212px !important;
+  border-color: rgba(184, 222, 255, 0.14) !important;
+  background:
+    radial-gradient(620px 240px at 18% 18%, rgba(123, 198, 255, 0.16), transparent 62%),
+    radial-gradient(560px 220px at 84% 76%, rgba(153, 112, 255, 0.12), transparent 60%),
+    linear-gradient(180deg, rgba(18, 27, 42, 0.9), rgba(10, 15, 26, 0.96)) !important;
+  box-shadow: 0 18px 34px rgba(0, 0, 0, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.06) !important;
+}
+
+.leadersHeroHeadline {
+  font-size: 24px !important;
+}
+
+.leadersHeroSub {
+  font-size: 14px !important;
+}
+
+.leadersBoardCard {
+  padding: 20px 22px 18px !important;
+}
+
+.quickMatchWidget {
+  position: fixed !important;
+  top: 24px !important;
+  right: 16px !important;
+  width: min(500px, calc(100vw - 24px)) !important;
+  max-width: calc(100vw - 24px) !important;
+  padding: 14px 14px 14px 16px !important;
+  border-radius: 22px !important;
+  border: 1px solid rgba(155, 214, 255, 0.22) !important;
+  grid-template-columns: minmax(0, 1fr) 112px !important;
+  grid-template-areas:
+    "top cancel"
+    "body cancel"
+    "status cancel" !important;
+  gap: 10px 12px !important;
+  background:
+    linear-gradient(132deg, rgba(10, 17, 31, 0.94), rgba(11, 20, 38, 0.9) 52%, rgba(31, 20, 51, 0.84) 100%),
+    radial-gradient(280px 120px at 84% 84%, rgba(155, 144, 255, 0.18), transparent 72%),
+    radial-gradient(260px 120px at 12% 18%, rgba(123, 198, 255, 0.14), transparent 74%),
+    url("/images/webapp/Background.webp") center/cover no-repeat !important;
+  box-shadow: 0 22px 44px rgba(0, 0, 0, 0.42), 0 0 0 1px rgba(168, 215, 255, 0.08) inset !important;
+  backdrop-filter: blur(16px) saturate(118%) !important;
+}
+
+.quickMatchWidget::before {
+  background:
+    linear-gradient(122deg, transparent 0 46%, rgba(160, 200, 255, 0.08) 58%, transparent 72%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.035), transparent 35%) !important;
+}
+
+.quickMatchWidgetTop {
+  gap: 10px !important;
+}
+
+.quickMatchWidgetEmblem {
+  width: 40px !important;
+  height: 40px !important;
+  border-radius: 12px !important;
+  border-color: rgba(153, 215, 255, 0.24) !important;
+  background: linear-gradient(180deg, rgba(129, 222, 255, 0.16), rgba(78, 107, 255, 0.12)) !important;
+  color: #bbecff !important;
+  font-size: 18px !important;
+}
+
+.quickMatchWidgetKicker {
+  font-size: 9px !important;
+  letter-spacing: 0.14em !important;
+}
+
+.quickMatchWidgetTitle {
+  font-size: 20px !important;
+  line-height: 1.05 !important;
+  text-shadow: none !important;
+}
+
+.quickMatchWidgetBody {
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 8px !important;
+}
+
+.quickMatchWidgetMetric {
+  min-height: 64px !important;
+  padding: 10px 12px !important;
+  border-radius: 14px !important;
+  border-color: rgba(155, 214, 255, 0.12) !important;
+  background:
+    linear-gradient(180deg, rgba(15, 24, 41, 0.76), rgba(10, 16, 29, 0.88)) !important;
+  gap: 6px !important;
+}
+
+.quickMatchWidgetMetricLabel {
+  font-size: 10px !important;
+  line-height: 1.25 !important;
+  text-transform: none !important;
+}
+
+.quickMatchWidgetMetric b {
+  color: #f3f8ff !important;
+  font-size: 22px !important;
+  font-weight: 800 !important;
+  text-shadow: none !important;
+}
+
+.quickMatchWidgetStatus {
+  min-height: 28px !important;
+  padding: 0 10px !important;
+  border-color: rgba(120, 239, 203, 0.18) !important;
+  background: rgba(120, 239, 203, 0.08) !important;
+  color: rgba(219, 255, 245, 0.92) !important;
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.06em !important;
+}
+
+.quickMatchWidgetStatusDot {
+  width: 7px !important;
+  height: 7px !important;
+  background: #78efcb !important;
+  box-shadow: 0 0 12px rgba(120, 239, 203, 0.58) !important;
+}
+
+.quickMatchWidgetCancel {
+  width: 112px !important;
+  min-height: 100% !important;
+  border-radius: 16px !important;
+  font-size: 12px !important;
+}
+
+@media (max-width: 900px) {
+  .quickMatchWidget {
+    top: 14px !important;
+    right: 10px !important;
+    width: min(460px, calc(100vw - 20px)) !important;
+    max-width: calc(100vw - 20px) !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .mainTabs {
+    gap: 6px !important;
+  }
+
+  .mainTab,
+  .subTab,
+  .promoBtn,
+  .equipBtn,
+  .ghostBtn,
+  .shopBuyBtn,
+  .purchaseActionBtn {
+    letter-spacing: 0.02em !important;
+  }
+
+  .quickMatchWidget {
+    top: 10px !important;
+    right: 8px !important;
+    left: 8px !important;
+    width: auto !important;
+    max-width: none !important;
+    padding: 10px 10px 10px 12px !important;
+    border-radius: 18px !important;
+    grid-template-columns: minmax(0, 1fr) 94px !important;
+    grid-template-areas:
+      "top cancel"
+      "body cancel"
+      "status status" !important;
+    gap: 8px 10px !important;
+  }
+
+  .quickMatchWidgetTop {
+    gap: 8px !important;
+    align-items: flex-start !important;
+  }
+
+  .quickMatchWidgetEmblem {
+    width: 34px !important;
+    height: 34px !important;
+    border-radius: 10px !important;
+    font-size: 15px !important;
+  }
+
+  .quickMatchWidgetKicker {
+    display: none !important;
+  }
+
+  .quickMatchWidgetTitle {
+    font-size: 16px !important;
+    line-height: 1.1 !important;
+  }
+
+  .quickMatchWidgetBody {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 8px !important;
+  }
+
+  .quickMatchWidgetMetric {
+    min-height: 52px !important;
+    padding: 8px 9px !important;
+    border-radius: 12px !important;
+    gap: 4px !important;
+  }
+
+  .quickMatchWidgetMetricLabel {
+    font-size: 9px !important;
+    line-height: 1.2 !important;
+  }
+
+  .quickMatchWidgetMetric b {
+    font-size: 17px !important;
+  }
+
+  .quickMatchWidgetStatus {
+    width: 100% !important;
+    justify-content: center !important;
+    font-size: 9px !important;
+    padding: 0 8px !important;
+  }
+
+  .quickMatchWidgetCancel {
+    width: 94px !important;
+    min-height: 100% !important;
+    padding: 10px 8px !important;
+    border-radius: 12px !important;
+    font-size: 11px !important;
+  }
+
+  .leadersHeroArt {
+    min-height: 176px !important;
+    padding: 16px !important;
+  }
+
+  .leadersHeroHeadline {
+    font-size: 20px !important;
+  }
+}
+/* EOF mobile/game overrides */
+#quickMatchWidget[style*="display:none"] { display: none !important; }
+.questClaimBtn:disabled { background: linear-gradient(180deg, rgba(110, 121, 140, 0.96), rgba(75, 85, 102, 0.98)) !important; border: 1px solid rgba(191, 202, 216, 0.24) !important; color: rgba(232, 239, 246, 0.86) !important; box-shadow: none !important; }
+.errorHead { background: radial-gradient(320px 140px at 0% 0%, rgba(255, 100, 100, 0.22), transparent 70%), linear-gradient(180deg, rgba(76, 16, 24, 0.78), rgba(34, 11, 17, 0.78)) !important; border-bottom: 1px solid rgba(255, 110, 110, 0.14) !important; }
+.errorCard { border-color: rgba(255, 103, 103, 0.28) !important; background: radial-gradient(460px 180px at 50% 0%, rgba(255, 95, 95, 0.22), transparent 70%), linear-gradient(180deg, rgba(34, 12, 16, 0.98), rgba(12, 7, 14, 0.99)) !important; }
+.errorText { color: #fff0f0 !important; text-align: center !important; }
+@media (max-width: 640px) {
+  .mainTabs { display: flex !important; gap: 6px !important; padding: 6px !important; overflow-x: auto !important; scrollbar-width: none; }
+  .mainTabs::-webkit-scrollbar { display: none; }
+  .mainTab { flex: 0 0 auto !important; min-width: 84px !important; min-height: 38px !important; padding: 8px 10px !important; font-size: 10px !important; border-radius: 11px !important; }
+  .quickMatchWidget { top: 10px !important; right: 8px !important; width: min(94vw, 420px) !important; padding: 12px !important; border-radius: 18px !important; grid-template-columns: 1fr !important; grid-template-areas: "top" "body" "status" "cancel" !important; gap: 8px !important; }
+  .quickMatchWidgetBody { grid-template-columns: 1fr !important; }
+  .quickMatchWidgetTitle { font-size: 18px !important; }
+  .quickMatchWidgetMetric { min-height: 58px !important; padding: 9px 10px !important; }
+  .quickMatchWidgetMetric b { font-size: 20px !important; }
+  .quickMatchWidgetCancel { width: 100% !important; min-height: 46px !important; border-radius: 14px !important; }
+}
+
+/* ===== Last-mile guaranteed overrides ===== */
+#quickMatchWidget[style*="display:none"] { display: none !important; }
+.questClaimBtn:disabled { background: linear-gradient(180deg, rgba(110, 121, 140, 0.96), rgba(75, 85, 102, 0.98)) !important; border: 1px solid rgba(191, 202, 216, 0.24) !important; color: rgba(232, 239, 246, 0.86) !important; box-shadow: none !important; }
+.errorHead { background: radial-gradient(320px 140px at 0% 0%, rgba(255, 100, 100, 0.22), transparent 70%), linear-gradient(180deg, rgba(76, 16, 24, 0.78), rgba(34, 11, 17, 0.78)) !important; border-bottom: 1px solid rgba(255, 110, 110, 0.14) !important; }
+.errorCard { border-color: rgba(255, 103, 103, 0.28) !important; background: radial-gradient(460px 180px at 50% 0%, rgba(255, 95, 95, 0.22), transparent 70%), linear-gradient(180deg, rgba(34, 12, 16, 0.98), rgba(12, 7, 14, 0.99)) !important; }
+.errorText { color: #fff0f0 !important; text-align: center !important; }
+
+@media (max-width: 640px) {
+  .mainTabs {
+    display: flex !important;
+    gap: 6px !important;
+    padding: 6px !important;
+    overflow-x: auto !important;
+    scrollbar-width: none;
+  }
+  .mainTabs::-webkit-scrollbar { display: none; }
+  .mainTab {
+    flex: 0 0 auto !important;
+    min-width: 84px !important;
+    min-height: 38px !important;
+    padding: 8px 10px !important;
+    font-size: 10px !important;
+    border-radius: 11px !important;
+  }
+  .quickMatchWidget {
+    top: 10px !important;
+    right: 8px !important;
+    width: min(94vw, 420px) !important;
+    padding: 12px !important;
+    border-radius: 18px !important;
+    grid-template-columns: 1fr !important;
+    grid-template-areas: "top" "body" "status" "cancel" !important;
+    gap: 8px !important;
+  }
+  .quickMatchWidgetBody { grid-template-columns: 1fr !important; }
+  .quickMatchWidgetTitle { font-size: 18px !important; }
+  .quickMatchWidgetMetric { min-height: 58px !important; padding: 9px 10px !important; }
+  .quickMatchWidgetMetric b { font-size: 20px !important; }
+  .quickMatchWidgetCancel { width: 100% !important; min-height: 46px !important; border-radius: 14px !important; }
+}
+
+/* ===== Absolute final overrides ===== */
+#quickMatchWidget[style*="display:none"] { display: none !important; }
+
+.quickMatchWidget {
+  border-color: rgba(255, 191, 92, 0.28) !important;
+  box-shadow: 0 28px 52px rgba(0, 0, 0, 0.48), 0 0 0 1px rgba(255, 211, 134, 0.08) inset !important;
+}
+
+.tankShowcase.isPreviewMode {
+  border-color: rgba(255, 214, 102, 0.34) !important;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.32), 0 0 0 1px rgba(255, 214, 102, 0.14) inset, 0 0 24px rgba(255, 214, 102, 0.08) !important;
+}
+
+.tankShowcase.isPreviewMode::after {
+  content: "PREVIEW";
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  min-height: 26px;
+  padding: 0 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 214, 102, 0.36);
+  background: rgba(255, 214, 102, 0.12);
+  color: rgba(255, 236, 178, 0.98);
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  display: inline-flex;
+  align-items: center;
+}
+
+.errorModal {
+  background: radial-gradient(480px 240px at 50% 22%, rgba(255, 76, 76, 0.18), transparent 68%), rgba(5, 8, 14, 0.86) !important;
+  backdrop-filter: blur(10px);
+}
+
+.errorCard {
+  width: min(560px, calc(100vw - 24px));
+  border-radius: 24px;
+  border: 1px solid rgba(255, 103, 103, 0.28) !important;
+  background: radial-gradient(460px 180px at 50% 0%, rgba(255, 95, 95, 0.22), transparent 70%), linear-gradient(180deg, rgba(34, 12, 16, 0.98), rgba(12, 7, 14, 0.99)) !important;
+  box-shadow: 0 28px 60px rgba(0, 0, 0, 0.56), 0 0 0 1px rgba(255, 115, 115, 0.08) inset, 0 0 46px rgba(255, 74, 74, 0.12) !important;
+}
+
+.errorBody {
+  min-height: 290px;
+  background: radial-gradient(320px 160px at 50% 34%, rgba(255, 95, 95, 0.16), transparent 72%), linear-gradient(180deg, rgba(24, 10, 15, 0.2), transparent);
+}
+
+.errorText {
+  max-width: 420px;
+  text-align: center;
+  color: #fff0f0;
+  font-size: 24px;
+  font-weight: 900;
+  line-height: 1.2;
+}
+
+/* ===== Ultra polish pass ===== */
+.promoBtn:disabled,
+.equipBtn:disabled,
+.shopBuyBtn:disabled,
+.questClaimBtn:disabled,
+.promoBtn.isDisabled,
+.equipBtn.isDisabled {
+  background: linear-gradient(180deg, rgba(110, 121, 140, 0.96), rgba(75, 85, 102, 0.98)) !important;
+  border: 1px solid rgba(191, 202, 216, 0.24) !important;
+  color: rgba(232, 239, 246, 0.86) !important;
+  box-shadow: none !important;
+  filter: none !important;
+  cursor: not-allowed !important;
+}
+
+.questClaimBtn:disabled {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.questCard {
+  display: grid;
+  grid-template-rows: auto auto auto 1fr auto;
+}
+
+.questFooter {
+  align-items: end;
+}
+
+.questStatus {
+  color: rgba(186, 205, 229, 0.82);
+}
+
+.errorHead {
+  padding: 18px 20px 16px !important;
+  background:
+    radial-gradient(320px 140px at 0% 0%, rgba(255, 100, 100, 0.22), transparent 70%),
+    linear-gradient(180deg, rgba(76, 16, 24, 0.78), rgba(34, 11, 17, 0.78)) !important;
+  border-bottom: 1px solid rgba(255, 110, 110, 0.14);
+}
+
+.errorAccent {
+  width: 14px !important;
+  height: 14px !important;
+  box-shadow: 0 0 18px rgba(255, 100, 100, 0.82), 0 0 0 6px rgba(255, 100, 100, 0.06) !important;
+}
+
+.errorTitle {
+  font-size: 34px !important;
+}
+
+.errorBody {
+  border-top: none !important;
+}
+
+.errorIcon {
+  position: relative;
+}
+
+.errorIcon::after {
+  content: "";
+  position: absolute;
+  inset: -10px;
+  border-radius: 32px;
+  border: 1px solid rgba(255, 103, 103, 0.12);
+  pointer-events: none;
+}
+
+.panel::before,
+.notice::before {
+  border-color: rgba(160, 214, 255, 0.1);
+}
+
+.mainTabs {
+  align-items: stretch;
+}
+
+.mainTab {
+  text-wrap: balance;
+}
+
+.shopCard,
+.questCard,
+.battleLobbyCard,
+.refRewardCard,
+.refMilestoneCard,
+.card {
+  transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+}
+
+.shopCard:hover,
+.questCard:hover,
+.battleLobbyCard:hover,
+.refRewardCard:hover,
+.refMilestoneCard:hover {
+  transform: translateY(-2px);
+}
+
+.quickMatchWidgetMetric {
+  min-height: 72px;
+}
+
+.quickMatchWidgetMetric b {
+  font-size: 24px;
+}
+
+.quickMatchWidgetCancel {
+  font-size: 13px;
+}
+
+@media (max-width: 900px) {
+  .hud {
+    padding: 12px;
+    border-radius: 18px;
+  }
+
+  .audioControl {
+    min-width: 150px;
+  }
+
+  .mainTab {
+    min-height: 44px;
+    padding: 10px 12px;
+    font-size: 11px;
+  }
+
+  .shopShowcaseTitle,
+  .leadersTitle,
+  .refHeroTitle,
+  .battlesTitle,
+  .profileTankTitle {
+    font-size: 28px !important;
+  }
+
+  .quickMatchWidget {
+    width: min(540px, calc(100vw - 20px)) !important;
+    padding: 14px 14px 14px 15px !important;
+    grid-template-columns: minmax(0, 1fr) 112px !important;
+  }
+
+  .quickMatchWidgetTitle {
+    font-size: 22px !important;
+  }
+
+  .quickMatchWidgetMetric {
+    min-height: 66px;
+    padding: 10px 12px;
+  }
+
+  .quickMatchWidgetMetric b {
+    font-size: 22px;
+  }
+}
+
+@media (max-width: 640px) {
+  .hud {
+    gap: 8px;
+  }
+
+  .nickname {
+    font-size: 14px;
+  }
+
+  .mainTabs {
+    display: flex !important;
+    gap: 6px;
+    padding: 6px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    border-radius: 16px;
+  }
+
+  .mainTabs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .mainTab {
+    flex: 0 0 auto;
+    min-width: 84px;
+    min-height: 38px;
+    padding: 8px 10px;
+    border-radius: 11px;
+    font-size: 10px;
+    letter-spacing: 0.05em;
+  }
+
+  .panel {
+    margin-top: 10px;
+    padding: 10px;
+  }
+
+  .statCard {
+    min-height: 92px;
+    padding: 12px;
+  }
+
+  .statValue {
+    font-size: 22px;
+  }
+
+  .shopMenu,
+  .shopShowcase,
+  .chatCard,
+  .refHero,
+  .refLinkCard,
+  .questCard,
+  .card,
+  .battleArena,
+  .battleSide {
+    border-radius: 16px !important;
+  }
+
+  .quickMatchWidget {
+    top: 10px !important;
+    right: 8px !important;
+    width: min(94vw, 420px) !important;
+    padding: 12px !important;
+    border-radius: 18px !important;
+    gap: 8px !important;
+  }
+
+  .quickMatchWidgetEmblem {
+    width: 38px;
+    height: 38px;
+    border-radius: 12px;
+    font-size: 16px;
+  }
+
+  .quickMatchWidgetKicker {
+    font-size: 9px;
+  }
+
+  .quickMatchWidgetTitle {
+    font-size: 18px !important;
+  }
+
+  .quickMatchWidgetMetric {
+    min-height: 58px;
+    padding: 9px 10px;
+    border-radius: 13px;
+  }
+
+  .quickMatchWidgetMetricLabel {
+    font-size: 10px;
+  }
+
+  .quickMatchWidgetMetric b {
+    font-size: 20px;
+  }
+
+  .quickMatchWidgetCancel {
+    min-height: 46px !important;
+    border-radius: 14px !important;
+    font-size: 12px;
+  }
+
+  .quickMatchWidgetStatus {
+    min-height: 28px;
+    padding: 0 10px;
+    font-size: 10px;
+  }
+
+  .errorCard {
+    width: min(92vw, 420px);
+  }
+
+  .errorTitle {
+    font-size: 26px !important;
+  }
+
+  .errorBody {
+    min-height: 236px;
+    padding: 18px 14px 20px;
+  }
+
+  .errorIcon {
+    width: 84px;
+    height: 84px;
+    font-size: 42px;
+    border-radius: 22px;
+  }
+
+  .errorText {
+    font-size: 20px;
+  }
+}
+
+/* ===== Visual finish: widget + section atmosphere ===== */
+.quickMatchWidget {
+  top: 18px !important;
+  right: 18px !important;
+  width: min(620px, calc(100vw - 24px)) !important;
+  padding: 16px 16px 16px 18px !important;
+  border-radius: 24px !important;
+  border: 1px solid rgba(255, 191, 92, 0.28) !important;
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) 132px !important;
+  grid-template-areas:
+    "top cancel"
+    "body cancel"
+    "status cancel";
+  gap: 12px 16px !important;
+  background:
+    linear-gradient(90deg, rgba(9, 16, 27, 0.94) 0%, rgba(9, 16, 27, 0.82) 42%, rgba(26, 18, 10, 0.72) 100%),
+    radial-gradient(320px 140px at 78% 68%, rgba(255, 157, 51, 0.22), transparent 72%),
+    radial-gradient(260px 120px at 16% 20%, rgba(126, 188, 255, 0.14), transparent 74%),
+    url("/images/webapp/Background.webp") center/cover no-repeat !important;
+  box-shadow: 0 28px 52px rgba(0, 0, 0, 0.48), 0 0 0 1px rgba(255, 211, 134, 0.08) inset !important;
+}
+
+.quickMatchWidgetTop { grid-area: top; display: flex; align-items: center; gap: 12px; min-width: 0; }
+.quickMatchWidgetBody { grid-area: body; padding: 0 !important; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.quickMatchWidgetStatus { grid-area: status; display: inline-flex; align-items: center; gap: 8px; min-height: 32px; width: fit-content; padding: 0 12px; border-radius: 999px; border: 1px solid rgba(126, 255, 53, 0.22); background: rgba(126, 255, 53, 0.08); color: rgba(223, 255, 204, 0.92); font-size: 11px; font-weight: 900; letter-spacing: 0.1em; text-transform: uppercase; }
+.quickMatchWidgetCancel { grid-area: cancel; width: 132px !important; min-height: 100%; border-radius: 18px !important; display: inline-flex; align-items: center; justify-content: center; text-align: center; line-height: 1.1; }
+.quickMatchWidgetEmblem { width: 46px; height: 46px; border-radius: 14px; display: inline-flex; align-items: center; justify-content: center; border: 1px solid rgba(255, 191, 92, 0.26); background: linear-gradient(180deg, rgba(255, 167, 72, 0.18), rgba(68, 34, 9, 0.18)); color: #ffd36f; font-size: 20px; }
+.quickMatchWidgetHeading { min-width: 0; display: grid; gap: 4px; }
+.quickMatchWidgetKicker { color: rgba(255, 208, 143, 0.76); font-size: 10px; font-weight: 900; letter-spacing: 0.18em; text-transform: uppercase; }
+.quickMatchWidgetTitle { padding: 0 !important; font-size: 26px !important; line-height: 1 !important; letter-spacing: 0.03em !important; }
+.quickMatchWidgetMetric { min-width: 0; min-height: 76px; padding: 12px 14px; border-radius: 16px; border: 1px solid rgba(255, 255, 255, 0.08); background: linear-gradient(180deg, rgba(12, 21, 36, 0.72), rgba(8, 14, 24, 0.84)); display: grid; gap: 8px; align-content: space-between; }
+.quickMatchWidgetMetricLabel { color: rgba(214, 228, 246, 0.82); font-size: 11px; font-weight: 800; line-height: 1.3; letter-spacing: 0.04em; text-transform: uppercase; overflow-wrap: anywhere; }
+.quickMatchWidgetMetric b { color: #ffd45e; font-size: 26px; font-weight: 1000; line-height: 1; text-shadow: 0 0 16px rgba(255, 195, 92, 0.18); }
+.quickMatchWidgetStatusDot { width: 8px; height: 8px; border-radius: 50%; background: #8ef95b; box-shadow: 0 0 14px rgba(142, 249, 91, 0.72); animation: quickMatchPulse 1s ease-in-out infinite; }
+
+.panelProfile { background: radial-gradient(760px 260px at 12% 14%, rgba(116, 190, 255, 0.14), transparent 64%), radial-gradient(540px 220px at 88% 100%, rgba(124, 255, 192, 0.08), transparent 68%), linear-gradient(180deg, rgba(8, 16, 29, 0.92), rgba(6, 12, 22, 0.98)) !important; }
+.panelGarage { background: radial-gradient(720px 280px at 86% 16%, rgba(131, 116, 255, 0.12), transparent 64%), radial-gradient(620px 240px at 0% 100%, rgba(123, 198, 255, 0.1), transparent 68%), linear-gradient(180deg, rgba(8, 15, 28, 0.94), rgba(6, 11, 22, 0.98)) !important; }
+.panelBattles { background: radial-gradient(820px 280px at 86% 12%, rgba(255, 151, 79, 0.12), transparent 62%), radial-gradient(700px 260px at 0% 100%, rgba(123, 198, 255, 0.08), transparent 68%), linear-gradient(180deg, rgba(10, 16, 27, 0.94), rgba(7, 11, 20, 0.98)) !important; }
+.panelShop { background: radial-gradient(760px 280px at 0% 0%, rgba(123, 198, 255, 0.1), transparent 66%), radial-gradient(720px 280px at 100% 100%, rgba(255, 211, 110, 0.08), transparent 68%), linear-gradient(180deg, rgba(9, 15, 29, 0.94), rgba(7, 12, 22, 0.98)) !important; }
+.panelContainers { background: radial-gradient(760px 280px at 50% 0%, rgba(255, 203, 104, 0.1), transparent 64%), radial-gradient(680px 260px at 0% 100%, rgba(123, 198, 255, 0.08), transparent 68%), linear-gradient(180deg, rgba(10, 15, 24, 0.94), rgba(7, 11, 20, 0.98)) !important; }
+.panelQuests { background: radial-gradient(760px 280px at 0% 0%, rgba(142, 249, 91, 0.1), transparent 64%), radial-gradient(720px 280px at 100% 100%, rgba(123, 198, 255, 0.08), transparent 68%), linear-gradient(180deg, rgba(9, 15, 26, 0.94), rgba(7, 11, 19, 0.98)) !important; }
+.panelSettings { background: radial-gradient(760px 280px at 0% 0%, rgba(123, 198, 255, 0.12), transparent 64%), radial-gradient(720px 280px at 100% 100%, rgba(153, 112, 255, 0.08), transparent 68%), linear-gradient(180deg, rgba(10, 16, 29, 0.94), rgba(7, 11, 21, 0.98)) !important; }
+
+.quickBattleCta { background: radial-gradient(260px 120px at 50% 0%, rgba(255, 243, 181, 0.28), transparent 70%), linear-gradient(180deg, #9ce8ff 0%, #58aaff 52%, #2d68f6 100%) !important; border: 1px solid rgba(193, 235, 255, 0.9) !important; color: #06111f !important; box-shadow: 0 18px 36px rgba(36, 124, 255, 0.32), inset 0 1px 0 rgba(255,255,255,0.28) !important; }
+.tankShowcase { background: radial-gradient(360px 180px at 50% 58%, rgba(123, 198, 255, 0.16), transparent 68%), linear-gradient(180deg, rgba(12, 19, 33, 0.94), rgba(7, 12, 22, 0.98)) !important; }
+.battleModesGrid .battleModeCard:nth-child(1) { background: radial-gradient(320px 140px at 50% 0%, rgba(123, 198, 255, 0.18), transparent 68%), linear-gradient(180deg, rgba(18, 31, 52, 0.98), rgba(10, 18, 31, 0.98)) !important; }
+.battleModesGrid .battleModeCard:nth-child(2) { background: radial-gradient(320px 140px at 50% 0%, rgba(255, 171, 85, 0.16), transparent 68%), linear-gradient(180deg, rgba(33, 24, 16, 0.98), rgba(14, 18, 30, 0.98)) !important; }
+.battleModesGrid .battleModeCard:nth-child(3), .battleModesGrid .battleModeCard:nth-child(4) { background: radial-gradient(320px 140px at 50% 0%, rgba(142, 249, 91, 0.14), transparent 68%), linear-gradient(180deg, rgba(18, 30, 29, 0.98), rgba(10, 18, 26, 0.98)) !important; }
+.battleLobbyCard { background: radial-gradient(320px 120px at 0% 0%, rgba(123, 198, 255, 0.14), transparent 68%), linear-gradient(180deg, rgba(21, 33, 52, 0.98), rgba(11, 18, 31, 0.98)) !important; }
+.refHero { background: radial-gradient(520px 180px at 0% 0%, rgba(123, 198, 255, 0.2), transparent 66%), radial-gradient(420px 180px at 100% 100%, rgba(153, 112, 255, 0.16), transparent 70%), linear-gradient(180deg, rgba(18, 29, 46, 0.97), rgba(10, 17, 31, 0.99)) !important; }
+.containerWrap { background: radial-gradient(420px 220px at 50% 45%, rgba(255, 203, 104, 0.2), transparent 70%), radial-gradient(320px 180px at 50% 65%, rgba(123, 198, 255, 0.16), transparent 72%), linear-gradient(180deg, rgba(16, 24, 39, 0.96), rgba(9, 15, 26, 0.98)) !important; }
+.questCard { background: radial-gradient(360px 140px at 0% -20%, rgba(126, 188, 255, 0.24), transparent 58%), radial-gradient(260px 120px at 100% 130%, rgba(151, 111, 255, 0.12), transparent 62%), linear-gradient(180deg, rgba(22, 35, 57, 0.96), rgba(11, 18, 31, 0.98)) !important; }
+
+@media (max-width: 900px) {
+  .quickMatchWidget { top: 12px !important; right: 10px !important; width: min(620px, calc(100vw - 20px)) !important; }
+}
+
+@media (max-width: 640px) {
+  .quickMatchWidget { grid-template-columns: 1fr !important; grid-template-areas: "top" "body" "status" "cancel"; gap: 10px !important; padding: 14px !important; }
+  .quickMatchWidgetBody { grid-template-columns: 1fr !important; }
+  .quickMatchWidgetCancel { width: 100% !important; min-height: 54px; }
+  .quickMatchWidgetTitle { font-size: 22px !important; }
+}
+
+#quickMatchWidget[style*="display:none"] {
+  display: none !important;
+}
+
+.tankShowcase.isPreviewMode {
+  border-color: rgba(255, 214, 102, 0.34) !important;
+  box-shadow:
+    0 20px 40px rgba(0, 0, 0, 0.32),
+    0 0 0 1px rgba(255, 214, 102, 0.14) inset,
+    0 0 24px rgba(255, 214, 102, 0.08) !important;
+}
+
+.tankShowcase.isPreviewMode::after {
+  content: "PREVIEW";
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  min-height: 26px;
+  padding: 0 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 214, 102, 0.36);
+  background: rgba(255, 214, 102, 0.12);
+  color: rgba(255, 236, 178, 0.98);
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  display: inline-flex;
+  align-items: center;
+}
+
+.tankShowcase.isPreviewMode #garageTankImg {
+  filter: drop-shadow(0 20px 28px rgba(255, 191, 77, 0.22));
+}
+
+.chatCard,
+.battleLobbyCard,
+.refRewardCard,
+.refMilestoneCard,
+.questCard,
+.card,
+.purchaseCard,
+.rankUpCard,
+.lootModalCard,
+.rewardCard {
+  overflow: hidden;
+  position: relative;
+}
+
+.chatCard::before,
+.battleLobbyCard::before,
+.refRewardCard::before,
+.refMilestoneCard::before,
+.questCard::before,
+.card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(255,255,255,0.04), transparent 38%);
+  pointer-events: none;
+}
+
+.battleLobbyCard {
+  padding: 16px;
+}
+
+.battleLobbyTag {
+  background: rgba(96, 149, 226, 0.14);
+  border-color: rgba(123, 198, 255, 0.18);
+}
+
+.refRewardCard {
+  display: grid;
+  align-content: start;
+  gap: 10px;
+}
+
+.refRewardIcon {
+  width: 46px;
+  height: 46px;
+  border-radius: 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(180deg, rgba(123, 198, 255, 0.18), rgba(52, 84, 132, 0.14));
+  border: 1px solid rgba(123, 198, 255, 0.18);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.08);
+}
+
+.refRewardTitle,
+.refMilestoneReward,
+.questTitle,
+.shopTitle {
+  color: #f4f8ff;
+  font-weight: 900;
+}
+
+.battleLobbySelect,
+.battleLobbyAllRanks,
+.battleLobbyCard,
+.purchaseActionBtn {
+  border-radius: 16px;
+}
+
+.errorModal {
+  background:
+    radial-gradient(480px 240px at 50% 22%, rgba(255, 76, 76, 0.18), transparent 68%),
+    rgba(5, 8, 14, 0.86);
+  backdrop-filter: blur(10px);
+}
+
+.errorCard {
+  width: min(560px, calc(100vw - 24px));
+  border-radius: 24px;
+  border: 1px solid rgba(255, 103, 103, 0.28);
+  background:
+    radial-gradient(460px 180px at 50% 0%, rgba(255, 95, 95, 0.22), transparent 70%),
+    linear-gradient(180deg, rgba(34, 12, 16, 0.98), rgba(12, 7, 14, 0.99));
+  box-shadow:
+    0 28px 60px rgba(0, 0, 0, 0.56),
+    0 0 0 1px rgba(255, 115, 115, 0.08) inset,
+    0 0 46px rgba(255, 74, 74, 0.12);
+  overflow: hidden;
+}
+
+.errorHead {
+  padding: 18px 20px 0;
+  gap: 12px;
+  align-items: center;
+}
+
+.errorAccent {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #ff6464;
+  box-shadow: 0 0 18px rgba(255, 100, 100, 0.82);
+}
+
+.errorTitle {
+  color: #ffe8e8;
+  letter-spacing: 0.14em;
+  text-shadow: 0 0 18px rgba(255, 100, 100, 0.22);
+}
+
+.errorBody {
+  min-height: 290px;
+  padding: 24px 22px 24px;
+  display: grid;
+  place-items: center;
+  gap: 18px;
+  background:
+    radial-gradient(320px 160px at 50% 34%, rgba(255, 95, 95, 0.16), transparent 72%),
+    linear-gradient(180deg, rgba(24, 10, 15, 0.2), transparent);
+}
+
+.errorIcon {
+  width: 108px;
+  height: 108px;
+  border-radius: 28px;
+  display: grid;
+  place-items: center;
+  font-size: 56px;
+  color: #ffd6d6;
+  border: 1px solid rgba(255, 103, 103, 0.24);
+  background: linear-gradient(180deg, rgba(255, 95, 95, 0.14), rgba(76, 13, 13, 0.22));
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.08), 0 0 28px rgba(255, 80, 80, 0.12);
+}
+
+.errorText {
+  max-width: 420px;
+  text-align: center;
+  color: #fff0f0;
+  font-size: 24px;
+  font-weight: 900;
+  line-height: 1.2;
+  text-shadow: 0 0 18px rgba(255, 95, 95, 0.1);
+}
+
+/* ===== Art pass: matchmaking widget + section skins ===== */
+.quickMatchWidget {
+  top: 18px;
+  right: 18px;
+  width: min(620px, calc(100vw - 24px));
+  padding: 16px 16px 16px 18px;
+  border-radius: 24px;
+  border: 1px solid rgba(255, 191, 92, 0.28);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 132px;
+  grid-template-areas:
+    "top cancel"
+    "body cancel"
+    "status cancel";
+  gap: 12px 16px;
+  background:
+    linear-gradient(90deg, rgba(9, 16, 27, 0.94) 0%, rgba(9, 16, 27, 0.82) 42%, rgba(26, 18, 10, 0.72) 100%),
+    radial-gradient(320px 140px at 78% 68%, rgba(255, 157, 51, 0.22), transparent 72%),
+    radial-gradient(260px 120px at 16% 20%, rgba(126, 188, 255, 0.14), transparent 74%),
+    url("/images/webapp/Background.webp") center/cover no-repeat;
+  box-shadow: 0 28px 52px rgba(0, 0, 0, 0.48), 0 0 0 1px rgba(255, 211, 134, 0.08) inset;
+  backdrop-filter: blur(14px);
+  overflow: hidden;
+}
+
+.quickMatchWidget::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(120deg, transparent 0 46%, rgba(255, 166, 71, 0.1) 56%, transparent 70%),
+    linear-gradient(180deg, rgba(255,255,255,0.04), transparent 35%);
+  pointer-events: none;
+}
+
+.quickMatchWidget::after {
+  content: "";
+  position: absolute;
+  inset: 10px;
+  border-radius: 18px;
+  border: 1px solid rgba(255, 214, 153, 0.08);
+  pointer-events: none;
+}
+
+.quickMatchWidgetTop,
+.quickMatchWidgetBody,
+.quickMatchWidgetStatus,
+.quickMatchWidgetCancel {
+  position: relative;
+  z-index: 1;
+}
+
+.quickMatchWidgetTop {
+  grid-area: top;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.quickMatchWidgetEmblem {
+  width: 46px;
+  height: 46px;
+  border-radius: 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 191, 92, 0.26);
+  background: linear-gradient(180deg, rgba(255, 167, 72, 0.18), rgba(68, 34, 9, 0.18));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 0 24px rgba(255, 157, 51, 0.12);
+  color: #ffd36f;
+  font-size: 20px;
+}
+
+.quickMatchWidgetHeading {
+  min-width: 0;
+  display: grid;
+  gap: 4px;
+}
+
+.quickMatchWidgetKicker {
+  color: rgba(255, 208, 143, 0.76);
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.quickMatchWidgetTitle {
+  padding: 0;
+  font-size: 26px;
+  line-height: 1;
+  letter-spacing: 0.03em;
+  text-shadow: 0 0 18px rgba(255, 174, 77, 0.16);
+}
+
+.quickMatchWidgetBody {
+  grid-area: body;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.quickMatchWidgetMetric {
+  min-width: 0;
+  min-height: 76px;
+  padding: 12px 14px;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background:
+    linear-gradient(180deg, rgba(12, 21, 36, 0.72), rgba(8, 14, 24, 0.84));
+  display: grid;
+  gap: 8px;
+  align-content: space-between;
+}
+
+.quickMatchWidgetMetricLabel {
+  color: rgba(214, 228, 246, 0.82);
+  font-size: 11px;
+  font-weight: 800;
+  line-height: 1.3;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  overflow-wrap: anywhere;
+}
+
+.quickMatchWidgetMetric b {
+  color: #ffd45e;
+  font-size: 26px;
+  font-weight: 1000;
+  line-height: 1;
+  text-shadow: 0 0 16px rgba(255, 195, 92, 0.18);
+}
+
+.quickMatchWidgetStatus {
+  grid-area: status;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 32px;
+  width: fit-content;
+  padding: 0 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(126, 255, 53, 0.22);
+  background: rgba(126, 255, 53, 0.08);
+  color: rgba(223, 255, 204, 0.92);
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.quickMatchWidgetStatusDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #8ef95b;
+  box-shadow: 0 0 14px rgba(142, 249, 91, 0.72);
+  animation: quickMatchPulse 1s ease-in-out infinite;
+}
+
+@keyframes quickMatchPulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.18); opacity: 0.7; }
+}
+
+.quickMatchWidgetCancel {
+  grid-area: cancel;
+  width: 132px;
+  min-height: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 18px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  line-height: 1.1;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+.quickMatchWidgetCancel:hover {
+  filter: brightness(1.05);
+  border-color: rgba(255, 214, 153, 0.24);
+}
+
+.panelProfile {
+  background:
+    radial-gradient(760px 260px at 12% 14%, rgba(116, 190, 255, 0.14), transparent 64%),
+    radial-gradient(540px 220px at 88% 100%, rgba(124, 255, 192, 0.08), transparent 68%),
+    linear-gradient(180deg, rgba(8, 16, 29, 0.92), rgba(6, 12, 22, 0.98));
+}
+
+.panelGarage {
+  background:
+    radial-gradient(720px 280px at 86% 16%, rgba(131, 116, 255, 0.12), transparent 64%),
+    radial-gradient(620px 240px at 0% 100%, rgba(123, 198, 255, 0.1), transparent 68%),
+    linear-gradient(180deg, rgba(8, 15, 28, 0.94), rgba(6, 11, 22, 0.98));
+}
+
+.panelBattles {
+  background:
+    radial-gradient(820px 280px at 86% 12%, rgba(255, 151, 79, 0.12), transparent 62%),
+    radial-gradient(700px 260px at 0% 100%, rgba(123, 198, 255, 0.08), transparent 68%),
+    linear-gradient(180deg, rgba(10, 16, 27, 0.94), rgba(7, 11, 20, 0.98));
+}
+
+.panelShop {
+  background:
+    radial-gradient(760px 280px at 0% 0%, rgba(123, 198, 255, 0.1), transparent 66%),
+    radial-gradient(720px 280px at 100% 100%, rgba(255, 211, 110, 0.08), transparent 68%),
+    linear-gradient(180deg, rgba(9, 15, 29, 0.94), rgba(7, 12, 22, 0.98));
+}
+
+.panelContainers {
+  background:
+    radial-gradient(760px 280px at 50% 0%, rgba(255, 203, 104, 0.1), transparent 64%),
+    radial-gradient(680px 260px at 0% 100%, rgba(123, 198, 255, 0.08), transparent 68%),
+    linear-gradient(180deg, rgba(10, 15, 24, 0.94), rgba(7, 11, 20, 0.98));
+}
+
+.panelQuests {
+  background:
+    radial-gradient(760px 280px at 0% 0%, rgba(142, 249, 91, 0.1), transparent 64%),
+    radial-gradient(720px 280px at 100% 100%, rgba(123, 198, 255, 0.08), transparent 68%),
+    linear-gradient(180deg, rgba(9, 15, 26, 0.94), rgba(7, 11, 19, 0.98));
+}
+
+.panelSettings {
+  background:
+    radial-gradient(760px 280px at 0% 0%, rgba(123, 198, 255, 0.12), transparent 64%),
+    radial-gradient(720px 280px at 100% 100%, rgba(153, 112, 255, 0.08), transparent 68%),
+    linear-gradient(180deg, rgba(10, 16, 29, 0.94), rgba(7, 11, 21, 0.98));
+}
+
+.profileQuickBattleWrap,
+.battleLobbyCreateWrap {
+  margin-bottom: 16px;
+}
+
+.quickBattleCta {
+  background:
+    radial-gradient(260px 120px at 50% 0%, rgba(255, 243, 181, 0.28), transparent 70%),
+    linear-gradient(180deg, #9ce8ff 0%, #58aaff 52%, #2d68f6 100%) !important;
+  border: 1px solid rgba(193, 235, 255, 0.9) !important;
+  color: #06111f !important;
+  box-shadow: 0 18px 36px rgba(36, 124, 255, 0.32), inset 0 1px 0 rgba(255,255,255,0.28) !important;
+}
+
+.stageInfo {
+  background:
+    linear-gradient(180deg, rgba(17, 29, 46, 0.92), rgba(10, 17, 29, 0.98)) !important;
+}
+
+.tankShowcase {
+  background:
+    radial-gradient(360px 180px at 50% 58%, rgba(123, 198, 255, 0.16), transparent 68%),
+    linear-gradient(180deg, rgba(12, 19, 33, 0.94), rgba(7, 12, 22, 0.98)) !important;
+}
+
+.battleModeCard {
+  overflow: hidden;
+  position: relative;
+}
+
+.battleModeCard::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(255,255,255,0.04), transparent 34%);
+  pointer-events: none;
+}
+
+.battleModesGrid .battleModeCard:nth-child(1) {
+  background:
+    radial-gradient(320px 140px at 50% 0%, rgba(123, 198, 255, 0.18), transparent 68%),
+    linear-gradient(180deg, rgba(18, 31, 52, 0.98), rgba(10, 18, 31, 0.98)) !important;
+}
+
+.battleModesGrid .battleModeCard:nth-child(2) {
+  background:
+    radial-gradient(320px 140px at 50% 0%, rgba(255, 171, 85, 0.16), transparent 68%),
+    linear-gradient(180deg, rgba(33, 24, 16, 0.98), rgba(14, 18, 30, 0.98)) !important;
+}
+
+.battleModesGrid .battleModeCard:nth-child(3),
+.battleModesGrid .battleModeCard:nth-child(4) {
+  background:
+    radial-gradient(320px 140px at 50% 0%, rgba(142, 249, 91, 0.14), transparent 68%),
+    linear-gradient(180deg, rgba(18, 30, 29, 0.98), rgba(10, 18, 26, 0.98)) !important;
+}
+
+.battleLobbyCard {
+  padding: 14px;
+  background:
+    radial-gradient(320px 120px at 0% 0%, rgba(123, 198, 255, 0.14), transparent 68%),
+    linear-gradient(180deg, rgba(21, 33, 52, 0.98), rgba(11, 18, 31, 0.98));
+}
+
+.refHero {
+  background:
+    radial-gradient(520px 180px at 0% 0%, rgba(123, 198, 255, 0.2), transparent 66%),
+    radial-gradient(420px 180px at 100% 100%, rgba(153, 112, 255, 0.16), transparent 70%),
+    linear-gradient(180deg, rgba(18, 29, 46, 0.97), rgba(10, 17, 31, 0.99)) !important;
+}
+
+.refRewardCard {
+  min-height: 152px;
+}
+
+.containerWrap {
+  background:
+    radial-gradient(420px 220px at 50% 45%, rgba(255, 203, 104, 0.2), transparent 70%),
+    radial-gradient(320px 180px at 50% 65%, rgba(123, 198, 255, 0.16), transparent 72%),
+    linear-gradient(180deg, rgba(16, 24, 39, 0.96), rgba(9, 15, 26, 0.98)) !important;
+}
+
+.questCard {
+  background:
+    radial-gradient(360px 140px at 0% -20%, rgba(126, 188, 255, 0.24), transparent 58%),
+    radial-gradient(260px 120px at 100% 130%, rgba(151, 111, 255, 0.12), transparent 62%),
+    linear-gradient(180deg, rgba(22, 35, 57, 0.96), rgba(11, 18, 31, 0.98)) !important;
+}
+
+.panelSettings .card {
+  background:
+    radial-gradient(360px 140px at 0% 0%, rgba(123, 198, 255, 0.14), transparent 68%),
+    linear-gradient(180deg, rgba(18, 29, 46, 0.96), rgba(10, 17, 31, 0.98)) !important;
+}
+
+@media (max-width: 900px) {
+  .quickMatchWidget {
+    top: 12px;
+    right: 10px;
+    width: min(620px, calc(100vw - 20px));
+  }
+}
+
+@media (max-width: 640px) {
+  .quickMatchWidget {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "top"
+      "body"
+      "status"
+      "cancel";
+    gap: 10px;
+    padding: 14px;
+  }
+
+  .quickMatchWidgetBody {
+    grid-template-columns: 1fr;
+  }
+
+  .quickMatchWidgetCancel {
+    width: 100%;
+    min-height: 54px;
+  }
+
+  .quickMatchWidgetTitle {
+    font-size: 22px;
+  }
+}
+
+/* ===== Game UI Refresh ===== */
+:root {
+  --shell-ink: #08101d;
+  --shell-panel: rgba(11, 18, 32, 0.9);
+  --shell-panel-strong: rgba(14, 23, 40, 0.96);
+  --shell-border: rgba(123, 183, 255, 0.26);
+  --shell-border-strong: rgba(168, 215, 255, 0.48);
+  --shell-blue: #7bc6ff;
+  --shell-green: #8ef95b;
+  --shell-gold: #ffd66e;
+  --shell-shadow: 0 22px 52px rgba(0, 0, 0, 0.42);
+}
+
+body {
+  background:
+    radial-gradient(1400px 620px at 50% -10%, rgba(90, 150, 255, 0.12), transparent 62%),
+    linear-gradient(180deg, #060b14 0%, #08101b 48%, #060b13 100%);
+}
+
+body::before {
+  background:
+    linear-gradient(rgba(4, 10, 19, 0.34), rgba(5, 11, 20, 0.76)),
+    radial-gradient(700px 260px at 50% 100%, rgba(126, 188, 255, 0.12), transparent 72%),
+    var(--bg-image) center/cover no-repeat;
+  filter: blur(1.5px) brightness(0.44) saturate(1.08);
+  transform: scale(1.08);
+  opacity: 0.84;
+}
+
+body::after {
+  background:
+    linear-gradient(180deg, rgba(147, 196, 255, 0.045), transparent 28%, transparent 72%, rgba(155, 112, 255, 0.04)),
+    radial-gradient(circle at 18% 18%, rgba(255, 255, 255, 0.08) 0 1px, transparent 1px),
+    radial-gradient(circle at 78% 24%, rgba(255, 255, 255, 0.06) 0 1px, transparent 1px),
+    radial-gradient(circle at 58% 72%, rgba(255, 255, 255, 0.05) 0 1px, transparent 1px);
+  background-size: auto, 132px 132px, 176px 176px, 104px 104px;
+  opacity: 0.18;
+}
+
+.app {
+  max-width: 1240px;
+  padding: 18px 18px 28px;
+}
+
+.hud {
+  padding: 14px 16px;
+  border-radius: 22px;
+  border: 1px solid var(--shell-border);
+  background:
+    radial-gradient(560px 180px at 0% 0%, rgba(123, 198, 255, 0.18), transparent 64%),
+    radial-gradient(520px 200px at 100% 100%, rgba(153, 112, 255, 0.12), transparent 68%),
+    linear-gradient(180deg, rgba(17, 28, 47, 0.94), rgba(10, 17, 30, 0.96));
+  box-shadow: var(--shell-shadow), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(14px);
+}
+
+.nickname {
+  font-size: 16px;
+  font-weight: 800;
+  color: #f4f8ff;
+  letter-spacing: 0.02em;
+  text-shadow: 0 0 12px rgba(123, 198, 255, 0.14);
+}
+
+.rankLine,
+.expValue {
+  color: rgba(207, 224, 247, 0.9);
+}
+
+.hudRight {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.audioControl,
+.currency {
+  min-height: 46px;
+  padding: 0 12px;
+  border-radius: 16px;
+  border: 1px solid rgba(123, 198, 255, 0.18);
+  background: linear-gradient(180deg, rgba(22, 35, 57, 0.84), rgba(12, 21, 36, 0.9));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+.currency {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 900;
+  color: #eff6ff;
+}
+
+.mainTabs {
+  margin-top: 12px;
+  padding: 10px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(112px, 1fr));
+  gap: 8px;
+  border-radius: 22px;
+  border: 1px solid rgba(123, 198, 255, 0.16);
+  background:
+    radial-gradient(620px 200px at 50% 0%, rgba(123, 198, 255, 0.08), transparent 72%),
+    linear-gradient(180deg, rgba(11, 19, 33, 0.86), rgba(8, 14, 24, 0.92));
+  box-shadow: 0 16px 34px rgba(0, 0, 0, 0.28);
+}
+
+.mainTab {
+  min-height: 50px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  border: 1px solid rgba(123, 198, 255, 0.14);
+  background:
+    linear-gradient(180deg, rgba(24, 38, 60, 0.94), rgba(13, 22, 38, 0.96));
+  color: rgba(207, 223, 244, 0.82);
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+.mainTab:hover {
+  color: #f2f7ff;
+  border-color: rgba(123, 198, 255, 0.34);
+  background:
+    linear-gradient(180deg, rgba(33, 53, 82, 0.97), rgba(18, 29, 47, 0.97));
+}
+
+.mainTab.isActive {
+  color: #f7fbff;
+  border-color: rgba(157, 214, 255, 0.54);
+  background:
+    radial-gradient(240px 120px at 50% 0%, rgba(123, 198, 255, 0.2), transparent 70%),
+    linear-gradient(180deg, rgba(52, 84, 132, 0.98), rgba(28, 49, 82, 0.98));
+  box-shadow:
+    0 12px 28px rgba(44, 92, 170, 0.24),
+    0 0 0 1px rgba(123, 198, 255, 0.16) inset;
+}
+
+.notice,
+.panel {
+  position: relative;
+  overflow: hidden;
+}
+
+.panel {
+  margin-top: 14px;
+  padding: 18px;
+  border-radius: 26px;
+  border: 1px solid var(--shell-border);
+  background:
+    radial-gradient(980px 320px at 0% 0%, rgba(123, 198, 255, 0.12), transparent 66%),
+    radial-gradient(760px 320px at 100% 100%, rgba(153, 112, 255, 0.1), transparent 70%),
+    linear-gradient(180deg, rgba(10, 16, 29, 0.9), rgba(7, 12, 21, 0.96));
+  box-shadow: var(--shell-shadow), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(12px);
+}
+
+.panel::before,
+.notice::before {
+  content: "";
+  position: absolute;
+  inset: 10px;
+  border-radius: 18px;
+  border: 1px solid rgba(160, 214, 255, 0.12);
+  pointer-events: none;
+}
+
+.panel > *,
+.notice > * {
+  position: relative;
+  z-index: 1;
+}
+
+.notice {
+  margin-top: 12px;
+  padding: 14px 16px;
+  border-radius: 20px;
+  border: 1px solid rgba(123, 198, 255, 0.22);
+  background:
+    radial-gradient(420px 160px at 0% 0%, rgba(123, 198, 255, 0.12), transparent 66%),
+    linear-gradient(180deg, rgba(16, 26, 44, 0.96), rgba(8, 15, 26, 0.98));
+  box-shadow: 0 18px 34px rgba(0, 0, 0, 0.28);
+}
+
+.stageInfo,
+.tankShowcase,
+.shopMenu,
+.shopContent,
+.containerWrap,
+.statCard,
+.itemCard,
+.shopCard,
+.battleBotCard,
+.battleArena,
+.battleSide,
+.battleMovePad,
+.battleActionPad,
+.leadersTableWrap,
+.leadersMeWrap,
+.leadersBoardCard,
+.promoRedeemCard,
+.promoHeroCard,
+.shopShowcase,
+.chatCard,
+.refHero,
+.refLinkCard,
+.refRewardCard,
+.refMilestoneCard,
+.questCard,
+.card,
+.battleModeCard,
+.settingsRow {
+  border-radius: 20px !important;
+  border: 1px solid rgba(123, 198, 255, 0.16) !important;
+  background:
+    radial-gradient(520px 180px at 0% 0%, rgba(123, 198, 255, 0.12), transparent 64%),
+    linear-gradient(180deg, rgba(18, 29, 46, 0.94), rgba(10, 17, 31, 0.98)) !important;
+  box-shadow: 0 18px 34px rgba(0, 0, 0, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.04) !important;
+  backdrop-filter: blur(10px);
+}
+
+.leadersHeroArt {
+  border-radius: 24px;
+  background:
+    radial-gradient(560px 240px at 24% 28%, rgba(123, 198, 255, 0.2), transparent 62%),
+    radial-gradient(480px 240px at 80% 72%, rgba(153, 112, 255, 0.16), transparent 60%),
+    linear-gradient(180deg, rgba(17, 25, 40, 0.94), rgba(9, 14, 24, 0.98));
+  box-shadow: 0 22px 44px rgba(0, 0, 0, 0.34), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+.promoBtn,
+.equipBtn,
+.ghostBtn,
+.shopBuyBtn,
+.purchaseActionBtn {
+  min-height: 48px;
+  border-radius: 14px;
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+}
+
+.promoBtn,
+.equipBtn {
+  background: linear-gradient(180deg, #a3ff70, #62f01f) !important;
+  color: #091108 !important;
+  border: 1px solid rgba(182, 255, 154, 0.86) !important;
+  box-shadow: 0 16px 26px rgba(98, 240, 31, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.22) !important;
+}
+
+.promoBtn:hover,
+.equipBtn:hover {
+  filter: saturate(1.05) brightness(1.03);
+}
+
+.ghostBtn,
+.shopBuyBtnAlt {
+  background:
+    linear-gradient(180deg, rgba(34, 50, 76, 0.98), rgba(18, 29, 46, 0.98)) !important;
+  color: #ecf3ff !important;
+  border: 1px solid rgba(123, 198, 255, 0.2) !important;
+}
+
+.subTabs {
+  padding: 8px;
+  border-radius: 18px;
+  border: 1px solid rgba(123, 198, 255, 0.12);
+  background:
+    linear-gradient(180deg, rgba(12, 20, 35, 0.82), rgba(8, 14, 25, 0.9));
+}
+
+.subTab {
+  min-height: 44px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.subTab.isActive {
+  border-color: rgba(157, 214, 255, 0.44);
+  background:
+    radial-gradient(220px 90px at 50% 0%, rgba(123, 198, 255, 0.16), transparent 70%),
+    linear-gradient(180deg, rgba(50, 77, 118, 0.97), rgba(25, 42, 68, 0.98));
+}
+
+.profileTankTitle,
+.stageTitle,
+.leadersTitle,
+.battlesTitle,
+.shopShowcaseTitle,
+.promoTitle,
+.refHeroTitle,
+.battleBotCardTitle {
+  color: #f5f9ff;
+  font-weight: 900;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.profileTankWrap,
+.tankShowcase {
+  min-height: 360px;
+  padding: 18px;
+}
+
+.tankGlow {
+  filter: blur(26px) saturate(1.15);
+  opacity: 0.92;
+}
+
+.statsGrid {
+  gap: 12px;
+}
+
+.statCard {
+  min-height: 112px;
+  padding: 16px 16px 14px;
+}
+
+.statLabel {
+  color: rgba(169, 193, 226, 0.84);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.statValue {
+  margin-top: 10px;
+  font-size: 28px;
+  font-weight: 900;
+  line-height: 1.04;
+  color: #f5f9ff;
+}
+
+.chatCard,
+.refLinkCard,
+.card {
+  padding: 18px;
+}
+
+.chatTitle,
+.refLinkTitle,
+.refMilestonesTitle,
+.battleSideTitle,
+.battleSectionTitle,
+.shopHeader {
+  color: rgba(207, 223, 244, 0.9);
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.chatList {
+  border-radius: 16px;
+  border: 1px solid rgba(123, 198, 255, 0.12);
+  background: linear-gradient(180deg, rgba(9, 15, 27, 0.72), rgba(5, 10, 18, 0.84));
+}
+
+.promoInput {
+  border-radius: 14px;
+  background: linear-gradient(180deg, rgba(10, 17, 29, 0.92), rgba(15, 24, 39, 0.96));
+  border-color: rgba(174, 199, 234, 0.2);
+}
+
+.promoInput:focus {
+  border-color: rgba(142, 249, 91, 0.74);
+  box-shadow: 0 0 0 3px rgba(142, 249, 91, 0.12);
+}
+
+.stageInfo {
+  padding: 18px;
+}
+
+.stageTitle {
+  font-size: 28px;
+  line-height: 1.06;
+}
+
+.stageDesc,
+.shopShowcaseSubtitle,
+.leadersSubtitle,
+.promoSubtitle,
+.refHeroSub,
+.shopCardMeta,
+.questDesc {
+  color: rgba(184, 204, 232, 0.9);
+}
+
+.itemsRail {
+  margin-top: 14px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(132px, 1fr));
+  gap: 12px;
+}
+
+.itemCard {
+  min-height: 118px;
+  padding: 12px;
+}
+
+.itemCard img {
+  height: 72px;
+  object-fit: contain;
+  filter: drop-shadow(0 14px 22px rgba(0, 0, 0, 0.34));
+}
+
+.battleModesGrid {
+  gap: 12px;
+}
+
+.battleModeCard {
+  min-height: 170px;
+  padding: 16px 14px;
+}
+
+.battleArena,
+.battleSide,
+.battleBotCard {
+  padding: 16px;
+}
+
+.battleMap {
+  border-radius: 16px;
+  background:
+    radial-gradient(420px 240px at 50% 40%, rgba(123, 198, 255, 0.16), transparent 68%),
+    linear-gradient(180deg, rgba(11, 18, 31, 0.88), rgba(8, 14, 25, 0.92));
+}
+
+.battleCell {
+  border-radius: 12px;
+}
+
+.refHero,
+.refLinkCard,
+.refRewardCard,
+.refMilestoneCard,
+.questCard {
+  padding: 18px;
+}
+
+.shopLayout {
+  gap: 18px;
+}
+
+.shopMenu {
+  padding: 14px;
+}
+
+.shopCat {
+  min-height: 76px;
+}
+
+.shopShowcase {
+  padding: 22px;
+}
+
+.shopShowcaseTitle {
+  font-size: 38px;
+}
+
+.shopShowcaseSubtitle {
+  max-width: 680px;
+}
+
+.shopShowcaseStat {
+  text-align: left;
+}
+
+.shopShowcaseStatValue {
+  font-size: 14px;
+}
+
+.shopCard {
+  min-width: 0;
+}
+
+.shopCardMedia {
+  min-height: 176px;
+}
+
+.shopCardItem .shopCardMedia img {
+  height: 132px;
+}
+
+.shopCardTitle,
+.shopCardMeta,
+.shopPremiumChip,
+.shopShowcaseStatValue,
+.shopShowcaseStatLabel,
+.battleModeName,
+.refRewardDesc,
+.refRewardTitle,
+.questTitle,
+.questStatus {
+  overflow-wrap: anywhere;
+}
+
+.shopCardActions {
+  grid-template-columns: 112px minmax(0, 1fr);
+}
+
+.shopCardActions .shopBuyBtn {
+  white-space: normal;
+  line-height: 1.14;
+  align-self: stretch;
+}
+
+.shopPrice {
+  width: 100%;
+}
+
+.shopPremiumContainerShowcase {
+  padding: 24px;
+}
+
+.premiumContainerShowcaseLayout {
+  grid-template-columns: minmax(420px, 1.15fr) minmax(320px, 0.9fr);
+  gap: 26px;
+}
+
+.premiumContainerVisual {
+  min-height: 320px;
+}
+
+.premiumContainerHero {
+  min-height: 300px;
+}
+
+.premiumContainerHeroImg {
+  width: min(680px, 100%);
+  height: 300px;
+}
+
+.premiumContainerDrops {
+  gap: 10px;
+}
+
+.premiumContainerActions {
+  grid-template-columns: 120px minmax(0, 320px) !important;
+  justify-content: flex-start;
+}
+
+.premiumContainerPrice .shopPriceStars {
+  margin-right: 0;
+}
+
+.containerWrap {
+  min-height: 320px;
+}
+
+.containerActions {
+  gap: 10px;
+}
+
+.containerActions .equipBtn,
+.containerActions .ghostBtn {
+  flex: 1 1 220px;
+}
+
+.questsList {
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+
+.questCard {
+  min-height: 228px;
+}
+
+@media (max-width: 900px) {
+  .app {
+    padding: 12px 12px 24px;
+  }
+
+  .hud {
+    padding: 12px;
+  }
+
+  .mainTabs {
+    grid-template-columns: repeat(auto-fit, minmax(96px, 1fr));
+  }
+
+  .panel {
+    padding: 14px;
+  }
+
+  .profileTankWrap,
+  .tankShowcase {
+    min-height: 300px;
+  }
+
+  .statValue {
+    font-size: 24px;
+  }
+
+  .stageTitle,
+  .shopShowcaseTitle {
+    font-size: 30px;
+  }
+
+  .shopCardActions {
+    grid-template-columns: 104px minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .app {
+    padding: 8px 8px 20px;
+  }
+
+  .hud {
+    border-radius: 18px;
+  }
+
+  .mainTabs {
+    padding: 8px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .mainTab {
+    min-height: 46px;
+    padding: 10px 12px;
+    font-size: 11px;
+  }
+
+  .panel {
+    border-radius: 22px;
+    padding: 12px;
+  }
+
+  .panel::before,
+  .notice::before {
+    inset: 7px;
+    border-radius: 15px;
+  }
+
+  .profileTankWrap,
+  .tankShowcase {
+    min-height: 248px;
+    padding: 12px;
+  }
+
+  .stageTitle,
+  .leadersTitle,
+  .promoTitle,
+  .refHeroTitle,
+  .battlesTitle,
+  .shopShowcaseTitle {
+    font-size: 24px;
+  }
+
+  .stageDesc,
+  .shopShowcaseSubtitle,
+  .shopCardMeta,
+  .promoSubtitle,
+  .refHeroSub {
+    font-size: 13px;
+  }
+
+  .itemsRail {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .shopCardActions,
+  .premiumContainerActions {
+    grid-template-columns: 1fr !important;
+  }
+
+  .shopPrice,
+  .premiumContainerPrice {
+    width: 100%;
+  }
+
+  .premiumContainerVisual {
+    min-height: 240px;
+  }
+
+  .premiumContainerHero {
+    min-height: 220px;
+  }
+
+  .premiumContainerHeroImg {
+    height: 220px;
+  }
+
+  .containerActions {
+    display: grid;
+  }
+}
+
 .questsList {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -160,7 +5330,8 @@
   --glass: rgba(18, 28, 46, 0.56);
   --danger: #ff5d5d;
   --shadow: 0 14px 30px rgba(0, 0, 0, 0.35);
-  --bg-image: url("./images/webapp/Background.webp");
+  /* Use API-served absolute path by default (prod hosting has no bundled ./images/webapp assets). */
+  --bg-image: url("/images/webapp/Background.webp");
 }
 
 * {
@@ -763,28 +5934,33 @@ button.isDisabled,
 .leadersTitle { font-size: 24px; font-weight: 900; letter-spacing: 0.04em; color: #f3f8ff; }
 .leadersSubtitle { color: rgba(203, 221, 246, 0.86); font-size: 13px; }
 .leadersPromoLayout {
-  min-height: 520px;
+  min-height: 0;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 28px;
-  padding: 8px 4px 4px;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  gap: 18px;
+  padding: 8px 0 4px;
 }
 .leadersHeroCard {
-  flex: 1 1 auto;
-  min-height: 300px;
+  flex: 0 0 auto;
+  width: 100%;
+  min-height: 0;
+  display: flex;
+  justify-content: stretch;
 }
 
 .leadersHeroArt {
-  width: min(100%, 520px);
-  min-height: 220px;
+  width: 100%;
+  max-width: none;
+  min-height: 212px;
   border-radius: 22px;
-  border: 1px solid rgba(206, 220, 255, 0.16);
+  border: 1px solid rgba(184, 222, 255, 0.14);
   background:
-    radial-gradient(520px 220px at 30% 30%, rgba(126, 188, 255, 0.18), transparent 62%),
-    radial-gradient(420px 220px at 80% 70%, rgba(156, 112, 255, 0.14), transparent 60%),
-    linear-gradient(180deg, rgba(22, 28, 39, 0.82), rgba(12, 16, 25, 0.88));
-  box-shadow: 0 18px 34px rgba(0, 0, 0, 0.34), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    radial-gradient(620px 240px at 18% 18%, rgba(123, 198, 255, 0.16), transparent 62%),
+    radial-gradient(560px 220px at 84% 76%, rgba(153, 112, 255, 0.12), transparent 60%),
+    linear-gradient(180deg, rgba(18, 27, 42, 0.9), rgba(10, 15, 26, 0.96));
+  box-shadow: 0 18px 34px rgba(0, 0, 0, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.06);
   display: grid;
   place-items: center;
   text-align: center;
@@ -800,18 +5976,18 @@ button.isDisabled,
 
 .leadersHeroHeadline {
   margin-top: 8px;
-  font-size: 22px;
-  font-weight: 900;
-  letter-spacing: 0.06em;
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
   text-transform: uppercase;
   color: #f3f8ff;
 }
 
 .leadersHeroSub {
   margin-top: 6px;
-  color: rgba(193, 214, 243, 0.88);
-  font-size: 13px;
-  font-weight: 700;
+  color: rgba(210, 224, 245, 0.74);
+  font-size: 14px;
+  font-weight: 600;
 }
 
 .leadersHeroShine {
@@ -828,8 +6004,9 @@ button.isDisabled,
   100% { transform: translateX(-10%) rotate(12deg); opacity: 0.2; }
 }
 .leadersBoardCard {
-  flex: 0 0 min(540px, 100%);
-  padding: 20px 18px 18px;
+  flex: 0 0 auto;
+  width: 100%;
+  padding: 20px 20px 18px;
   border-radius: 16px;
   border: 1px solid rgba(255, 255, 255, 0.08);
   background: linear-gradient(180deg, rgba(22, 28, 39, 0.96), rgba(15, 20, 30, 0.98));
@@ -858,7 +6035,7 @@ button.isDisabled,
 }
 .leadersTableHead, .leadersRow {
   display: grid;
-  grid-template-columns: 52px minmax(230px, 1.8fr) 0.9fr 0.8fr 0.7fr;
+  grid-template-columns: 56px minmax(280px, 2.3fr) minmax(110px, 0.95fr) minmax(92px, 0.82fr) minmax(92px, 0.82fr);
   gap: 8px;
   align-items: center;
 }
@@ -1790,94 +6967,220 @@ button.isDisabled,
   box-shadow: 0 18px 46px rgba(0, 0, 0, 0.56);
 }
 
-.quickMatchCard,
-.quickMatchTop,
-.quickMatchTitle,
-.quickMatchCancelBtn,
-.quickMatchBody,
-.quickMatchLine {
-  /* legacy modal styles kept but unused */
-}
-
 .quickMatchWidget {
   position: fixed;
-  top: 36px;
+  top: 24px;
   right: 16px;
-  width: 520px;
-  max-width: calc(100vw - 32px);
-  border-radius: 14px;
+  width: min(500px, calc(100vw - 24px));
+  max-width: calc(100vw - 24px);
+  border-radius: 22px;
   overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  box-shadow: 0 16px 44px rgba(0, 0, 0, 0.52);
+  border: 1px solid rgba(155, 214, 255, 0.22);
+  box-shadow: 0 22px 44px rgba(0, 0, 0, 0.42), 0 0 0 1px rgba(168, 215, 255, 0.08) inset;
   display: grid;
-  grid-template-columns: 1fr auto;
-  grid-template-rows: auto auto;
+  grid-template-columns: minmax(0, 1fr) 112px;
+  grid-template-areas:
+    "top cancel"
+    "body cancel"
+    "status cancel";
+  gap: 10px 12px;
   z-index: 60;
   background:
-    linear-gradient(102deg, rgba(40, 138, 72, 0.88) 0 2.4%, transparent 2.4% 100%),
-    linear-gradient(180deg, rgba(0,0,0,0.46), rgba(0,0,0,0.28)),
+    linear-gradient(132deg, rgba(10, 17, 31, 0.94), rgba(11, 20, 38, 0.9) 52%, rgba(31, 20, 51, 0.84) 100%),
+    radial-gradient(280px 120px at 84% 84%, rgba(155, 144, 255, 0.18), transparent 72%),
+    radial-gradient(260px 120px at 12% 18%, rgba(123, 198, 255, 0.14), transparent 74%),
     url("/images/webapp/Background.webp");
   background-size: cover;
   background-position: center;
-  backdrop-filter: blur(2px);
+  padding: 14px 14px 14px 16px;
+  backdrop-filter: blur(16px) saturate(118%);
 }
 
 @media (max-width: 900px) {
   .quickMatchWidget {
-    top: 12px;
+    top: 14px;
     right: 10px;
-    width: min(520px, calc(100vw - 20px));
+    width: min(460px, calc(100vw - 20px));
+    max-width: calc(100vw - 20px);
   }
 }
 
 .quickMatchWidgetTitle {
-  padding: 12px 14px 6px;
-  font-weight: 1000;
-  letter-spacing: 0.08em;
+  padding: 0;
+  font-weight: 800;
+  letter-spacing: 0.02em;
   text-transform: uppercase;
-  font-size: 16px;
+  font-size: 20px;
   color: rgba(245, 250, 255, 0.96);
-  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.38);
+  line-height: 1.05;
+  text-shadow: none;
 }
 
 .quickMatchWidgetBody {
-  padding: 0 14px 12px;
+  grid-area: body;
+  padding: 0;
   display: grid;
-  gap: 4px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
 }
 
-.quickMatchWidgetLine {
-  display: flex;
-  justify-content: space-between;
+.quickMatchWidgetTop {
+  grid-area: top;
   gap: 10px;
-  color: rgba(231, 244, 255, 0.92);
-  font-weight: 800;
-  font-size: 13px;
-  white-space: nowrap;
 }
 
-.quickMatchWidgetLine b {
-  color: #ffd44f;
-  font-weight: 1000;
+.quickMatchWidgetEmblem {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  border-color: rgba(153, 215, 255, 0.24);
+  background: linear-gradient(180deg, rgba(129, 222, 255, 0.16), rgba(78, 107, 255, 0.12));
+  color: #bbecff;
+  font-size: 18px;
+}
+
+.quickMatchWidgetKicker {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: rgba(210, 224, 245, 0.74);
+}
+
+.quickMatchWidgetMetric {
+  min-height: 64px;
+  padding: 10px 12px;
+  border-radius: 14px;
+  border-color: rgba(155, 214, 255, 0.12);
+  background: linear-gradient(180deg, rgba(15, 24, 41, 0.76), rgba(10, 16, 29, 0.88));
+  gap: 6px;
+}
+
+.quickMatchWidgetMetricLabel {
+  font-size: 10px;
+  line-height: 1.25;
+  font-weight: 600;
   letter-spacing: 0.02em;
+  text-transform: none;
+  color: rgba(210, 224, 245, 0.74);
+}
+
+.quickMatchWidgetMetric b {
+  color: #f3f8ff;
+  font-size: 22px;
+  font-weight: 800;
+  text-shadow: none;
+}
+
+.quickMatchWidgetStatus {
+  grid-area: status;
+  min-height: 28px;
+  padding: 0 10px;
+  border-color: rgba(120, 239, 203, 0.18);
+  background: rgba(120, 239, 203, 0.08);
+  color: rgba(219, 255, 245, 0.92);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+
+.quickMatchWidgetStatusDot {
+  width: 7px;
+  height: 7px;
+  background: #78efcb;
+  box-shadow: 0 0 12px rgba(120, 239, 203, 0.58);
 }
 
 .quickMatchWidgetCancel {
-  grid-column: 2 / 3;
-  grid-row: 1 / 3;
-  width: 120px;
-  border: none;
+  grid-area: cancel;
+  width: 112px;
+  min-height: 100%;
+  border: 1px solid rgba(149, 201, 255, 0.18);
+  border-radius: 16px;
   cursor: pointer;
-  font-weight: 1000;
-  letter-spacing: 0.08em;
-  color: rgba(235, 245, 255, 0.96);
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.10), rgba(255, 255, 255, 0.02));
-  border-left: 1px solid rgba(255, 255, 255, 0.14);
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  color: #eef5ff;
+  background: linear-gradient(180deg, rgba(27, 41, 64, 0.96), rgba(14, 24, 40, 0.98));
   transition: filter 0.12s ease, background 0.12s ease;
 }
 
 .quickMatchWidgetCancel:hover { filter: brightness(1.06); }
 .quickMatchWidgetCancel:active { filter: brightness(0.98); }
+
+@media (max-width: 640px) {
+  .quickMatchWidget {
+    top: 10px;
+    right: 8px;
+    left: 8px;
+    width: auto;
+    max-width: none;
+    padding: 10px 10px 10px 12px;
+    border-radius: 18px;
+    grid-template-columns: minmax(0, 1fr) 94px;
+    grid-template-areas:
+      "top cancel"
+      "body cancel"
+      "status status";
+    gap: 8px 10px;
+  }
+
+  .quickMatchWidgetTop {
+    gap: 8px;
+    align-items: flex-start;
+  }
+
+  .quickMatchWidgetEmblem {
+    width: 34px;
+    height: 34px;
+    border-radius: 10px;
+    font-size: 15px;
+  }
+
+  .quickMatchWidgetKicker {
+    display: none;
+  }
+
+  .quickMatchWidgetTitle {
+    font-size: 16px;
+    line-height: 1.1;
+  }
+
+  .quickMatchWidgetBody {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .quickMatchWidgetMetric {
+    min-height: 52px;
+    padding: 8px 9px;
+    border-radius: 12px;
+    gap: 4px;
+  }
+
+  .quickMatchWidgetMetricLabel {
+    font-size: 9px;
+    line-height: 1.2;
+  }
+
+  .quickMatchWidgetMetric b {
+    font-size: 17px;
+  }
+
+  .quickMatchWidgetStatus {
+    width: 100%;
+    justify-content: center;
+    font-size: 9px;
+    padding: 0 8px;
+  }
+
+  .quickMatchWidgetCancel {
+    width: 94px;
+    min-height: 100%;
+    padding: 10px 8px;
+    border-radius: 12px;
+    font-size: 11px;
+  }
+}
 .quickMatchTop {
   display: grid;
   grid-template-columns: 1fr auto;
@@ -3663,6 +8966,10 @@ body {
   color: rgba(255, 237, 189, 0.96);
   font-size: 12px;
   font-weight: 700;
+  line-height: 1.2;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  max-width: 100%;
 }
 
 .shopBuyBtnPremium {
@@ -3691,6 +8998,589 @@ body {
 
 .shopPriceStars { display: inline-block; margin-right: 10px; font-weight: 1000; color: rgba(255, 237, 189, 0.98); }
 .shopPriceCrystals { opacity: 0.78; font-weight: 900; color: rgba(205, 231, 255, 0.9); }
+
+/* Shop redesign: unified storefront */
+.shopLayout {
+  grid-template-columns: 250px minmax(0, 1fr);
+  gap: 16px;
+  align-items: start;
+}
+
+.shopMenu {
+  position: sticky;
+  top: 10px;
+  padding: 12px;
+  gap: 10px;
+  border: 1px solid rgba(126, 188, 255, 0.2);
+  border-radius: 16px;
+  background:
+    radial-gradient(480px 180px at 10% 0%, rgba(126, 188, 255, 0.14), transparent 62%),
+    linear-gradient(180deg, rgba(19, 29, 46, 0.94), rgba(11, 18, 31, 0.96));
+  box-shadow: 0 18px 32px rgba(0, 0, 0, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+.shopMenuIntro {
+  padding: 6px 4px 10px;
+  border-bottom: 1px solid rgba(126, 188, 255, 0.14);
+}
+
+.shopMenuEyebrow {
+  color: rgba(161, 188, 228, 0.78);
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.shopMenuTitle {
+  margin-top: 6px;
+  color: #f2f7ff;
+  font-size: 24px;
+  font-weight: 900;
+  line-height: 1.05;
+}
+
+.shopMenuNote {
+  margin-top: 8px;
+  color: rgba(183, 202, 228, 0.86);
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.shopCat {
+  position: relative;
+  display: grid;
+  grid-template-columns: 42px minmax(0, 1fr);
+  align-items: center;
+  gap: 12px;
+  min-height: 68px;
+  padding: 12px;
+  border-radius: 14px;
+  border: 1px solid rgba(126, 188, 255, 0.16);
+  background:
+    linear-gradient(180deg, rgba(31, 45, 68, 0.94), rgba(20, 31, 49, 0.96));
+  color: #d4e4ff;
+  overflow: hidden;
+}
+
+.shopCat::after {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 3px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, rgba(126, 188, 255, 0.12), rgba(156, 112, 255, 0.12));
+  opacity: 0;
+  transition: opacity 0.16s ease;
+}
+
+.shopCatIcon {
+  width: 42px;
+  height: 42px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  border: 1px solid rgba(136, 187, 255, 0.18);
+  background: linear-gradient(180deg, rgba(72, 103, 150, 0.32), rgba(32, 49, 77, 0.32));
+  color: #edf4ff;
+  font-size: 18px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+.shopCatCopy {
+  min-width: 0;
+  display: grid;
+  gap: 4px;
+}
+
+.shopCatTitle {
+  color: #f2f7ff;
+  font-size: 14px;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.shopCatMeta {
+  color: rgba(170, 193, 224, 0.86);
+  font-size: 11px;
+  line-height: 1.35;
+}
+
+.shopCat:hover {
+  border-color: rgba(126, 188, 255, 0.34);
+  color: #eef5ff;
+  transform: translateY(-1px);
+  box-shadow: 0 14px 24px rgba(0, 0, 0, 0.24);
+}
+
+.shopCat:hover::after,
+.shopCat.isActive::after {
+  opacity: 1;
+}
+
+.shopCat.isActive {
+  border-color: rgba(126, 188, 255, 0.52);
+  background:
+    radial-gradient(320px 120px at 0% 0%, rgba(126, 188, 255, 0.18), transparent 64%),
+    linear-gradient(180deg, rgba(44, 67, 102, 0.98), rgba(24, 41, 67, 0.98));
+  box-shadow:
+    0 16px 28px rgba(0, 0, 0, 0.28),
+    0 0 0 1px rgba(126, 188, 255, 0.18) inset;
+}
+
+.shopCat.isActive .shopCatIcon {
+  border-color: rgba(171, 211, 255, 0.48);
+  background: linear-gradient(180deg, rgba(112, 165, 255, 0.34), rgba(43, 69, 111, 0.4));
+}
+
+.shopContent {
+  padding: 0;
+  display: grid;
+  gap: 12px;
+}
+
+.shopShowcase {
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) minmax(344px, 0.9fr);
+  gap: 14px;
+  align-items: end;
+  padding: 20px;
+  border-radius: 18px;
+  border: 1px solid rgba(126, 188, 255, 0.22);
+  background:
+    radial-gradient(720px 280px at 0% 0%, rgba(126, 188, 255, 0.18), transparent 68%),
+    radial-gradient(540px 240px at 100% 100%, rgba(156, 112, 255, 0.14), transparent 70%),
+    linear-gradient(180deg, rgba(18, 29, 46, 0.96), rgba(10, 17, 31, 0.98));
+  box-shadow: 0 18px 34px rgba(0, 0, 0, 0.28);
+}
+
+.shopShowcaseCopy {
+  min-width: 0;
+}
+
+.shopShowcaseEyebrow {
+  color: rgba(171, 198, 235, 0.8);
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.shopShowcaseTitle {
+  margin-top: 10px;
+  color: #f4f8ff;
+  font-size: 32px;
+  font-weight: 900;
+  line-height: 1.04;
+  text-transform: uppercase;
+}
+
+.shopShowcaseSubtitle {
+  margin-top: 10px;
+  max-width: 720px;
+  color: rgba(193, 214, 241, 0.92);
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+.shopShowcaseMeta {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.shopShowcaseStat {
+  min-height: 92px;
+  padding: 12px 12px;
+  border-radius: 14px;
+  border: 1px solid rgba(126, 188, 255, 0.16);
+  background: linear-gradient(180deg, rgba(20, 33, 53, 0.78), rgba(11, 19, 33, 0.84));
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.shopShowcaseStatLabel {
+  color: rgba(161, 184, 216, 0.82);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  overflow-wrap: anywhere;
+}
+
+.shopShowcaseStatValue {
+  color: #f2f7ff;
+  font-size: 15px;
+  font-weight: 900;
+  line-height: 1.12;
+  overflow-wrap: anywhere;
+}
+
+.shopHeader {
+  margin: 2px 2px 0;
+  color: rgba(180, 203, 234, 0.88);
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.shopList {
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 14px;
+}
+
+.starsRecordWarning {
+  border-radius: 14px;
+}
+
+.promoPanel {
+  min-height: 0;
+  align-items: stretch;
+  gap: 16px;
+  padding: 0;
+}
+
+.promoHeroCard,
+.promoRedeemCard {
+  border-radius: 18px;
+  border: 1px solid rgba(126, 188, 255, 0.16);
+  background:
+    radial-gradient(520px 200px at 0% 0%, rgba(126, 188, 255, 0.16), transparent 68%),
+    linear-gradient(180deg, rgba(18, 29, 46, 0.96), rgba(10, 17, 31, 0.98));
+  box-shadow: 0 18px 34px rgba(0, 0, 0, 0.28);
+}
+
+.promoHeroCard {
+  min-height: 320px;
+}
+
+.promoHeroPoster {
+  width: min(100%, 520px);
+  min-height: 220px;
+  padding: 24px;
+  border-radius: 22px;
+  border: 1px solid rgba(206, 220, 255, 0.16);
+  background:
+    radial-gradient(460px 200px at 0% 0%, rgba(126, 188, 255, 0.18), transparent 70%),
+    radial-gradient(420px 220px at 100% 100%, rgba(126, 255, 53, 0.12), transparent 68%),
+    linear-gradient(180deg, rgba(24, 37, 58, 0.96), rgba(13, 23, 39, 0.98));
+  box-shadow: 0 16px 30px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  display: grid;
+  align-content: space-between;
+  gap: 18px;
+}
+
+.promoHeroLabel {
+  display: inline-flex;
+  width: fit-content;
+  padding: 7px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(126, 255, 53, 0.34);
+  background: rgba(126, 255, 53, 0.1);
+  color: #d8ffc0;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.promoHeroLines {
+  display: grid;
+  gap: 10px;
+}
+
+.promoHeroLine {
+  height: 12px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(126, 188, 255, 0.75), rgba(126, 255, 53, 0.4));
+  opacity: 0.95;
+}
+
+.promoHeroLine:nth-child(1) { width: 78%; }
+.promoHeroLine:nth-child(2) { width: 92%; }
+.promoHeroLine:nth-child(3) { width: 56%; }
+
+.promoHeroDots {
+  width: 100%;
+  min-height: 0;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  justify-content: flex-start;
+  gap: 12px;
+}
+
+.promoHeroDot {
+  width: 16px;
+  height: 16px;
+  background: radial-gradient(circle at 35% 35%, #c5f7a7, #65a62d 72%);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08) inset, 0 0 16px rgba(126, 255, 53, 0.18);
+}
+
+.promoRedeemCard {
+  flex: 0 0 340px;
+  padding: 22px 20px 18px;
+}
+
+.shopCard {
+  min-height: 100%;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  border-radius: 16px;
+}
+
+.shopCardItem {
+  background:
+    radial-gradient(460px 160px at 50% 0%, rgba(126, 188, 255, 0.12), transparent 62%),
+    linear-gradient(180deg, rgba(20, 31, 49, 0.97), rgba(11, 18, 31, 0.98));
+  border-color: rgba(126, 188, 255, 0.16);
+}
+
+.shopCardItem--weapon {
+  background:
+    radial-gradient(420px 170px at 50% 0%, rgba(86, 166, 255, 0.14), transparent 64%),
+    linear-gradient(180deg, rgba(18, 31, 52, 0.98), rgba(10, 18, 31, 0.98));
+}
+
+.shopCardItem--hull {
+  background:
+    radial-gradient(420px 170px at 50% 0%, rgba(126, 255, 53, 0.12), transparent 64%),
+    linear-gradient(180deg, rgba(20, 34, 44, 0.98), rgba(11, 19, 27, 0.98));
+}
+
+.shopCardItem.isOwned {
+  border-color: rgba(126, 255, 53, 0.24);
+}
+
+.shopCardMedia {
+  position: relative;
+  min-height: 160px;
+  padding: 16px 14px 12px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  background:
+    radial-gradient(320px 120px at 50% 20%, rgba(255, 255, 255, 0.08), transparent 68%),
+    linear-gradient(180deg, rgba(16, 25, 40, 0.92), rgba(10, 16, 28, 0.96));
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.shopCardMediaGlow {
+  position: absolute;
+  inset: auto 15% 10px;
+  height: 24px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(126, 188, 255, 0.26), transparent 70%);
+  filter: blur(10px);
+}
+
+.shopCardItem--hull .shopCardMediaGlow {
+  background: radial-gradient(circle, rgba(126, 255, 53, 0.18), transparent 70%);
+}
+
+.shopCardItem .shopCardMedia img {
+  position: relative;
+  width: 100%;
+  height: 128px;
+  object-fit: contain;
+  filter: drop-shadow(0 18px 24px rgba(0, 0, 0, 0.32));
+}
+
+.shopCardBadge,
+.shopOwnedPill {
+  position: absolute;
+  top: 10px;
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+  padding: 0 10px;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.shopCardBadge {
+  left: 10px;
+  border: 1px solid rgba(126, 188, 255, 0.24);
+  background: rgba(82, 131, 206, 0.18);
+  color: #d5e8ff;
+}
+
+.shopOwnedPill {
+  right: 10px;
+  border: 1px solid rgba(126, 255, 53, 0.28);
+  background: rgba(126, 255, 53, 0.12);
+  color: #d8ffc0;
+}
+
+.shopCardBody {
+  display: grid;
+  gap: 6px;
+  min-width: 0;
+}
+
+.shopCardTitle {
+  margin-top: 0;
+  font-size: 15px;
+  line-height: 1.28;
+  overflow-wrap: anywhere;
+}
+
+.shopCardMeta {
+  margin-top: 0;
+  min-height: 40px;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+
+.shopCardActions {
+  margin-top: auto;
+  display: grid;
+  grid-template-columns: minmax(0, auto) minmax(128px, 1fr);
+  align-items: center;
+  gap: 10px;
+}
+
+.shopCardActions .shopBuyBtn {
+  width: 100%;
+  min-width: 0;
+  margin-left: 0;
+  padding: 10px 12px;
+  font-size: 13px;
+}
+
+.shopPrice {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  padding: 0 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(126, 188, 255, 0.14);
+  background: rgba(255, 255, 255, 0.04);
+  white-space: nowrap;
+}
+
+.shopCardPremium {
+  padding: 16px;
+}
+
+.shopCardPremium .shopCardTitle {
+  font-size: 17px;
+}
+
+.shopCardPremium .shopCardActions {
+  display: grid;
+  gap: 12px;
+}
+
+.shopCardPremium .shopPrice {
+  justify-content: space-between;
+  width: 100%;
+  min-height: 46px;
+}
+
+.shopBuyDual .shopBuyBtn {
+  width: 100%;
+  margin-left: 0;
+}
+
+.shopBuyBtnAlt {
+  background: linear-gradient(180deg, rgba(43, 62, 92, 0.98), rgba(28, 43, 66, 0.98));
+  color: #eaf2ff;
+  border: 1px solid rgba(126, 188, 255, 0.18);
+}
+
+.shopPremiumContainerShowcase {
+  padding: 20px 20px 22px;
+}
+
+.shopPremiumContainerShowcase .shopCardTitle {
+  font-size: 22px;
+}
+
+.shopPremiumContainerShowcase .shopCardMeta {
+  min-height: 0;
+  font-size: 14px;
+}
+
+.shopPremiumContainerShowcase .shopCardActions {
+  display: grid;
+  grid-template-columns: minmax(0, auto) minmax(220px, 320px);
+  align-items: center;
+  gap: 14px;
+}
+
+.shopPremiumContainerShowcase .starsBuyBtn {
+  width: 100%;
+  min-width: 0;
+}
+
+.premiumContainerShowcaseLayout {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(340px, 1.15fr) minmax(320px, 0.95fr);
+  gap: 24px;
+  align-items: center;
+}
+
+.premiumContainerVisual,
+.premiumContainerInfo {
+  min-width: 0;
+}
+
+.premiumContainerVisual {
+  border-radius: 20px;
+  border: 1px solid rgba(255, 211, 79, 0.2);
+  background:
+    radial-gradient(520px 240px at 50% 35%, rgba(255, 214, 92, 0.24), transparent 70%),
+    linear-gradient(180deg, rgba(36, 28, 11, 0.44), rgba(21, 14, 29, 0.22));
+  padding: 10px;
+}
+
+.premiumContainerInfo {
+  display: grid;
+  align-content: center;
+  gap: 12px;
+}
+
+.premiumContainerKicker {
+  display: inline-flex;
+  width: fit-content;
+  min-height: 28px;
+  align-items: center;
+  padding: 0 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 211, 79, 0.34);
+  background: rgba(255, 211, 79, 0.1);
+  color: rgba(255, 235, 186, 0.96);
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.premiumContainerActions {
+  margin-top: 4px;
+}
+
+.premiumContainerPrice {
+  min-width: 110px;
+  border-color: rgba(255, 211, 79, 0.22);
+  background: rgba(255, 220, 120, 0.08);
+}
 
 .containerTabs {
   overflow-x: auto;
@@ -3829,7 +9719,7 @@ body {
 }
 .premiumContainerHero {
   position: relative;
-  min-height: 300px;
+  min-height: 240px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -3848,10 +9738,11 @@ body {
 
 .premiumContainerHeroImg {
   width: min(620px, 100%);
-  height: 340px;
+  height: 260px;
   object-fit: contain;
-  transform: scale(1.28);
+  transform: scale(1.18);
   filter: drop-shadow(0 0 30px rgba(255, 211, 79, 0.42));
+  animation: premiumContainerFloat 4.8s ease-in-out infinite;
 }
 
 @keyframes premiumContainerFloat {
@@ -4464,6 +10355,201 @@ body {
   flex-shrink: 0;
 }
 
+.panelReferrals {
+  display: grid;
+  gap: 12px;
+}
+
+.refHero {
+  position: relative;
+  border: 1px solid rgba(120, 170, 255, 0.28);
+  border-radius: 14px;
+  padding: 14px;
+  background:
+    radial-gradient(650px 220px at 0% 0%, rgba(72, 98, 224, 0.28), transparent 60%),
+    radial-gradient(620px 220px at 100% 100%, rgba(38, 196, 190, 0.2), transparent 62%),
+    linear-gradient(140deg, rgba(9, 24, 48, 0.96), rgba(8, 22, 36, 0.96));
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.42);
+}
+
+.refHeroBadge {
+  display: inline-flex;
+  border: 1px solid rgba(157, 188, 255, 0.42);
+  border-radius: 999px;
+  padding: 4px 10px;
+  font-size: 12px;
+  font-weight: 700;
+  color: rgba(216, 228, 255, 0.96);
+  background: rgba(79, 125, 244, 0.22);
+}
+
+.refHeroTitle {
+  margin: 10px 0 6px;
+  font-size: 26px;
+  line-height: 1.08;
+}
+
+.refHeroSub {
+  margin: 0;
+  color: rgba(196, 212, 236, 0.95);
+}
+
+.refHeroStats {
+  margin-top: 12px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.refStat {
+  border: 1px solid rgba(130, 160, 220, 0.3);
+  border-radius: 11px;
+  padding: 10px;
+  background: rgba(16, 27, 49, 0.66);
+}
+
+.refStatLabel {
+  font-size: 12px;
+  color: rgba(178, 198, 226, 0.96);
+}
+
+.refStatValue {
+  margin-top: 5px;
+  font-size: 22px;
+  font-weight: 800;
+}
+
+.refLinkCard {
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  background: rgba(12, 22, 36, 0.82);
+  padding: 12px;
+}
+
+.refLinkTitle {
+  font-size: 13px;
+  font-weight: 700;
+  color: rgba(189, 208, 232, 0.95);
+  margin-bottom: 8px;
+}
+
+.refLinkRow {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px;
+}
+
+.refRewardsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.refRewardCard {
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  background: linear-gradient(155deg, rgba(11, 24, 41, 0.9), rgba(8, 21, 34, 0.86));
+  padding: 12px;
+}
+
+.refRewardIcon {
+  font-size: 20px;
+}
+
+.refRewardTitle {
+  margin-top: 8px;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.refRewardDesc {
+  margin-top: 6px;
+  color: rgba(184, 202, 228, 0.95);
+  font-size: 13px;
+  line-height: 1.34;
+}
+
+.refMilestones {
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  padding: 12px;
+  background: rgba(11, 21, 34, 0.82);
+}
+
+.refMilestonesTitle {
+  font-size: 15px;
+  font-weight: 800;
+  margin-bottom: 10px;
+}
+
+.refMilestonesList {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.refMilestoneCard {
+  border: 1px solid rgba(124, 148, 188, 0.26);
+  border-radius: 11px;
+  padding: 10px;
+  background: rgba(14, 26, 43, 0.72);
+}
+
+.refMilestoneCard.isDone {
+  border-color: rgba(106, 208, 158, 0.55);
+  background: linear-gradient(150deg, rgba(20, 48, 39, 0.82), rgba(15, 34, 55, 0.82));
+}
+
+.refMilestoneCard.isNext {
+  border-color: rgba(104, 165, 255, 0.58);
+  box-shadow: 0 0 0 1px rgba(104, 165, 255, 0.16) inset;
+}
+
+.refMilestoneTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.refMilestoneIcon {
+  font-size: 20px;
+}
+
+.refMilestoneTarget {
+  font-size: 18px;
+  font-weight: 900;
+}
+
+.refMilestoneReward {
+  margin-top: 8px;
+  font-size: 13px;
+  line-height: 1.35;
+}
+
+.refMilestoneMeta {
+  margin-top: 9px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  color: rgba(186, 204, 228, 0.95);
+}
+
+.refMilestoneBar {
+  margin-top: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: rgba(83, 105, 138, 0.34);
+  overflow: hidden;
+}
+
+.refMilestoneBar i {
+  display: block;
+  height: 100%;
+  width: 0;
+  background: linear-gradient(90deg, #4ab3ff, #61d39b);
+}
+
 @media (max-width: 900px) {
   .garageStage {
     grid-template-columns: 1fr;
@@ -4471,6 +10557,27 @@ body {
 
   .shopLayout {
     grid-template-columns: 1fr;
+  }
+
+  .shopMenu {
+    position: static;
+  }
+
+  .shopShowcase {
+    grid-template-columns: 1fr;
+  }
+
+  .shopShowcaseMeta {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .premiumContainerShowcaseLayout {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .shopPremiumContainerShowcase .shopCardActions {
+    grid-template-columns: minmax(0, auto) minmax(220px, 1fr);
   }
 
   .promoPanel {
@@ -4484,12 +10591,97 @@ body {
     width: 100%;
   }
 
+  .refHeroStats,
+  .refRewardsGrid,
+  .refMilestonesList {
+    grid-template-columns: 1fr;
+  }
+
+  .refLinkRow {
+    grid-template-columns: 1fr;
+  }
+
   .promoRedeemCard {
     flex-basis: auto;
   }
 }
 
 @media (max-width: 640px) {
+  .shopMenu {
+    padding: 10px;
+  }
+
+  .shopCat {
+    grid-template-columns: 38px minmax(0, 1fr);
+    min-height: 62px;
+    padding: 10px;
+  }
+
+  .shopCatIcon {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    font-size: 16px;
+  }
+
+  .shopShowcase {
+    padding: 16px;
+  }
+
+  .shopShowcaseTitle {
+    font-size: 24px;
+  }
+
+  .shopShowcaseSubtitle {
+    font-size: 13px;
+  }
+
+  .shopShowcaseMeta {
+    grid-template-columns: 1fr;
+  }
+
+  .shopShowcaseStat {
+    min-height: 0;
+  }
+
+  .shopList {
+    grid-template-columns: 1fr;
+  }
+
+  .shopCardActions,
+  .shopPremiumContainerShowcase .shopCardActions {
+    grid-template-columns: 1fr;
+  }
+
+  .shopPrice,
+  .premiumContainerPrice {
+    width: 100%;
+  }
+
+  .promoHeroPoster {
+    min-height: 180px;
+    padding: 18px;
+  }
+
+  .promoRedeemCard {
+    padding: 18px 16px 16px;
+  }
+
+  .shopCardActions .shopBuyBtn,
+  .shopPremiumContainerShowcase .starsBuyBtn {
+    width: 100%;
+    min-width: 0;
+    margin-left: 0;
+  }
+
+  .shopPremiumContainerShowcase {
+    padding: 16px 14px 18px;
+  }
+
+  .premiumContainerVisual {
+    padding: 6px;
+  }
+
   .purchaseModal,
   .lootModal,
   .errorModal,
@@ -4957,3 +11149,1298 @@ body {
   }
 }
 
+/* ===== Final Game Pass: end-of-file overrides ===== */
+body {
+  background:
+    radial-gradient(1280px 560px at 18% -8%, rgba(112, 198, 255, 0.13), transparent 60%),
+    radial-gradient(980px 460px at 100% 8%, rgba(155, 144, 255, 0.11), transparent 58%),
+    radial-gradient(880px 420px at 50% 100%, rgba(120, 239, 203, 0.08), transparent 62%),
+    linear-gradient(180deg, #050a13 0%, #09111f 52%, #060a13 100%);
+  color: #eef5ff;
+}
+
+body::before {
+  background:
+    linear-gradient(rgba(5, 10, 19, 0.34), rgba(5, 11, 22, 0.8)),
+    radial-gradient(780px 280px at 50% 100%, rgba(123, 198, 255, 0.14), transparent 72%),
+    var(--bg-image) center/cover no-repeat;
+  filter: blur(1.5px) brightness(0.46) saturate(1.08);
+  transform: scale(1.08);
+  opacity: 0.9;
+}
+
+.app {
+  max-width: 1240px;
+  padding: 18px 18px 28px;
+}
+
+.hud {
+  padding: 14px 16px;
+  border-radius: 22px;
+  border: 1px solid rgba(150, 201, 255, 0.2);
+  background:
+    radial-gradient(540px 180px at 0% 0%, rgba(123, 198, 255, 0.16), transparent 64%),
+    radial-gradient(520px 220px at 100% 100%, rgba(155, 144, 255, 0.11), transparent 68%),
+    linear-gradient(180deg, rgba(16, 26, 46, 0.92), rgba(9, 15, 29, 0.96));
+  box-shadow: 0 24px 56px rgba(2, 8, 20, 0.44), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(18px) saturate(118%);
+}
+
+.hudRight {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.audioControl,
+.currency {
+  min-height: 46px;
+  padding: 0 12px;
+  border-radius: 16px;
+  border: 1px solid rgba(123, 198, 255, 0.18);
+  background: linear-gradient(180deg, rgba(22, 35, 57, 0.84), rgba(12, 21, 36, 0.9));
+}
+
+.mainTabs {
+  margin-top: 12px;
+  padding: 10px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(112px, 1fr));
+  gap: 8px;
+  border-radius: 22px;
+  border: 1px solid rgba(150, 201, 255, 0.16);
+  background:
+    radial-gradient(620px 200px at 50% 0%, rgba(123, 198, 255, 0.07), transparent 72%),
+    linear-gradient(180deg, rgba(12, 19, 35, 0.82), rgba(8, 14, 25, 0.92));
+  box-shadow: 0 24px 56px rgba(2, 8, 20, 0.4);
+}
+
+.mainTab {
+  min-height: 50px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  border: 1px solid rgba(149, 201, 255, 0.12);
+  background: linear-gradient(180deg, rgba(21, 34, 58, 0.92), rgba(13, 22, 38, 0.96));
+  color: rgba(213, 227, 247, 0.78);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.mainTab.isActive {
+  color: #f7fbff;
+  border-color: rgba(181, 224, 255, 0.5);
+  background:
+    radial-gradient(260px 110px at 50% 0%, rgba(144, 214, 255, 0.18), transparent 70%),
+    linear-gradient(180deg, rgba(66, 93, 146, 0.96), rgba(34, 53, 86, 0.98));
+  box-shadow: 0 12px 26px rgba(34, 84, 162, 0.22), 0 0 0 1px rgba(144, 214, 255, 0.12) inset;
+}
+
+.panel {
+  margin-top: 14px;
+  padding: 18px;
+  border-radius: 26px;
+  border: 1px solid rgba(150, 201, 255, 0.2);
+  background:
+    radial-gradient(980px 320px at 0% 0%, rgba(123, 198, 255, 0.1), transparent 66%),
+    radial-gradient(760px 300px at 100% 100%, rgba(155, 144, 255, 0.08), transparent 70%),
+    linear-gradient(180deg, rgba(10, 16, 30, 0.86), rgba(7, 12, 23, 0.95));
+  box-shadow: 0 24px 56px rgba(2, 8, 20, 0.44), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(18px) saturate(118%);
+}
+
+.stageInfo,
+.tankShowcase,
+.shopMenu,
+.shopContent,
+.containerWrap,
+.statCard,
+.itemCard,
+.shopCard,
+.battleBotCard,
+.battleArena,
+.battleSide,
+.leadersTableWrap,
+.leadersMeWrap,
+.leadersBoardCard,
+.promoRedeemCard,
+.promoHeroCard,
+.shopShowcase,
+.chatCard,
+.refHero,
+.refLinkCard,
+.refRewardCard,
+.refMilestoneCard,
+.questCard,
+.card,
+.battleModeCard {
+  border-radius: 20px !important;
+  border: 1px solid rgba(149, 201, 255, 0.16) !important;
+  background:
+    radial-gradient(520px 180px at 0% 0%, rgba(123, 198, 255, 0.1), transparent 64%),
+    radial-gradient(340px 160px at 100% 100%, rgba(155, 144, 255, 0.06), transparent 70%),
+    linear-gradient(180deg, rgba(17, 27, 48, 0.9), rgba(10, 17, 32, 0.97)) !important;
+  box-shadow: 0 18px 34px rgba(0, 0, 0, 0.26), inset 0 1px 0 rgba(255, 255, 255, 0.04) !important;
+}
+
+.profileTankWrap,
+.tankShowcase {
+  min-height: 360px;
+  padding: 18px;
+}
+
+.statsGrid {
+  gap: 12px;
+}
+
+.statCard {
+  min-height: 112px;
+  padding: 16px 16px 14px;
+}
+
+.statValue {
+  margin-top: 10px;
+  font-size: 28px;
+  font-weight: 800;
+  line-height: 1.04;
+}
+
+.promoBtn,
+.equipBtn,
+.ghostBtn,
+.shopBuyBtn,
+.purchaseActionBtn {
+  min-height: 48px;
+  border-radius: 14px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+}
+
+.promoBtn,
+.equipBtn,
+.quickBattleCta,
+.purchaseActionBtn,
+.shopBuyBtn,
+.questClaimBtn {
+  border: 1px solid rgba(201, 241, 255, 0.78) !important;
+  background:
+    radial-gradient(180px 80px at 50% 0%, rgba(255, 255, 255, 0.28), transparent 72%),
+    linear-gradient(135deg, #95ecff 0%, #7cb8ff 50%, #8d84ff 100%) !important;
+  color: #071321 !important;
+  box-shadow: 0 16px 30px rgba(72, 123, 255, 0.24), inset 0 1px 0 rgba(255, 255, 255, 0.26) !important;
+}
+
+.ghostBtn,
+.shopBuyBtnAlt {
+  border: 1px solid rgba(149, 201, 255, 0.18) !important;
+  background: linear-gradient(180deg, rgba(27, 41, 64, 0.96), rgba(14, 24, 40, 0.98)) !important;
+  color: #eef5ff !important;
+}
+
+.nickname,
+.currency,
+.leadersTitle,
+.battlesTitle,
+.shopShowcaseTitle,
+.profileTankTitle,
+.stageTitle,
+.purchaseTitle,
+.questTitle,
+.shopTitle {
+  font-weight: 800 !important;
+  letter-spacing: 0.02em !important;
+}
+
+.hint,
+.leadersSubtitle,
+.shopCardMeta,
+.purchaseLabel {
+  color: rgba(210, 224, 245, 0.74) !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.02em !important;
+}
+
+.shopLayout {
+  gap: 18px;
+}
+
+.shopShowcase {
+  padding: 22px;
+  grid-template-columns: minmax(0, 1.6fr) minmax(344px, 0.9fr);
+}
+
+.shopShowcaseTitle {
+  font-size: 38px;
+}
+
+.shopShowcaseStat {
+  min-height: 96px;
+  padding: 12px;
+}
+
+.shopShowcaseStatValue,
+.shopShowcaseStatLabel,
+.shopCardTitle,
+.shopCardMeta,
+.shopPremiumChip {
+  overflow-wrap: anywhere;
+}
+
+.shopList {
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+.shopCardMedia {
+  min-height: 176px;
+}
+
+.shopCardActions {
+  grid-template-columns: 112px minmax(0, 1fr);
+}
+
+.shopCardActions .shopBuyBtn {
+  width: 100%;
+  min-width: 0;
+  white-space: normal;
+  line-height: 1.14;
+}
+
+.shopPrice {
+  width: 100%;
+  justify-content: center;
+}
+
+.premiumContainerShowcaseLayout {
+  grid-template-columns: minmax(420px, 1.15fr) minmax(320px, 0.9fr);
+  gap: 26px;
+}
+
+.premiumContainerVisual {
+  min-height: 320px;
+}
+
+.premiumContainerHero {
+  min-height: 300px;
+}
+
+.premiumContainerHeroImg {
+  width: min(680px, 100%);
+  height: 300px;
+}
+
+.premiumContainerActions {
+  grid-template-columns: 120px minmax(0, 320px) !important;
+  justify-content: flex-start;
+}
+
+@media (max-width: 900px) {
+  .app {
+    padding: 12px 12px 24px;
+  }
+
+  .mainTabs {
+    grid-template-columns: repeat(auto-fit, minmax(96px, 1fr));
+  }
+
+  .shopShowcase {
+    grid-template-columns: 1fr;
+  }
+
+  .premiumContainerShowcaseLayout {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+}
+
+@media (max-width: 640px) {
+  .app {
+    padding: 8px 8px 20px;
+  }
+
+  .mainTabs {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .panel {
+    border-radius: 22px;
+    padding: 12px;
+  }
+
+  .profileTankWrap,
+  .tankShowcase {
+    min-height: 248px;
+    padding: 12px;
+  }
+
+  .shopCardActions,
+  .premiumContainerActions {
+    grid-template-columns: 1fr !important;
+  }
+
+  .premiumContainerVisual {
+    min-height: 240px;
+  }
+
+  .premiumContainerHero {
+    min-height: 220px;
+  }
+
+  .premiumContainerHeroImg {
+    height: 220px;
+  }
+}
+/* Final EOF overrides */
+
+.mainTab,
+.subTab,
+.promoBtn,
+.equipBtn,
+.ghostBtn,
+.shopBuyBtn,
+.purchaseActionBtn,
+.questClaimBtn {
+  font-weight: 660 !important;
+  letter-spacing: 0.02em !important;
+}
+
+.leadersTitle,
+.battlesTitle,
+.shopShowcaseTitle,
+.profileTankTitle,
+.stageTitle,
+.purchaseTitle,
+.questTitle,
+.shopTitle,
+.nickname,
+.currency {
+  font-weight: 760 !important;
+  letter-spacing: 0.015em !important;
+}
+
+.containerWrap,
+.shopCard,
+.questCard,
+.battleModeCard,
+.rewardCard,
+.errorCard,
+.battleResultCard {
+  transition:
+    transform 380ms cubic-bezier(.22,.78,.16,1),
+    box-shadow 380ms cubic-bezier(.22,.78,.16,1),
+    border-color 320ms ease,
+    background 380ms ease !important;
+}
+
+.containerWrap:hover,
+.shopCard:hover,
+.questCard:hover,
+.battleModeCard:hover {
+  transform: translateY(-2px);
+}
+
+.battleResultModal {
+  position: fixed !important;
+  inset: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-height: 100dvh !important;
+  padding: 16px 14px !important;
+  box-sizing: border-box !important;
+  background:
+    radial-gradient(860px 320px at 50% 50%, rgba(30, 56, 94, 0.16), transparent 72%),
+    rgba(2, 6, 14, 0.8) !important;
+  backdrop-filter: blur(10px) saturate(112%) !important;
+}
+
+.battleResultCard {
+  width: min(820px, 94vw) !important;
+  border-radius: 28px !important;
+  border: 1px solid rgba(134, 196, 255, 0.22) !important;
+  background:
+    radial-gradient(760px 280px at 50% -10%, rgba(129, 213, 255, 0.14), transparent 66%),
+    radial-gradient(640px 260px at 100% 100%, rgba(132, 116, 255, 0.12), transparent 72%),
+    linear-gradient(180deg, rgba(10, 18, 34, 0.98), rgba(6, 10, 20, 0.99)) !important;
+  box-shadow: 0 34px 74px rgba(0, 0, 0, 0.54), 0 0 0 1px rgba(255, 255, 255, 0.04) inset !important;
+}
+
+.battleResultCard.isLose {
+  border-color: rgba(255, 94, 94, 0.24) !important;
+  background:
+    radial-gradient(760px 300px at 50% -10%, rgba(255, 90, 90, 0.16), transparent 66%),
+    radial-gradient(620px 240px at 100% 100%, rgba(118, 28, 52, 0.18), transparent 72%),
+    linear-gradient(180deg, rgba(20, 11, 18, 0.985), rgba(8, 7, 13, 0.995)) !important;
+  box-shadow: 0 34px 82px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 78, 96, 0.08) inset, 0 0 46px rgba(150, 24, 44, 0.12) !important;
+}
+
+.battleResultBanner {
+  min-height: 132px !important;
+  padding: 26px 22px !important;
+  background:
+    radial-gradient(460px 190px at 50% 50%, rgba(78, 231, 152, 0.26), transparent 68%),
+    linear-gradient(180deg, rgba(18, 54, 41, 0.96), rgba(10, 23, 21, 0.98)) !important;
+}
+
+.battleResultBanner.isLose {
+  background:
+    radial-gradient(500px 200px at 50% 52%, rgba(255, 92, 92, 0.22), transparent 66%),
+    linear-gradient(180deg, rgba(63, 18, 28, 0.98), rgba(21, 10, 14, 0.995)) !important;
+}
+
+.battleResultTitle {
+  font-size: clamp(34px, 6vw, 52px) !important;
+  font-weight: 820 !important;
+  letter-spacing: 0.045em !important;
+  color: #f7fbff !important;
+}
+
+.battleResultBody {
+  padding: 30px 28px 32px !important;
+  gap: 16px !important;
+}
+
+.battleResultIcon {
+  width: 108px;
+  height: 108px;
+  display: grid !important;
+  place-items: center;
+  border-radius: 30px;
+  font-size: 54px !important;
+  line-height: 1 !important;
+  color: #ffe7a0;
+  background:
+    radial-gradient(circle at 50% 40%, rgba(255, 236, 158, 0.26), transparent 56%),
+    linear-gradient(180deg, rgba(42, 52, 82, 0.92), rgba(15, 21, 36, 0.96));
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 20px 42px rgba(0, 0, 0, 0.34), inset 0 1px 0 rgba(255, 255, 255, 0.07);
+  filter: none !important;
+}
+
+.battleResultCard.isLose .battleResultIcon {
+  color: #ff9c87;
+  background:
+    radial-gradient(circle at 50% 42%, rgba(255, 149, 80, 0.28), transparent 56%),
+    linear-gradient(180deg, rgba(63, 24, 24, 0.94), rgba(18, 10, 14, 0.98));
+  border-color: rgba(255, 110, 110, 0.16);
+  box-shadow: 0 24px 50px rgba(0, 0, 0, 0.44), 0 0 36px rgba(173, 24, 42, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+.battleResultText {
+  max-width: 600px !important;
+  font-size: 16px !important;
+  font-weight: 590 !important;
+  line-height: 1.58 !important;
+  color: rgba(226, 236, 248, 0.88) !important;
+}
+
+.errorModal {
+  background:
+    radial-gradient(760px 280px at 50% 40%, rgba(129, 14, 39, 0.18), transparent 68%),
+    rgba(5, 4, 10, 0.84) !important;
+  backdrop-filter: blur(12px) saturate(112%) !important;
+}
+
+.errorCard {
+  width: min(500px, 92vw) !important;
+  border-radius: 26px !important;
+  border: 1px solid rgba(191, 52, 74, 0.38) !important;
+  background:
+    radial-gradient(540px 220px at 50% -10%, rgba(138, 14, 43, 0.22), transparent 66%),
+    linear-gradient(180deg, rgba(26, 8, 16, 0.985), rgba(10, 6, 10, 0.995)) !important;
+  box-shadow: 0 30px 72px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 86, 116, 0.05) inset, 0 0 54px rgba(109, 12, 33, 0.16) !important;
+}
+
+.errorHead {
+  min-height: 86px !important;
+  padding: 0 24px !important;
+  gap: 16px;
+  background:
+    radial-gradient(360px 120px at 0% 50%, rgba(255, 77, 107, 0.18), transparent 68%),
+    linear-gradient(180deg, rgba(58, 14, 26, 0.98), rgba(31, 8, 13, 0.995)) !important;
+  border-bottom: 1px solid rgba(255, 94, 122, 0.14) !important;
+}
+
+.errorAccent {
+  width: 14px !important;
+  height: 14px;
+  align-self: auto !important;
+  border-radius: 999px;
+  background: radial-gradient(circle, #ff7d94 0%, #ea3b5b 54%, #8d112d 100%) !important;
+  box-shadow: 0 0 24px rgba(234, 59, 91, 0.46);
+  animation: dangerPulseEof 2.4s ease-in-out infinite;
+}
+
+.errorTitle {
+  margin-left: 0 !important;
+  font-size: clamp(24px, 5vw, 38px) !important;
+  font-weight: 820 !important;
+  letter-spacing: 0.04em !important;
+  color: #fff4f6 !important;
+}
+
+.errorBody {
+  padding: 28px 26px 30px !important;
+  display: grid;
+  justify-items: center;
+  gap: 18px;
+  background:
+    radial-gradient(420px 200px at 50% 10%, rgba(136, 14, 40, 0.12), transparent 70%),
+    linear-gradient(180deg, rgba(16, 8, 13, 0.7), rgba(9, 5, 8, 0));
+}
+
+.errorIcon {
+  width: 136px;
+  height: 136px;
+  display: grid !important;
+  place-items: center;
+  border-radius: 34px;
+  border: 1px solid rgba(255, 96, 126, 0.18);
+  background:
+    radial-gradient(circle at 50% 42%, rgba(255, 111, 140, 0.22), transparent 58%),
+    linear-gradient(180deg, rgba(56, 12, 24, 0.94), rgba(21, 8, 14, 0.98));
+  color: #ff718d !important;
+  font-size: 72px !important;
+  box-shadow: 0 24px 54px rgba(0, 0, 0, 0.42), 0 0 38px rgba(158, 18, 48, 0.18);
+}
+
+.errorText {
+  max-width: 360px;
+  text-align: center;
+  font-size: 19px !important;
+  font-weight: 620 !important;
+  line-height: 1.5 !important;
+  color: rgba(255, 230, 235, 0.94) !important;
+}
+
+.questResetTime {
+  margin-bottom: 12px;
+  font-size: 12px !important;
+  font-weight: 620 !important;
+  color: rgba(197, 213, 234, 0.68) !important;
+}
+
+.questsList {
+  display: grid;
+  gap: 12px;
+}
+
+.questCard {
+  padding: 16px !important;
+  min-height: 0 !important;
+  border-radius: 18px !important;
+  gap: 12px !important;
+}
+
+.questTop,
+.questFooter {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 12px !important;
+  align-items: center !important;
+}
+
+.questTitle {
+  font-size: 17px !important;
+  font-weight: 750 !important;
+  line-height: 1.25 !important;
+}
+
+.questChip {
+  min-height: 24px;
+  padding: 0 10px !important;
+  font-size: 11px !important;
+  font-weight: 680 !important;
+}
+
+.questReward {
+  min-height: 32px;
+  padding: 0 12px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 211, 98, 0.1);
+  border: 1px solid rgba(255, 211, 98, 0.16);
+  color: #ffd980 !important;
+  font-size: 13px !important;
+  font-weight: 720 !important;
+}
+
+.questDesc {
+  font-size: 13px !important;
+  line-height: 1.45 !important;
+  color: rgba(206, 220, 239, 0.74) !important;
+}
+
+.questProgressRow {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 10px !important;
+  align-items: center !important;
+}
+
+.questProgressTrack {
+  height: 10px !important;
+}
+
+.questProgressText {
+  font-size: 12px !important;
+  font-weight: 650 !important;
+}
+
+.questStatus {
+  min-height: 0 !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  color: rgba(202, 217, 237, 0.76) !important;
+}
+
+.questClaimBtn {
+  min-height: 40px !important;
+  padding: 0 16px !important;
+  border-radius: 12px !important;
+  font-size: 12px !important;
+}
+
+.shopLayout {
+  gap: 16px !important;
+}
+
+.shopMenu,
+.shopContent {
+  padding: 16px !important;
+}
+
+.shopMenuIntro {
+  gap: 6px !important;
+  margin-bottom: 6px !important;
+}
+
+.shopMenuTitle {
+  font-size: 28px !important;
+  font-weight: 780 !important;
+}
+
+.shopMenuNote,
+.shopCatMeta,
+.shopCardMeta,
+.shopShowcaseSubtitle,
+.premiumContainerShowSub {
+  font-size: 12px !important;
+  line-height: 1.45 !important;
+  color: rgba(203, 216, 236, 0.7) !important;
+}
+
+.shopCat {
+  min-height: 68px !important;
+  padding: 12px 14px !important;
+  gap: 12px !important;
+  border-radius: 16px !important;
+}
+
+.shopCatIcon {
+  width: 40px !important;
+  height: 40px !important;
+  font-size: 18px !important;
+}
+
+.shopCatTitle,
+.shopCardTitle,
+.premiumContainerShowTitle {
+  font-size: 17px !important;
+  font-weight: 740 !important;
+  line-height: 1.25 !important;
+}
+
+.shopShowcase {
+  padding: 18px !important;
+  gap: 16px !important;
+}
+
+.shopShowcaseTitle {
+  font-size: clamp(28px, 4.6vw, 40px) !important;
+}
+
+.shopShowcaseStat {
+  min-height: 82px !important;
+  padding: 12px !important;
+  border-radius: 16px !important;
+}
+
+.shopShowcaseStatValue {
+  font-size: 20px !important;
+  font-weight: 760 !important;
+}
+
+.shopShowcaseStatLabel {
+  font-size: 11px !important;
+  font-weight: 580 !important;
+}
+
+.shopList {
+  gap: 12px !important;
+}
+
+.shopCard {
+  padding: 14px !important;
+  gap: 12px !important;
+}
+
+.shopCardMedia {
+  min-height: 146px !important;
+  border-radius: 16px !important;
+}
+
+.shopCardActions {
+  gap: 10px !important;
+}
+
+.shopPrice,
+.premiumContainerPrice {
+  min-height: 42px !important;
+  padding: 0 12px !important;
+  font-size: 14px !important;
+  font-weight: 730 !important;
+}
+
+.shopBuyBtnAlt,
+.starsBuyBtn {
+  min-height: 42px !important;
+  border-radius: 12px !important;
+  font-size: 12px !important;
+}
+
+.premiumContainerShowcaseLayout {
+  gap: 18px !important;
+}
+
+.premiumContainerVisual {
+  min-height: 252px !important;
+  padding: 8px !important;
+}
+
+.premiumContainerHero {
+  min-height: 208px !important;
+}
+
+.premiumContainerHeroImg {
+  height: 234px !important;
+}
+
+.containerTabs {
+  gap: 8px !important;
+}
+
+.containerTabs .subTab {
+  min-height: 42px !important;
+  padding: 10px 14px !important;
+  font-size: 12px !important;
+}
+
+.containerWrap {
+  min-height: 208px !important;
+  border-radius: 20px !important;
+  background:
+    radial-gradient(420px 220px at 50% 45%, rgba(94, 167, 255, 0.22), transparent 72%),
+    linear-gradient(180deg, rgba(22, 33, 56, 0.96), rgba(14, 22, 39, 0.99)) !important;
+}
+
+.containerImg {
+  width: min(340px, 88%) !important;
+  height: 170px !important;
+  animation: standardContainerFloatEof 3.6s ease-in-out infinite;
+  filter: drop-shadow(0 16px 26px rgba(0, 0, 0, 0.34));
+}
+
+.containerActions {
+  gap: 8px !important;
+  margin-top: 10px !important;
+}
+
+.containerActions .equipBtn,
+.containerActions .ghostBtn {
+  min-height: 42px !important;
+  padding: 0 14px !important;
+  border-radius: 12px !important;
+  font-size: 12px !important;
+}
+
+.containerMetaRow {
+  margin-top: 10px !important;
+  padding: 10px 12px !important;
+  gap: 10px !important;
+  border-radius: 16px !important;
+}
+
+.containerMetaTitle {
+  font-size: 11px !important;
+  font-weight: 740 !important;
+  letter-spacing: 0.04em !important;
+}
+
+.containerPill {
+  min-height: 28px;
+  padding: 0 10px !important;
+  font-size: 12px !important;
+  font-weight: 700 !important;
+}
+
+.containerMetaActive {
+  font-size: 12px !important;
+  font-weight: 620 !important;
+}
+
+.rewardModal {
+  background:
+    radial-gradient(760px 280px at 50% 42%, rgba(67, 102, 170, 0.12), transparent 72%),
+    rgba(3, 7, 16, 0.8) !important;
+  backdrop-filter: none !important;
+}
+
+.rewardCard {
+  --reward-glow: rgba(88, 231, 255, 0.98);
+  --reward-glow-soft: rgba(88, 231, 255, 0.24);
+  width: min(560px, 92vw) !important;
+  padding: 24px 22px 22px !important;
+  border-radius: 30px !important;
+  border: 1px solid rgba(127, 194, 255, 0.22) !important;
+  background:
+    radial-gradient(600px 220px at 50% -10%, rgba(138, 212, 255, 0.14), transparent 68%),
+    radial-gradient(520px 220px at 100% 100%, rgba(140, 126, 255, 0.12), transparent 74%),
+    linear-gradient(180deg, rgba(12, 20, 38, 0.98), rgba(7, 11, 22, 0.995)) !important;
+  box-shadow: 0 30px 74px rgba(0, 0, 0, 0.58), 0 0 0 1px rgba(255, 255, 255, 0.04) inset !important;
+  overflow: hidden !important;
+}
+
+.rewardCard::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transform: scale(0.98);
+  background:
+    radial-gradient(circle at 50% 22%, rgba(255, 255, 255, 0.06) 0%, transparent 54%),
+    radial-gradient(circle at 50% 50%, var(--reward-glow-soft) 0%, transparent 78%);
+}
+
+.rewardCard.rarity-rare { --reward-glow: rgba(88, 231, 255, 0.98); --reward-glow-soft: rgba(88, 231, 255, 0.26); }
+.rewardCard.rarity-epic { --reward-glow: rgba(176, 113, 255, 0.98); --reward-glow-soft: rgba(176, 113, 255, 0.28); }
+.rewardCard.rarity-ultrarare { --reward-glow: rgba(255, 93, 93, 0.98); --reward-glow-soft: rgba(255, 93, 93, 0.28); }
+.rewardCard.rarity-legendary { --reward-glow: rgba(255, 211, 79, 0.99); --reward-glow-soft: rgba(255, 211, 79, 0.32); }
+
+.rewardCard.isPrimed::before {
+  animation: rewardRarityGlowEof var(--reward-glow-ms, 680ms) cubic-bezier(.16,.84,.2,1) forwards;
+}
+
+.rewardCard.rarity-legendary.isPrimed::before {
+  animation: rewardLegendaryHaloEof calc(var(--reward-glow-ms, 1600ms) * 1.18) cubic-bezier(.14,.82,.18,1) forwards;
+}
+
+.rewardCard.isReveal {
+  border-color: rgba(255, 255, 255, 0.18) !important;
+  box-shadow:
+    0 34px 84px rgba(0, 0, 0, 0.58),
+    0 0 0 1px rgba(255, 255, 255, 0.05) inset,
+    inset 0 0 38px var(--reward-glow-soft) !important;
+}
+
+.rewardTitle {
+  font-size: 20px !important;
+  font-weight: 760 !important;
+  letter-spacing: 0.03em !important;
+}
+
+.rewardContainerBox {
+  width: min(360px, 100%) !important;
+  height: 234px !important;
+  margin: 18px auto 0 !important;
+  border-radius: 26px !important;
+  border: 1px solid rgba(146, 199, 255, 0.16) !important;
+  background:
+    radial-gradient(320px 180px at 50% 44%, rgba(106, 171, 255, 0.12), transparent 68%),
+    linear-gradient(180deg, rgba(16, 26, 47, 0.94), rgba(10, 17, 31, 0.98)) !important;
+  overflow: hidden;
+}
+
+.rewardContainerBox::before {
+  content: "";
+  position: absolute;
+  inset: 10%;
+  pointer-events: none;
+  opacity: 0;
+  transform: scale(0.96);
+  background:
+    radial-gradient(circle at 50% 50%, var(--reward-glow-soft) 0%, transparent 64%),
+    radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.14) 0%, transparent 78%);
+}
+
+.rewardContainerBox.isPrimed::before {
+  opacity: 1;
+  transform: scale(1.01);
+  transition:
+    opacity var(--reward-glow-ms, 680ms) cubic-bezier(.16,.84,.2,1),
+    transform var(--reward-glow-ms, 680ms) cubic-bezier(.16,.84,.2,1);
+}
+
+.rewardContainerImg,
+.rewardDropImg {
+  transition:
+    transform 320ms cubic-bezier(.22,.78,.16,1),
+    opacity 420ms ease !important;
+  backface-visibility: hidden;
+}
+
+.rewardContainerBox.isCharging .rewardContainerImg {
+  animation: rewardContainerChargeEof 1.26s ease-in-out infinite;
+}
+
+.rewardContainerImg.isHidden {
+  opacity: 0 !important;
+  transform: translateY(8px) scale(0.96) !important;
+}
+
+#rewardDropImg {
+  position: absolute !important;
+  top: 43% !important;
+  left: 50% !important;
+  width: clamp(96px, 28vw, 112px) !important;
+  height: clamp(96px, 28vw, 112px) !important;
+  object-fit: contain !important;
+  opacity: 0;
+  transform: translate(-50%, -50%);
+  transform-origin: center center !important;
+  filter: drop-shadow(0 16px 24px rgba(0, 0, 0, 0.38));
+  will-change: opacity;
+}
+
+#rewardDropImg.show {
+  opacity: 1 !important;
+}
+
+.rewardContainerBox.rewardBurst::after {
+  content: "";
+  position: absolute;
+  inset: -12%;
+  pointer-events: none;
+  border-radius: inherit;
+  background:
+    radial-gradient(circle at 50% 50%, var(--reward-glow-soft) 0%, transparent 58%),
+    radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.3) 0%, transparent 38%);
+  animation: rewardBurstFxEof 720ms ease-out forwards;
+}
+
+.rewardText {
+  margin-top: 18px !important;
+  font-size: 16px !important;
+  font-weight: 620 !important;
+  line-height: 1.52 !important;
+  color: rgba(232, 240, 250, 0.92) !important;
+  opacity: 0;
+  transform: translateY(0);
+  filter: none;
+  will-change: opacity;
+}
+
+#rewardText.show {
+  opacity: 1 !important;
+}
+
+@keyframes rewardRarityGlowEof {
+  0% { opacity: 0; transform: scale(0.98); }
+  55% { opacity: 0.72; transform: scale(1.01); }
+  100% { opacity: 0.92; transform: scale(1.03); }
+}
+
+@keyframes rewardLegendaryHaloEof {
+  0% { opacity: 0; transform: scale(0.98); }
+  38% { opacity: 0.52; transform: scale(1.01); }
+  72% { opacity: 0.82; transform: scale(1.03); }
+  100% { opacity: 0.96; transform: scale(1.04); }
+}
+
+@keyframes rewardContainerChargeEof {
+  0%, 100% { transform: translateY(0) scale(1); filter: drop-shadow(0 12px 22px rgba(0, 0, 0, 0.3)); }
+  50% { transform: translateY(-7px) scale(1.025); filter: drop-shadow(0 18px 28px rgba(255, 255, 255, 0.16)); }
+}
+
+@keyframes rewardBurstFxEof {
+  0% { opacity: 0; transform: scale(0.76); }
+  28% { opacity: 0.9; }
+  100% { opacity: 0; transform: scale(1.18); }
+}
+
+@keyframes dangerPulseEof {
+  0%, 100% { transform: scale(1); opacity: 0.9; }
+  50% { transform: scale(1.16); opacity: 1; }
+}
+
+@keyframes standardContainerFloatEof {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+@media (max-width: 640px) {
+  .battleResultCard {
+    width: min(94vw, 520px) !important;
+    border-radius: 24px !important;
+  }
+
+  .battleResultBanner {
+    min-height: 106px !important;
+    padding: 18px 16px !important;
+  }
+
+  .battleResultTitle {
+    font-size: 17vw !important;
+    line-height: 0.94 !important;
+  }
+
+  .battleResultBody {
+    padding: 20px 16px 22px !important;
+    gap: 12px !important;
+  }
+
+  .battleResultIcon {
+    width: 82px;
+    height: 82px;
+    border-radius: 24px;
+    font-size: 40px !important;
+  }
+
+  .battleResultText {
+    font-size: 13px !important;
+  }
+
+  .errorCard {
+    width: min(92vw, 420px) !important;
+    border-radius: 22px !important;
+  }
+
+  .errorHead {
+    min-height: 72px !important;
+    padding: 0 18px !important;
+    gap: 12px;
+  }
+
+  .errorIcon {
+    width: 110px;
+    height: 110px;
+    border-radius: 28px;
+    font-size: 58px !important;
+  }
+
+  .errorBody {
+    padding: 22px 18px 24px !important;
+    gap: 14px;
+  }
+
+  .errorText {
+    font-size: 16px !important;
+  }
+
+  .questCard {
+    padding: 12px !important;
+    gap: 10px !important;
+  }
+
+  .questTitle,
+  .shopCardTitle,
+  .premiumContainerShowTitle {
+    font-size: 15px !important;
+  }
+
+  .questChip,
+  .questStatus,
+  .questProgressText,
+  .questDesc,
+  .shopMenuNote,
+  .shopCatMeta,
+  .shopCardMeta,
+  .shopShowcaseSubtitle,
+  .premiumContainerShowSub {
+    font-size: 11px !important;
+  }
+
+  .questReward {
+    min-height: 28px;
+    padding: 0 10px;
+    font-size: 12px !important;
+  }
+
+  .questClaimBtn {
+    min-height: 36px !important;
+    padding: 0 12px !important;
+    font-size: 11px !important;
+  }
+
+  .shopLayout {
+    gap: 12px !important;
+  }
+
+  .shopMenu,
+  .shopContent {
+    padding: 12px !important;
+  }
+
+  .shopMenuTitle {
+    font-size: 22px !important;
+  }
+
+  .shopCat {
+    min-height: 56px !important;
+    padding: 10px 12px !important;
+    gap: 10px !important;
+    border-radius: 14px !important;
+  }
+
+  .shopCatIcon {
+    width: 34px !important;
+    height: 34px !important;
+    font-size: 16px !important;
+  }
+
+  .shopCatTitle {
+    font-size: 13px !important;
+  }
+
+  .shopShowcase {
+    padding: 14px !important;
+    gap: 12px !important;
+  }
+
+  .shopShowcaseTitle {
+    font-size: 24px !important;
+  }
+
+  .shopShowcaseStat {
+    min-height: 68px !important;
+    padding: 10px !important;
+  }
+
+  .shopShowcaseStatValue {
+    font-size: 17px !important;
+  }
+
+  .shopShowcaseStatLabel {
+    font-size: 10px !important;
+  }
+
+  .shopList {
+    gap: 10px !important;
+  }
+
+  .shopCard {
+    padding: 12px !important;
+    gap: 10px !important;
+  }
+
+  .shopCardMedia {
+    min-height: 108px !important;
+  }
+
+  .shopCardActions {
+    grid-template-columns: 1fr !important;
+    gap: 8px !important;
+  }
+
+  .shopPrice,
+  .premiumContainerPrice,
+  .shopBuyBtnAlt,
+  .starsBuyBtn {
+    min-height: 38px !important;
+    font-size: 11px !important;
+  }
+
+  .premiumContainerShowcaseLayout {
+    gap: 14px !important;
+  }
+
+  .premiumContainerVisual {
+    min-height: 200px !important;
+  }
+
+  .premiumContainerHero {
+    min-height: 170px !important;
+  }
+
+  .premiumContainerHeroImg {
+    height: 184px !important;
+    transform: scale(1.08) !important;
+  }
+
+  .containerTabs {
+    gap: 6px !important;
+  }
+
+  .containerTabs .subTab {
+    min-height: 36px !important;
+    padding: 8px 12px !important;
+    font-size: 11px !important;
+  }
+
+  .containerWrap {
+    min-height: 170px !important;
+    margin-top: 10px !important;
+  }
+
+  .containerImg {
+    width: min(270px, 82%) !important;
+    height: 132px !important;
+  }
+
+  .containerActions {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 8px !important;
+  }
+
+  .containerActions .equipBtn,
+  .containerActions .ghostBtn {
+    min-height: 36px !important;
+    padding: 0 12px !important;
+    font-size: 11px !important;
+  }
+
+  .containerMetaRow {
+    grid-template-columns: 1fr !important;
+    padding: 10px !important;
+    gap: 8px !important;
+  }
+
+  .containerMetaRight {
+    align-items: stretch !important;
+  }
+
+  .containerPill {
+    min-height: 24px;
+    font-size: 11px !important;
+  }
+
+  .rewardCard {
+    width: min(92vw, 440px) !important;
+    padding: 18px 16px 18px !important;
+    border-radius: 24px !important;
+  }
+
+  .rewardTitle {
+    font-size: 17px !important;
+  }
+
+  .rewardContainerBox {
+    width: min(290px, 100%) !important;
+    height: 188px !important;
+    margin-top: 14px !important;
+    border-radius: 22px !important;
+  }
+
+  .rewardText {
+    margin-top: 14px !important;
+    font-size: 13px !important;
+  }
+}

@@ -4,10 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tanki Online</title>
-    <link rel="stylesheet" href="./styles.css?v=55" />
+    <link rel="stylesheet" href="./styles.css?v=64" />
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script src="./config.js"></script>
-    <script src="./app.js?v=92" defer></script>
+    <script src="./app.js?v=97" defer></script>
   </head>
   <body>
     <div class="app" id="app">
@@ -44,6 +44,7 @@
 
       <nav class="mainTabs" id="tabs">
         <button class="mainTab isActive" data-tab="profile" data-i18n="tab_profile">Профиль</button>
+        <button class="mainTab" data-tab="referrals" data-i18n="tab_referrals">Рефералы</button>
         <button class="mainTab" data-tab="leaders" data-i18n="tab_leaders">Лидеры</button>
         <button class="mainTab" data-tab="battles" data-i18n="tab_battles">Бои</button>
         <button class="mainTab" data-tab="garage" data-i18n="tab_garage">Гараж</button>
@@ -86,7 +87,6 @@
           </div>
           <div class="statCard"><div class="statLabel" data-i18n="stat_winrate">Винрейт</div><div class="statValue" id="winrateValue">0%</div></div>
         </div>
-
         <section class="chatCard" id="globalChatCard">
           <div class="chatHead">
             <div class="chatTitle" data-i18n="global_chat_title">ОБЩИЙ ЧАТ</div>
@@ -97,6 +97,60 @@
             <input id="globalChatInput" class="promoInput chatInput" type="text" data-i18n-placeholder="global_chat_placeholder" placeholder="Написать в общий чат..." maxlength="300" autocomplete="off" />
             <button id="globalChatSend" class="promoBtn chatSendBtn" type="submit" data-i18n="send">Отправить</button>
           </form>
+        </section>
+      </main>
+
+      <main class="panel panelReferrals" id="panelReferrals" style="display:none">
+        <section class="refHero">
+          <div class="refHeroBadge" data-i18n="ref_title">РЕФЕРАЛЬНАЯ СИСТЕМА</div>
+          <h2 class="refHeroTitle" data-i18n="ref_hero_title">Приглашай друзей и забирай награды</h2>
+          <p class="refHeroSub" data-i18n="ref_hero_sub">Делись ссылкой, отслеживай прогресс и получай бонусы за этапы.</p>
+          <div class="refHeroStats">
+            <div class="refStat">
+              <div class="refStatLabel" data-i18n="ref_stat_invited">Приглашено</div>
+              <div class="refStatValue" id="refInvitedValue">0</div>
+            </div>
+            <div class="refStat">
+              <div class="refStatLabel" data-i18n="ref_stat_rewarded">Награждено</div>
+              <div class="refStatValue" id="refRewardedValue">0</div>
+            </div>
+            <div class="refStat">
+              <div class="refStatLabel" data-i18n="ref_stat_slots">Осталось слотов</div>
+              <div class="refStatValue" id="refSlotsValue">20/20</div>
+            </div>
+          </div>
+        </section>
+
+        <section class="refLinkCard">
+          <div class="refLinkTitle" data-i18n="ref_link_title">Твоя реферальная ссылка</div>
+          <div class="refLinkRow">
+            <input id="refLinkInput" class="promoInput" type="text" readonly />
+            <button id="copyRefBtn" class="promoBtn" type="button" data-i18n="ref_copy">Копировать ссылку</button>
+          </div>
+          <div class="hint" id="refStatsLine"></div>
+        </section>
+
+        <section class="refRewardsGrid">
+          <article class="refRewardCard">
+            <div class="refRewardIcon">💎</div>
+            <div class="refRewardTitle" data-i18n="ref_reward_each_you_title">За каждого реферала (вам)</div>
+            <div class="refRewardDesc" data-i18n="ref_reward_each_you_desc">+80 кристаллов и +1 контейнер</div>
+          </article>
+          <article class="refRewardCard">
+            <div class="refRewardIcon">🎁</div>
+            <div class="refRewardTitle" data-i18n="ref_reward_each_friend_title">Новому игроку</div>
+            <div class="refRewardDesc" data-i18n="ref_reward_each_friend_desc">+35 кристаллов за вход по вашей ссылке</div>
+          </article>
+          <article class="refRewardCard">
+            <div class="refRewardIcon">👑</div>
+            <div class="refRewardTitle" data-i18n="ref_reward_milestone_title">Этапные бонусы</div>
+            <div class="refRewardDesc" data-i18n="ref_reward_milestone_desc">Премиум и премиум контейнеры на ключевых этапах</div>
+          </article>
+        </section>
+
+        <section class="refMilestones">
+          <div class="refMilestonesTitle" data-i18n="ref_milestones_title">Этапы наград</div>
+          <div id="refMilestonesList" class="refMilestonesList"></div>
         </section>
       </main>
 
@@ -122,8 +176,8 @@
 
       <main class="panel panelLeaders" id="panelLeaders" style="display:none">
         <div class="leadersPromoLayout">
-          <div class="promoHeroCard leadersHeroCard" aria-hidden="true">
-            <div class="leadersHeroArt">
+          <div class="promoHeroCard leadersHeroCard" aria-hidden="true" style="width:100%">
+            <div class="leadersHeroArt" style="width:100%;max-width:none">
               <div class="leadersHeroTrophy">🏆</div>
               <div class="leadersHeroHeadline" data-i18n="leaders_top_players">ТОП ИГРОКИ</div>
               <div class="leadersHeroSub" data-i18n="leaders_top_sub">Опыт • Победы • Бои</div>
@@ -298,21 +352,72 @@
       <main class="panel panelShop" id="panelShop" style="display:none">
         <div class="shopLayout">
           <aside class="shopMenu" id="shopCategory">
-            <button class="shopCat isActive" data-cat="weapon" data-i18n="shop_cat_weapon">Пушки</button>
-            <button class="shopCat" data-cat="hull" data-i18n="shop_cat_hull">Корпуса</button>
-            <button class="shopCat" data-cat="premium" data-i18n="shop_cat_premium">Премиум подписка</button>
-            <button class="shopCat" data-cat="premium_containers" data-i18n="shop_cat_premium_containers">Премиум контейнеры</button>
-            <button class="shopCat" data-cat="promo" data-i18n="shop_cat_promo">Промокоды</button>
+            <div class="shopMenuIntro">
+              <div class="shopMenuEyebrow" data-i18n="shop_menu_label">Витрина</div>
+              <div class="shopMenuTitle" data-i18n="tab_shop">Магазин</div>
+              <div class="shopMenuNote" data-i18n="shop_menu_note">Выбери раздел и оффер.</div>
+            </div>
+            <button class="shopCat isActive" data-cat="weapon" type="button">
+              <span class="shopCatIcon" aria-hidden="true">✦</span>
+              <span class="shopCatCopy">
+                <span class="shopCatTitle" data-i18n="shop_cat_weapon">Пушки</span>
+                <span class="shopCatMeta" data-i18n="shop_cat_weapon_meta">Боевые орудия за кристаллы</span>
+              </span>
+            </button>
+            <button class="shopCat" data-cat="hull" type="button">
+              <span class="shopCatIcon" aria-hidden="true">▣</span>
+              <span class="shopCatCopy">
+                <span class="shopCatTitle" data-i18n="shop_cat_hull">Корпуса</span>
+                <span class="shopCatMeta" data-i18n="shop_cat_hull_meta">Платформы под разные стили игры</span>
+              </span>
+            </button>
+            <button class="shopCat" data-cat="premium" type="button">
+              <span class="shopCatIcon" aria-hidden="true">👑</span>
+              <span class="shopCatCopy">
+                <span class="shopCatTitle" data-i18n="shop_cat_premium">Премиум подписка</span>
+                <span class="shopCatMeta" data-i18n="shop_cat_premium_meta">Stars или альтернатива за кристаллы</span>
+              </span>
+            </button>
+            <button class="shopCat" data-cat="premium_containers" type="button">
+              <span class="shopCatIcon" aria-hidden="true">⬢</span>
+              <span class="shopCatCopy">
+                <span class="shopCatTitle" data-i18n="shop_cat_premium_containers">Премиум контейнеры</span>
+                <span class="shopCatMeta" data-i18n="shop_cat_premium_containers_meta">Легендарный дроп за Stars</span>
+              </span>
+            </button>
+            <button class="shopCat" data-cat="promo" type="button">
+              <span class="shopCatIcon" aria-hidden="true">⌁</span>
+              <span class="shopCatCopy">
+                <span class="shopCatTitle" data-i18n="shop_cat_promo">Промокоды</span>
+                <span class="shopCatMeta" data-i18n="shop_cat_promo_meta">Активация бонусных кодов</span>
+              </span>
+            </button>
           </aside>
           <section class="shopContent">
+            <div class="shopShowcase" id="shopShowcase">
+              <div class="shopShowcaseCopy">
+                <div class="shopShowcaseEyebrow" id="shopShowcaseEyebrow">ARSENAL</div>
+                <div class="shopShowcaseTitle" id="shopShowcaseTitle">Предложения</div>
+                <div class="shopShowcaseSubtitle" id="shopShowcaseSubtitle">Выбирай раздел магазина и усиливай сборку танка.</div>
+              </div>
+              <div class="shopShowcaseMeta" id="shopShowcaseMeta"></div>
+            </div>
             <div class="shopHeader" id="shopHeader" data-i18n="shop_offers">Предложения</div>
             <div id="shopList" class="shopList"></div>
             <div id="promoPanel" class="promoPanel" style="display:none">
               <div class="promoHeroCard" aria-hidden="true">
-                <div class="promoHeroDots">
-                  <span class="promoHeroDot"></span>
-                  <span class="promoHeroDot"></span>
-                  <span class="promoHeroDot"></span>
+                <div class="promoHeroPoster">
+                  <div class="promoHeroLabel">PROMO</div>
+                  <div class="promoHeroLines">
+                    <span class="promoHeroLine"></span>
+                    <span class="promoHeroLine"></span>
+                    <span class="promoHeroLine"></span>
+                  </div>
+                  <div class="promoHeroDots">
+                    <span class="promoHeroDot"></span>
+                    <span class="promoHeroDot"></span>
+                    <span class="promoHeroDot"></span>
+                  </div>
                 </div>
               </div>
               <div class="promoRedeemCard">
@@ -506,16 +611,26 @@
     <!-- quick match widget lives inside Battles panel -->
 
     <div id="quickMatchWidget" class="quickMatchWidget" style="display:none" aria-live="polite">
-      <div class="quickMatchWidgetTitle" data-i18n="quick_match_title">БЫСТРЫЙ БОЙ</div>
+      <div class="quickMatchWidgetTop">
+        <div class="quickMatchWidgetEmblem" aria-hidden="true">⚡</div>
+        <div class="quickMatchWidgetHeading">
+          <div class="quickMatchWidgetKicker">MATCHMAKING</div>
+          <div class="quickMatchWidgetTitle" data-i18n="quick_match_title">БЫСТРЫЙ БОЙ</div>
+        </div>
+      </div>
       <div class="quickMatchWidgetBody">
-        <div class="quickMatchWidgetLine">
-          <span data-i18n="quick_match_avg">Среднее время ожидания</span>
+        <div class="quickMatchWidgetMetric">
+          <span class="quickMatchWidgetMetricLabel" data-i18n="quick_match_avg">Среднее время ожидания</span>
           <b id="quickMatchAvg">—</b>
         </div>
-        <div class="quickMatchWidgetLine">
-          <span data-i18n="quick_match_current">Текущее время ожидания</span>
+        <div class="quickMatchWidgetMetric">
+          <span class="quickMatchWidgetMetricLabel" data-i18n="quick_match_current">Текущее время ожидания</span>
           <b id="quickMatchCurrent">00 с</b>
         </div>
+      </div>
+      <div class="quickMatchWidgetStatus">
+        <span class="quickMatchWidgetStatusDot" aria-hidden="true"></span>
+        <span data-i18n="quick_match_status">Поиск соперника</span>
       </div>
       <button id="quickMatchCancelBtn" class="quickMatchWidgetCancel" type="button" data-i18n="quick_match_cancel">ОТМЕНА</button>
     </div>
