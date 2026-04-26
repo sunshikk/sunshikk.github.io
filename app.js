@@ -523,6 +523,7 @@ const state = {
   damageAcc: null,
   markerDamageAcc: null,
   paladinDashMode: false,
+  launchMode: "unknown",
   quickMatchController: null,
   quickMatchTimer: null,
   quickMatchStartedAt: 0,
@@ -553,8 +554,8 @@ const I18N = {
     quest_status_progress: "В процессе",
     quest_claim_take: "Забрать",
     quest_claimed: "Получено",
-    err_open_in_telegram: "Открой мини-апп из Telegram.",
-    err_initdata_missing: "initData не получен. Открой WebApp кнопкой из бота, а не обычной ссылкой в браузере.",
+    err_open_in_telegram: "Открой игру или мини-апп из Telegram.",
+    err_initdata_missing: "Не получены данные запуска. Открой WebApp кнопкой из бота или игру через Play в Telegram.",
     battle_cooldown: "Кулдаун",
     battles_title_modes: "БЫСТРЫЙ БОЙ",
     battles_title_pvp: "БОЙ С ИГРОКОМ",
@@ -758,8 +759,8 @@ const I18N = {
     quest_status_progress: "In progress",
     quest_claim_take: "Claim",
     quest_claimed: "Claimed",
-    err_open_in_telegram: "Open this mini app from Telegram.",
-    err_initdata_missing: "initData is missing. Open the WebApp using the bot button (not a regular browser link).",
+    err_open_in_telegram: "Open this game or mini app from Telegram.",
+    err_initdata_missing: "Launch data is missing. Open the WebApp from the bot button or the game via Play in Telegram.",
     battle_cooldown: "Cooldown",
     battles_title_modes: "QUICK BATTLE",
     battles_title_pvp: "BATTLE VS PLAYER",
@@ -1367,6 +1368,28 @@ function absUrl(path) {
     return new URL(path, window.location.origin).toString();
   } catch { return path; }
 }
+function getGameLaunchToken() {
+  try {
+    const url = new URL(window.location.href);
+    const direct = String(url.searchParams.get("game_auth") || url.searchParams.get("gameAuth") || "").trim();
+    if (direct) return direct;
+  } catch {}
+  try {
+    const initParams = window.TelegramGameProxy?.initParams;
+    if (initParams && typeof initParams === "object") {
+      const raw = String(initParams.game_auth || initParams.gameAuth || "").trim();
+      if (raw) return raw;
+    }
+  } catch {}
+  try {
+    const rawHash = String(window.location.hash || "").replace(/^#/, "");
+    if (!rawHash) return "";
+    const hashParams = new URLSearchParams(rawHash);
+    return String(hashParams.get("game_auth") || hashParams.get("gameAuth") || "").trim();
+  } catch {
+    return "";
+  }
+}
 function normalizeStoredAvatarUrl(storedUrl) {
   const s = String(storedUrl || "").trim();
   if (!s) return "";
@@ -1928,23 +1951,38 @@ function initMusic() {
 
 async function initAuth() {
   const tg = window.Telegram?.WebApp;
-  if (!tg) throw new Error(tr("err_open_in_telegram"));
-  tg.ready();
-  tg.expand();
-  const unsafeUser = tg.initDataUnsafe?.user;
+  if (tg) {
+    try { tg.ready(); } catch {}
+    try { tg.expand(); } catch {}
+  }
+  const unsafeUser = tg?.initDataUnsafe?.user;
   state.viewerName = unsafeUser?.username || unsafeUser?.first_name || "player";
   if (unsafeUser?.photo_url) {
     state.avatarUrl = unsafeUser.photo_url;
   }
-  if (!tg.initData) {
-    throw new Error(tr("err_initdata_missing"));
+  if (tg?.initData) {
+    const auth = await api("/api/auth/telegram", {
+      method: "POST",
+      body: JSON.stringify({ initData: tg.initData, photo_url: state.avatarUrl || null }),
+      headers: {},
+    });
+    state.token = auth.token;
+    state.launchMode = "webapp";
+    return;
   }
-  const auth = await api("/api/auth/telegram", {
-    method: "POST",
-    body: JSON.stringify({ initData: tg.initData, photo_url: state.avatarUrl || null }),
-    headers: {},
-  });
-  state.token = auth.token;
+  const gameLaunchToken = getGameLaunchToken();
+  if (gameLaunchToken) {
+    const auth = await api("/api/auth/game", {
+      method: "POST",
+      body: JSON.stringify({ token: gameLaunchToken }),
+      headers: {},
+    });
+    state.token = auth.token;
+    state.launchMode = "game";
+    return;
+  }
+  if (!tg) throw new Error(tr("err_open_in_telegram"));
+  throw new Error(tr("err_initdata_missing"));
 }
 
 function isUnlocked(key) { return key === "smoky" || key === "hunter" || Boolean(state.profile?.unlocks?.[key]); }
