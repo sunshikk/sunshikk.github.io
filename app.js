@@ -528,6 +528,7 @@ const state = {
   quickMatchStartedAt: 0,
   quickMatchSearching: false,
   quickMatchHideTimer: null,
+  battleSearchActionsLocked: false,
 };
 
 const I18N = {
@@ -2237,8 +2238,11 @@ function renderReferrals() {
   if (!state.profile) return;
   const invited = Number(state.profile.referral_invited_total || 0);
   const rewarded = Number(state.profile.referral_rewarded_total || 0);
-  const left = Number(state.profile.referral_remaining_slots || 0);
-  const totalSlots = rewarded + left;
+  const rawLeft = Number(state.profile.referral_remaining_slots);
+  const left = Number.isFinite(rawLeft) && (rawLeft > 0 || rewarded >= 20)
+    ? rawLeft
+    : Math.max(0, 20 - rewarded);
+  const totalSlots = 20;
 
   const refInput = qs("refLinkInput");
   if (refInput) refInput.value = String(state.profile.referral_link || "");
@@ -3615,9 +3619,11 @@ function renderLobbies() {
   if (!lobbies.length) {
     stopLobbyTicker();
     list.innerHTML = `<div class="leadersEmpty" style="grid-column:1/-1;">${tr("lobby_empty")}</div>`;
+    lockBattleSearchActions(Boolean(state.battleSearchActionsLocked));
     return;
   }
   list.innerHTML = lobbies.map(lobbyCardHtml).join("");
+  lockBattleSearchActions(Boolean(state.battleSearchActionsLocked));
   ensureLobbyTicker();
   tickLobbyTimersDom();
 }
@@ -4105,6 +4111,7 @@ function lockMainTabs(locked) {
 }
 
 function lockBattleSearchActions(locked) {
+  state.battleSearchActionsLocked = Boolean(locked);
   const ids = [
     "quickBattleBtn",
     "profileQuickBattleBtn",
@@ -4112,6 +4119,8 @@ function lockBattleSearchActions(locked) {
     "battlePlayerModeCard",
     "createLobbyBtn",
     "sendPvpInviteBtn",
+    "cancelPvpInviteBtn",
+    "pvpUsernameInput",
     "joinLobbyConfirmBtn",
     "backToModesBtn",
     "backToModesFromPvpBtn",
@@ -4121,6 +4130,10 @@ function lockBattleSearchActions(locked) {
     const el = qs(id);
     if (!el) return;
     if (id === "quickMatchCancelBtn") return;
+    el.disabled = Boolean(locked);
+    el.classList.toggle("isDisabled", Boolean(locked));
+  });
+  document.querySelectorAll(".battleLobbyCard").forEach((el) => {
     el.disabled = Boolean(locked);
     el.classList.toggle("isDisabled", Boolean(locked));
   });
@@ -4330,11 +4343,14 @@ function renderBattleState(st) {
   state.battleLastState = st;
 
   if (st.active !== true) {
-    closeQuickMatchModal();
+    const keepQuickSearchUi = Boolean(state.quickMatchController);
+    if (!keepQuickSearchUi) {
+      closeQuickMatchModal();
+    }
     exitBattleArenaToModes();
     stopBattlePolling();
-    lockMainTabs(false);
-    lockBattleSearchActions(false);
+    lockMainTabs(keepQuickSearchUi);
+    lockBattleSearchActions(keepQuickSearchUi);
     state.webBattleActive = false;
     state.currentBattleId = null;
     state.battleChatAfterId = 0;
