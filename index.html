@@ -1,14 +1,24 @@
 ﻿<!doctype html>
-<html lang="ru">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tanki Online</title>
     <link rel="stylesheet" href="./styles.css?v=65" />
+    
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    
+    <script src="https://tganalytics.xyz/index.js" type="text/javascript"></script>
+    
+    <script type="text/javascript">
+      window.telegramAnalytics.init({
+        token: 'eyJhcHBfbmFtZSI6InRhbmtpX29ubGluZV9ib3QiLCJhcHBfdXJsIjoiaHR0cHM6Ly90Lm1lL3Rhbmtpb25saW5lcHZwX2JvdCIsImFwcF9kb21haW4iOiJodHRwczovL3N1bnNoaWtrLmdpdGh1Yi5pby8ifQ==!KvMeVsHXQ2d+geextpMPKGWhsYzJf/5OGdC/k3UmDXg=', 
+        appName: 'tanki_online_bot'
+      });
+    </script>
+
     <script src="./config.js"></script>
     <script src="./app.js?v=98" defer></script>
-  </head>
+</head>
   <body>
     <div class="app" id="app">
       <header class="hud">
