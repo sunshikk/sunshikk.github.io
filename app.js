@@ -1,18 +1,22 @@
-﻿/* global Telegram */
+/* global Telegram */
 
 const API_BASE_URL = String(window.API_BASE_URL || "").trim().replace(/\/+$/, "");
 const MUSIC_STORAGE_KEY = "bg_music_enabled";
 const MUSIC_VOLUME_STORAGE_KEY = "bg_music_volume";
 const QUESTS_SEEN_DAY_KEY_STORAGE = "quests_seen_day_key";
 const DEFAULT_MUSIC_VOLUME = 0.35;
+const DEFAULT_MUSIC_ENABLED = true;
 const LOCALES = ["ru", "en"];
 const TAB_MUSIC = {
   profile: "/sounds/music/background_music.mp3",
+  referrals: "/sounds/music/background_music.mp3",
+  leaders: "/sounds/music/background_music.mp3",
   battles: "/sounds/music/battle_music.mp3",
-  garage: "/sounds/music/background_music.mp3",
+  garage: "/sounds/music/garage_music.mp3",
   shop: "/sounds/music/shop_music.mp3",
   containers: "/sounds/music/background_music.mp3",
   quests: "/sounds/music/background_music.mp3",
+  settings: "/sounds/music/background_music.mp3",
 };
 const PURCHASE_SOUND_PATH = "/sounds/notify.mp3";
 const BATTLE_AMBIENT_PATH = "/sounds/ambient/space_ambient.mp3";
@@ -36,7 +40,208 @@ const REWARD_ITEM_IMAGES = {
   titan: "/images/webapp/titan.png",
   paladin: "/images/webapp/paladin.png",
   dictator: "/images/webapp/dictator.png",
+  module1: "/images/webapp/module1.png",
+  module2: "/images/webapp/module2.png",
+  module3: "/images/webapp/module3.png",
+  module4: "/images/webapp/module4.png",
+  module5: "/images/webapp/module5.png",
+  module6: "/images/webapp/module6.png",
+  module7: "/images/webapp/module7.png",
+  module8: "/images/webapp/module8.png",
+  module9: "/images/webapp/module9.png",
+  module10: "/images/webapp/module10.png",
+  module11: "/images/webapp/module11.png",
+  module12: "/images/webapp/module12.png",
+  module13: "/images/webapp/module13.png",
+  module14: "/images/webapp/module14.png",
+  module15: "/images/webapp/module15.png",
+  module16: "/images/webapp/module16.png",
 };
+const MODULE_LOOT = [
+  {
+    key: "module1",
+    type: "module",
+    name: "Легкая бронепластина",
+    name_en: "Light armor plate",
+    chance: "0.70%",
+    rarity: "epic",
+    image: REWARD_ITEM_IMAGES.module1,
+    description: "Первое попадание по вам в бою получает -5 урона.",
+    description_en: "The first hit you take in a battle deals 5 less damage.",
+  },
+  {
+    key: "module2",
+    type: "module",
+    name: "Стабилизатор прицела",
+    name_en: "Aim stabilizer",
+    chance: "0.70%",
+    rarity: "epic",
+    image: REWARD_ITEM_IMAGES.module2,
+    description: "Если вы не двигались перед выстрелом, шанс попадания +8%.",
+    description_en: "If you did not move before shooting, hit chance is increased by 8%.",
+  },
+  {
+    key: "module3",
+    type: "module",
+    name: "Боевой регистратор",
+    name_en: "Battle recorder",
+    chance: "0.80%",
+    rarity: "epic",
+    image: REWARD_ITEM_IMAGES.module3,
+    description: "Дает небольшой бонус к опыту за бой: +5%, максимум +10 опыта.",
+    description_en: "Grants a small battle XP bonus: +5%, capped at +10 XP.",
+  },
+  {
+    key: "module4",
+    type: "module",
+    name: "Маневровые приводы",
+    name_en: "Maneuver drives",
+    chance: "0.80%",
+    rarity: "epic",
+    image: REWARD_ITEM_IMAGES.module4,
+    description: "После движения следующий входящий выстрел получает -5% к точности.",
+    description_en: "After you move, the next incoming shot gets -5% accuracy.",
+  },
+  {
+    key: "module5",
+    type: "module",
+    name: "Противоосколочная обшивка",
+    name_en: "Anti-fragment lining",
+    chance: "0.50%",
+    rarity: "ultrarare",
+    image: REWARD_ITEM_IMAGES.module5,
+    description: "Дальний входящий урон на расстоянии 4+ снижается на 10%.",
+    description_en: "Incoming long-range damage at distance 4+ is reduced by 10%.",
+  },
+  {
+    key: "module6",
+    type: "module",
+    name: "Усиленный затвор",
+    name_en: "Reinforced breech",
+    chance: "0.50%",
+    rarity: "ultrarare",
+    image: REWARD_ITEM_IMAGES.module6,
+    description: "После промаха ваш следующий выстрел получает +10% точности.",
+    description_en: "After a miss, your next shot gets +10% accuracy.",
+  },
+  {
+    key: "module7",
+    type: "module",
+    name: "Калиброванный боек",
+    name_en: "Calibrated striker",
+    chance: "0.50%",
+    rarity: "ultrarare",
+    image: REWARD_ITEM_IMAGES.module7,
+    description: "Дает +6% к шансу критического попадания. Крит наносит +25% урона.",
+    description_en: "Grants +6% critical hit chance. Critical hits deal +25% damage.",
+  },
+  {
+    key: "module8",
+    type: "module",
+    name: "Адаптивная броня",
+    name_en: "Adaptive armor",
+    chance: "0.50%",
+    rarity: "legendary",
+    image: REWARD_ITEM_IMAGES.module8,
+    description: "Когда HP впервые падает ниже 40%, следующий входящий удар режется на 25%.",
+    description_en: "When HP first drops below 40%, the next incoming hit is reduced by 25%.",
+  },
+  {
+    key: "module9",
+    type: "module",
+    name: "Дымовой генератор",
+    name_en: "Smoke generator",
+    chance: "0.70%",
+    rarity: "epic",
+    image: REWARD_ITEM_IMAGES.module9,
+    description: "Активируйте, чтобы следующий выстрел противника получил -15% точности.",
+    description_en: "Activate to make the opponent's next shot lose 15% accuracy.",
+  },
+  {
+    key: "module10",
+    type: "module",
+    name: "Аварийная защита",
+    name_en: "Emergency guard",
+    chance: "0.70%",
+    rarity: "epic",
+    image: REWARD_ITEM_IMAGES.module10,
+    description: "Активируется при HP 50% или ниже: восстанавливает 15 HP.",
+    description_en: "Can be activated at 50% HP or lower: restores 15 HP.",
+  },
+  {
+    key: "module11",
+    type: "module",
+    name: "Форсаж",
+    name_en: "Afterburner",
+    chance: "0.80%",
+    rarity: "epic",
+    image: REWARD_ITEM_IMAGES.module11,
+    description: "Следующее движение проходит на 2 клетки, но следующий выстрел получает -15% точности.",
+    description_en: "Your next move travels 2 cells, but your next shot gets -15% accuracy.",
+  },
+  {
+    key: "module12",
+    type: "module",
+    name: "Импульсный заряд",
+    name_en: "Impulse charge",
+    chance: "0.50%",
+    rarity: "ultrarare",
+    image: REWARD_ITEM_IMAGES.module12,
+    description: "Следующий выстрел наносит +10 урона. Промах тратит заряд.",
+    description_en: "Your next shot deals +10 damage. Missing still consumes the charge.",
+  },
+  {
+    key: "module13",
+    type: "module",
+    name: "Тактический сканер",
+    name_en: "Tactical scanner",
+    chance: "0.50%",
+    rarity: "ultrarare",
+    image: REWARD_ITEM_IMAGES.module13,
+    description: "Следующий выстрел получает +12% точности.",
+    description_en: "Your next shot gets +12% accuracy.",
+  },
+  {
+    key: "module14",
+    type: "module",
+    name: "Ремкомплект",
+    name_en: "Repair kit",
+    chance: "0.50%",
+    rarity: "ultrarare",
+    image: REWARD_ITEM_IMAGES.module14,
+    description: "Восстанавливает до 25 HP, но не выше максимального HP.",
+    description_en: "Restores up to 25 HP, not above max HP.",
+  },
+  {
+    key: "module15",
+    type: "module",
+    name: "Критический боекомплект",
+    name_en: "Critical ammo rack",
+    chance: "0.65%",
+    rarity: "legendary",
+    image: REWARD_ITEM_IMAGES.module15,
+    description: "Следующий выстрел получает +20% шанса крита. Крит наносит +25% урона.",
+    description_en: "Your next shot gets +20% critical chance. Critical hits deal +25% damage.",
+  },
+  {
+    key: "module16",
+    type: "module",
+    name: "Перегрузка орудия",
+    name_en: "Weapon overload",
+    chance: "0.65%",
+    rarity: "legendary",
+    image: REWARD_ITEM_IMAGES.module16,
+    description: "Следующий выстрел получает +15 урона и +10% точности, после выстрела перезарядка дольше на 1 ход.",
+    description_en: "Your next shot gets +15 damage and +10% accuracy, then reload is 1 turn longer.",
+  },
+];
+const PREMIUM_MODULE_LOOT = MODULE_LOOT.map((item) => ({
+  ...item,
+  rarity: "legendary",
+  chance: "1.88%",
+  description: "Легендарный модуль.",
+  description_en: "Legendary module.",
+}));
 const RARITY_LABELS = {
   rare: "Редкое",
   epic: "Эпическое",
@@ -139,6 +344,7 @@ const CONTAINER_LOOT = [
     description: "Легендарный штурмовой корпус с щитом и увеличенной мобильностью.",
     description_en: "Legendary assault hull with a shield and increased mobility.",
   },
+  ...MODULE_LOOT,
   {
     key: "crystals_1000",
     type: "crystals",
@@ -286,33 +492,11 @@ const PREMIUM_CONTAINER_LOOT = [
     description_en: "Legendary crystal drop.",
   },
   {
-    key: "prem_crystals_25000",
-    type: "crystals",
-    name: "Кристаллы 25 000",
-    name_en: "Crystals 25,000",
-    chance: "2.5%",
-    rarity: "legendary",
-    image: REWARD_ITEM_IMAGES.crystals,
-    description: "Легендарный кристальный дроп.",
-    description_en: "Legendary crystal drop.",
-  },
-  {
-    key: "prem_crystals_30000",
-    type: "crystals",
-    name: "Кристаллы 30 000",
-    name_en: "Crystals 30,000",
-    chance: "2.5%",
-    rarity: "legendary",
-    image: REWARD_ITEM_IMAGES.crystals,
-    description: "Легендарный кристальный дроп.",
-    description_en: "Legendary crystal drop.",
-  },
-  {
     key: "premium_1d",
     type: "premium",
     name: "Премиум 1 день",
     name_en: "Premium 1 day",
-    chance: "30%",
+    chance: "20%",
     rarity: "legendary",
     image: REWARD_ITEM_IMAGES.premium,
     description: "Премиум подписка.",
@@ -323,7 +507,7 @@ const PREMIUM_CONTAINER_LOOT = [
     type: "premium",
     name: "Премиум 3 дня",
     name_en: "Premium 3 days",
-    chance: "8%",
+    chance: "5%",
     rarity: "legendary",
     image: REWARD_ITEM_IMAGES.premium,
     description: "Премиум подписка.",
@@ -373,6 +557,7 @@ const PREMIUM_CONTAINER_LOOT = [
     description: "Легендарный корпус.",
     description_en: "Legendary hull.",
   },
+  ...PREMIUM_MODULE_LOOT,
 ];
 
 function syncLootChancesFromApi(info) {
@@ -393,6 +578,22 @@ function syncLootChancesFromApi(info) {
       crystals_1000: "crystals_1000",
       crystals_10000: "crystals_10000",
       crystals_20000: "crystals_20000",
+      module1: "module1",
+      module2: "module2",
+      module3: "module3",
+      module4: "module4",
+      module5: "module5",
+      module6: "module6",
+      module7: "module7",
+      module8: "module8",
+      module9: "module9",
+      module10: "module10",
+      module11: "module11",
+      module12: "module12",
+      module13: "module13",
+      module14: "module14",
+      module15: "module15",
+      module16: "module16",
     };
     CONTAINER_LOOT.forEach((item) => {
       const apiKey = stdMap[item.key];
@@ -427,6 +628,22 @@ function syncLootChancesFromApi(info) {
       ricochet: "ricochet",
       molot: "molot",
       paladin: "paladin",
+      module1: "module1",
+      module2: "module2",
+      module3: "module3",
+      module4: "module4",
+      module5: "module5",
+      module6: "module6",
+      module7: "module7",
+      module8: "module8",
+      module9: "module9",
+      module10: "module10",
+      module11: "module11",
+      module12: "module12",
+      module13: "module13",
+      module14: "module14",
+      module15: "module15",
+      module16: "module16",
     };
     PREMIUM_CONTAINER_LOOT.forEach((item) => {
       const apiKey = premMap[item.key];
@@ -451,6 +668,13 @@ const state = {
   profile: null,
   shop: null,
   containersInfo: null,
+  microUpgrades: null,
+  modules: null,
+  moduleImagePreloads: new Set(),
+  modulePreloadQueue: [],
+  modulePreloadTimer: null,
+  modulePreloadIdleHandle: null,
+  modulePreloadActive: false,
   containerKind: "standard", // standard | premium
   quests: null,
   activeTab: "profile",
@@ -458,6 +682,7 @@ const state = {
   shopCategory: "weapon",
   selectedWeapon: "smoky",
   selectedHull: "hunter",
+  selectedModule: "module1",
   viewerName: "player",
   bgMusic: null,
   prevMusic: null,
@@ -628,6 +853,7 @@ const I18N = {
     send: "Отправить",
     garage_weapons: "Пушки",
     garage_hulls: "Корпуса",
+    garage_modules: "Модули",
     garage_pick_item: "Выберите пушку или корпус",
     equip: "Установить",
     leaders_top_players: "ТОП ИГРОКИ",
@@ -833,6 +1059,7 @@ const I18N = {
     send: "Send",
     garage_weapons: "Weapons",
     garage_hulls: "Hulls",
+    garage_modules: "Modules",
     garage_pick_item: "Select a weapon or a hull",
     equip: "Equip",
     leaders_top_players: "TOP PLAYERS",
@@ -1326,6 +1553,8 @@ const LOCKED_HINTS_EN = {
 };
 
 function itemName(key) {
+  const mod = moduleByKey(key);
+  if (mod?.name) return String(mod.name);
   return state.locale === "en" ? (NAMES_EN[key] || NAMES[key] || key) : (NAMES[key] || key);
 }
 function itemKeyFromAnyName(raw) {
@@ -1346,9 +1575,19 @@ function localizedItemName(rawOrKey) {
   return key ? itemName(key) : String(rawOrKey || "—");
 }
 function itemDescription(key) {
+  const mod = moduleByKey(key);
+  if (mod?.description) return String(mod.description);
   return state.locale === "en" ? (DESCRIPTIONS_EN[key] || DESCRIPTIONS[key] || "") : (DESCRIPTIONS[key] || "");
 }
 function itemLockedHint(key) {
+  const mod = moduleByKey(key);
+  if (mod) {
+    if (!mod.available) {
+      const rank = mod.rank_name ? trRankName(String(mod.rank_name)) : String(mod.rank_required || "");
+      return state.locale === "en" ? `Required rank: ${rank}` : `Требуется звание: ${rank}`;
+    }
+    return state.locale === "en" ? `Price: ${Number(mod.price || 0)} crystals.` : `Цена: ${Number(mod.price || 0)} кристаллов.`;
+  }
   return state.locale === "en" ? (LOCKED_HINTS_EN[key] || LOCKED_HINTS[key] || "This item is unavailable now.") : (LOCKED_HINTS[key] || "Этот предмет пока недоступен.");
 }
 function rarityLabel(key) {
@@ -1407,7 +1646,7 @@ function avatarUrlForUser(userId, storedUrl) {
   if (direct) return direct;
   return avatarProxyUrlForUser(userId);
 }
-const ASSET_CACHE_VERSION = "54";
+const ASSET_CACHE_VERSION = "56";
 function withCacheBust(url) { return `${url}${url.includes("?") ? "&" : "?"}v=${ASSET_CACHE_VERSION}`; }
 function sleep(ms) { return new Promise((resolve) => setTimeout(resolve, ms)); }
 async function fadeInOpacity(el, durationMs = 600) {
@@ -1449,16 +1688,26 @@ async function fadeAudioVolume(audio, from, to, durationMs = 300, shouldContinue
     // Smoother than linear in Telegram WebView.
     return x < 0.5 ? 2 * x * x : 1 - Math.pow(-2 * x + 2, 2) / 2;
   };
-  audio.volume = start;
+  try { audio.volume = start; } catch {}
   const startedAt = performance.now();
-  while (true) {
-    if (!shouldContinue()) return;
-    const elapsed = performance.now() - startedAt;
-    const p = Math.max(0, Math.min(1, elapsed / totalMs));
-    audio.volume = start + (end - start) * ease(p);
-    if (p >= 1) break;
-    await new Promise((resolve) => requestAnimationFrame(resolve));
-  }
+  // Use fixed-interval setTimeout instead of requestAnimationFrame.
+  // rAF is tied to the render thread and gets throttled when the page is
+  // under heavy load (CSS animations, DOM rebuilds for modules, etc.),
+  // causing large volume jumps that produce audible clicks / crackling.
+  // setTimeout with a fixed step runs on the timer queue and is far more
+  // consistent in Telegram WebView.
+  const STEP_MS = 40;
+  return new Promise((resolve) => {
+    function step() {
+      if (!shouldContinue()) { resolve(); return; }
+      const elapsed = performance.now() - startedAt;
+      const p = Math.min(1, elapsed / totalMs);
+      try { audio.volume = Math.max(0, Math.min(1, start + (end - start) * ease(p))); } catch {}
+      if (p >= 1) { resolve(); return; }
+      setTimeout(step, STEP_MS);
+    }
+    step();
+  });
 }
 function waitForImageLoad(img, timeoutMs = 2000) {
   return new Promise((resolve) => {
@@ -1494,6 +1743,51 @@ function preloadImage(url, timeoutMs = 2200) {
     img.src = url;
     setTimeout(finish, timeoutMs);
   });
+}
+function preloadModuleImages(payload = state.modules) {
+  const list = Array.isArray(payload?.modules) ? payload.modules : [];
+  const queue = [];
+  for (const mod of list) {
+    const raw = String(mod?.image_url || getItemImage(mod?.key || "") || "").trim();
+    if (!raw) continue;
+    const url = withCacheBust(absUrl(raw));
+    if (state.moduleImagePreloads.has(url)) continue;
+    state.moduleImagePreloads.add(url);
+    queue.push(url);
+  }
+  if (!queue.length) return;
+  state.modulePreloadQueue.push(...queue);
+  scheduleModuleImagePreload();
+}
+function scheduleModuleImagePreload(delayMs = 700) {
+  if (state.modulePreloadActive || state.modulePreloadTimer || state.modulePreloadIdleHandle) return;
+  if (window.requestIdleCallback) {
+    state.modulePreloadIdleHandle = window.requestIdleCallback(() => {
+      state.modulePreloadIdleHandle = null;
+      runNextModuleImagePreload();
+    }, { timeout: delayMs });
+  } else {
+    state.modulePreloadTimer = window.setTimeout(runNextModuleImagePreload, delayMs);
+  }
+}
+async function runNextModuleImagePreload() {
+  state.modulePreloadTimer = null;
+  if (state.modulePreloadIdleHandle) {
+    window.cancelIdleCallback?.(state.modulePreloadIdleHandle);
+    state.modulePreloadIdleHandle = null;
+  }
+  const url = state.modulePreloadQueue.shift();
+  if (!url) return;
+  state.modulePreloadActive = true;
+  await preloadImage(url, 2600);
+  state.modulePreloadActive = false;
+  if (state.modulePreloadQueue.length) {
+    scheduleModuleImagePreload(180);
+  }
+}
+function setModulesPayload(payload) {
+  state.modules = payload;
+  preloadModuleImages(payload);
 }
 
 function hideErrorModal() {
@@ -1645,10 +1939,10 @@ function detectRewardRarity(result) {
 }
 
 const REWARD_REVEAL_TIMINGS = {
-  rare: { preDelay: 0, glowMs: 680, swapMs: 180, dropDelay: 170, dropFadeMs: 720, textDelay: 120, textFadeMs: 520, settleMs: 180 },
-  epic: { preDelay: 1500, glowMs: 900, swapMs: 210, dropDelay: 220, dropFadeMs: 760, textDelay: 140, textFadeMs: 540, settleMs: 200 },
-  ultrarare: { preDelay: 2000, glowMs: 1120, swapMs: 240, dropDelay: 260, dropFadeMs: 820, textDelay: 150, textFadeMs: 560, settleMs: 220 },
-  legendary: { preDelay: 3000, glowMs: 1600, swapMs: 280, dropDelay: 320, dropFadeMs: 900, textDelay: 180, textFadeMs: 600, settleMs: 240 },
+  rare: { preDelay: 220, glowMs: 620, swapMs: 150, dropDelay: 260, dropFadeMs: 420, textDelay: 150, textFadeMs: 320, settleMs: 160 },
+  epic: { preDelay: 320, glowMs: 720, swapMs: 160, dropDelay: 290, dropFadeMs: 450, textDelay: 160, textFadeMs: 340, settleMs: 170 },
+  ultrarare: { preDelay: 420, glowMs: 820, swapMs: 170, dropDelay: 320, dropFadeMs: 480, textDelay: 170, textFadeMs: 360, settleMs: 180 },
+  legendary: { preDelay: 520, glowMs: 940, swapMs: 180, dropDelay: 360, dropFadeMs: 520, textDelay: 180, textFadeMs: 380, settleMs: 200 },
 };
 
 function rewardTextFromResult(result) {
@@ -1662,14 +1956,45 @@ function rewardTextFromResult(result) {
       ? `Premium received: ${result.reward_amount} day(s)`
       : `Получен премиум: ${result.reward_amount} дн.`;
   }
+  if (result.reward_type === "module") {
+    const name = itemName(result.reward_key) || result.reward_key;
+    return state.locale === "en"
+      ? `Module received: ${name}`
+      : `Получен модуль: ${name}`;
+  }
   return state.locale === "en"
     ? `Crystals received: ${result.reward_amount}`
     : `Получено кристаллов: ${result.reward_amount}`;
 }
 
 function getItemImage(key) {
+  if (String(key || "").startsWith("module")) return `/images/webapp/${key}.png`;
   const imageName = ITEM_IMAGE_OVERRIDES[key] || `${key}.png`;
   return `/images/webapp/${imageName}`;
+}
+
+function placeRewardDropOnContainer(box, contImg, isPremiumContainer) {
+  if (!box || !contImg) return;
+  const boxRect = box.getBoundingClientRect();
+  const imgRect = contImg.getBoundingClientRect();
+  if (!boxRect.width || !boxRect.height || !imgRect.width || !imgRect.height) return;
+  const naturalW = Number(contImg.naturalWidth || 0);
+  const naturalH = Number(contImg.naturalHeight || 0);
+  const imgAspect = naturalW > 0 && naturalH > 0 ? naturalW / naturalH : (imgRect.width / imgRect.height);
+  const boxAspect = imgRect.width / imgRect.height;
+  const renderedW = boxAspect > imgAspect ? imgRect.height * imgAspect : imgRect.width;
+  const renderedH = boxAspect > imgAspect ? imgRect.height : imgRect.width / imgAspect;
+  const renderedLeft = imgRect.left + (imgRect.width - renderedW) / 2;
+  const renderedTop = imgRect.top + (imgRect.height - renderedH) / 2;
+  const anchor = isPremiumContainer
+    ? { x: 0.50, y: 0.28, size: 0.49 }
+    : { x: 0.50, y: 0.33, size: 0.60 };
+  const left = (renderedLeft - boxRect.left) + renderedW * anchor.x;
+  const top = (renderedTop - boxRect.top) + renderedH * anchor.y;
+  const size = Math.max(96, Math.min(132, renderedW * anchor.size));
+  box.style.setProperty("--drop-left", `${left}px`);
+  box.style.setProperty("--drop-top", `${top}px`);
+  box.style.setProperty("--drop-size", `${size}px`);
 }
 
 function getTankComboImage(weapon, hull) {
@@ -1702,10 +2027,56 @@ function saveMusic() {
   try {
     localStorage.setItem(MUSIC_STORAGE_KEY, state.bgMusicEnabled ? "1" : "0");
     localStorage.setItem(MUSIC_VOLUME_STORAGE_KEY, String(state.bgMusicVolume));
+    if (state.profile?.user_id) {
+      localStorage.setItem(`${MUSIC_STORAGE_KEY}:${state.profile.user_id}`, state.bgMusicEnabled ? "1" : "0");
+      localStorage.setItem(`${MUSIC_VOLUME_STORAGE_KEY}:${state.profile.user_id}`, String(state.bgMusicVolume));
+    }
   } catch {}
 }
 
+function loadMusicSettingsForUser(userId = null) {
+  try {
+    const scopedEnabled = userId ? localStorage.getItem(`${MUSIC_STORAGE_KEY}:${userId}`) : null;
+    const scopedVolume = userId ? localStorage.getItem(`${MUSIC_VOLUME_STORAGE_KEY}:${userId}`) : null;
+    const legacyEnabled = localStorage.getItem(MUSIC_STORAGE_KEY);
+    const legacyVolume = localStorage.getItem(MUSIC_VOLUME_STORAGE_KEY);
+    const enabledRaw = scopedEnabled ?? legacyEnabled;
+    const volumeRaw = scopedVolume ?? legacyVolume;
+    state.bgMusicEnabled = enabledRaw == null ? DEFAULT_MUSIC_ENABLED : enabledRaw === "1";
+    const savedVolume = Number(volumeRaw);
+    if (!Number.isNaN(savedVolume)) state.bgMusicVolume = Math.max(0, Math.min(1, savedVolume));
+  } catch {
+    state.bgMusicEnabled = DEFAULT_MUSIC_ENABLED;
+  }
+}
+
+async function syncMusicSettingsForProfile() {
+  if (!state.profile?.user_id) return;
+  const beforeEnabled = state.bgMusicEnabled;
+  const beforeVolume = state.bgMusicVolume;
+  loadMusicSettingsForUser(state.profile.user_id);
+  const volume = qs("musicVolume");
+  if (volume) volume.value = String(Math.round(state.bgMusicVolume * 100));
+  updateMusicButton();
+  saveMusic();
+  if (state.bgMusic && (beforeEnabled !== state.bgMusicEnabled || beforeVolume !== state.bgMusicVolume)) {
+    await switchTrack();
+    await applyMusic();
+  }
+}
+
 function getTrack() { return absUrl(withApiBase(TAB_MUSIC[state.activeTab] || TAB_MUSIC.profile)); }
+
+function prepareLoopingMusic(audio, _shouldRestart) {
+  if (!audio) return null;
+  // Use native loop for gapless playback.  Manual ended-event restart
+  // introduced micro-gaps at each loop boundary that were audible as
+  // clicks / pops, especially in Telegram WebView on mobile devices.
+  audio.loop = true;
+  audio.preload = "auto";
+  audio.load(); // Ensure audio is loaded to prevent crackling
+  return audio;
+}
 
 async function fadeVolume(target, durationMs = 300) {
   if (!state.bgMusic) return;
@@ -1756,14 +2127,8 @@ async function startBattleAmbient() {
   const seq = state.battleAudioSeq;
   if (!state.battleAmbient) {
     state.battleAmbient = new Audio(absUrl(withApiBase(BATTLE_AMBIENT_PATH)));
-    state.battleAmbient.loop = false;
-    state.battleAmbient.preload = "auto";
     state.battleAmbient.volume = 0;
-    state.battleAmbient.addEventListener("ended", () => {
-      if (!state.battleAmbient || !state.battleAmbientActive) return;
-      state.battleAmbient.currentTime = 0;
-      void state.battleAmbient.play().catch(() => {});
-    });
+    prepareLoopingMusic(state.battleAmbient, (audio) => state.battleAmbient === audio && state.battleAmbientActive);
   }
   const a = state.battleAmbient;
   if (state.bgMusic) {
@@ -1852,6 +2217,7 @@ async function playPurchaseSound() {
   if (!state.notifySound) {
     state.notifySound = new Audio(absUrl(withApiBase(PURCHASE_SOUND_PATH)));
     state.notifySound.preload = "auto";
+    state.notifySound.load();
   }
   const sound = state.notifySound;
   sound.pause();
@@ -1879,15 +2245,9 @@ async function switchTrack() {
     state.prevMusic = null;
   }
   const newAudio = new Audio(nextSrc);
-  newAudio.loop = true;
-  newAudio.preload = "auto";
+  prepareLoopingMusic(newAudio, (audio) => state.bgMusicEnabled && state.bgMusic === audio);
   newAudio.volume = 0;
   newAudio.muted = false;
-  newAudio.addEventListener("ended", () => {
-    if (!state.bgMusicEnabled || state.bgMusic !== newAudio) return;
-    newAudio.currentTime = 0;
-    void newAudio.play().catch(() => {});
-  });
   state.bgMusic = newAudio;
   state.prevMusic = oldAudio;
   try { await newAudio.play(); } catch {}
@@ -1912,21 +2272,13 @@ function initMusic() {
   const volume = qs("musicVolume");
   if (!btn || !volume) return;
 
-  try {
-    state.bgMusicEnabled = localStorage.getItem(MUSIC_STORAGE_KEY) === "1";
-    const saved = Number(localStorage.getItem(MUSIC_VOLUME_STORAGE_KEY));
-    if (!Number.isNaN(saved)) state.bgMusicVolume = Math.max(0, Math.min(1, saved));
-  } catch {}
+  loadMusicSettingsForUser();
 
-  const audio = new Audio(getTrack());
-  audio.loop = true;
-  audio.preload = "auto";
+  const audio = prepareLoopingMusic(
+    new Audio(getTrack()),
+    (current) => state.bgMusicEnabled && state.bgMusic === current
+  );
   audio.volume = state.bgMusicEnabled ? state.bgMusicVolume : 0;
-  audio.addEventListener("ended", () => {
-    if (!state.bgMusicEnabled || state.bgMusic !== audio) return;
-    audio.currentTime = 0;
-    void audio.play().catch(() => {});
-  });
   audio.addEventListener("error", () => {
     state.bgMusicEnabled = false;
     updateMusicButton();
@@ -1985,9 +2337,24 @@ async function initAuth() {
   throw new Error(tr("err_initdata_missing"));
 }
 
-function isUnlocked(key) { return key === "smoky" || key === "hunter" || Boolean(state.profile?.unlocks?.[key]); }
-function currentGarageKey() { return state.garageCategory === "weapon" ? state.selectedWeapon : state.selectedHull; }
+function moduleByKey(key) {
+  const list = Array.isArray(state.modules?.modules) ? state.modules.modules : [];
+  return list.find((m) => String(m.key || "") === String(key || "")) || null;
+}
+function isModuleOwned(key) { return Boolean(moduleByKey(key)?.owned); }
+function isUnlocked(key) {
+  if (String(key || "").startsWith("module")) return isModuleOwned(key);
+  return key === "smoky" || key === "hunter" || Boolean(state.profile?.unlocks?.[key]);
+}
+function currentGarageKey() {
+  if (state.garageCategory === "modules") return state.selectedModule;
+  return state.garageCategory === "weapon" ? state.selectedWeapon : state.selectedHull;
+}
 function garageList() {
+  if (state.garageCategory === "modules") {
+    const list = Array.isArray(state.modules?.modules) ? state.modules.modules : [];
+    return list.map((m) => String(m.key || "")).filter(Boolean);
+  }
   return state.garageCategory === "weapon"
     ? ["smoky", "railgun", "shaft", "thunder", "ricochet", "molot"]
     : ["hunter", "titan", "paladin", "dictator"];
@@ -2008,19 +2375,67 @@ function showPurchaseLikeModal({ title, label, icon, name, price }) {
   modal.style.display = "flex";
 }
 
-function showConfirmModal({ title = trText("ПОДТВЕРДИТЕ", "CONFIRM"), label = trText("Вы уверены?", "Are you sure?"), icon = "⚑", name = "—", meta = "", onOk = null }) {
+function showConfirmModal({
+  title = trText("ПОДТВЕРДИТЕ", "CONFIRM"),
+  label = trText("Вы уверены?", "Are you sure?"),
+  icon = "⚑",
+  name = "—",
+  meta = "",
+  note = "",
+  badge = "",
+  preview = "",
+  details = [],
+  okText = trText("Подтвердить", "Confirm"),
+  variant = "default",
+  onOk = null,
+}) {
   const modal = qs("confirmModal");
   if (!modal) return;
+  const card = modal.querySelector(".confirmCard");
   const t = qs("confirmTitle");
   const l = qs("confirmLabel");
   const i = qs("confirmIcon");
   const n = qs("confirmName");
   const m = qs("confirmMeta");
+  const previewWrap = qs("confirmPreview");
+  const previewImg = qs("confirmPreviewImg");
+  const badgeEl = qs("confirmBadge");
+  const noteEl = qs("confirmNote");
+  const detailsEl = qs("confirmDetails");
+  const okBtn = qs("confirmOkBtn");
+  const isPurchase = String(variant || "") === "purchase";
   if (t) t.textContent = String(title || trText("ПОДТВЕРДИТЕ", "CONFIRM"));
   if (l) l.textContent = String(label || trText("Вы уверены?", "Are you sure?"));
   if (i) i.textContent = String(icon || "⚑");
   if (n) n.textContent = String(name || "—");
   if (m) m.textContent = String(meta || "");
+  if (card) card.classList.toggle("isPurchase", isPurchase);
+  modal.classList.toggle("isPurchase", isPurchase);
+  if (badgeEl) {
+    badgeEl.textContent = String(badge || "");
+    badgeEl.style.display = badge ? "inline-flex" : "none";
+  }
+  if (noteEl) {
+    noteEl.textContent = String(note || "");
+    noteEl.style.display = note ? "block" : "none";
+  }
+  if (previewWrap && previewImg) {
+    const src = String(preview || "").trim();
+    previewWrap.style.display = src ? "flex" : "none";
+    if (src) {
+      previewImg.src = src;
+      previewImg.alt = String(name || "Preview");
+    } else {
+      previewImg.removeAttribute("src");
+      previewImg.alt = "";
+    }
+  }
+  if (detailsEl) {
+    const rows = Array.isArray(details) ? details.filter(Boolean) : [];
+    detailsEl.innerHTML = rows.map((row) => `<div class="confirmDetailChip">${escapeHtml(String(row))}</div>`).join("");
+    detailsEl.style.display = rows.length ? "flex" : "none";
+  }
+  if (okBtn) okBtn.textContent = String(okText || trText("Подтвердить", "Confirm"));
   state.confirmOnOk = typeof onOk === "function" ? onOk : null;
   modal.style.display = "flex";
 }
@@ -2036,6 +2451,36 @@ function showPurchaseModal(item) {
     icon: "🛒",
     name: item.name || NAMES[item.key] || item.key,
     price: String(item.price ?? 0),
+  });
+}
+
+function showShopBuyConfirm(item, onOk) {
+  if (!item) return;
+  const isPremium = String(item.category || "") === "premium";
+  const priceText = `${Number(item.price || 0)} 💎`;
+  const previewSrc = item.image_url
+    ? withCacheBust(absUrl(item.image_url))
+    : withCacheBust(absUrl(getItemImage(item.key)));
+  const badge = isPremium
+    ? trText("Премиум", "Premium")
+    : (item.category === "weapon"
+      ? trText("Пушка", "Weapon")
+      : (item.category === "hull" ? trText("Корпус", "Hull") : shopCategoryLabel(item.category)));
+  const note = isPremium
+    ? trText("Премиум суммируется с текущим сроком и активируется сразу после покупки.", "Premium time stacks with your current duration and activates instantly.")
+    : trText("Покупка спишет кристаллы и сразу добавит предмет в ваш аккаунт.", "This purchase will spend crystals and unlock the item on your account immediately.");
+  showConfirmModal({
+    title: trText("ПОДТВЕРЖДЕНИЕ ПОКУПКИ", "PURCHASE CONFIRMATION"),
+    label: trText("Проверьте товар перед списанием кристаллов.", "Review the item before crystals are spent."),
+    icon: isPremium ? String((SHOP_PREMIUM_META[item.key] || {}).icon || "👑") : "💎",
+    name: isPremium ? (premiumMetaText(SHOP_PREMIUM_META[item.key] || {}, "title") || String(item.name || "")) : displayItemName(item),
+    meta: priceText,
+    note,
+    badge,
+    preview: previewSrc,
+    okText: trText("Купить", "Buy"),
+    variant: "purchase",
+    onOk,
   });
 }
 
@@ -2142,9 +2587,53 @@ function updateGarageEquipButton() {
   const equipBtn = qs("equipBtn");
   if (!equipBtn || !state.profile) return;
   const key = currentGarageKey();
+  if (state.garageCategory === "modules") {
+    const mod = moduleByKey(key);
+    const microBtn = qs("microUpgradeBtn");
+    if (microBtn) microBtn.style.display = "none";
+    if (!mod) {
+      equipBtn.disabled = true;
+      equipBtn.classList.add("isDisabled");
+      equipBtn.textContent = trText("Загрузка", "Loading");
+      return;
+    }
+    if (mod.equipped) {
+      equipBtn.disabled = true;
+      equipBtn.classList.add("isDisabled");
+      equipBtn.textContent = trText("Установлено", "Equipped");
+      return;
+    }
+    if (mod.owned) {
+      equipBtn.disabled = false;
+      equipBtn.classList.remove("isDisabled");
+      equipBtn.textContent = trText("Установить", "Equip");
+      return;
+    }
+    if (!mod.available) {
+      equipBtn.disabled = true;
+      equipBtn.classList.add("isDisabled");
+      equipBtn.textContent = trText("Недоступно", "Unavailable");
+      return;
+    }
+    const affordable = Number(state.modules?.crystals ?? state.profile?.crystals ?? 0) >= Number(mod.price || 0);
+    equipBtn.disabled = !affordable;
+    equipBtn.classList.toggle("isDisabled", !affordable);
+    equipBtn.textContent = affordable
+      ? `${trText("Купить", "Buy")} · ${Number(mod.price || 0)} 💎`
+      : trText("Недостаточно кристаллов", "Not enough crystals");
+    return;
+  }
+  const microUnlocked = isUnlocked(key);
+  const microBtn = qs("microUpgradeBtn");
+  if (microBtn) {
+    microBtn.style.display = "";
+    microBtn.textContent = trText("МИКРОПРОКАЧКИ", "MICRO UPGRADES");
+    microBtn.disabled = !microUnlocked;
+    microBtn.classList.toggle("isDisabled", !microUnlocked);
+  }
   const equippedCurrent = state.garageCategory === "weapon" ? state.profile.weapon : state.profile.hull;
   const isCurrentEquipped = key === equippedCurrent;
-  const isCurrentUnlocked = isUnlocked(key);
+  const isCurrentUnlocked = microUnlocked;
   if (!isCurrentUnlocked) {
     equipBtn.disabled = true;
     equipBtn.classList.add("isDisabled");
@@ -2166,6 +2655,191 @@ function resetGaragePreviewSelection() {
   if (!state.profile) return;
   state.selectedWeapon = String(state.profile.weapon || "smoky");
   state.selectedHull = String(state.profile.hull || "hunter");
+}
+
+function microCurrentType() {
+  return state.garageCategory === "hull" ? "hull" : "weapon";
+}
+
+function microCurrentKey() {
+  return currentGarageKey();
+}
+
+function microStatLabel(stat) {
+  const key = String(stat || "").toLowerCase();
+  const ru = {
+    damage: "Урон",
+    accuracy: "Точность",
+    hp: "HP",
+    armor: "Броня",
+  };
+  const en = {
+    damage: "Damage",
+    accuracy: "Accuracy",
+    hp: "HP",
+    armor: "Armor",
+  };
+  return state.locale === "en" ? (en[key] || key) : (ru[key] || key);
+}
+
+function formatMicroEffects(effects) {
+  const order = ["damage", "accuracy", "hp", "armor"];
+  const src = effects && typeof effects === "object" ? effects : {};
+  const keys = order.filter((k) => Number(src[k] || 0) !== 0);
+  if (!keys.length) return "—";
+  return keys.map((k) => `+${Number(src[k] || 0)} ${microStatLabel(k)}`).join(" · ");
+}
+
+function microProgressPips(level, maxLevel) {
+  const lvl = Math.max(0, Number(level || 0));
+  const max = Math.max(0, Number(maxLevel || 0));
+  return Array.from({ length: max }, (_, i) => `<span class="${i < lvl ? "isFilled" : ""}"></span>`).join("");
+}
+
+function closeMicroUpgradeModal() {
+  const modal = qs("microModal");
+  if (!modal) return;
+  modal.classList.remove("isOpen");
+  modal.style.display = "none";
+}
+
+async function loadMicroUpgradesForCurrent() {
+  const type = microCurrentType();
+  const key = microCurrentKey();
+  const info = await api(`/api/micro_upgrades?item_type=${encodeURIComponent(type)}&item_key=${encodeURIComponent(key)}`);
+  state.microUpgrades = info;
+  renderMicroUpgradeModal();
+  return info;
+}
+
+function renderMicroUpgradeModal() {
+  const info = state.microUpgrades;
+  const list = qs("microUpgradeList");
+  if (!list) return;
+  const itemKey = String(info?.item_key || microCurrentKey() || "");
+  const itemType = String(info?.item_type || microCurrentType());
+  const itemLabel = itemName(itemKey) || String(info?.item_name || itemKey);
+  const title = qs("microTitle");
+  const sub = qs("microSub");
+  const img = qs("microItemImg");
+  const crystals = qs("microCrystals");
+  const tankPower = qs("microTankPower");
+  if (title) title.textContent = itemLabel ? itemLabel.toUpperCase() : "—";
+  if (sub) {
+    const typeLabel = itemType === "hull" ? trText("Корпус", "Hull") : trText("Пушка", "Weapon");
+    sub.textContent = `${typeLabel} · ${trText("дорогие точечные улучшения", "expensive targeted upgrades")}`;
+  }
+  if (img) img.src = withCacheBust(absUrl(getItemImage(itemKey)));
+  if (crystals) crystals.textContent = String(info?.crystals ?? state.profile?.crystals ?? 0);
+  if (tankPower) tankPower.textContent = String(info?.tank_power ?? state.profile?.tank_power ?? 0);
+  if (!info) {
+    list.innerHTML = `<div class="microLoading">${trText("Загрузка микропрокачек...", "Loading micro upgrades...")}</div>`;
+    return;
+  }
+  const upgrades = Array.isArray(info.upgrades) ? info.upgrades : [];
+  list.innerHTML = upgrades.map((up) => {
+    const quality = String(up.quality || "basic").toLowerCase();
+    const level = Number(up.level || 0);
+    const maxLevel = Number(up.max_level || 0);
+    const maxed = Boolean(up.is_maxed) || (maxLevel > 0 && level >= maxLevel);
+    const locked = Boolean(up.is_locked);
+    const cost = Number(up.cost || 0);
+    const affordable = Number(info.crystals || 0) >= cost;
+    const canBuy = Boolean(up.can_buy) && !maxed && affordable;
+    const stateText = locked
+      ? String(up.lock_reason || trText("Сначала закрой предыдущую редкость.", "Finish the previous tier first."))
+      : (maxed
+        ? trText("Редкость закрыта на максимум", "Tier maxed out")
+        : (affordable
+          ? trText("Готово к покупке следующего уровня", "Ready for the next level")
+          : trText("Нужно больше кристаллов", "Need more crystals")));
+    const totalText = level > 0
+      ? formatMicroEffects(up.total_effects)
+      : trText("Бонусов пока нет", "No bonuses yet");
+    const perLevelText = formatMicroEffects(up.effects_per_level);
+    const btnText = maxed
+      ? trText("МАКСИМУМ", "MAXED")
+      : `${trText("УЛУЧШИТЬ", "UPGRADE")} · ${cost} 💎`;
+    return `
+      <article class="microUpgradeCard microQuality-${quality}${locked ? " isLocked" : ""}${maxed ? " isMaxed" : ""}${canBuy ? " canBuy" : ""}">
+        <div class="microCardGlow" aria-hidden="true"></div>
+        <div class="microCardShine" aria-hidden="true"></div>
+        <div class="microUpgradeHead">
+          <span class="microQualityBadge">${escapeHtml(String(up.quality_label || quality))}</span>
+          <span class="microLevelText">${level}/${maxLevel}</span>
+        </div>
+        <div class="microUpgradeTitle">${escapeHtml(String(up.title || ""))}</div>
+        <div class="microUpgradeDesc">${escapeHtml(String(up.description || ""))}</div>
+        <div class="microEffectRow">
+          <span>${escapeHtml(perLevelText)}</span>
+        </div>
+        <div class="microTotalRow">${escapeHtml(totalText)}</div>
+        <div class="microStateRow">${escapeHtml(stateText)}</div>
+        <div class="microPips">${microProgressPips(level, maxLevel)}</div>
+        <button class="microBuyBtn" type="button" data-micro-buy="${escapeHtml(String(up.upgrade_key || ""))}" ${canBuy ? "" : "disabled"}>
+          ${escapeHtml(locked ? trText("ЗАБЛОКИРОВАНО", "LOCKED") : btnText)}
+        </button>
+      </article>
+    `;
+  }).join("");
+}
+
+async function openMicroUpgradeModal() {
+  const key = microCurrentKey();
+  if (!isUnlocked(key)) {
+    const hint = qs("garageHint");
+    if (hint) hint.textContent = trText("Сначала разблокируй этот предмет.", "Unlock this item first.");
+    return;
+  }
+  const modal = qs("microModal");
+  if (!modal) return;
+  state.microUpgrades = null;
+  renderMicroUpgradeModal();
+  modal.style.display = "flex";
+  requestAnimationFrame(() => modal.classList.add("isOpen"));
+  try {
+    await loadMicroUpgradesForCurrent();
+    clearError();
+  } catch (err) {
+    setError(prettyError(err));
+    listErrorToMicro(prettyError(err));
+  }
+}
+
+function listErrorToMicro(message) {
+  const list = qs("microUpgradeList");
+  if (!list) return;
+  list.innerHTML = `<div class="microLoading microError">${escapeHtml(String(message || ""))}</div>`;
+}
+
+async function buyMicroUpgrade(upgradeKey, btn) {
+  const info = state.microUpgrades;
+  if (!info || !upgradeKey) return;
+  if (btn) btn.disabled = true;
+  try {
+    const updated = await api("/api/micro_upgrades/buy", {
+      method: "POST",
+      body: JSON.stringify({
+        item_type: info.item_type,
+        item_key: info.item_key,
+        upgrade_key: upgradeKey,
+      }),
+    });
+    state.microUpgrades = updated;
+    if (state.profile) {
+      state.profile.crystals = updated.crystals;
+      state.profile.tank_power = updated.tank_power;
+    }
+    renderHud();
+    renderGarage();
+    renderMicroUpgradeModal();
+    clearError();
+  } catch (err) {
+    setError(prettyError(err));
+    renderMicroUpgradeModal();
+  } finally {
+    if (btn) btn.disabled = false;
+  }
 }
 
 function renderHud() {
@@ -2403,25 +3077,68 @@ async function refreshLeaderboard() {
   renderLeaderboard();
 }
 
+function rankRequirementHtml(mod) {
+  const rankName = mod?.rank_name ? trRankName(String(mod.rank_name)) : String(mod?.rank_required || "");
+  const rankSrc = withCacheBust(absUrl(rankImageUrlFromId(Number(mod?.rank_required || 1))));
+  return `<span class="moduleRankRequirement"><img src="${rankSrc}" alt="" loading="lazy">${escapeHtml(rankName)}</span>`;
+}
+
 function renderGarage() {
   if (!state.profile) return;
   const key = currentGarageKey();
+  const isModuleTab = state.garageCategory === "modules";
+  const mod = isModuleTab ? moduleByKey(key) : null;
   const unlocked = isUnlocked(key);
   const previewWeapon = String(state.selectedWeapon || state.profile.weapon || "smoky");
   const previewHull = String(state.selectedHull || state.profile.hull || "hunter");
   const isPreviewChanged = previewWeapon !== String(state.profile.weapon || "smoky")
     || previewHull !== String(state.profile.hull || "hunter");
+  const selectedModuleRankLocked = Boolean(isModuleTab && mod && !mod.available);
   qs("garageSelectedName").textContent = `${itemName(key)}`.toUpperCase();
-  qs("garageSelectedDesc").textContent = unlocked
+  qs("garageSelectedDesc").textContent = isModuleTab ? (itemDescription(key) || itemLockedHint(key)) : unlocked
     ? (itemDescription(key) || (state.locale === "en" ? "Select an item." : "Выберите предмет."))
     : itemLockedHint(key);
-  qs("garageTankImg").src = withCacheBust(absUrl(getTankComboImage(previewWeapon, previewHull)));
-  qs("garageTankImg").dataset.preview = isPreviewChanged ? "1" : "0";
-  qs("garageTankImg").closest(".tankShowcase")?.classList.toggle("isPreviewMode", isPreviewChanged);
+  const moduleMeta = qs("garageModuleMeta");
+  if (moduleMeta) {
+    if (isModuleTab && mod) {
+      const rows = [
+        [trText("Тип", "Type"), escapeHtml(mod.slot === "active" ? trText("Активный", "Active") : trText("Пассивный", "Passive"))],
+        [trText("Требуется", "Requires"), rankRequirementHtml(mod)],
+        [trText("Стоимость", "Price"), escapeHtml(`${Number(mod.price || 0)} 💎`)],
+        [trText("Сила", "Power"), escapeHtml(`+${Number(mod.power_bonus || 0)}`)],
+      ];
+      if (mod.limit_text) rows.push([trText("Лимит", "Limit"), escapeHtml(String(mod.limit_text))]);
+      moduleMeta.innerHTML = rows.map(([label, value]) => `
+        <div class="stageModuleMetaRow">
+          <span>${escapeHtml(label)}</span>
+          <strong>${value}</strong>
+        </div>
+      `).join("");
+      moduleMeta.style.display = "grid";
+    } else {
+      moduleMeta.innerHTML = "";
+      moduleMeta.style.display = "none";
+    }
+  }
+  const garageImg = qs("garageTankImg");
+  const lockedPreview = qs("garageLockedPreview");
+  if (garageImg) {
+    garageImg.src = withCacheBust(absUrl(isModuleTab ? getItemImage(key) : getTankComboImage(previewWeapon, previewHull)));
+    garageImg.dataset.preview = isPreviewChanged ? "1" : "0";
+    garageImg.style.display = selectedModuleRankLocked ? "none" : "";
+    garageImg.closest(".tankShowcase")?.classList.toggle("isPreviewMode", isPreviewChanged && !isModuleTab);
+    garageImg.closest(".tankShowcase")?.classList.toggle("isModuleShowcase", isModuleTab);
+    garageImg.closest(".tankShowcase")?.classList.toggle("isLockedModuleShowcase", selectedModuleRankLocked);
+  }
+  if (lockedPreview) {
+    lockedPreview.style.display = selectedModuleRankLocked ? "flex" : "none";
+  }
   const p = Number(state.profile.tank_power || 0);
   const hint = qs("garageHint");
   if (hint) {
-    hint.textContent = isPreviewChanged
+    hint.textContent = isModuleTab
+      ? ""
+      : isPreviewChanged
       ? trText(
           `Превью сборки: ${itemName(previewWeapon)} + ${itemName(previewHull)}. Нажми "Установить", чтобы применить.`,
           `Preview build: ${itemName(previewWeapon)} + ${itemName(previewHull)}. Press "Equip" to apply.`
@@ -2431,29 +3148,65 @@ function renderGarage() {
   const equippedCurrent = state.garageCategory === "weapon" ? state.profile.weapon : state.profile.hull;
   updateGarageEquipButton();
   const rail = qs("garageItemsRail");
-  rail.innerHTML = "";
-  const equipped = equippedCurrent;
-  for (const itemKey of garageList()) {
-    const card = document.createElement("button");
-    card.type = "button";
-    card.className = "itemCard";
-    if (!isUnlocked(itemKey)) card.classList.add("isLocked");
-    if (itemKey === key) card.classList.add("isSelected");
-    card.innerHTML = isUnlocked(itemKey)
-      ? `
-        <img src="${absUrl(getItemImage(itemKey))}" alt="${itemName(itemKey)}" />
-        <div class="itemName">${itemName(itemKey)}</div>
-      `
-      : `
-        <div class="lockedQuestionMark">?</div>
-        <div class="itemName">${itemName(itemKey)}</div>
+  if (rail) {
+    const list = garageList();
+    const existingKeys = Array.from(rail.children).map((child) => String(child.dataset.itemKey || ""));
+    const sameList = existingKeys.length === list.length && list.every((key, idx) => key === existingKeys[idx]);
+    if (sameList) {
+      for (const card of Array.from(rail.children)) {
+        const itemKey = String(card.dataset.itemKey || "");
+        const itemMod = isModuleTab ? moduleByKey(itemKey) : null;
+        const moduleRankLocked = Boolean(isModuleTab && itemMod && !itemMod.available);
+        const cardUnlocked = isModuleTab ? !moduleRankLocked : isUnlocked(itemKey);
+        card.classList.toggle("isLocked", !cardUnlocked);
+        card.classList.toggle("isSelected", itemKey === key);
+        card.classList.toggle("isEquipped", Boolean(itemMod?.equipped));
+        const nameEl = card.querySelector(".itemName");
+        if (nameEl) nameEl.textContent = itemName(itemKey);
+        const priceEl = card.querySelector(".moduleCardPrice");
+        if (priceEl && itemMod) priceEl.textContent = `${Number(itemMod.price || 0)} 💎`;
+        const metaEl = card.querySelector(".moduleCardMeta");
+        if (metaEl) metaEl.textContent = itemMod
+          ? (itemMod.slot === "active" ? trText("Активный", "Active") : trText("Пассивный", "Passive"))
+          : "";
+      }
+      return;
+    }
+
+    rail.innerHTML = "";
+    for (const itemKey of list) {
+      const card = document.createElement("button");
+      card.type = "button";
+      card.className = "itemCard";
+      card.dataset.itemKey = itemKey;
+      const itemMod = isModuleTab ? moduleByKey(itemKey) : null;
+      const moduleRankLocked = Boolean(isModuleTab && itemMod && !itemMod.available);
+      const cardUnlocked = isModuleTab ? !moduleRankLocked : isUnlocked(itemKey);
+      if (!cardUnlocked) card.classList.add("isLocked");
+      if (itemKey === key) card.classList.add("isSelected");
+      if (itemMod?.equipped) card.classList.add("isEquipped");
+      card.innerHTML = cardUnlocked
+        ? `
+          <img src="${withCacheBust(absUrl(getItemImage(itemKey)))}" alt="${itemName(itemKey)}" />
+          <div class="itemName">${itemName(itemKey)}</div>
+          ${itemMod ? `
+            <div class="moduleCardMeta">${itemMod.slot === "active" ? trText("Активный", "Active") : trText("Пассивный", "Passive")}</div>
+            ${itemMod.owned ? "" : `<div class="moduleCardPrice">${Number(itemMod.price || 0)} 💎</div>`}
+          ` : ""}
+        `
+        : `
+          <div class="lockedQuestionMark">?</div>
+          <div class="itemName">${itemName(itemKey)}</div>
+          ${itemMod ? `<div class="moduleCardMeta">${rankRequirementHtml(itemMod)}</div>` : ""}
       `;
-    card.onclick = () => {
-      if (state.garageCategory === "weapon") state.selectedWeapon = itemKey;
-      else state.selectedHull = itemKey;
-      renderGarage();
-    };
-    rail.appendChild(card);
+      card.onclick = () => {
+        if (state.garageCategory === "modules") state.selectedModule = itemKey;
+        else if (state.garageCategory === "weapon") state.selectedWeapon = itemKey;
+        else state.selectedHull = itemKey;
+        renderGarage();
+      };
+      rail.appendChild(card);
+    }
   }
 }
 
@@ -2570,10 +3323,6 @@ function renderShop() {
           <span class="shopPremiumChip">${escapeHtml(String(premiumMeta?.icon || "👑"))} ${escapeHtml(trText("срок суммируется", "stackable"))}</span>
         </div>
         <div class="shopCardActions">
-          <span class="shopPrice">
-            <span class="shopPriceStars">${starsPrice || "—"}</span>
-            <span class="shopPriceCrystals">${crystalsPrice}</span>
-          </span>
           ${buyButton}
         </div>
       `;
@@ -2596,31 +3345,40 @@ function renderShop() {
   }
   list.querySelectorAll("[data-buy]").forEach((btn) => {
     btn.addEventListener("click", async () => {
-      btn.disabled = true;
       const itemKey = btn.getAttribute("data-buy");
       const item = state.shop?.items?.find((it) => it.key === itemKey);
-      try {
-        await api("/api/shop/buy", { method: "POST", body: JSON.stringify({ item: itemKey }) });
-        await refreshAll();
-        if (item?.category === "premium") {
-          const premiumMeta = SHOP_PREMIUM_META[item.key] || {};
-          showPurchaseLikeModal({
+      showShopBuyConfirm(item, async () => {
+        const okBtn = qs("confirmOkBtn");
+        const cancelBtn = qs("confirmCancelBtn");
+        btn.disabled = true;
+        if (okBtn) okBtn.disabled = true;
+        if (cancelBtn) cancelBtn.disabled = true;
+        try {
+          await api("/api/shop/buy", { method: "POST", body: JSON.stringify({ item: itemKey }) });
+          hideConfirmModal();
+          await refreshAll();
+          if (item?.category === "premium") {
+            const premiumMeta = SHOP_PREMIUM_META[item.key] || {};
+            showPurchaseLikeModal({
             title: trText("ПРЕМИУМ АКТИВИРОВАН", "PREMIUM ACTIVATED"),
             label: trText("Подписка продлена на:", "Subscription extended by:"),
             icon: String(premiumMeta.icon || "👑"),
             name: premiumMetaText(premiumMeta, "duration") || String(item.name || trText("Премиум", "Premium")),
             price: `${item.price} 💎`,
-          });
-        } else {
-          showPurchaseModal(item);
+            });
+          } else {
+            showPurchaseModal(item);
+          }
+          void playPurchaseSound();
+          clearError();
+        } catch (e) {
+          setError(prettyError(e));
+        } finally {
+          btn.disabled = false;
+          if (okBtn) okBtn.disabled = false;
+          if (cancelBtn) cancelBtn.disabled = false;
         }
-        void playPurchaseSound();
-        clearError();
-      } catch (e) {
-        setError(prettyError(e));
-      } finally {
-        btn.disabled = false;
-      }
+      });
     });
   });
 
@@ -2834,6 +3592,12 @@ async function showRewardModal(result) {
     qs("containerResult").textContent = rewardTextFromResult(result);
     return;
   }
+  try {
+    card.getAnimations?.().forEach((animation) => animation.cancel());
+    box.getAnimations?.().forEach((animation) => animation.cancel());
+    contImg.getAnimations?.().forEach((animation) => animation.cancel());
+  } catch {}
+  modal.classList.remove("isOpen");
   card.className = "rewardCard";
   card.style.setProperty("--reward-glow-ms", `${Number(timing.glowMs || 680)}ms`);
   state.rewardAnimating = true;
@@ -2850,6 +3614,7 @@ async function showRewardModal(result) {
   text.style.visibility = "hidden";
   text.textContent = "";
   const isPremiumContainer = String(result.container_kind || "") === "premium";
+  box.classList.add(isPremiumContainer ? "isPremiumReward" : "isStandardReward");
   const closedSrc = withCacheBust(absUrl(isPremiumContainer ? PREMIUM_CONTAINER_CLOSED_IMAGE : CONTAINER_CLOSED_IMAGE));
   const openedSrc = withCacheBust(absUrl(
     isPremiumContainer
@@ -2864,12 +3629,15 @@ async function showRewardModal(result) {
   void preloadImage(openedSrc, 2600);
   void preloadImage(dropSrc, 2600);
   modal.style.display = "flex";
-  await sleep(30);
+  await new Promise((resolve) => requestAnimationFrame(resolve));
+  modal.classList.add("isOpen");
+  card.classList.add("isEntering");
+  await sleep(90);
   box.classList.add("isCharging");
   if (Number(timing.preDelay || 0) > 0) {
     await sleep(Number(timing.preDelay || 0));
   }
-  card.className = `rewardCard rarity-${rarity} isPrimed`;
+  card.className = `rewardCard rarity-${rarity} isEntering isPrimed`;
   box.classList.add("isPrimed");
   await sleep(Number(timing.glowMs || 680));
   card.classList.add("isReveal");
@@ -2878,24 +3646,32 @@ async function showRewardModal(result) {
   contImg.classList.add("isHidden");
   await sleep(Number(timing.swapMs || 180));
   contImg.src = openedSrc;
-  dropImg.src = dropSrc;
   await Promise.race([
-    Promise.all([waitForImageLoad(contImg, 900), waitForImageLoad(dropImg, 900)]),
+    waitForImageLoad(contImg, 900),
     sleep(650),
   ]);
   contImg.classList.remove("isHidden");
+  await new Promise((resolve) => requestAnimationFrame(resolve));
+  placeRewardDropOnContainer(box, contImg, isPremiumContainer);
   if (Number(timing.dropDelay || 0) > 0) {
     await sleep(Number(timing.dropDelay || 0));
   }
+  dropImg.src = dropSrc;
+  await Promise.race([waitForImageLoad(dropImg, 900), sleep(420)]);
   box.classList.add("rewardBurst", `rewardBurst--${rarity}`);
   window.setTimeout(() => {
     try { box.classList.remove("rewardBurst", `rewardBurst--${rarity}`); } catch {}
-  }, 720);
+  }, 620);
   text.textContent = rewardTextFromResult(result);
-  await Promise.all([
-    fadeInOpacity(dropImg, Number(timing.dropFadeMs || 720)),
-    fadeInOpacity(text, Number(timing.textFadeMs || 520)),
-  ]);
+  dropImg.classList.remove("show");
+  text.classList.remove("show");
+  dropImg.style.visibility = "visible";
+  text.style.visibility = "visible";
+  await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+  dropImg.classList.add("show");
+  await sleep(Number(timing.textDelay || 120));
+  text.classList.add("show");
+  await sleep(Math.max(Number(timing.dropFadeMs || 420), Number(timing.textFadeMs || 340)));
   await sleep(Number(timing.settleMs || 420));
   state.rewardAnimating = false;
 }
@@ -2905,14 +3681,17 @@ function hideRewardModal() {
   const modal = qs("rewardModal");
   const dropImg = qs("rewardDropImg");
   const text = qs("rewardText");
+  if (modal) modal.classList.remove("isOpen");
   if (dropImg) {
     try { dropImg.getAnimations?.().forEach((animation) => animation.cancel()); } catch {}
+    dropImg.classList.remove("show");
     dropImg.style.opacity = "0";
     dropImg.style.visibility = "hidden";
     dropImg.removeAttribute("src");
   }
   if (text) {
     try { text.getAnimations?.().forEach((animation) => animation.cancel()); } catch {}
+    text.classList.remove("show");
     text.style.opacity = "0";
     text.style.visibility = "hidden";
     text.textContent = "";
@@ -3020,7 +3799,13 @@ async function refreshTabContext(tab) {
   if (tab === "garage") {
     if (!state.profile) await refreshAll();
     else {
-      state.profile = await api("/api/profile/me");
+      const [profile, modules] = await Promise.all([
+        api("/api/profile/me"),
+        api("/api/modules"),
+      ]);
+      state.profile = profile;
+      setModulesPayload(modules);
+      if (!moduleByKey(state.selectedModule)) state.selectedModule = String(state.modules?.modules?.[0]?.key || "module1");
       renderHud();
       renderGarage();
     }
@@ -3143,12 +3928,13 @@ async function showTab(tab, { force = false } = {}) {
 }
 
 async function refreshAll() {
-  const [profile, shop, containersInfo, leaderboard, quests] = await Promise.all([
+  const [profile, shop, containersInfo, leaderboard, quests, modules] = await Promise.all([
     api("/api/profile/me"),
     api("/api/shop/items"),
     api("/api/containers"),
     api(`/api/leaderboard?sort=${encodeURIComponent(state.leaderboardSort)}&limit=${encodeURIComponent(state.leaderboardLimit)}`),
     api("/api/quests/daily"),
+    api("/api/modules"),
   ]);
   state.profile = profile;
   const loc = String(state.profile?.locale || "").toLowerCase();
@@ -3162,6 +3948,8 @@ async function refreshAll() {
   syncLootChancesFromApi(containersInfo);
   state.leaderboard = leaderboard;
   state.quests = quests;
+  setModulesPayload(modules);
+  if (!moduleByKey(state.selectedModule)) state.selectedModule = String(state.modules?.modules?.[0]?.key || "module1");
   if (!state.ranks) {
     try { state.ranks = (await api("/api/ranks"))?.ranks || []; } catch { state.ranks = []; }
   }
@@ -3170,6 +3958,7 @@ async function refreshAll() {
   state.selectedHull = state.profile.hull;
   renderHud();
   renderProfile();
+  await syncMusicSettingsForProfile();
   renderGarage();
   renderShop();
   renderContainers();
@@ -3351,7 +4140,7 @@ function renderBattleChatMessages(msgs, { append = true } = {}) {
   if (wasNearBottom) list.scrollTop = list.scrollHeight;
 }
 
-function showToast(text, { title = null, ms = 2600 } = {}) {
+function showToast(text, { title = null, ms = 2600, sound = true } = {}) {
   const host = qs("toastHost");
   if (!host) return;
   const el = document.createElement("div");
@@ -3365,7 +4154,7 @@ function showToast(text, { title = null, ms = 2600 } = {}) {
     <div class="toastBar"><div class="toastBarFill"></div></div>
   `.trim();
   host.appendChild(el);
-  void playPurchaseSound();
+  if (sound) void playPurchaseSound();
   window.setTimeout(() => {
     try { el.remove(); } catch {}
   }, Math.max(800, Number(ms) || 2600));
@@ -4545,13 +5334,19 @@ function renderBattleState(st) {
     const next = absUrl(st.player_tank_image_url);
     if (pImg.src !== next) pImg.src = next;
   }
+  const playerReloadTurns = Math.max(0, Number(st.player_reload_turns || 0));
+  const botReloadTurns = Math.max(0, Number(st.bot_reload_turns || 0));
+  const reloadSuffix = (turns) => {
+    if (turns <= 0) return "";
+    return state.locale === "en" ? ` • Reload: ${turns}` : ` • Перезарядка: ${turns}`;
+  };
   const bImg = qs("battleBotTankImg");
   if (bImg && st.bot_tank_image_url) {
     const next = absUrl(st.bot_tank_image_url);
     if (bImg.src !== next) bImg.src = next;
   }
   const pW = qs("battlePlayerWeapon");
-  if (pW) pW.textContent = `🔫 ${localizedItemName(st.player_weapon_name || state.profile?.weapon || "—")}`;
+  if (pW) pW.textContent = `🔫 ${localizedItemName(st.player_weapon_name || state.profile?.weapon || "—")}${reloadSuffix(playerReloadTurns)}`;
   const pH = qs("battlePlayerHull");
   if (pH) {
     const turnMark = st.is_pvp ? (st.is_player_turn ? (state.locale === "en" ? " • Your turn" : " • Ваш ход") : "") : "";
@@ -4562,7 +5357,7 @@ function renderBattleState(st) {
     pH.textContent = `🛡 ${localizedItemName(st.player_hull_name || state.profile?.hull || "—")} • ${state.locale === "en" ? "Power" : "Сила"} ${pPower}${dmMark}${turnMark}`;
   }
   const bW = qs("battleBotWeapon");
-  if (bW) bW.textContent = `🔫 ${localizedItemName(st.bot_weapon_name || "—")}`;
+  if (bW) bW.textContent = `🔫 ${localizedItemName(st.bot_weapon_name || "—")}${reloadSuffix(botReloadTurns)}`;
   const aimState = qs("battleAimState");
   if (aimState) {
     aimState.style.display = st.aiming ? "inline-flex" : "none";
@@ -4616,16 +5411,30 @@ function renderBattleState(st) {
   const cd = qs("battleCooldown");
   if (cd) {
     const remaining = Number(st.cooldown_remaining || 0);
-    cd.textContent = remaining > 0
-      ? (state.locale === "en" ? `${tr("battle_cooldown")}: ${remaining}s` : `${tr("battle_cooldown")}: ${remaining}с`)
-      : "";
+    let cdText = "";
+    if (remaining > 0) {
+      cdText = state.locale === "en"
+        ? `${tr("battle_cooldown")}: ${remaining}s`
+        : `${tr("battle_cooldown")}: ${remaining}с`;
+    }
+    if (playerReloadTurns > 0) {
+      const reloadText = state.locale === "en"
+        ? `Reload: ${playerReloadTurns}`
+        : `Перезарядка: ${playerReloadTurns}`;
+      cdText = cdText ? `${cdText} • ${reloadText}` : reloadText;
+    }
+    cd.textContent = cdText;
   }
   const isOnCooldown = Number(st.cooldown_remaining || 0) > 0;
+  const isReloading = playerReloadTurns > 0;
   const isLockedByTurn = Boolean(st.is_pvp) && !Boolean(st.is_player_turn) && !Boolean(st.game_over);
   const isLockedByBotThinking = Boolean(st.quick_mode) && Boolean(st.awaiting_bot_action) && !Boolean(st.game_over);
   const shootBtn = qs("battleShootBtn");
   if (shootBtn) {
-    shootBtn.disabled = isOnCooldown || isLockedByTurn || isLockedByBotThinking || Boolean(st.game_over);
+    shootBtn.textContent = isReloading
+      ? (state.locale === "en" ? `Reload: ${playerReloadTurns}` : `Перезарядка: ${playerReloadTurns}`)
+      : trText("Огонь", "Fire");
+    shootBtn.disabled = isOnCooldown || isReloading || isLockedByTurn || isLockedByBotThinking || Boolean(st.game_over);
     shootBtn.classList.toggle("isDisabled", shootBtn.disabled);
   }
   // Disable move buttons if cooldown/turn locked/game over, or if movement would go out of bounds.
@@ -4657,6 +5466,16 @@ function renderBattleState(st) {
       : trText("Прицел", "Aim");
     aimBtn.disabled = Boolean(st.cooldown_remaining > 0) || isLockedByTurn || isLockedByBotThinking || Boolean(st.game_over);
     aimBtn.classList.toggle("isDisabled", aimBtn.disabled);
+  }
+  const moduleBtn = qs("battleModuleBtn");
+  if (moduleBtn) {
+    const hasModule = Boolean(st.active_module_key);
+    moduleBtn.style.display = hasModule ? "block" : "none";
+    moduleBtn.textContent = st.active_module_used
+      ? trText("Модуль использован", "Module used")
+      : (st.active_module_name || trText("Модуль", "Module"));
+    moduleBtn.disabled = !hasModule || !Boolean(st.active_module_ready) || isOnCooldown || isLockedByTurn || isLockedByBotThinking || Boolean(st.game_over);
+    moduleBtn.classList.toggle("isDisabled", moduleBtn.disabled);
   }
   const palBtn = qs("battlePaladinStepBtn");
   if (palBtn) {
@@ -4878,6 +5697,10 @@ async function forfeitBattleIfActive() {
 
 function bindUI() {
   let surrenderBusy = false;
+  document.addEventListener("selectstart", (e) => e.preventDefault());
+  document.addEventListener("copy", (e) => e.preventDefault());
+  document.addEventListener("cut", (e) => e.preventDefault());
+  document.addEventListener("contextmenu", (e) => e.preventDefault());
   async function handleSurrender() {
     if (surrenderBusy) return;
     surrenderBusy = true;
@@ -5100,6 +5923,7 @@ function bindUI() {
   qs("battleChatList")?.addEventListener("click", onReportClick);
 
   qs("confirmCancelBtn")?.addEventListener("click", hideConfirmModal);
+  qs("confirmCloseTopBtn")?.addEventListener("click", hideConfirmModal);
   qs("confirmModal")?.addEventListener("click", (e) => { if (e.target === qs("confirmModal")) hideConfirmModal(); });
   qs("confirmOkBtn")?.addEventListener("click", async () => {
     const fn = state.confirmOnOk;
@@ -5144,6 +5968,14 @@ function bindUI() {
     qs("garageCategoryTabs")?.querySelectorAll(".subTab").forEach((it) => it.classList.toggle("isActive", it.dataset.cat === state.garageCategory));
     renderGarage();
   });
+  qs("microUpgradeBtn")?.addEventListener("click", openMicroUpgradeModal);
+  qs("microCloseTopBtn")?.addEventListener("click", closeMicroUpgradeModal);
+  qs("microModal")?.addEventListener("click", (e) => { if (e.target === qs("microModal")) closeMicroUpgradeModal(); });
+  qs("microUpgradeList")?.addEventListener("click", async (e) => {
+    const btn = e.target.closest("[data-micro-buy]");
+    if (!btn) return;
+    await buyMicroUpgrade(btn.getAttribute("data-micro-buy"), btn);
+  });
   qs("shopCategory")?.addEventListener("click", (e) => {
     const b = e.target.closest(".shopCat");
     if (!b) return;
@@ -5155,6 +5987,27 @@ function bindUI() {
   });
   qs("equipBtn")?.addEventListener("click", async () => {
     const key = currentGarageKey();
+    if (state.garageCategory === "modules") {
+      const mod = moduleByKey(key);
+      if (!mod) return;
+      try {
+        if (!mod.owned) {
+          setModulesPayload(await api("/api/modules/buy", { method: "POST", body: JSON.stringify({ module_key: key }) }));
+          await playPurchaseSound();
+          showToast(itemName(key), { title: trText("МОДУЛЬ КУПЛЕН", "MODULE PURCHASED"), ms: 2400, sound: false });
+        } else {
+          setModulesPayload(await api("/api/modules/equip", { method: "POST", body: JSON.stringify({ slot: mod.slot, module_key: key }) }));
+        }
+        state.profile = await api("/api/profile/me");
+        renderHud();
+        renderGarage();
+        clearError();
+      } catch (e) {
+        qs("garageHint").textContent = `${trText("Ошибка", "Error")}: ${prettyError(e)}`;
+        setError(prettyError(e));
+      }
+      return;
+    }
     const equipped = state.garageCategory === "weapon" ? state.profile?.weapon : state.profile?.hull;
     if (key === equipped) return;
     if (!isUnlocked(key)) {
@@ -5477,6 +6330,9 @@ function bindUI() {
   qs("battleAimBtn")?.addEventListener("click", async () => {
     const aiming = Boolean(state.battleLastState?.aiming);
     try { await battleSendAction(aiming ? "cancel_aim" : "aim"); } catch (e) { setError(prettyError(e)); }
+  });
+  qs("battleModuleBtn")?.addEventListener("click", async () => {
+    try { await battleSendAction("module"); } catch (e) { setError(prettyError(e)); }
   });
   qs("battlePaladinStepBtn")?.addEventListener("click", () => {
     state.paladinDashMode = !state.paladinDashMode;

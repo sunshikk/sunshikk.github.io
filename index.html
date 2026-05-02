@@ -1,9 +1,9 @@
-﻿<!doctype html>
+<!doctype html>
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tanki Online</title>
-    <link rel="stylesheet" href="./styles.css?v=65" />
+    <link rel="stylesheet" href="./styles.css?v=84" />
     
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     
@@ -17,7 +17,7 @@
     </script>
 
     <script src="./config.js"></script>
-    <script src="./app.js?v=98" defer></script>
+    <script src="./app.js?v=117" defer></script>
 </head>
   <body>
     <div class="app" id="app">
@@ -168,16 +168,20 @@
         <div class="subTabs" id="garageCategoryTabs">
           <button class="subTab isActive" data-cat="weapon" data-i18n="garage_weapons">Пушки</button>
           <button class="subTab" data-cat="hull" data-i18n="garage_hulls">Корпуса</button>
+          <button class="subTab" data-cat="modules" data-i18n="garage_modules">Модули</button>
         </div>
         <div class="garageStage">
           <div class="stageInfo">
             <div class="stageTitle" id="garageSelectedName">—</div>
             <div class="stageDesc" id="garageSelectedDesc" data-i18n="garage_pick_item">Выберите пушку или корпус</div>
+            <div class="stageModuleMeta" id="garageModuleMeta" style="display:none"></div>
             <button id="equipBtn" class="equipBtn" data-i18n="equip">Установить</button>
+            <button id="microUpgradeBtn" class="microUpgradeBtn" type="button">МИКРОПРОКАЧКИ</button>
             <div class="hint" id="garageHint"></div>
           </div>
           <div class="tankShowcase">
             <div class="tankGlow"></div>
+            <div class="garageLockedPreview" id="garageLockedPreview" style="display:none">?</div>
             <img id="garageTankImg" alt="tank" />
           </div>
         </div>
@@ -319,6 +323,7 @@
                 <div class="battleActionPad">
                   <button id="battleShootBtn" class="equipBtn" type="button" style="margin-top:0" data-i18n="fire">Огонь</button>
                   <button id="battleAimBtn" class="ghostBtn" type="button" style="margin-top:10px; display:none" data-i18n="battle_aim">Прицел</button>
+                  <button id="battleModuleBtn" class="ghostBtn" type="button" style="margin-top:10px; display:none">Модуль</button>
                   <button id="battlePaladinStepBtn" class="ghostBtn" type="button" style="margin-top:10px; display:none" data-i18n="paladin_step_1">Ход: 1 клетка</button>
                   <div class="battleHotkeysHint" data-i18n="hotkeys_hint">ПК: WASD/стрелки - движение, F - огонь, G - прицел</div>
                   <div id="battleTurnTimer" class="battleCooldown"></div>
@@ -371,35 +376,30 @@
               <span class="shopCatIcon" aria-hidden="true">✦</span>
               <span class="shopCatCopy">
                 <span class="shopCatTitle" data-i18n="shop_cat_weapon">Пушки</span>
-                <span class="shopCatMeta" data-i18n="shop_cat_weapon_meta">Боевые орудия за кристаллы</span>
               </span>
             </button>
             <button class="shopCat" data-cat="hull" type="button">
               <span class="shopCatIcon" aria-hidden="true">▣</span>
               <span class="shopCatCopy">
                 <span class="shopCatTitle" data-i18n="shop_cat_hull">Корпуса</span>
-                <span class="shopCatMeta" data-i18n="shop_cat_hull_meta">Платформы под разные стили игры</span>
               </span>
             </button>
             <button class="shopCat" data-cat="premium" type="button">
               <span class="shopCatIcon" aria-hidden="true">👑</span>
               <span class="shopCatCopy">
                 <span class="shopCatTitle" data-i18n="shop_cat_premium">Премиум подписка</span>
-                <span class="shopCatMeta" data-i18n="shop_cat_premium_meta">Stars или альтернатива за кристаллы</span>
               </span>
             </button>
             <button class="shopCat" data-cat="premium_containers" type="button">
               <span class="shopCatIcon" aria-hidden="true">⬢</span>
               <span class="shopCatCopy">
                 <span class="shopCatTitle" data-i18n="shop_cat_premium_containers">Премиум контейнеры</span>
-                <span class="shopCatMeta" data-i18n="shop_cat_premium_containers_meta">Легендарный дроп за Stars</span>
               </span>
             </button>
             <button class="shopCat" data-cat="promo" type="button">
               <span class="shopCatIcon" aria-hidden="true">⌁</span>
               <span class="shopCatCopy">
                 <span class="shopCatTitle" data-i18n="shop_cat_promo">Промокоды</span>
-                <span class="shopCatMeta" data-i18n="shop_cat_promo_meta">Активация бонусных кодов</span>
               </span>
             </button>
           </aside>
@@ -523,6 +523,7 @@
           <div class="hint" id="settingsSavedHint2" style="margin-top:8px;"></div>
         </section>
       </main>
+
     </div>
 
     <div class="rewardModal" id="rewardModal" style="display:none">
@@ -713,22 +714,33 @@
       </div>
     </div>
 
-    <div class="purchaseModal" id="confirmModal" style="display:none">
-      <div class="purchaseCard" role="dialog" aria-modal="true" aria-labelledby="confirmTitle">
-        <div class="purchaseIconPane">
-          <div class="purchaseCartIcon" id="confirmIcon" aria-hidden="true">⚑</div>
+    <div class="confirmModalOverlay" id="confirmModal" style="display:none">
+      <div class="confirmCard" role="dialog" aria-modal="true" aria-labelledby="confirmTitle">
+        <button id="confirmCloseTopBtn" class="confirmCloseTop" type="button" aria-label="Закрыть">×</button>
+        <!-- Hidden icon holder for non-purchase variant (legacy) -->
+        <div class="confirmIconPane" style="display:none">
+          <div id="confirmIcon" aria-hidden="true">⚑</div>
         </div>
-        <div class="purchaseContent">
-          <div class="purchaseTitle" id="confirmTitle" data-i18n="confirm">ПОДТВЕРДИТЕ</div>
-          <div class="purchaseLabel" id="confirmLabel" data-i18n="confirm_label">Вы уверены?</div>
-          <div class="purchaseRow">
-            <div class="purchaseItemName" id="confirmName">—</div>
-            <div class="purchaseItemPrice" id="confirmMeta"></div>
+        <div class="confirmHero">
+          <div class="confirmPreview" id="confirmPreview" style="display:none">
+            <div class="confirmPreviewGlow" aria-hidden="true"></div>
+            <img id="confirmPreviewImg" class="confirmPreviewImg" alt="" />
           </div>
-          <div class="purchaseActions" style="gap:10px;">
-            <button id="confirmCancelBtn" class="ghostBtn" type="button" data-i18n="cancel">Отмена</button>
-            <button id="confirmOkBtn" class="purchaseActionBtn" type="button" data-i18n="confirm">Подтвердить</button>
+          <div class="confirmHeroMeta">
+            <div id="confirmBadge" class="confirmBadge" style="display:none"></div>
+            <div class="confirmTitle" id="confirmTitle" data-i18n="confirm">ПОДТВЕРДИТЕ</div>
+            <div class="confirmLabel" id="confirmLabel" data-i18n="confirm_label">Вы уверены?</div>
+            <div id="confirmNote" class="confirmNote" style="display:none"></div>
           </div>
+        </div>
+        <div class="confirmPriceRow">
+          <div class="confirmPriceName" id="confirmName">—</div>
+          <div class="confirmPriceValue" id="confirmMeta"></div>
+        </div>
+        <div id="confirmDetails" class="confirmDetails" style="display:none"></div>
+        <div class="confirmActions">
+          <button id="confirmCancelBtn" class="confirmCancelBtn" type="button" data-i18n="cancel">Отмена</button>
+          <button id="confirmOkBtn" class="confirmOkBtn" type="button" data-i18n="confirm">Подтвердить</button>
         </div>
       </div>
     </div>
@@ -751,6 +763,32 @@
             <button id="joinLobbyConfirmBtn" class="purchaseActionBtn joinLobbyConfirmBtn" type="button" data-i18n="join">Вступить</button>
           </div>
         </div>
+      </div>
+    </div>
+
+    <div class="microModal" id="microModal" style="display:none">
+      <div class="microCard" role="dialog" aria-modal="true" aria-labelledby="microTitle">
+        <button id="microCloseTopBtn" class="microCloseTop" type="button" aria-label="Закрыть">×</button>
+        <div class="microHero">
+          <div class="microHeroGlow" aria-hidden="true"></div>
+          <img id="microItemImg" class="microItemImg" alt="" />
+          <div class="microHeroMeta">
+            <div class="microKicker">МИКРОПРОКАЧКИ</div>
+            <div id="microTitle" class="microTitle">—</div>
+            <div id="microSub" class="microSub">—</div>
+          </div>
+        </div>
+        <div class="microTopStats">
+          <div class="microStatBox">
+            <span>КРИСТАЛЛЫ</span>
+            <b id="microCrystals">0</b>
+          </div>
+          <div class="microStatBox">
+            <span>СИЛА ТАНКА</span>
+            <b id="microTankPower">0</b>
+          </div>
+        </div>
+        <div id="microUpgradeList" class="microUpgradeList"></div>
       </div>
     </div>
 

@@ -11,6 +11,384 @@
   letter-spacing: 0.02em;
 }
 
+/* Lightweight premium container reveal. Keep animations on transform/opacity for mobile WebView. */
+.rewardModal {
+  opacity: 0 !important;
+  background:
+    radial-gradient(620px 300px at 50% 38%, rgba(93, 157, 255, 0.16), transparent 68%),
+    rgba(3, 7, 16, 0.84) !important;
+  transition: opacity 180ms ease !important;
+  backdrop-filter: none !important;
+}
+
+.rewardModal.isOpen {
+  opacity: 1 !important;
+}
+
+.rewardCard {
+  --reward-glow: rgba(88, 231, 255, 0.98);
+  --reward-glow-soft: rgba(88, 231, 255, 0.26);
+  width: min(540px, 92vw) !important;
+  padding: 24px 22px 22px !important;
+  border-radius: 24px !important;
+  border: 1px solid rgba(177, 218, 255, 0.2) !important;
+  background:
+    linear-gradient(180deg, rgba(28, 42, 68, 0.98), rgba(8, 13, 27, 0.995)) !important;
+  box-shadow:
+    0 30px 80px rgba(0, 0, 0, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
+  overflow: hidden !important;
+  transform: translateY(18px) scale(0.985);
+  opacity: 0;
+  will-change: transform, opacity;
+}
+
+.rewardCard.isEntering {
+  animation: rewardCardEnterPremium 360ms cubic-bezier(.18,.86,.18,1) forwards;
+}
+
+.rewardCard::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transform: scale(0.94);
+  background:
+    radial-gradient(440px 180px at 50% 2%, rgba(255, 255, 255, 0.1), transparent 68%),
+    radial-gradient(420px 260px at 50% 44%, var(--reward-glow-soft), transparent 76%);
+  transition: opacity var(--reward-glow-ms, 640ms) ease, transform var(--reward-glow-ms, 640ms) ease !important;
+  box-shadow: none !important;
+}
+
+.rewardCard.rarity-rare { --reward-glow: rgba(88, 231, 255, 0.98); --reward-glow-soft: rgba(88, 231, 255, 0.25); }
+.rewardCard.rarity-epic { --reward-glow: rgba(176, 113, 255, 0.98); --reward-glow-soft: rgba(176, 113, 255, 0.27); }
+.rewardCard.rarity-ultrarare { --reward-glow: rgba(255, 93, 93, 0.98); --reward-glow-soft: rgba(255, 93, 93, 0.27); }
+.rewardCard.rarity-legendary { --reward-glow: rgba(255, 211, 79, 0.99); --reward-glow-soft: rgba(255, 211, 79, 0.32); }
+
+.rewardCard.isPrimed::before {
+  opacity: 1 !important;
+  transform: scale(1.04);
+  animation: none !important;
+}
+
+.rewardCard.isReveal {
+  border-color: color-mix(in srgb, var(--reward-glow) 46%, rgba(255,255,255,0.16)) !important;
+}
+
+.rewardTitle {
+  position: relative;
+  z-index: 2;
+  margin: 0 0 14px !important;
+  text-align: center;
+  font-size: 19px !important;
+  font-weight: 850 !important;
+  letter-spacing: 0.03em !important;
+  color: rgba(244, 249, 255, 0.96) !important;
+}
+
+.rewardContainerBox {
+  position: relative;
+  z-index: 1;
+  width: min(360px, 100%) !important;
+  height: 230px !important;
+  margin: 0 auto !important;
+  border-radius: 22px !important;
+  border: 1px solid rgba(158, 210, 255, 0.16) !important;
+  background:
+    radial-gradient(260px 160px at 50% 50%, rgba(119, 179, 255, 0.12), transparent 70%),
+    linear-gradient(180deg, rgba(17, 27, 47, 0.96), rgba(8, 14, 28, 0.98)) !important;
+  overflow: hidden;
+  transform: translateZ(0);
+}
+
+.rewardContainerBox::before,
+.rewardContainerBox::after {
+  content: "";
+  position: absolute;
+  inset: 11%;
+  pointer-events: none;
+  opacity: 0;
+  transform: scale(0.7);
+  border-radius: 999px;
+}
+
+.rewardContainerBox::before {
+  border: 1px solid color-mix(in srgb, var(--reward-glow) 62%, transparent);
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.04);
+}
+
+.rewardContainerBox::after {
+  background:
+    conic-gradient(from 0deg, transparent 0 10deg, color-mix(in srgb, var(--reward-glow) 44%, transparent) 18deg, transparent 32deg 58deg, rgba(255,255,255,0.2) 64deg, transparent 78deg 360deg);
+  mix-blend-mode: screen;
+}
+
+.rewardContainerBox.isPrimed::before {
+  animation: rewardRingPremium var(--reward-glow-ms, 640ms) cubic-bezier(.16,.84,.2,1) forwards !important;
+}
+
+.rewardContainerBox.isPrimed::after {
+  animation: rewardRaysPremium var(--reward-glow-ms, 640ms) cubic-bezier(.16,.84,.2,1) forwards !important;
+}
+
+.rewardContainerImg {
+  position: relative;
+  z-index: 2;
+  width: min(320px, 90%) !important;
+  height: 180px !important;
+  object-fit: contain;
+  filter: none !important;
+  will-change: transform, opacity;
+  transition: transform 220ms ease, opacity 180ms ease !important;
+}
+
+.rewardContainerBox.isCharging .rewardContainerImg {
+  animation: rewardContainerChargePremium 720ms ease-in-out infinite !important;
+}
+
+.rewardContainerImg.isHidden {
+  opacity: 0 !important;
+  transform: translateY(10px) scale(0.95) !important;
+}
+
+#rewardDropImg {
+  position: absolute !important;
+  z-index: 3;
+  top: 46% !important;
+  left: 50% !important;
+  width: clamp(96px, 25vw, 122px) !important;
+  height: clamp(96px, 25vw, 122px) !important;
+  object-fit: contain !important;
+  opacity: 0;
+  visibility: hidden;
+  transform: translate(-50%, -38%) scale(0.72) rotate(-3deg) !important;
+  filter: none !important;
+  will-change: transform, opacity;
+  transition: none !important;
+}
+
+#rewardDropImg.show {
+  visibility: visible;
+  animation: rewardDropPremium 520ms cubic-bezier(.16,.92,.18,1) forwards !important;
+}
+
+.rewardContainerBox.rewardBurst {
+  animation: rewardBoxKickPremium 360ms cubic-bezier(.18,.86,.18,1) !important;
+}
+
+.rewardContainerBox.rewardBurst::before {
+  animation: rewardBurstRingPremium 620ms ease-out forwards !important;
+}
+
+.rewardContainerBox.rewardBurst::after {
+  inset: -18%;
+  border-radius: inherit;
+  background:
+    radial-gradient(circle at 50% 50%, rgba(255,255,255,0.42) 0%, var(--reward-glow-soft) 34%, transparent 66%);
+  mix-blend-mode: screen;
+  animation: rewardBurstPremium 620ms ease-out forwards !important;
+}
+
+.rewardText {
+  position: relative;
+  z-index: 2;
+  min-height: 48px;
+  margin: 18px auto 0 !important;
+  max-width: 440px;
+  text-align: center;
+  font-size: 15px !important;
+  font-weight: 720 !important;
+  line-height: 1.45 !important;
+  color: rgba(234, 242, 253, 0.94) !important;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(8px);
+  filter: none !important;
+  will-change: transform, opacity;
+}
+
+#rewardText.show {
+  visibility: visible;
+  animation: rewardTextPremium 340ms ease-out forwards !important;
+}
+
+@keyframes rewardCardEnterPremium {
+  from { opacity: 0; transform: translateY(18px) scale(0.985); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes rewardContainerChargePremium {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-5px) scale(1.018); }
+}
+
+@keyframes rewardRingPremium {
+  0% { opacity: 0; transform: scale(0.66); }
+  62% { opacity: 0.86; transform: scale(1.04); }
+  100% { opacity: 0.54; transform: scale(1.16); }
+}
+
+@keyframes rewardRaysPremium {
+  0% { opacity: 0; transform: scale(0.72) rotate(-20deg); }
+  54% { opacity: 0.42; transform: scale(1.05) rotate(12deg); }
+  100% { opacity: 0.22; transform: scale(1.18) rotate(28deg); }
+}
+
+@keyframes rewardBoxKickPremium {
+  0%, 100% { transform: translateZ(0) scale(1); }
+  42% { transform: translateZ(0) scale(1.018); }
+}
+
+@keyframes rewardBurstRingPremium {
+  0% { opacity: 0.9; transform: scale(0.62); }
+  100% { opacity: 0; transform: scale(1.38); }
+}
+
+@keyframes rewardBurstPremium {
+  0% { opacity: 0; transform: scale(0.78); }
+  24% { opacity: 0.88; }
+  100% { opacity: 0; transform: scale(1.2); }
+}
+
+@keyframes rewardDropPremium {
+  0% { opacity: 0; transform: translate(-50%, -26%) scale(0.72) rotate(-3deg); }
+  62% { opacity: 1; transform: translate(-50%, -54%) scale(1.08) rotate(1deg); }
+  100% { opacity: 1; transform: translate(-50%, -50%) scale(1) rotate(0deg); }
+}
+
+@keyframes rewardTextPremium {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 640px) {
+  .rewardCard {
+    width: min(93vw, 430px) !important;
+    padding: 18px 15px 16px !important;
+    border-radius: 22px !important;
+  }
+
+  .rewardTitle {
+    font-size: 17px !important;
+    margin-bottom: 12px !important;
+  }
+
+  .rewardContainerBox {
+    width: min(300px, 100%) !important;
+    height: 188px !important;
+  }
+
+  .rewardContainerImg {
+    height: 150px !important;
+  }
+
+  #rewardDropImg {
+    width: clamp(84px, 28vw, 104px) !important;
+    height: clamp(84px, 28vw, 104px) !important;
+  }
+
+  .rewardText {
+    min-height: 42px;
+    margin-top: 14px !important;
+    font-size: 13px !important;
+  }
+}
+
+.tankShowcase.isModuleShowcase #garageTankImg {
+  width: min(260px, 72%);
+  height: min(260px, 72%);
+  object-fit: contain;
+  filter: drop-shadow(0 24px 36px rgba(16, 28, 48, 0.46));
+}
+
+.garageLockedPreview {
+  position: relative;
+  z-index: 1;
+  width: min(260px, 72%);
+  height: min(260px, 72%);
+  align-items: center;
+  justify-content: center;
+  border-radius: 18px;
+  background: linear-gradient(180deg, rgba(34, 52, 71, 0.92), rgba(26, 42, 59, 0.92));
+  color: rgba(148, 176, 214, 0.92);
+  font-size: clamp(72px, 16vw, 128px);
+  font-weight: 900;
+  text-shadow: 0 0 28px rgba(0, 0, 0, 0.36);
+}
+
+.itemCard.isEquipped {
+  border-color: rgba(92, 225, 154, 0.62) !important;
+  box-shadow: 0 18px 38px rgba(28, 170, 105, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
+}
+
+.stageModuleMeta {
+  margin-top: 10px;
+  gap: 6px;
+}
+
+.stageModuleMetaRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 7px 9px;
+  border: 1px solid rgba(132, 163, 204, 0.18);
+  border-radius: 8px;
+  background: rgba(9, 17, 31, 0.34);
+  color: rgba(184, 205, 232, 0.84);
+  font-size: 12px;
+  line-height: 1.2;
+}
+
+.stageModuleMetaRow strong {
+  color: #eef5ff;
+  font-weight: 800;
+  text-align: right;
+}
+
+.moduleRankRequirement {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+  min-width: 0;
+}
+
+.moduleRankRequirement img {
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+  flex: 0 0 auto;
+  filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.34));
+}
+
+.itemCard .moduleRankRequirement {
+  justify-content: flex-start;
+}
+
+.itemCard .moduleRankRequirement img {
+  width: 18px;
+  height: 18px;
+}
+
+.moduleCardMeta {
+  margin-top: 6px;
+  color: rgba(184, 205, 232, 0.86);
+  font-size: 11px;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+}
+
+.moduleCardPrice {
+  margin-top: 3px;
+  color: rgba(238, 245, 255, 0.95);
+  font-size: 11px;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
 /* ===== Final Game Pass ===== */
 body {
   background:
@@ -1656,6 +2034,267 @@ body::after {
     margin-top: 14px !important;
     font-size: 13px !important;
   }
+}
+
+/* Final override: container opening animation tuned for mobile WebView. */
+.rewardModal {
+  opacity: 0 !important;
+  background: radial-gradient(620px 300px at 50% 38%, rgba(93, 157, 255, 0.16), transparent 68%), rgba(3, 7, 16, 0.84) !important;
+  transition: opacity 180ms ease !important;
+  backdrop-filter: none !important;
+}
+.rewardModal.isOpen { opacity: 1 !important; }
+.rewardCard {
+  --reward-glow: rgba(88, 231, 255, 0.98);
+  --reward-glow-soft: rgba(88, 231, 255, 0.26);
+  width: min(540px, 92vw) !important;
+  padding: 24px 22px 22px !important;
+  border-radius: 24px !important;
+  border: 1px solid rgba(177, 218, 255, 0.2) !important;
+  background: linear-gradient(180deg, rgba(28, 42, 68, 0.98), rgba(8, 13, 27, 0.995)) !important;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
+  overflow: hidden !important;
+  transform: translateY(18px) scale(0.985);
+  opacity: 0;
+  will-change: transform, opacity;
+}
+.rewardCard.isEntering { animation: rewardCardEnterPremium 360ms cubic-bezier(.18,.86,.18,1) forwards !important; }
+.rewardCard::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transform: scale(0.94);
+  background: radial-gradient(440px 180px at 50% 2%, rgba(255, 255, 255, 0.1), transparent 68%), radial-gradient(420px 260px at 50% 44%, var(--reward-glow-soft), transparent 76%);
+  transition: opacity var(--reward-glow-ms, 640ms) ease, transform var(--reward-glow-ms, 640ms) ease !important;
+  box-shadow: none !important;
+  animation: none !important;
+}
+.rewardCard.rarity-rare { --reward-glow: rgba(88, 231, 255, 0.98); --reward-glow-soft: rgba(88, 231, 255, 0.25); }
+.rewardCard.rarity-epic { --reward-glow: rgba(176, 113, 255, 0.98); --reward-glow-soft: rgba(176, 113, 255, 0.27); }
+.rewardCard.rarity-ultrarare { --reward-glow: rgba(255, 93, 93, 0.98); --reward-glow-soft: rgba(255, 93, 93, 0.27); }
+.rewardCard.rarity-legendary { --reward-glow: rgba(255, 211, 79, 0.99); --reward-glow-soft: rgba(255, 211, 79, 0.32); }
+.rewardCard.isPrimed::before { opacity: 1 !important; transform: scale(1.04); }
+.rewardTitle {
+  position: relative;
+  z-index: 2;
+  margin: 0 0 14px !important;
+  text-align: center;
+  font-size: 19px !important;
+  font-weight: 850 !important;
+  letter-spacing: 0.03em !important;
+  color: rgba(244, 249, 255, 0.96) !important;
+}
+.rewardContainerBox {
+  position: relative;
+  z-index: 1;
+  width: min(360px, 100%) !important;
+  height: 230px !important;
+  margin: 0 auto !important;
+  border-radius: 22px !important;
+  border: 1px solid rgba(158, 210, 255, 0.16) !important;
+  background: radial-gradient(260px 160px at 50% 50%, rgba(119, 179, 255, 0.12), transparent 70%), linear-gradient(180deg, rgba(17, 27, 47, 0.96), rgba(8, 14, 28, 0.98)) !important;
+  overflow: hidden;
+  transform: translateZ(0);
+}
+.rewardContainerBox::before,
+.rewardContainerBox::after {
+  content: "";
+  position: absolute;
+  inset: 11%;
+  pointer-events: none;
+  opacity: 0;
+  transform: scale(0.7);
+  border-radius: 999px;
+}
+.rewardContainerBox::before { border: 1px solid color-mix(in srgb, var(--reward-glow) 62%, transparent); box-shadow: inset 0 0 0 1px rgba(255,255,255,0.04); }
+.rewardContainerBox::after {
+  background: conic-gradient(from 0deg, transparent 0 10deg, color-mix(in srgb, var(--reward-glow) 44%, transparent) 18deg, transparent 32deg 58deg, rgba(255,255,255,0.2) 64deg, transparent 78deg 360deg);
+  mix-blend-mode: screen;
+}
+.rewardContainerBox.isPrimed::before { animation: rewardRingPremium var(--reward-glow-ms, 640ms) cubic-bezier(.16,.84,.2,1) forwards !important; }
+.rewardContainerBox.isPrimed::after { animation: rewardRaysPremium var(--reward-glow-ms, 640ms) cubic-bezier(.16,.84,.2,1) forwards !important; }
+.rewardContainerImg {
+  position: relative;
+  z-index: 2;
+  width: min(320px, 90%) !important;
+  height: 180px !important;
+  object-fit: contain;
+  filter: none !important;
+  will-change: transform, opacity;
+  transition: transform 220ms ease, opacity 180ms ease !important;
+}
+.rewardContainerBox.isCharging .rewardContainerImg { animation: rewardContainerChargePremium 720ms ease-in-out infinite !important; }
+.rewardContainerImg.isHidden { opacity: 0 !important; transform: translateY(10px) scale(0.95) !important; }
+#rewardDropImg {
+  position: absolute !important;
+  z-index: 3;
+  top: 46% !important;
+  left: 50% !important;
+  width: clamp(96px, 25vw, 122px) !important;
+  height: clamp(96px, 25vw, 122px) !important;
+  object-fit: contain !important;
+  opacity: 0;
+  visibility: hidden;
+  transform: translate(-50%, -38%) scale(0.72) rotate(-3deg) !important;
+  filter: none !important;
+  will-change: transform, opacity;
+  transition: none !important;
+}
+#rewardDropImg.show { visibility: visible; animation: rewardDropPremium 520ms cubic-bezier(.16,.92,.18,1) forwards !important; }
+.rewardContainerBox.rewardBurst { animation: rewardBoxKickPremium 360ms cubic-bezier(.18,.86,.18,1) !important; }
+.rewardContainerBox.rewardBurst::before { animation: rewardBurstRingPremium 620ms ease-out forwards !important; }
+.rewardContainerBox.rewardBurst::after {
+  inset: -18%;
+  border-radius: inherit;
+  background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.42) 0%, var(--reward-glow-soft) 34%, transparent 66%);
+  mix-blend-mode: screen;
+  animation: rewardBurstPremium 620ms ease-out forwards !important;
+}
+.rewardText {
+  position: relative;
+  z-index: 2;
+  min-height: 48px;
+  margin: 18px auto 0 !important;
+  max-width: 440px;
+  text-align: center;
+  font-size: 15px !important;
+  font-weight: 720 !important;
+  line-height: 1.45 !important;
+  color: rgba(234, 242, 253, 0.94) !important;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(8px);
+  filter: none !important;
+  will-change: transform, opacity;
+}
+#rewardText.show { visibility: visible; animation: rewardTextPremium 340ms ease-out forwards !important; }
+@media (max-width: 640px) {
+  .rewardCard { width: min(93vw, 430px) !important; padding: 18px 15px 16px !important; border-radius: 22px !important; }
+  .rewardTitle { font-size: 17px !important; margin-bottom: 12px !important; }
+  .rewardContainerBox { width: min(300px, 100%) !important; height: 188px !important; }
+  .rewardContainerImg { height: 150px !important; }
+#rewardDropImg { width: clamp(84px, 28vw, 104px) !important; height: clamp(84px, 28vw, 104px) !important; }
+  .rewardText { min-height: 42px; margin-top: 14px !important; font-size: 13px !important; }
+}
+
+/* Container reveal v2: final clean override. No rays; item pops at the center after open. */
+.rewardContainerBox::after,
+.rewardContainerBox.isPrimed::after,
+.rewardContainerBox.rewardBurst::after {
+  display: none !important;
+  animation: none !important;
+  background: none !important;
+}
+
+.rewardContainerBox::before {
+  inset: 18% !important;
+  border-radius: 999px !important;
+  background: radial-gradient(circle at 50% 50%, var(--reward-glow-soft) 0%, transparent 72%) !important;
+  border: 1px solid color-mix(in srgb, var(--reward-glow) 48%, transparent) !important;
+  box-shadow: none !important;
+}
+
+.rewardContainerBox.isPrimed::before {
+  animation: rewardCleanRing 720ms cubic-bezier(.18,.82,.18,1) forwards !important;
+}
+
+.rewardContainerBox.rewardBurst::before {
+  animation: rewardCleanBurst 520ms ease-out forwards !important;
+}
+
+#rewardDropImg {
+  top: 50% !important;
+  left: 50% !important;
+  opacity: 0;
+  visibility: hidden;
+  transform: translate(-50%, -50%) scale(0.84) !important;
+}
+
+#rewardDropImg.show {
+  visibility: visible;
+  animation: rewardItemPopClean 520ms cubic-bezier(.16,.92,.18,1) forwards !important;
+}
+
+@keyframes rewardCleanRing {
+  0% { opacity: 0; transform: scale(0.72); }
+  58% { opacity: 0.58; transform: scale(1.02); }
+  100% { opacity: 0.32; transform: scale(1.12); }
+}
+
+@keyframes rewardCleanBurst {
+  0% { opacity: 0.58; transform: scale(0.74); }
+  100% { opacity: 0; transform: scale(1.34); }
+}
+
+@keyframes rewardItemPopClean {
+  0% { opacity: 0; transform: translate(-50%, -50%) scale(0.84); }
+  62% { opacity: 1; transform: translate(-50%, -50%) scale(1.08); }
+  100% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+}
+
+/* Container reveal v2: no white rays, item appears only after the opened container is visible. */
+.rewardContainerBox::after {
+  display: none !important;
+  animation: none !important;
+  background: none !important;
+}
+
+.rewardContainerBox::before {
+  inset: 18% !important;
+  border-radius: 999px !important;
+  background: radial-gradient(circle at 50% 50%, var(--reward-glow-soft) 0%, transparent 72%) !important;
+  border: 1px solid color-mix(in srgb, var(--reward-glow) 48%, transparent) !important;
+  box-shadow: none !important;
+}
+
+.rewardContainerBox.isPrimed::before {
+  animation: rewardCleanRing 720ms cubic-bezier(.18,.82,.18,1) forwards !important;
+}
+
+.rewardContainerBox.isPrimed::after {
+  display: none !important;
+  animation: none !important;
+}
+
+#rewardDropImg {
+  top: 50% !important;
+  left: 50% !important;
+  opacity: 0;
+  visibility: hidden;
+  transform: translate(-50%, -50%) scale(0.84) !important;
+}
+
+#rewardDropImg.show {
+  visibility: visible;
+  animation: rewardItemPopClean 520ms cubic-bezier(.16,.92,.18,1) forwards !important;
+}
+
+.rewardContainerBox.rewardBurst::after {
+  display: none !important;
+}
+
+.rewardContainerBox.rewardBurst::before {
+  animation: rewardCleanBurst 520ms ease-out forwards !important;
+}
+
+@keyframes rewardCleanRing {
+  0% { opacity: 0; transform: scale(0.72); }
+  58% { opacity: 0.58; transform: scale(1.02); }
+  100% { opacity: 0.32; transform: scale(1.12); }
+}
+
+@keyframes rewardCleanBurst {
+  0% { opacity: 0.58; transform: scale(0.74); }
+  100% { opacity: 0; transform: scale(1.34); }
+}
+
+@keyframes rewardItemPopClean {
+  0% { opacity: 0; transform: translate(-50%, -50%) scale(0.84); }
+  62% { opacity: 1; transform: translate(-50%, -50%) scale(1.08); }
+  100% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
 }
 
 /* ===== Final UI polish: battles, errors, quests, shop, containers ===== */
@@ -8521,6 +9160,7 @@ body {
   width: min(640px, 98%);
   height: 290px;
   object-fit: contain;
+  transition: opacity 180ms ease, transform 180ms ease;
 }
 
 .itemsRail {
@@ -8985,7 +9625,19 @@ body {
 .shopBuyDual {
   width: 100%;
   display: grid;
-  gap: 10px;
+  gap: 8px;
+}
+
+.shopBuyDual .shopBuyBtn,
+.shopBuyDual .shopBuyBtnAlt {
+  width: 100% !important;
+  min-width: 0 !important;
+  box-sizing: border-box;
+}
+
+.shopCardPremium .shopCardActions {
+  display: block;
+  margin-top: 10px;
 }
 
 .shopBuyBtnAlt {
@@ -9969,6 +10621,331 @@ body {
   font-size: 34px;
   line-height: 1;
   cursor: pointer;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   CONFIRM-МОДАЛКА — дизайн в стиле микропрокачек
+   ═══════════════════════════════════════════════════════════ */
+
+.confirmModalOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 2200;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 18px;
+  background:
+    radial-gradient(circle at 50% 18%, rgba(51, 135, 202, 0.18), transparent 38%),
+    rgba(2, 6, 13, 0.82);
+  backdrop-filter: blur(10px);
+  opacity: 0;
+  transition: opacity 180ms ease;
+}
+
+.confirmModalOverlay[style*="display: flex"],
+.confirmModalOverlay[style*="display:flex"] {
+  opacity: 1;
+}
+
+.confirmCard {
+  position: relative;
+  width: min(640px, 100%);
+  overflow: hidden;
+  border: 1px solid rgba(104, 157, 219, 0.48);
+  border-radius: 8px;
+  background:
+    linear-gradient(145deg, rgba(14, 24, 43, 0.98), rgba(8, 14, 27, 0.99) 54%, rgba(17, 23, 42, 0.98)),
+    radial-gradient(circle at 18% 0%, rgba(77, 186, 199, 0.16), transparent 42%),
+    radial-gradient(circle at 90% 12%, rgba(220, 169, 63, 0.14), transparent 34%);
+  box-shadow:
+    0 28px 80px rgba(0, 0, 0, 0.58),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  transform: scale(0.982) translateY(8px);
+  animation: confirmCardIn 220ms cubic-bezier(.2,.9,.2,1) forwards;
+}
+
+@keyframes confirmCardIn {
+  from { opacity: 0; transform: scale(0.982) translateY(8px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+/* ── Close Button ── */
+.confirmCloseTop {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 3;
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  border: 1px solid rgba(150, 184, 227, 0.34);
+  background: rgba(8, 15, 28, 0.82);
+  color: rgba(235, 244, 255, 0.9);
+  font-size: 24px;
+  line-height: 1;
+  cursor: pointer;
+  transition: background 120ms ease, border-color 120ms ease;
+}
+
+.confirmCloseTop:hover {
+  background: rgba(20, 34, 58, 0.96);
+  border-color: rgba(150, 184, 227, 0.56);
+}
+
+/* ── Hero Section (image + meta) ── */
+.confirmHero {
+  position: relative;
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: 18px;
+  min-height: 150px;
+  padding: 24px 50px 20px 24px;
+  border-bottom: 1px solid rgba(102, 147, 205, 0.24);
+  background:
+    linear-gradient(90deg, rgba(34, 72, 112, 0.22), transparent 62%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.04), transparent);
+}
+
+/* ── Preview image container ── */
+.confirmPreview {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-self: center;
+  overflow: hidden;
+}
+
+.confirmPreviewGlow {
+  position: absolute;
+  left: 20px;
+  top: 16px;
+  width: 140px;
+  height: 80px;
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(92, 225, 211, 0.3), transparent 70%);
+  filter: blur(14px);
+  pointer-events: none;
+}
+
+.confirmPreviewImg {
+  position: relative;
+  z-index: 1;
+  width: 160px;
+  height: 110px;
+  object-fit: contain;
+  filter: drop-shadow(0 18px 28px rgba(0, 0, 0, 0.45));
+}
+
+/* ── Hero Meta Text ── */
+.confirmHeroMeta {
+  align-self: center;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.confirmBadge {
+  align-self: flex-start;
+  border: 1px solid rgba(141, 202, 255, 0.34);
+  border-radius: 999px;
+  padding: 4px 10px;
+  color: #dff4ff;
+  background: rgba(55, 119, 176, 0.22);
+  font-size: 10px;
+  font-weight: 950;
+  text-transform: uppercase;
+  display: inline-flex;
+  align-items: center;
+}
+
+.confirmTitle {
+  margin-top: 8px;
+  color: #f5f8ff;
+  font-size: 26px;
+  font-weight: 950;
+  line-height: 1.04;
+  text-transform: uppercase;
+}
+
+.confirmLabel {
+  margin-top: 8px;
+  max-width: 420px;
+  color: rgba(186, 204, 229, 0.9);
+  font-size: 13.5px;
+  line-height: 1.4;
+}
+
+.confirmNote {
+  margin-top: 8px;
+  max-width: 420px;
+  color: rgba(160, 186, 220, 0.78);
+  font-size: 12px;
+  line-height: 1.4;
+  font-style: italic;
+}
+
+/* ── Price Row (stat-box style) ── */
+.confirmPriceRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 14px 24px 0;
+  min-height: 52px;
+  border: 1px solid rgba(102, 151, 210, 0.26);
+  border-radius: 8px;
+  background: rgba(9, 18, 34, 0.72);
+  padding: 12px 16px;
+}
+
+.confirmPriceName {
+  color: #f6f9ff;
+  font-size: 15px;
+  font-weight: 850;
+  line-height: 1.2;
+}
+
+.confirmPriceValue {
+  color: #8bdcff;
+  font-size: 16px;
+  font-weight: 950;
+  white-space: nowrap;
+}
+
+/* ── Detail Chips ── */
+.confirmDetails {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 10px 24px 0;
+}
+
+.confirmDetailChip {
+  min-height: 30px;
+  padding: 0 12px;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  background: rgba(5, 12, 24, 0.42);
+  border: 1px solid rgba(102, 151, 210, 0.24);
+  color: #dceeff;
+  font-size: 12px;
+  font-weight: 850;
+}
+
+/* ── Action Buttons ── */
+.confirmActions {
+  display: flex;
+  gap: 10px;
+  padding: 16px 24px 22px;
+}
+
+.confirmOkBtn {
+  flex: 1;
+  min-height: 44px;
+  border: 1px solid rgba(139, 207, 255, 0.42);
+  border-radius: 8px;
+  background: linear-gradient(135deg, rgba(44, 115, 177, 0.96), rgba(30, 57, 111, 0.98));
+  color: #f7fbff;
+  font-size: 13px;
+  font-weight: 950;
+  letter-spacing: 0;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: filter 120ms ease, transform 120ms ease;
+}
+
+.confirmOkBtn:hover {
+  filter: brightness(1.12);
+  transform: translateY(-1px);
+}
+
+.confirmOkBtn:active {
+  filter: brightness(0.96);
+  transform: translateY(0);
+}
+
+.confirmCancelBtn {
+  flex: 0 0 auto;
+  min-width: 110px;
+  min-height: 44px;
+  border: 1px solid rgba(150, 184, 227, 0.28);
+  border-radius: 8px;
+  background: rgba(8, 15, 28, 0.72);
+  color: rgba(210, 226, 248, 0.9);
+  font-size: 12px;
+  font-weight: 900;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 120ms ease, border-color 120ms ease;
+}
+
+.confirmCancelBtn:hover {
+  background: rgba(18, 32, 56, 0.88);
+  border-color: rgba(150, 184, 227, 0.44);
+}
+
+/* ── Mobile ── */
+@media (max-width: 640px) {
+  .confirmHero {
+    grid-template-columns: 100px 1fr;
+    gap: 14px;
+    padding: 18px 44px 16px 18px;
+    min-height: 0;
+  }
+
+  .confirmPreviewImg {
+    width: 90px;
+    height: 68px;
+  }
+
+  .confirmPreviewGlow {
+    width: 80px;
+    height: 50px;
+    left: 10px;
+    top: 10px;
+  }
+
+  .confirmTitle {
+    font-size: 20px;
+  }
+
+  .confirmLabel {
+    font-size: 12px;
+  }
+
+  .confirmPriceRow {
+    margin: 12px 18px 0;
+  }
+
+  .confirmDetails {
+    padding: 8px 18px 0;
+  }
+
+  .confirmActions {
+    flex-direction: column-reverse;
+    padding: 14px 18px 18px;
+  }
+
+  .confirmOkBtn,
+  .confirmCancelBtn {
+    width: 100%;
+    flex: none;
+    min-height: 48px;
+  }
+}
+
+.shopCatCopy {
+  gap: 0;
+  align-content: center;
+}
+
+.shopCat {
+  min-height: 58px;
+  align-items: center;
 }
 
 .lootModal {
@@ -12443,4 +13420,1006 @@ body::before {
     margin-top: 14px !important;
     font-size: 13px !important;
   }
+}
+
+/* Final override: container opening animation tuned for mobile WebView. */
+.rewardModal {
+  opacity: 0;
+  background: radial-gradient(620px 300px at 50% 38%, rgba(93, 157, 255, 0.16), transparent 68%), rgba(3, 7, 16, 0.84) !important;
+  transition: opacity 180ms ease !important;
+  backdrop-filter: none !important;
+}
+.rewardModal.isOpen { opacity: 1 !important; }
+.rewardCard {
+  --reward-glow: rgba(88, 231, 255, 0.98);
+  --reward-glow-soft: rgba(88, 231, 255, 0.26);
+  width: min(540px, 92vw) !important;
+  padding: 24px 22px 22px !important;
+  border-radius: 24px !important;
+  border: 1px solid rgba(177, 218, 255, 0.2) !important;
+  background: linear-gradient(180deg, rgba(28, 42, 68, 0.98), rgba(8, 13, 27, 0.995)) !important;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
+  overflow: hidden !important;
+  transform: translateY(18px) scale(0.985);
+  opacity: 0;
+  will-change: transform, opacity;
+}
+.rewardCard.isEntering { animation: rewardCardEnterPremium 360ms cubic-bezier(.18,.86,.18,1) forwards !important; }
+.rewardCard::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transform: scale(0.94);
+  background: radial-gradient(440px 180px at 50% 2%, rgba(255, 255, 255, 0.1), transparent 68%), radial-gradient(420px 260px at 50% 44%, var(--reward-glow-soft), transparent 76%);
+  transition: opacity var(--reward-glow-ms, 640ms) ease, transform var(--reward-glow-ms, 640ms) ease !important;
+  box-shadow: none !important;
+  animation: none !important;
+}
+.rewardCard.rarity-rare { --reward-glow: rgba(88, 231, 255, 0.98); --reward-glow-soft: rgba(88, 231, 255, 0.25); }
+.rewardCard.rarity-epic { --reward-glow: rgba(176, 113, 255, 0.98); --reward-glow-soft: rgba(176, 113, 255, 0.27); }
+.rewardCard.rarity-ultrarare { --reward-glow: rgba(255, 93, 93, 0.98); --reward-glow-soft: rgba(255, 93, 93, 0.27); }
+.rewardCard.rarity-legendary { --reward-glow: rgba(255, 211, 79, 0.99); --reward-glow-soft: rgba(255, 211, 79, 0.32); }
+.rewardCard.isPrimed::before { opacity: 1 !important; transform: scale(1.04); }
+.rewardTitle {
+  position: relative;
+  z-index: 2;
+  margin: 0 0 14px !important;
+  text-align: center;
+  font-size: 19px !important;
+  font-weight: 850 !important;
+  letter-spacing: 0.03em !important;
+  color: rgba(244, 249, 255, 0.96) !important;
+}
+.rewardContainerBox {
+  position: relative;
+  z-index: 1;
+  width: min(360px, 100%) !important;
+  height: 230px !important;
+  margin: 0 auto !important;
+  border-radius: 22px !important;
+  border: 1px solid rgba(158, 210, 255, 0.16) !important;
+  background: radial-gradient(260px 160px at 50% 50%, rgba(119, 179, 255, 0.12), transparent 70%), linear-gradient(180deg, rgba(17, 27, 47, 0.96), rgba(8, 14, 28, 0.98)) !important;
+  overflow: hidden;
+  transform: translateZ(0);
+}
+.rewardContainerBox::before,
+.rewardContainerBox::after {
+  content: "";
+  position: absolute;
+  inset: 11%;
+  pointer-events: none;
+  opacity: 0;
+  transform: scale(0.7);
+  border-radius: 999px;
+}
+.rewardContainerBox::before { border: 1px solid color-mix(in srgb, var(--reward-glow) 62%, transparent); box-shadow: inset 0 0 0 1px rgba(255,255,255,0.04); }
+.rewardContainerBox::after {
+  background: conic-gradient(from 0deg, transparent 0 10deg, color-mix(in srgb, var(--reward-glow) 44%, transparent) 18deg, transparent 32deg 58deg, rgba(255,255,255,0.2) 64deg, transparent 78deg 360deg);
+  mix-blend-mode: screen;
+}
+.rewardContainerBox.isPrimed::before { animation: rewardRingPremium var(--reward-glow-ms, 640ms) cubic-bezier(.16,.84,.2,1) forwards !important; }
+.rewardContainerBox.isPrimed::after { animation: rewardRaysPremium var(--reward-glow-ms, 640ms) cubic-bezier(.16,.84,.2,1) forwards !important; }
+.rewardContainerImg {
+  position: relative;
+  z-index: 2;
+  width: min(320px, 90%) !important;
+  height: 180px !important;
+  object-fit: contain;
+  filter: none !important;
+  will-change: transform, opacity;
+  transition: transform 220ms ease, opacity 180ms ease !important;
+}
+.rewardContainerBox.isCharging .rewardContainerImg { animation: rewardContainerChargePremium 720ms ease-in-out infinite !important; }
+.rewardContainerImg.isHidden { opacity: 0; transform: translateY(10px) scale(0.95) !important; }
+#rewardDropImg {
+  position: absolute !important;
+  z-index: 3;
+  top: 46% !important;
+  left: 50% !important;
+  width: clamp(96px, 25vw, 122px) !important;
+  height: clamp(96px, 25vw, 122px) !important;
+  object-fit: contain !important;
+  opacity: 0;
+  visibility: hidden;
+  transform: translate(-50%, -38%) scale(0.72) rotate(-3deg) !important;
+  filter: none !important;
+  will-change: transform, opacity;
+  transition: none !important;
+}
+#rewardDropImg.show { visibility: visible; animation: rewardDropPremium 520ms cubic-bezier(.16,.92,.18,1) forwards !important; }
+.rewardContainerBox.rewardBurst { animation: rewardBoxKickPremium 360ms cubic-bezier(.18,.86,.18,1) !important; }
+.rewardContainerBox.rewardBurst::before { animation: rewardBurstRingPremium 620ms ease-out forwards !important; }
+.rewardContainerBox.rewardBurst::after {
+  inset: -18%;
+  border-radius: inherit;
+  background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.42) 0%, var(--reward-glow-soft) 34%, transparent 66%);
+  mix-blend-mode: screen;
+  animation: rewardBurstPremium 620ms ease-out forwards !important;
+}
+.rewardText {
+  position: relative;
+  z-index: 2;
+  min-height: 48px;
+  margin: 18px auto 0 !important;
+  max-width: 440px;
+  text-align: center;
+  font-size: 15px !important;
+  font-weight: 720 !important;
+  line-height: 1.45 !important;
+  color: rgba(234, 242, 253, 0.94) !important;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(8px);
+  filter: none !important;
+  will-change: transform, opacity;
+}
+#rewardText.show { visibility: visible; animation: rewardTextPremium 340ms ease-out forwards !important; }
+@media (max-width: 640px) {
+  .rewardCard { width: min(93vw, 430px) !important; padding: 18px 15px 16px !important; border-radius: 22px !important; }
+  .rewardTitle { font-size: 17px !important; margin-bottom: 12px !important; }
+  .rewardContainerBox { width: min(300px, 100%) !important; height: 188px !important; }
+  .rewardContainerImg { height: 150px !important; }
+  #rewardDropImg { width: clamp(84px, 28vw, 104px) !important; height: clamp(84px, 28vw, 104px) !important; }
+  .rewardText { min-height: 42px; margin-top: 14px !important; font-size: 13px !important; }
+}
+
+/* Container reveal v2: final clean override. No rays; item pops at the center after open. */
+.rewardContainerBox::after,
+.rewardContainerBox.isPrimed::after,
+.rewardContainerBox.rewardBurst::after {
+  display: none !important;
+  animation: none !important;
+  background: none !important;
+}
+
+.rewardContainerBox::before {
+  inset: 18% !important;
+  border-radius: 999px !important;
+  background: radial-gradient(circle at 50% 50%, var(--reward-glow-soft) 0%, transparent 72%) !important;
+  border: 1px solid color-mix(in srgb, var(--reward-glow) 48%, transparent) !important;
+  box-shadow: none !important;
+}
+
+.rewardContainerBox.isPrimed::before {
+  animation: rewardCleanRing 720ms cubic-bezier(.18,.82,.18,1) forwards !important;
+}
+
+.rewardContainerBox.rewardBurst::before {
+  animation: rewardCleanBurst 520ms ease-out forwards !important;
+}
+
+#rewardDropImg {
+  top: 50% !important;
+  left: 50% !important;
+  opacity: 0;
+  visibility: hidden;
+  transform: translate(-50%, -50%) scale(0.84) !important;
+}
+
+#rewardDropImg.show {
+  visibility: visible;
+  animation: rewardItemPopClean 520ms cubic-bezier(.16,.92,.18,1) forwards !important;
+}
+
+@keyframes rewardCleanRing {
+  0% { opacity: 0; transform: scale(0.72); }
+  58% { opacity: 0.58; transform: scale(1.02); }
+  100% { opacity: 0.32; transform: scale(1.12); }
+}
+
+@keyframes rewardCleanBurst {
+  0% { opacity: 0.58; transform: scale(0.74); }
+  100% { opacity: 0; transform: scale(1.34); }
+}
+
+@keyframes rewardItemPopClean {
+  0% { opacity: 0; transform: translate(-50%, -50%) scale(0.84); }
+  62% { opacity: 1; transform: translate(-50%, -50%) scale(1.08); }
+  100% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+}
+
+/* Container reveal v3: smooth fade-in for drop, no instant keyframe snap. */
+#rewardDropImg {
+  top: 50% !important;
+  left: 50% !important;
+  opacity: 0 !important;
+  visibility: hidden;
+  transform: translate(-50%, -50%) scale(0.86) !important;
+  animation: none !important;
+  transition:
+    opacity 680ms cubic-bezier(.18,.82,.2,1),
+    transform 680ms cubic-bezier(.18,.82,.2,1) !important;
+}
+
+#rewardDropImg.show {
+  opacity: 1 !important;
+  visibility: visible;
+  transform: translate(-50%, -50%) scale(1) !important;
+  animation: none !important;
+}
+
+#rewardText {
+  opacity: 0 !important;
+  visibility: hidden;
+  transform: translateY(10px) !important;
+  animation: none !important;
+  transition:
+    opacity 420ms ease,
+    transform 420ms ease !important;
+}
+
+#rewardText.show {
+  opacity: 1 !important;
+  visibility: visible;
+  transform: translateY(0) !important;
+  animation: none !important;
+}
+
+/* Compact reward modal bottom spacing. */
+.rewardCard {
+  padding-bottom: 14px !important;
+}
+
+.rewardContainerBox {
+  margin-bottom: 0 !important;
+}
+
+.rewardText {
+  min-height: 0 !important;
+  margin-top: 10px !important;
+  margin-bottom: 0 !important;
+  line-height: 1.28 !important;
+}
+
+#rewardText:not(.show) {
+  height: 0 !important;
+  margin-top: 0 !important;
+  overflow: hidden !important;
+}
+
+@media (max-width: 640px) {
+  .rewardCard {
+    padding-bottom: 12px !important;
+  }
+
+  .rewardText {
+    margin-top: 8px !important;
+  }
+}
+
+/* Reward layout v4: fixed text slot and drop anchored to container glow. */
+.rewardCard {
+  padding-bottom: 16px !important;
+}
+
+.rewardContainerBox.isStandardReward {
+  --drop-left: 47%;
+  --drop-top: 37%;
+  --drop-size: clamp(54px, 15vw, 70px);
+}
+
+.rewardContainerBox.isPremiumReward {
+  --drop-left: 43%;
+  --drop-top: 39%;
+  --drop-size: clamp(56px, 16vw, 74px);
+}
+
+#rewardDropImg {
+  top: var(--drop-top) !important;
+  left: var(--drop-left) !important;
+  width: var(--drop-size) !important;
+  height: var(--drop-size) !important;
+  opacity: 0 !important;
+  visibility: hidden;
+  transform: translate(-50%, -50%) scale(0.82) !important;
+  animation: none !important;
+  transition:
+    opacity 620ms cubic-bezier(.18,.82,.2,1),
+    transform 620ms cubic-bezier(.18,.82,.2,1) !important;
+}
+
+#rewardDropImg.show {
+  opacity: 1 !important;
+  visibility: visible;
+  transform: translate(-50%, -50%) scale(1) !important;
+  animation: none !important;
+}
+
+.rewardText,
+#rewardText,
+#rewardText:not(.show) {
+  box-sizing: border-box !important;
+  height: 38px !important;
+  min-height: 38px !important;
+  max-height: 38px !important;
+  margin: 10px auto 0 !important;
+  padding: 0 10px !important;
+  overflow: hidden !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
+  line-height: 1.18 !important;
+}
+
+#rewardText {
+  opacity: 0 !important;
+  visibility: hidden;
+  transform: translateY(4px) !important;
+  transition:
+    opacity 360ms ease,
+    transform 360ms ease !important;
+}
+
+#rewardText.show {
+  opacity: 1 !important;
+  visibility: visible;
+  transform: translateY(0) !important;
+  animation: none !important;
+}
+
+@media (max-width: 640px) {
+  .rewardContainerBox.isStandardReward {
+    --drop-left: 47%;
+    --drop-top: 37%;
+    --drop-size: clamp(46px, 18vw, 60px);
+  }
+
+  .rewardContainerBox.isPremiumReward {
+    --drop-left: 43%;
+    --drop-top: 39%;
+    --drop-size: clamp(48px, 19vw, 62px);
+  }
+
+  .rewardText,
+  #rewardText,
+  #rewardText:not(.show) {
+    height: 34px !important;
+    min-height: 34px !important;
+    max-height: 34px !important;
+    margin-top: 8px !important;
+    font-size: 12px !important;
+  }
+}
+
+/* Reward drop v5: position is calculated from the actual opened container image. */
+.rewardContainerBox.isStandardReward,
+.rewardContainerBox.isPremiumReward {
+  --drop-left: 50%;
+  --drop-top: 43%;
+  --drop-size: 38px;
+}
+
+#rewardDropImg {
+  top: var(--drop-top) !important;
+  left: var(--drop-left) !important;
+  width: var(--drop-size) !important;
+  height: var(--drop-size) !important;
+  opacity: 0 !important;
+  visibility: hidden;
+  transform: translate(-50%, -50%) scale(0.86) !important;
+  animation: none !important;
+  transition:
+    opacity 620ms cubic-bezier(.18,.82,.2,1),
+    transform 620ms cubic-bezier(.18,.82,.2,1) !important;
+}
+
+#rewardDropImg.show {
+  opacity: 1 !important;
+  visibility: visible;
+  transform: translate(-50%, -50%) scale(1) !important;
+  animation: none !important;
+}
+
+/* Reward drop v6 fallback: bigger drop while JS calculates exact image-relative position. */
+.rewardContainerBox.isStandardReward,
+.rewardContainerBox.isPremiumReward {
+  --drop-size: 112px;
+}
+
+/* Garage micro upgrades modal and anti-selection hardening. */
+.microUpgradeBtn {
+  position: relative;
+  width: min(100%, 210px);
+  min-height: 42px;
+  margin-top: 14px;
+  border: 1px solid rgba(111, 202, 255, 0.56);
+  border-radius: 8px;
+  background:
+    linear-gradient(135deg, rgba(32, 98, 156, 0.96), rgba(42, 58, 113, 0.94) 48%, rgba(86, 61, 142, 0.92)),
+    radial-gradient(circle at 24% 18%, rgba(255, 255, 255, 0.28), transparent 36%);
+  box-shadow:
+    0 12px 28px rgba(20, 92, 155, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    inset 0 -12px 24px rgba(0, 0, 0, 0.18);
+  color: #f4f8ff;
+  font-size: 12px;
+  font-weight: 950;
+  letter-spacing: 0;
+  text-transform: uppercase;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.3);
+}
+
+.microUpgradeBtn::after {
+  content: "";
+  position: absolute;
+  inset: 4px 8px auto;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.72), transparent);
+  opacity: 0.82;
+}
+
+.microUpgradeBtn:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.08);
+}
+
+.microUpgradeBtn.isDisabled,
+.microUpgradeBtn:disabled {
+  opacity: 0.48;
+  filter: grayscale(0.55);
+  transform: none;
+}
+
+.stageInfo #garageHint {
+  margin-top: 22px !important;
+  min-height: 18px;
+  font-size: 13px;
+  line-height: 1.25;
+  color: rgba(194, 212, 236, 0.94);
+}
+
+.microModal {
+  position: fixed;
+  inset: 0;
+  z-index: 9500;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 18px;
+  background:
+    radial-gradient(circle at 50% 18%, rgba(51, 135, 202, 0.22), transparent 38%),
+    rgba(2, 6, 13, 0.78);
+  backdrop-filter: blur(10px);
+  opacity: 0;
+  transition: opacity 180ms ease;
+}
+
+.microModal.isOpen {
+  opacity: 1;
+}
+
+.microCard {
+  position: relative;
+  width: min(930px, 100%);
+  max-height: min(88vh, 760px);
+  overflow: hidden;
+  border: 1px solid rgba(104, 157, 219, 0.48);
+  border-radius: 8px;
+  background:
+    linear-gradient(145deg, rgba(14, 24, 43, 0.98), rgba(8, 14, 27, 0.99) 54%, rgba(17, 23, 42, 0.98)),
+    radial-gradient(circle at 18% 0%, rgba(77, 186, 199, 0.18), transparent 42%),
+    radial-gradient(circle at 90% 12%, rgba(220, 169, 63, 0.16), transparent 34%);
+  box-shadow:
+    0 28px 80px rgba(0, 0, 0, 0.58),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  transform: scale(0.982) translateY(8px);
+  transition: transform 220ms cubic-bezier(.2,.9,.2,1);
+}
+
+.microModal.isOpen .microCard {
+  transform: scale(1) translateY(0);
+}
+
+.microCloseTop {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 3;
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  border: 1px solid rgba(150, 184, 227, 0.34);
+  background: rgba(8, 15, 28, 0.82);
+  color: rgba(235, 244, 255, 0.9);
+  font-size: 24px;
+  line-height: 1;
+}
+
+.microHero {
+  position: relative;
+  display: grid;
+  grid-template-columns: 190px 1fr;
+  gap: 18px;
+  min-height: 160px;
+  padding: 24px 60px 18px 24px;
+  border-bottom: 1px solid rgba(102, 147, 205, 0.24);
+  background:
+    linear-gradient(90deg, rgba(34, 72, 112, 0.22), transparent 62%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.045), transparent);
+}
+
+.microHeroGlow {
+  position: absolute;
+  left: 42px;
+  top: 32px;
+  width: 160px;
+  height: 92px;
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(92, 225, 211, 0.3), transparent 70%);
+  filter: blur(14px);
+}
+
+.microItemImg {
+  position: relative;
+  z-index: 1;
+  width: 180px;
+  height: 118px;
+  object-fit: contain;
+  align-self: center;
+  filter: drop-shadow(0 18px 28px rgba(0, 0, 0, 0.45));
+}
+
+.microHeroMeta {
+  align-self: center;
+  min-width: 0;
+}
+
+.microKicker {
+  color: #8bdcff;
+  font-size: 12px;
+  font-weight: 950;
+  letter-spacing: 0;
+}
+
+.microTitle {
+  margin-top: 6px;
+  color: #f5f8ff;
+  font-size: 30px;
+  font-weight: 950;
+  line-height: 1;
+}
+
+.microSub {
+  margin-top: 8px;
+  max-width: 520px;
+  color: rgba(186, 204, 229, 0.9);
+  font-size: 14px;
+  line-height: 1.35;
+}
+
+.microTopStats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  padding: 14px 24px 0;
+}
+
+.microStatBox {
+  min-height: 66px;
+  border: 1px solid rgba(102, 151, 210, 0.26);
+  border-radius: 8px;
+  background: rgba(9, 18, 34, 0.72);
+  padding: 12px 14px;
+}
+
+.microStatBox span {
+  display: block;
+  color: rgba(153, 177, 209, 0.88);
+  font-size: 11px;
+  font-weight: 900;
+}
+
+.microStatBox b {
+  display: block;
+  margin-top: 5px;
+  color: #ffffff;
+  font-size: 24px;
+  line-height: 1;
+}
+
+.microUpgradeList {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  padding: 16px 24px 24px;
+  max-height: 430px;
+  overflow: auto;
+}
+
+.microLoading {
+  grid-column: 1 / -1;
+  min-height: 160px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(104, 157, 219, 0.28);
+  border-radius: 8px;
+  color: rgba(211, 226, 246, 0.9);
+  background: rgba(8, 15, 30, 0.72);
+  font-weight: 900;
+}
+
+.microError {
+  color: #ffb9b9;
+}
+
+.microUpgradeCard {
+  position: relative;
+  overflow: hidden;
+  min-height: 286px;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  border: 1px solid rgba(111, 158, 218, 0.3);
+  border-radius: 8px;
+  background: linear-gradient(180deg, rgba(18, 33, 58, 0.92), rgba(8, 15, 29, 0.96));
+  padding: 13px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.055);
+}
+
+.microCardGlow {
+  position: absolute;
+  inset: -50% -40% auto auto;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  opacity: 0.36;
+  background: #6fcaff;
+  filter: blur(24px);
+}
+
+.microQuality-rare .microCardGlow { background: #55e6a5; }
+.microQuality-epic .microCardGlow { background: #d78cff; }
+.microQuality-legendary .microCardGlow { background: #ffc94e; }
+
+.microUpgradeHead {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.microQualityBadge {
+  min-width: 0;
+  max-width: 72%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  border: 1px solid rgba(141, 202, 255, 0.34);
+  border-radius: 999px;
+  padding: 4px 8px;
+  color: #dff4ff;
+  background: rgba(55, 119, 176, 0.22);
+  font-size: 10px;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.microQuality-rare .microQualityBadge {
+  border-color: rgba(85, 230, 165, 0.42);
+  color: #c9ffe8;
+  background: rgba(42, 142, 95, 0.18);
+}
+
+.microQuality-epic .microQualityBadge {
+  border-color: rgba(215, 140, 255, 0.44);
+  color: #f3dcff;
+  background: rgba(128, 73, 174, 0.18);
+}
+
+.microQuality-legendary .microQualityBadge {
+  border-color: rgba(255, 201, 78, 0.46);
+  color: #fff1be;
+  background: rgba(173, 121, 28, 0.18);
+}
+
+.microLevelText {
+  color: rgba(223, 235, 250, 0.92);
+  font-size: 12px;
+  font-weight: 950;
+}
+
+.microUpgradeTitle {
+  position: relative;
+  color: #f6f9ff;
+  font-size: 16px;
+  font-weight: 950;
+  line-height: 1.08;
+}
+
+.microUpgradeDesc {
+  position: relative;
+  min-height: 48px;
+  color: rgba(178, 199, 225, 0.92);
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+.microEffectRow,
+.microTotalRow {
+  position: relative;
+  border: 1px solid rgba(102, 151, 210, 0.24);
+  border-radius: 8px;
+  background: rgba(5, 12, 24, 0.42);
+  padding: 8px 9px;
+  color: #dceeff;
+  font-size: 12px;
+  font-weight: 850;
+  line-height: 1.25;
+}
+
+.microTotalRow {
+  color: rgba(189, 209, 235, 0.9);
+}
+
+.microPips {
+  position: relative;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
+  gap: 5px;
+  margin-top: auto;
+}
+
+.microPips span {
+  height: 7px;
+  border-radius: 999px;
+  background: rgba(104, 139, 183, 0.25);
+  box-shadow: inset 0 0 0 1px rgba(149, 181, 224, 0.15);
+}
+
+.microPips span.isFilled {
+  background: linear-gradient(90deg, #74d7ff, #b1f0ff);
+  box-shadow: 0 0 14px rgba(116, 215, 255, 0.34);
+}
+
+.microQuality-rare .microPips span.isFilled { background: linear-gradient(90deg, #55e6a5, #c8ffe4); }
+.microQuality-epic .microPips span.isFilled { background: linear-gradient(90deg, #d78cff, #ffe2ff); }
+.microQuality-legendary .microPips span.isFilled { background: linear-gradient(90deg, #ffc94e, #fff0a8); }
+
+.microBuyBtn {
+  position: relative;
+  width: 100%;
+  min-height: 40px;
+  border: 1px solid rgba(139, 207, 255, 0.42);
+  border-radius: 8px;
+  background: linear-gradient(135deg, rgba(44, 115, 177, 0.96), rgba(30, 57, 111, 0.98));
+  color: #f7fbff;
+  font-size: 11px;
+  font-weight: 950;
+  letter-spacing: 0;
+}
+
+.microBuyBtn:not(:disabled):hover {
+  filter: brightness(1.09);
+  transform: translateY(-1px);
+}
+
+.microBuyBtn:disabled {
+  opacity: 0.52;
+  filter: grayscale(0.45);
+}
+
+html,
+body,
+#app,
+#app * {
+  -webkit-user-select: none !important;
+  user-select: none !important;
+  -webkit-touch-callout: none !important;
+  cursor: default !important;
+}
+
+input,
+textarea,
+[contenteditable="true"] {
+  -webkit-user-select: none !important;
+  user-select: none !important;
+  cursor: default !important;
+}
+
+button,
+a,
+[role="button"],
+.mainTab,
+.subTab,
+.shopCat,
+.itemCard,
+.microUpgradeBtn,
+.microBuyBtn {
+  cursor: pointer !important;
+}
+
+::selection {
+  background: transparent;
+  color: inherit;
+}
+
+@media (max-width: 760px) {
+  .microModal {
+    align-items: flex-end;
+    padding: 10px;
+  }
+
+  .microCard {
+    width: 100%;
+    max-height: 92vh;
+  }
+
+  .microHero {
+    grid-template-columns: 116px 1fr;
+    min-height: 126px;
+    gap: 10px;
+    padding: 18px 50px 14px 16px;
+  }
+
+  .microHeroGlow {
+    left: 22px;
+    top: 34px;
+    width: 100px;
+    height: 70px;
+  }
+
+  .microItemImg {
+    width: 112px;
+    height: 86px;
+  }
+
+  .microTitle {
+    font-size: 22px;
+  }
+
+  .microSub {
+    font-size: 12px;
+  }
+
+  .microTopStats {
+    padding: 12px 14px 0;
+  }
+
+  .microUpgradeList {
+    grid-template-columns: 1fr;
+    padding: 14px;
+    max-height: 58vh;
+  }
+
+  .microUpgradeCard {
+    min-height: 246px;
+  }
+
+  .stageInfo #garageHint {
+    margin-top: 18px !important;
+  }
+}
+
+/* Micro upgrade polish v2 */
+.microHero {
+  background:
+    linear-gradient(90deg, rgba(26, 101, 125, 0.2), rgba(255, 170, 59, 0.08) 62%, transparent),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.05), transparent) !important;
+}
+
+.microStatBox {
+  background:
+    linear-gradient(180deg, rgba(16, 30, 56, 0.92), rgba(7, 15, 29, 0.9)),
+    radial-gradient(circle at 18% 22%, rgba(115, 219, 255, 0.1), transparent 46%) !important;
+  box-shadow:
+    0 8px 18px rgba(0, 0, 0, 0.24),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06) !important;
+}
+
+.microUpgradeCard {
+  background:
+    linear-gradient(180deg, rgba(18, 33, 58, 0.96), rgba(8, 15, 29, 0.97)),
+    radial-gradient(circle at 12% 10%, rgba(111, 202, 255, 0.1), transparent 38%) !important;
+  transition:
+    transform 160ms ease,
+    border-color 160ms ease,
+    box-shadow 160ms ease,
+    filter 160ms ease !important;
+}
+
+.microUpgradeCard:hover {
+  transform: translateY(-2px);
+  border-color: rgba(146, 208, 255, 0.4);
+}
+
+.microCardShine {
+  position: absolute;
+  inset: -22% auto auto -38%;
+  width: 88px;
+  height: 220px;
+  transform: rotate(26deg);
+  background: linear-gradient(180deg, transparent, rgba(255, 255, 255, 0.13), transparent);
+  opacity: 0.8;
+  pointer-events: none;
+}
+
+.microUpgradeCard.canBuy {
+  border-color: rgba(111, 222, 189, 0.46);
+  box-shadow:
+    0 14px 28px rgba(25, 127, 95, 0.16),
+    inset 0 1px 0 rgba(255, 255, 255, 0.07);
+}
+
+.microUpgradeCard.canBuy .microBuyBtn:not(:disabled) {
+  background: linear-gradient(135deg, rgba(28, 142, 115, 0.98), rgba(17, 85, 97, 0.98)) !important;
+  border-color: rgba(115, 243, 205, 0.52) !important;
+}
+
+.microUpgradeCard.isLocked {
+  filter: saturate(0.82);
+  border-color: rgba(121, 134, 156, 0.28);
+}
+
+.microUpgradeCard.isLocked .microCardGlow,
+.microUpgradeCard.isLocked .microCardShine {
+  opacity: 0.16;
+}
+
+.microUpgradeCard.isLocked .microQualityBadge {
+  background: rgba(76, 88, 108, 0.18) !important;
+  border-color: rgba(135, 145, 162, 0.26) !important;
+  color: rgba(203, 211, 223, 0.9) !important;
+}
+
+.microUpgradeCard.isMaxed {
+  border-color: rgba(255, 206, 107, 0.5);
+  box-shadow:
+    0 16px 34px rgba(184, 121, 18, 0.16),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.microStateRow {
+  position: relative;
+  min-height: 40px;
+  display: flex;
+  align-items: center;
+  border: 1px solid rgba(98, 141, 188, 0.22);
+  border-radius: 8px;
+  background: rgba(5, 11, 23, 0.42);
+  padding: 8px 9px;
+  color: rgba(198, 217, 243, 0.92);
+  font-size: 11px;
+  line-height: 1.3;
+}
+
+.microUpgradeCard.isLocked .microStateRow {
+  color: rgba(255, 198, 149, 0.96);
+  border-color: rgba(214, 149, 94, 0.28);
+  background: rgba(39, 22, 13, 0.32);
+}
+
+.microUpgradeCard.isMaxed .microStateRow {
+  color: rgba(255, 232, 161, 0.96);
+  border-color: rgba(223, 190, 104, 0.28);
+  background: rgba(45, 33, 10, 0.28);
+}
+
+.microQuality-basic {
+  background:
+    linear-gradient(180deg, rgba(20, 41, 73, 0.97), rgba(8, 15, 29, 0.98)),
+    radial-gradient(circle at 10% 0%, rgba(111, 202, 255, 0.12), transparent 42%) !important;
+}
+
+.microQuality-rare {
+  background:
+    linear-gradient(180deg, rgba(16, 49, 54, 0.97), rgba(7, 17, 25, 0.98)),
+    radial-gradient(circle at 10% 0%, rgba(85, 230, 165, 0.14), transparent 42%) !important;
+}
+
+.microQuality-epic {
+  background:
+    linear-gradient(180deg, rgba(43, 25, 63, 0.97), rgba(10, 13, 28, 0.98)),
+    radial-gradient(circle at 10% 0%, rgba(215, 140, 255, 0.16), transparent 42%) !important;
+}
+
+.microQuality-legendary {
+  background:
+    linear-gradient(180deg, rgba(61, 35, 12, 0.97), rgba(12, 15, 24, 0.98)),
+    radial-gradient(circle at 10% 0%, rgba(255, 201, 78, 0.18), transparent 42%) !important;
 }
